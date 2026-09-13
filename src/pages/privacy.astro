@@ -1,0 +1,102 @@
+---
+/**
+ * Privacy policy.
+ *
+ * Short because the site genuinely does very little. The temptation with a page
+ * like this is to copy a generic template full of clauses about marketing
+ * preferences and third-party advertising partners that do not exist here.
+ * A privacy policy describing processing that does not happen is worse than
+ * none: it is the same failure as a citation pointing at the wrong paper.
+ */
+import Base from "../layouts/Base.astro";
+
+const updated = "13 September 2026";
+---
+
+<Base
+  title="Privacy | AI Safety Index"
+  description="What this site collects, which is almost nothing, and what the host logs on its behalf."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Privacy</h1>
+        <p class="masthead__meta mono">Last updated {updated}</p>
+      </div>
+
+      <div class="doc">
+        <p class="lede">
+          This site sets no cookies, runs no analytics, embeds no third-party scripts and has no
+          accounts, forms or comments. It ships no JavaScript at all. There is nothing here that
+          tracks you.
+        </p>
+
+        <h2>What we collect</h2>
+        <p>
+          Nothing, directly. There is no mechanism on this site for you to give us information and
+          no code on it that gathers any.
+        </p>
+
+        <h2>What the host logs</h2>
+        <p>
+          The site is served by Cloudflare. Like every web host, Cloudflare processes the requests
+          it serves in order to serve them and to protect the service from abuse. That normally
+          includes your IP address, the page requested, the time, and the user agent your browser
+          sends. This happens at the infrastructure layer, we do not add to it, and we do not
+          build profiles from it.
+        </p>
+        <p>
+          What Cloudflare retains, and for how long, is governed by
+          <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's own privacy policy</a>
+          rather than by this one.
+        </p>
+
+        <h2>What your browser stores</h2>
+        <p>
+          Nothing that we put there. No cookies, no local storage, no fingerprinting. Your browser
+          will cache the page and its fonts the way it caches any site, which is a browser feature
+          rather than something we set.
+        </p>
+
+        <h2>Fonts and other assets</h2>
+        <p>
+          Fonts are served from this site, not from a font network, so loading a page does not
+          send a request to Google or anyone else. The site deliberately carries no images, no
+          embedded video, no social widgets and no tag managers. Every byte a page loads comes
+          from this domain.
+        </p>
+
+        <h2>Links out</h2>
+        <p>
+          This site is an index, so nearly every page links to other people's. Following one of
+          those links takes you somewhere with its own privacy practices, which are theirs and not
+          ours. Links to sources are plain links with no tracking parameters attached.
+        </p>
+
+        <h2>Data about other people</h2>
+        <p>
+          The data published here describes countries, organisations, models, laws and
+          aggregate populations. Individuals appear only where they are already named in a public
+          record we are citing, such as the author of a paper or the publisher of a government
+          document. We hold no personal data about readers and do not seek any.
+        </p>
+
+        <h2>Your rights</h2>
+        <p>
+          Australian privacy law and the GDPR both give people rights over personal information
+          held about them. We hold none, so in practice there is nothing for us to give you access
+          to, correct or erase. If you believe that is wrong, or if something published here
+          concerns you personally, <a href="/corrections/">tell us</a> and we will deal with it.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          If this ever changes, it will change here first, and the date at the top will move. The
+          site's full history is public, so any change to this page is visible in the repository
+          as a dated commit rather than a silent edit.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,369 @@
+---
+/**
+ * Every source, its licence, and what it is used for.
+ *
+ * The dataset list per source is computed from the processed data rather than
+ * written by hand, so a source that stops being used stops being listed as used
+ * without anyone remembering to edit this page.
+ */
+import Base from "../../layouts/Base.astro";
+import { sources, type Source } from "../../lib/sources";
+
+/* Every processed dataset, loaded at build time, so the mapping from source to
+   dataset is derived rather than asserted. */
+const datasetModules = import.meta.glob<{ default: { dataset?: string; sources?: string[]; count?: number } }>(
+  "../../../data/processed/*.json",
+  { eager: true },
+);
+
+const usage = new Map<string, Array<{ dataset: string; count: number }>>();
+for (const [path, module] of Object.entries(datasetModules)) {
+  const data = module.default;
+  if (!data?.sources) continue; // _status.json has no source list
+  const name = data.dataset ?? path.split("/").pop()!.replace(".json", "");
+  for (const id of data.sources) {
+    const list = usage.get(id) ?? [];
+    list.push({ dataset: name, count: data.count ?? 0 });
+    usage.set(id, list);
+  }
+}
+
+type Entry = Source & { id: string; datasets: Array<{ dataset: string; count: number }> };
+
+const all: Entry[] = Object.entries(sources).map(([id, source]) => ({
+  id,
+  ...source,
+  datasets: (usage.get(id) ?? []).sort((a, b) => a.dataset.localeCompare(b.dataset)),
+}));
+
+const BLOCKED = new Set(["prohibited", "no-derivatives"]);
+const blocked = all.filter((s) => BLOCKED.has(s.redistribution));
+const active = all
+  .filter((s) => !BLOCKED.has(s.redistribution) && s.datasets.length > 0)
+  .sort((a, b) => b.datasets.length - a.datasets.length || a.name.localeCompare(b.name));
+const registered = all
+  .filter((s) => !BLOCKED.has(s.redistribution) && s.datasets.length === 0)
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const licences = [...new Set(active.map((s) => s.licence))].sort();
+const ourOwn = active.filter((s) => s.publisher === "This site");
+
+const REDISTRIBUTION_MEANING: Record<string, string> = {
+  permitted: "Reuse permitted.",
+  "permitted-with-attribution": "Reuse permitted, attribution required.",
+  "share-alike": "Reuse permitted, derived databases must be licensed alike.",
+  "no-derivatives": "No derivative works. Cannot be re-plotted. Blocked in code.",
+  prohibited: "Redistribution forbidden. Blocked in code.",
+};
+---
+
+<Base
+  title="Sources | AI Safety Index"
+  description="Every source behind every figure on this site, with its licence, its update cadence and its known limitations."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Sources</h1>
+        <p class="masthead__meta mono">
+          {all.length} registered
+          <span aria-hidden="true">/</span>
+          {active.length} in use
+          <span aria-hidden="true">/</span>
+          {licences.length} licences
+          <span aria-hidden="true">/</span>
+          {blocked.length} blocked in code
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Every source is declared once, with its licence, attribution, cadence and known
+        limitations. Every processed record carries the identifier of the source it came from, so
+        the attribution on a figure is a database join rather than something somebody remembered
+        to write. This page is that registry.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>In use</h2>
+        <p>Sources with data on the site right now, and the datasets built from each.</p>
+      </div>
+
+      <ul class="registry">
+        {
+          active.map((source) => (
+            <li class="entry">
+              <div class="entry__head">
+                <a href={source.landing_page} class="entry__name">
+                  {source.name}
+                </a>
+                <a href={source.licence_url} class="entry__lic mono">
+                  {source.licence}
+                </a>
+              </div>
+
+              <p class="entry__pub">
+                <a href={source.publisher_url}>{source.publisher}</a>
+                {source.cadence && <span class="entry__cadence">Updated {source.cadence}</span>}
+              </p>
+
+              <p class="entry__caveat">{source.caveats}</p>
+
+              <ul class="datasets">
+                {source.datasets.map((dataset) => (
+                  <li class="tag mono">
+                    {dataset.dataset} <span class="datasets__n">{dataset.count.toLocaleString("en-GB")}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p class="entry__terms mono">
+                {REDISTRIBUTION_MEANING[source.redistribution] ?? source.redistribution}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    registered.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>Registered, not yet used</h2>
+            <p>
+              Checked, licensed and ready to wire in. They are declared ahead of use so that
+              adding one is a data change rather than a decision.
+            </p>
+          </div>
+
+          <ul class="cards">
+            {registered.map((source) => (
+              <li class="card">
+                <a href={source.landing_page} class="card__title">
+                  {source.name}
+                </a>
+                <p>{source.publisher}</p>
+                <span class="card__meta mono">
+                  <a href={source.licence_url}>{source.licence}</a>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section section--sunk" id="blocked">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Registered so that using them fails the build</h2>
+        <p>
+          Both of these have data we would like. Neither licence permits it, so both are
+          registered with a redistribution status that makes the pipeline refuse to write their
+          data and the site refuse to render it.
+        </p>
+      </div>
+
+      <ul class="registry">
+        {
+          blocked.map((source) => (
+            <li class="entry entry--blocked">
+              <div class="entry__head">
+                <a href={source.landing_page} class="entry__name">
+                  {source.name}
+                </a>
+                <a href={source.licence_url} class="entry__lic mono">
+                  {source.licence}
+                </a>
+              </div>
+              <p class="entry__pub">{source.publisher}</p>
+              <p class="entry__caveat">{source.caveats}</p>
+              <p class="entry__terms mono">{REDISTRIBUTION_MEANING[source.redistribution]}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="caveat">
+        The check runs at both ends. <code>guard()</code> in the Python pipeline refuses to write
+        a dataset whose source forbids republication, and <code>assertRenderable()</code> in the
+        site refuses to render one. Two checks rather than one, because data can also arrive
+        hand-written without passing through the pipeline, which on this site it frequently does.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="our-own">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What is ours</h2>
+        <p>
+          Two of the datasets here are our own work rather than anyone else's data, and are
+          licensed for reuse on the same terms we ask of everyone.
+        </p>
+      </div>
+
+      <ul class="cards">
+        {
+          ourOwn.map((source) => (
+            <li class="card">
+              <a href={source.landing_page} class="card__title">
+                {source.name}
+              </a>
+              <p>{source.caveats.split(".")[0]}.</p>
+              <span class="card__meta mono">
+                <a href={source.licence_url}>{source.licence}</a>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="caveat">
+        They exist because the obvious alternative was not available. OECD.AI and the IAPP both
+        publish policy trackers, and both are protected by the EU sui generis database right on
+        top of copyright, so bulk-extracting either would be a licence we do not have. Reading
+        primary instruments and coding them ourselves avoids the question and means the result is
+        ours to give away.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How we behave as a client</h2>
+      </div>
+
+      <div class="doc">
+        <ul>
+          <li>
+            The crawler identifies itself honestly, as
+            <code>AISafetyIndexBot</code>, with a link back. A publisher who wants to block it
+            should be able to.
+          </li>
+          <li>
+            Once a day, not once an hour. The fastest-moving source here changes a few times a
+            week, and hammering publishers who give us data for free is how you get blocked.
+          </li>
+          <li>
+            News items are a headline, an extract of at most 200 characters, the publisher and a
+            link to the original. Never full text. Never a hotlinked image.
+          </li>
+          <li>
+            Where a source refuses our request, that is their decision and we record it as
+            refused rather than working around it. We do not present ourselves as a browser to
+            get past a bot wall.
+          </li>
+          <li>
+            Failures degrade rather than break. A source that cannot be fetched serves its last
+            cached copy and the site shows the reader how old it is.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .registry {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entry {
+    padding-block: 1.25rem;
+    border-block-start: 1px solid var(--line);
+  }
+
+  .entry:last-child {
+    border-block-end: 1px solid var(--line);
+  }
+
+  .entry__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+  }
+
+  .entry__name {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .entry__name:hover {
+    color: var(--accent);
+  }
+
+  .entry__lic {
+    font-size: 0.75rem;
+  }
+
+  .entry__pub {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    margin-block-start: 0.2rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .entry__cadence {
+    color: var(--muted);
+  }
+
+  .entry__caveat {
+    margin-block-start: 0.6rem;
+    max-inline-size: 84ch;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .datasets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .datasets .tag {
+    font-size: 0.6875rem;
+  }
+
+  .datasets__n {
+    color: var(--ink);
+  }
+
+  .entry__terms {
+    margin-block-start: 0.6rem;
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .entry--blocked .entry__terms {
+    color: var(--warn);
+  }
+
+  code {
+    font-family: var(--f-mono);
+    font-size: 0.9em;
+  }
+</style>

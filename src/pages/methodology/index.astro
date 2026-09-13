@@ -1,0 +1,122 @@
+---
+/**
+ * Methodology hub. Each dataset's own caveats live with the dataset; this page
+ * covers the decisions that apply across all of them.
+ */
+import Base from "../../layouts/Base.astro";
+---
+
+<Base
+  title="Methodology | AI Safety Index"
+  description="How the data is fetched, processed, checked and published, and the judgement calls behind it."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Methodology</h1>
+        <p class="masthead__meta mono">Decisions that apply to everything here</p>
+      </div>
+
+      <div class="doc">
+        <p class="lede">
+          Per-dataset caveats live with the dataset, in the popover attached to every figure and
+          on the <a href="/sources/">sources page</a>. This page covers the choices that apply
+          across all of them.
+        </p>
+
+        <h2>Our own indexes</h2>
+        <ul>
+          <li>
+            <a href="/methodology/governance-readiness/">Governance Readiness Index</a>: the
+            scoring rubric, what it does and does not measure, and how the EU is handled.
+          </li>
+          <li>
+            <a href="/policy/australia/#about-this-index">AI Law and Policy Index</a>: how
+            instruments are selected and how "how binding is this" is decided.
+          </li>
+        </ul>
+
+        <h2>Comparing things that are not comparable</h2>
+        <p>
+          Several pages set two measures against each other. Where the measures have different
+          units, they are converted to percentile ranks within the set of entities present in both
+          before being compared. A use rate of 40 percent and a readiness score of 40 are not the
+          same kind of 40, and subtracting one from the other directly would produce a number with
+          no meaning.
+        </p>
+        <p>
+          The consequence, stated wherever it applies: the picture moves when the set of entities
+          changes. A rank is a statement about relative standing, which is all a cross-unit
+          comparison can honestly be.
+        </p>
+
+        <h2>Trends</h2>
+        <p>
+          Where a growth rate is fitted, it is ordinary least squares on the logarithm of the
+          quantity against time, over a window that is stated. It describes what has already
+          happened and is deliberately not extended past the last observation. This site publishes
+          no forecasts of its own.
+        </p>
+        <p>
+          Fits are checked against alternative windows and the result of that check is printed in
+          the figure's own note, so a reader can see whether the answer depends on where the
+          window starts.
+        </p>
+
+        <h2>Missing data</h2>
+        <p>
+          A suppressed or absent value is never treated as zero. An entity with no data is left
+          unshaded on a map and absent from a table, and the count of what is missing is stated
+          next to the count of what is present. Where a join drops entities, they are named.
+        </p>
+        <p>
+          This matters more than it sounds. Reported compute clusters, reported incidents and
+          reported adoption all measure reporting as much as they measure the thing. An absence of
+          incidents in a country usually means an absence of reporting.
+        </p>
+
+        <h2>Freshness</h2>
+        <p>
+          Every figure carries the date its data was retrieved, and anything older than 45 days is
+          marked stale rather than presented as current. When a source cannot be fetched, the
+          last cached copy is served and its age is shown: stale data with a visible date beats a
+          page that vanishes.
+        </p>
+        <p>
+          A dataset is only rewritten when its records change, so the repository history
+          distinguishes a day when data moved from a day when the pipeline merely ran.
+        </p>
+
+        <h2>Classification</h2>
+        <p>
+          News items are categorised by keyword rule, and every item on the
+          <a href="/news/">news pages</a> prints the terms that matched. The rule is blunt: it
+          misses things and occasionally files something oddly. Publishing the terms is what makes
+          it arguable rather than authoritative.
+        </p>
+
+        <h2>Checks</h2>
+        <p>
+          Each stage carries a runnable check, and the ones that matter are verified by being
+          deliberately broken to confirm they fail. The licence guard is checked against sources
+          it must block. The news classifier is checked against real headlines it previously got
+          wrong. The map's coordinate decoder is checked against a hand-computed example and
+          against the mistake that would otherwise be made silently.
+        </p>
+        <p>
+          That last habit came from a real incident: a bulk edit once rewrote a normalisation rule
+          and the assertion guarding it into a matching pair that passed while doing nothing. A
+          check that still passes when the logic is broken is worse than no check.
+        </p>
+
+        <h2>Typography</h2>
+        <p>
+          Extracts from feeds have their dash characters normalised to plain hyphens, which is a
+          house style rule rather than an editorial one. It changes presentation and not meaning,
+          and the unaltered original is one link away from every extract.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

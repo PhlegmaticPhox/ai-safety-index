@@ -59,6 +59,7 @@ jobs:
           npm ci
           npm run check:lib
           npm run build
+          npm run check:links
 
       - name: Commit refreshed data
         run: |

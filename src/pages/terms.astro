@@ -1,0 +1,108 @@
+---
+/**
+ * Terms of use.
+ *
+ * The parts that matter here are the disclaimer and the licensing, because this
+ * site publishes other people's data under their licences and its own coding
+ * under ours, and a reader needs to know which is which before reusing anything.
+ */
+import Base from "../layouts/Base.astro";
+
+const updated = "13 September 2026";
+---
+
+<Base
+  title="Terms | AI Safety Index"
+  description="What you can do with what is published here, what is ours and what is not, and what this site does not promise."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Terms</h1>
+        <p class="masthead__meta mono">Last updated {updated}</p>
+      </div>
+
+      <div class="doc">
+        <p class="lede">
+          Use it freely. Check it before you rely on it. Nothing here is legal, financial,
+          investment or professional advice of any kind.
+        </p>
+
+        <h2>This is not advice</h2>
+        <p>
+          The law and policy index in particular is a map of where to start reading, not a
+          compliance product. It is a reading of public instruments at a review date, it does not
+          account for your circumstances, and reasonable lawyers would code several entries
+          differently. If a decision turns on it, get advice from someone qualified in the
+          jurisdiction concerned.
+        </p>
+        <p>
+          The same applies elsewhere. Governance readiness scores measure how much machinery a
+          jurisdiction has, not whether its rules are good or well enforced. A high score is not a
+          compliment and a low one is not an accusation.
+        </p>
+
+        <h2>No warranty</h2>
+        <p>
+          The site is provided as it is, with no warranty of any kind. Figures come from other
+          people's datasets, which have their own errors, revisions and limitations, and we add
+          errors of our own. Every figure carries its source, its licence and its retrieval date
+          precisely so you can check it rather than trust it. Please do check it.
+        </p>
+        <p>
+          To the extent the law allows, we accept no liability for any loss arising from use of
+          this site or reliance on anything published here. Nothing in these terms limits rights
+          you have under the Australian Consumer Law or equivalent legislation that cannot be
+          excluded.
+        </p>
+
+        <h2>What is ours, and what you can do with it</h2>
+        <p>
+          The site's code, its written explanations, the Governance Readiness Index and the AI Law
+          and Policy Index are ours, and are licensed
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Take them, change
+          them, build on them commercially, and credit us.
+        </p>
+
+        <h2>What is not ours</h2>
+        <p>
+          Most of the figures on this site are reproduced from other people's datasets under their
+          own licences, and remain theirs. Those licences are not ours to widen. Before reusing a
+          figure from here, check the licence on the
+          <a href="/sources/">sources page</a> or in the provenance popover attached to the figure
+          itself, and comply with that rather than with these terms.
+        </p>
+        <p>
+          Two constraints come up often enough to state plainly. The AI Incident Database is
+          licensed ODbL, which has share-alike conditions on derived databases. News headlines and
+          extracts belong to their publishers; we show a headline, at most 200 characters and a
+          link, which is what we consider defensible, and copying more of them from here is on
+          you.
+        </p>
+
+        <h2>Linking and reuse of the site</h2>
+        <p>
+          Link to anything. Quote figures with attribution. Do not present the site or its data as
+          endorsed by any of the publishers we cite: none of them endorse this site, and several
+          of the licences we rely on say so explicitly.
+        </p>
+
+        <h2>Corrections and takedowns</h2>
+        <p>
+          If something here is wrong, <a href="/corrections/">tell us</a>. If you hold rights in
+          something published here and want it removed, tell us and we will remove it. The
+          architecture is built for that: source data lives in one registry, and removing a source
+          removes everything derived from it in a single change.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          These terms may change. Changes appear here with the date at the top updated, and
+          because the repository is public, every version of this page is visible in its history
+          as a dated commit.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,120 @@
+---
+/**
+ * What this is, who it is for, and what it deliberately is not.
+ */
+import Base from "../layouts/Base.astro";
+import { sources } from "../lib/sources";
+
+const REPO = "https://github.com/PhlegmaticPhox/ai-safety-index";
+const sourceCount = Object.keys(sources).length;
+---
+
+<Base
+  title="About | AI Safety Index"
+  description="An independent, cited index of AI capability, governance and safety. What it is, who it is for, and what it is not."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>About</h1>
+        <p class="masthead__meta mono">
+          {sourceCount} sources
+          <span aria-hidden="true">/</span>
+          zero client JavaScript
+          <span aria-hidden="true">/</span>
+          public repository
+        </p>
+      </div>
+
+      <div class="doc">
+        <p class="lede">
+          The data on AI is fragmented. Epoch AI has the best capability figures and almost no
+          policy. The OECD and the IAPP have policy and no capability data. Eurostat has adoption
+          and neither. Nobody joins them, and practitioners say so plainly: the field is hard to
+          navigate and there is no single overview of how the pieces relate.
+        </p>
+
+        <h2>What this is</h2>
+        <p>
+          An attempt at that overview, built for two readers at once. Someone who wants to
+          understand what is actually happening in AI, and someone who wants current sourced
+          numbers without visiting eight sites. The same page serves both by putting the figure
+          first and the detail one click away.
+        </p>
+        <p>Four things it tries to do that the existing sites do not:</p>
+        <ul>
+          <li>Put capability, adoption, governance and incidents on one screen.</li>
+          <li>
+            Set exposure against governance readiness, so the question "who is meeting this
+            technology without the machinery to answer for it" has a picture.
+          </li>
+          <li>
+            Index the law that actually applies to AI, including the large majority of it that
+            never mentions AI.
+          </li>
+          <li>
+            Attach provenance to every individual figure, rather than a bibliography at the
+            bottom.
+          </li>
+        </ul>
+
+        <h2>The one rule</h2>
+        <p>
+          Every source is declared once with its licence, attribution and known limitations. Every
+          processed record carries its source identifier. Licence and attribution are resolved by
+          joining that registry when the page renders, which makes attribution structural rather
+          than a matter of discipline. The pipeline refuses to write data whose licence forbids
+          republication; the site refuses to render it. Two checks, because data can also arrive
+          hand-written.
+        </p>
+        <p>
+          The practical consequence is that a takedown is a one-line change. Remove a source from
+          the registry and everything derived from it stops being published.
+        </p>
+
+        <h2>What it is not</h2>
+        <ul>
+          <li>
+            <strong>Not a forecaster.</strong> Where a trend is fitted, it describes what already
+            happened and is not extended past the last observation.
+          </li>
+          <li>
+            <strong>Not a ranking of countries.</strong> Governance readiness counts machinery,
+            not quality. A jurisdiction can score low because it has deliberately chosen not to
+            legislate.
+          </li>
+          <li>
+            <strong>Not legal advice.</strong> See the <a href="/terms/">terms</a>.
+          </li>
+          <li>
+            <strong>Not a business.</strong> No accounts, no comments, no newsletter, no tracking,
+            no revenue model, nothing to sign up for.
+          </li>
+        </ul>
+
+        <h2>How it is built</h2>
+        <p>
+          A Python pipeline fetches and processes each source, then a static site generator renders
+          the result. Charts are drawn to SVG at build time, so the pages ship as markup with no
+          chart library, no map tiles and no client JavaScript at all. Data refreshes daily, and a
+          dataset is only rewritten when its records actually change, so a commit in the history
+          means the data moved rather than that a timestamp did.
+        </p>
+        <p>
+          Everything is in a <a href={REPO}>public repository</a>: the pipeline, the source
+          registry, the processed data, the coding rules behind our own indexes, and the checks
+          that guard all of it.
+        </p>
+
+        <h2>Who made it</h2>
+        <p>
+          A personal project, built in the open, largely by an AI agent working under direction.
+          That is worth stating on a site about AI. It is also the reason the checks in the
+          repository are as paranoid as they are: several of them exist because something went
+          wrong quietly and was only caught by reading the output rather than the code.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

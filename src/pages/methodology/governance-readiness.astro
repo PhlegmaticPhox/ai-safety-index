@@ -1,0 +1,403 @@
+---
+/**
+ * The Governance Readiness Index rubric.
+ *
+ * This is the landing page cited in the provenance popover on every governance
+ * figure, so it has to actually answer the question a reader clicking that icon
+ * is asking: where did this number come from and what does it mean.
+ */
+import Base from "../../layouts/Base.astro";
+import { assertRenderable, type Dataset } from "../../lib/sources";
+
+import governanceFile from "../../../data/processed/governance-readiness.json";
+
+interface GovernanceRecord {
+  code: string;
+  name: string;
+  basis: "national" | "eu-harmonised";
+  scores: Record<string, number>;
+  total: number;
+  readiness: number;
+  note: string;
+  instruments: Array<{ title: string; url: string; year: number }>;
+  reviewed: string;
+  source_id: string;
+}
+
+const governance = governanceFile as Dataset<GovernanceRecord>;
+assertRenderable(...governance.sources);
+
+const DIMENSIONS = [
+  {
+    key: "binding_law",
+    label: "Binding law",
+    max: 3,
+    levels: [
+      "No binding rules addressed to AI systems.",
+      "Sectoral or partial rules only.",
+      "A horizontal instrument adopted but not yet fully applicable.",
+      "A horizontal instrument in force and applicable.",
+    ],
+  },
+  {
+    key: "oversight_body",
+    label: "Oversight body",
+    max: 2,
+    levels: [
+      "Nobody designated.",
+      "A coordinating or advisory body.",
+      "A regulator holding statutory powers over AI.",
+    ],
+  },
+  {
+    key: "evaluation_capacity",
+    label: "Evaluation capacity",
+    max: 2,
+    levels: [
+      "No capacity to test models or systems.",
+      "Announced or embryonic.",
+      "An operating safety or evaluation institute.",
+    ],
+  },
+  {
+    key: "transparency_duty",
+    label: "Transparency duty",
+    max: 2,
+    levels: [
+      "No duty to tell people.",
+      "A general data-protection route only.",
+      "An explicit AI disclosure, labelling or automated-decision duty in law.",
+    ],
+  },
+  {
+    key: "strategy",
+    label: "Strategy",
+    max: 1,
+    levels: ["No published national AI strategy.", "A published national AI strategy."],
+  },
+];
+
+const MAX = DIMENSIONS.reduce((sum, d) => sum + d.max, 0);
+
+const national = governance.records.filter((r) => r.basis === "national");
+const euMembers = governance.records.filter((r) => r.basis === "eu-harmonised");
+const ranked = [...national].sort((a, b) => b.readiness - a.readiness || a.name.localeCompare(b.name));
+const reviewed = governance.records[0]?.reviewed ?? "";
+---
+
+<Base
+  title="Governance Readiness Index | AI Safety Index"
+  description="The scoring rubric behind the governance readiness figure: five dimensions, what each measures, and what the score does not mean."
+  cites={governance.sources}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Governance Readiness Index</h1>
+        <p class="masthead__meta mono">
+          {governance.count} jurisdictions
+          <span aria-hidden="true">/</span>
+          {national.length} coded individually
+          <span aria-hidden="true">/</span>
+          {DIMENSIONS.length} dimensions
+          <span aria-hidden="true">/</span>
+          reviewed {reviewed}
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Our own coding, from primary instruments. It measures how much governance machinery a
+        jurisdiction has built, not how strict that machinery is, not how well it is enforced, and
+        not whether the rules are any good.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The rubric</h2>
+        <p>Five dimensions, {MAX} points, normalised to a score out of 100.</p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            The five scoring dimensions and what each score level means.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Dimension</th>
+              <th scope="col" class="ta-end">Max</th>
+              <th scope="col" class="wrap-cell">What each level means</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              DIMENSIONS.map((dimension) => (
+                <tr>
+                  <th scope="row">{dimension.label}</th>
+                  <td class="ta-end num">{dimension.max}</td>
+                  <td class="wrap-cell">
+                    <ol class="levels">
+                      {dimension.levels.map((level, score) => (
+                        <li>
+                          <span class="levels__n mono">{score}</span>
+                          {level}
+                        </li>
+                      ))}
+                    </ol>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What it does not mean</h2>
+      </div>
+
+      <div class="doc">
+        <ul>
+          <li>
+            <strong>It is not a ranking of good governance.</strong> Presence of machinery is not
+            quality of machinery. The United Kingdom scores below jurisdictions with far less
+            capacity because it has deliberately chosen not to legislate horizontally, which is a
+            position rather than a failure.
+          </li>
+          <li>
+            <strong>Ties are real.</strong> South Korea and the EU both score {MAX} out of {MAX}
+            while imposing very different burdens. Both have the apparatus; the index does not
+            weigh what they do with it.
+          </li>
+          <li>
+            <strong>It goes stale.</strong> Scores are a reading of public instruments at
+            {" "}{reviewed}. Commencement dates move and institutes open.
+          </li>
+          <li>
+            <strong>Reasonable people would code it differently.</strong> Whether China's stack of
+            binding administrative measures counts as horizontal, or whether Japan's
+            penalty-free AI act counts as applicable, are judgement calls. They are recorded in
+            each jurisdiction's note so the disagreement has something to bite on.
+          </li>
+          <li><strong>It is not legal advice.</strong> See the <a href="/terms/">terms</a>.</li>
+        </ul>
+
+        <h2>How the EU is handled</h2>
+        <p>
+          The AI Act is a regulation, so it applies directly in all 27 member states rather than
+          needing transposition. The EU is therefore coded once at bloc level and that score is
+          applied to each member state, marked as EU-harmonised. National measures on top of it,
+          most visibly which authority each member state has actually designated, are not
+          separately scored.
+        </p>
+        <p>
+          Read a member state's number as the floor its membership guarantees, not as a complete
+          account of that country's own position. {euMembers.length} of the
+          {" "}{governance.count} jurisdictions here are scored this way.
+        </p>
+
+        <h2>Why we coded it ourselves</h2>
+        <p>
+          OECD.AI and the IAPP both publish policy trackers, and both are protected by the EU sui
+          generis database right on top of copyright. Bulk-extracting either would be a licence we
+          do not have. Reading primary instruments and coding them ourselves avoids the question
+          entirely and means the result is ours to license
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+        </p>
+        <p>
+          Every jurisdiction lists the instruments it was coded from, and a build check probes
+          each of those links. A citation that returns a 404 looks like evidence and is not.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sunk" id="scores">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Every score, and what it was coded from</h2>
+        <p>
+          Nationally coded jurisdictions. The 27 EU member states share the bloc score and are
+          listed on the <a href="/map/#table">map page</a>.
+        </p>
+      </div>
+
+      <ul class="entries">
+        {
+          ranked.map((record) => (
+            <li class="entry">
+              <div class="entry__head">
+                <h3>{record.name}</h3>
+                <span class="entry__score num">{record.readiness}</span>
+              </div>
+
+              <ul class="scores">
+                {DIMENSIONS.map((dimension) => (
+                  <li>
+                    <span class="scores__label">{dimension.label}</span>
+                    <span class="scores__dots" aria-hidden="true">
+                      {Array.from({ length: dimension.max }, (_, i) => (
+                        <span
+                          class:list={["dot", i < record.scores[dimension.key] && "is-on"]}
+                        />
+                      ))}
+                    </span>
+                    <span class="scores__val mono">
+                      {record.scores[dimension.key]}/{dimension.max}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <p class="entry__note">{record.note}</p>
+
+              <ul class="instruments">
+                {record.instruments.map((instrument) => (
+                  <li>
+                    <a href={instrument.url}>{instrument.title}</a>
+                    <span class="mono">{instrument.year}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .levels {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    max-inline-size: 60ch;
+  }
+
+  .levels li {
+    display: flex;
+    gap: 0.6rem;
+    padding-block: 0.15rem;
+  }
+
+  .levels__n {
+    color: var(--accent);
+    flex: none;
+  }
+
+  .entries {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entry {
+    padding-block: 1.35rem;
+    border-block-start: 1px solid var(--line);
+  }
+
+  .entry:last-child {
+    border-block-end: 1px solid var(--line);
+  }
+
+  .entry__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .entry__head h3 {
+    font-size: 1.0625rem;
+  }
+
+  .entry__score {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--accent-2);
+  }
+
+  .scores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: 0.3rem 1.5rem;
+    margin: 0.8rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.75rem;
+  }
+
+  .scores li {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .scores__label {
+    color: var(--muted);
+  }
+
+  .scores__dots {
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .dot {
+    inline-size: 0.45rem;
+    block-size: 0.45rem;
+    border-radius: var(--r-mark);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+
+  .dot.is-on {
+    background: var(--accent-2);
+    border-color: var(--accent-2);
+  }
+
+  .scores__val {
+    color: var(--muted);
+  }
+
+  .entry__note {
+    margin-block-start: 0.9rem;
+    max-inline-size: 84ch;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .instruments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.5rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8125rem;
+  }
+
+  .instruments li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .instruments .mono {
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+</style>
