@@ -203,17 +203,27 @@ Index, the Frontier Safety Framework Index and the Compute Threshold Index.
 
 Public repo, `main` branch, Cloudflare Workers static assets, `wrangler.jsonc` at the root.
 
-**NOT YET CONNECTED. A push deploys nothing.** This section previously said "every push rebuilds",
-which was an assumption written when the config was added and never verified. The evidence: the
-repo has zero GitHub deployment records, which both Cloudflare Pages and Workers Builds create when
-their Git integration is connected, and no workflow here deploys. Whatever is live was put there
-some other way. Do not repeat the claim until a deployment record exists.
+**Cloudflare Workers Builds is connected and builds every push to `main`.** The Worker is named
+`ai-safety-index`, which matches the `name` in `wrangler.jsonc`; if that name ever diverges,
+`npx wrangler deploy` silently creates a second Worker instead of updating the one the domain
+points at.
 
-When it is connected, connect it at the Cloudflare end (Workers & Pages, import this repository)
-rather than as a GitHub Actions workflow. `refresh-data.yml` pushes with the default `GITHUB_TOKEN`,
-and GitHub deliberately does not trigger workflows from those pushes, so an Actions deploy on
-`push` would fire for hand-made commits and silently skip every daily data refresh. Cloudflare's
-integration watches the repository over a webhook and is not subject to that rule.
+**How to check whether a push deployed, correctly.** Workers Builds reports as a GitHub *check run*
+on the commit, not as a GitHub *deployment*. Looking for deployment records returns nothing even
+when everything is working, which is how this file previously came to claim the opposite:
+
+```bash
+gh api repos/PhlegmaticPhox/ai-safety-index/commits/main/check-runs --jq '.check_runs[] | "\(.name): \(.status) \(.conclusion)"'
+```
+
+Cloudflare watches the repository over a webhook rather than through GitHub Actions, which matters
+because `refresh-data.yml` pushes with the default `GITHUB_TOKEN` and GitHub deliberately does not
+trigger workflows from those pushes. An Actions-based deploy would fire for hand-made commits and
+silently skip every daily data refresh; the Cloudflare integration is not subject to that rule.
+
+**A green build is not a visible change.** Build success only means the Worker was updated. If the
+custom domain is routed to a different Worker or an older project, every build can succeed while
+the domain serves something else entirely, and nothing in the build log says so.
 
 `.github/workflows/refresh-data.yml` runs daily at 06:17 UTC, runs all guards before fetching,
 builds the site before committing, and labels its commits `Data refresh` when a dataset moved or
@@ -222,10 +232,11 @@ builds the site before committing, and labels its commits `Data refresh` when a 
 **At launch, remove the `noindex` meta in `src/layouts/Base.astro`.** It is there deliberately so a
 half-built index is not crawled.
 
-**`SITE_URL` has no real default.** `astro.config.mjs` falls back to `ai-safety-index.pages.dev`,
-which does not resolve, so every canonical link and every sitemap entry in a locally built site
-points at nothing. Set `SITE_URL` in the Cloudflare build environment to the real domain, and
-replace the fallback here once that domain is known.
+**`SITE_URL` has no real default.** Unset, `astro.config.mjs` warns and falls back to localhost,
+so canonical links and the sitemap are wrong until it is set. It does not fail the build: it was
+briefly made fatal, which broke a working deploy pipeline to fix a problem that the `noindex` meta
+makes dormant. Hardcode the real origin here once the domain is settled; a static site with one
+domain does not need this to be an environment variable at all.
 
 ## Working agreement
 
