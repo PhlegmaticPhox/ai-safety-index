@@ -46,6 +46,12 @@ jobs:
       - name: Governance index self-check
         run: python etl/build_governance.py --self-check
 
+      - name: Policy index self-check
+        run: python etl/build_policy_index.py --self-check
+
+      - name: Eurostat decoder self-check
+        run: python etl/fetch_eurostat.py --self-check
+
       - name: Palette contrast check
         run: python etl/check_contrast.py
 
@@ -59,7 +65,7 @@ jobs:
           npm ci
           npm run check:lib
           npm run build
-          npm run check:links
+          npm run check:built
 
       - name: Commit refreshed data
         run: |

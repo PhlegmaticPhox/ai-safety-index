@@ -31,7 +31,7 @@ import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 
-from common import PROCESSED, fetch, write_dataset
+from common import PROCESSED, fetch, normalise_dashes, write_dataset
 
 SNIPPET_CHARS = 200
 
@@ -166,10 +166,9 @@ def _clean(text: str | None) -> str:
     for _ in range(2):
         text = html.unescape(text)
         text = re.sub(r"<[^>]+>", " ", text)
-    # Written as escapes on purpose. Spelling these as literal characters once let a
-    # project-wide dash sweep rewrite this line AND its self-check into a matching
-    # pair that passed while doing nothing.
-    text = text.replace("—", "-").replace("–", "-")
+    # One implementation of the dash rule, in common.py, rather than a second
+    # copy here that can drift from it.
+    text = normalise_dashes(text)
     # Invisible characters survive a \s+ collapse, because Python does not treat
     # a zero-width space as whitespace. Feeds carry them: one arrived with a
     # U+200B thirteen characters into the extract, where it did nothing visible

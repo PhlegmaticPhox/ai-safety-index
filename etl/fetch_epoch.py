@@ -18,7 +18,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 
-from common import fetch, read_csv, write_dataset
+from common import fetch, normalise_dashes, read_csv, write_dataset
 
 MODELS = "epoch-notable-models"
 BENCHMARKS = "epoch-benchmarks"
@@ -31,6 +31,16 @@ HARDWARE = "epoch-ml-hardware"
 # only one we plot. Others exist in guidance and rescinded executive orders; those
 # belong in the governance section as text, not as a line on a chart.
 EU_SYSTEMIC_RISK_FLOP = 1e25
+
+
+def _text(value: str | None) -> str:
+    """Trim, and apply the house dash rule.
+
+    Epoch's organisation names carry en dashes, one of which reached a chart
+    tooltip on the capability page. Every free-text field that gets rendered
+    goes through here.
+    """
+    return normalise_dashes((value or "").strip())
 
 
 def _float(value: str | None) -> float | None:
@@ -91,20 +101,20 @@ def build_models(offline: bool) -> None:
             continue
         records.append(
             {
-                "model": row["Model"].strip(),
-                "organisation": (row.get("Organization") or "").strip(),
-                "country": (row.get("Country (of organization)") or "").strip(),
+                "model": _text(row["Model"]),
+                "organisation": _text(row.get("Organization")),
+                "country": _text(row.get("Country (of organization)")),
                 "published": published[:10],
                 "compute_flop": compute,
                 "parameters": _float(row.get("Parameters")),
-                "confidence": (row.get("Confidence") or "").strip(),
-                "domain": (row.get("Domain") or "").strip(),
+                "confidence": _text(row.get("Confidence")),
+                "domain": _text(row.get("Domain")),
                 # Disclosed for about a third of models. Where it is absent that
                 # is a disclosure gap, not a cheap model, and the site has to say
                 # so wherever the figure is plotted.
                 "cost_usd": _float(row.get("Training compute cost (2023 USD)")),
                 "accessibility": _access(row.get("Model accessibility")),
-                "hardware": (row.get("Training hardware") or "").strip(),
+                "hardware": _text(row.get("Training hardware")),
                 "reference": (row.get("Link") or "").strip(),
                 "source_id": MODELS,
             }
@@ -178,7 +188,7 @@ def build_benchmarks(offline: bool) -> None:
     # what the best available model could do at that point in time.
     best: dict[tuple[str, str], dict] = {}
     for row in rows:
-        task = (row.get("task") or "").strip()
+        task = _text(row.get("task"))
         month = _year_month(row.get("Version release date"))
         score = _float(row.get(score_col))
         if not task or not month or score is None:
@@ -187,8 +197,8 @@ def build_benchmarks(offline: bool) -> None:
         if key not in best or score > best[key]["score"]:
             best[key] = {
                 "score": score,
-                "model": (row.get("Display name") or row.get("model") or "").strip(),
-                "organisation": (row.get("Organization") or "").strip(),
+                "model": _text(row.get("Display name") or row.get("model")),
+                "organisation": _text(row.get("Organization")),
             }
 
     by_task: dict[str, list] = defaultdict(list)
@@ -248,7 +258,7 @@ def build_clusters(offline: bool) -> None:
         lambda: {"clusters": 0, "power_mw": 0.0, "known_power": 0}
     )
     for row in rows:
-        country = (row.get("Country") or "").strip()
+        country = _text(row.get("Country"))
         if not country:
             continue
         entry = by_country[country]
@@ -301,20 +311,18 @@ def build_releases(offline: bool) -> None:
     records = []
     for row in rows:
         published = row.get("Publication date") or ""
-        model = (row.get("Model") or "").strip()
+        model = _text(row.get("Model"))
         if not model or len(published) < 7:
             continue
         records.append(
             {
                 "model": model,
-                "organisation": (row.get("Organization") or "").strip(),
-                "country": (row.get("Country (of organization)") or "").strip(),
+                "organisation": _text(row.get("Organization")),
+                "country": _text(row.get("Country (of organization)")),
                 "published": published[:10],
-                "domain": (row.get("Domain") or "").strip().split(",")[0],
+                "domain": _text(row.get("Domain")).split(",")[0],
                 "accessibility": _access(row.get("Model accessibility")),
-                "org_category": (row.get("Organization categorization") or "")
-                .strip()
-                .split(",")[0],
+                "org_category": _text(row.get("Organization categorization")).split(",")[0],
                 "source_id": MODELS,
             }
         )

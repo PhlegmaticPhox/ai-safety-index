@@ -1,6 +1,6 @@
 {
   "dataset": "model-releases",
-  "generated": "2026-09-13T05:56:20+00:00",
+  "generated": "2026-09-13T06:28:10+00:00",
   "retrieved": "2026-09-13T02:56:05+00:00",
   "sources": [
     "epoch-notable-models"
@@ -1731,7 +1731,7 @@
     },
     {
       "model": "TransE",
-      "organisation": "Universite de Technologie de Compiègne – CNRS,Google",
+      "organisation": "Universite de Technologie de Compiègne - CNRS,Google",
       "country": "France,United States of America",
       "published": "2013-12-05",
       "domain": "Language",

@@ -12,7 +12,7 @@
     "etl": "python etl/run_all.py",
     "etl:offline": "python etl/run_all.py --offline",
     "check:lib": "node --experimental-strip-types scripts/check-lib.mjs",
-    "check:links": "node scripts/check-internal-links.mjs"
+    "check:built": "node scripts/check-internal-links.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

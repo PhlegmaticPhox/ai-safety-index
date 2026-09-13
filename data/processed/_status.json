@@ -1,10 +1,12 @@
 {
-  "last_checked": "2026-09-13T05:55:10+00:00",
-  "offline": true,
+  "last_checked": "2026-09-13T06:28:47+00:00",
+  "offline": false,
   "modules": {
     "fetch_microsoft_diffusion": "ok",
     "fetch_epoch": "ok",
-    "fetch_policy_feeds": "ok",
-    "build_governance": "ok"
+    "fetch_eurostat": "ok",
+    "fetch_news": "ok",
+    "build_governance": "ok",
+    "build_policy_index": "ok"
   }
 }

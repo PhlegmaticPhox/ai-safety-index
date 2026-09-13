@@ -68,6 +68,28 @@ def utcnow() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+# Written as escape sequences on purpose, never as the literal characters.
+# Spelling them literally once let a project-wide dash sweep rewrite the
+# normalisation line AND the assertion guarding it into a matching pair that
+# passed while doing nothing at all.
+EM_DASH = "—"
+EN_DASH = "–"
+
+
+def normalise_dashes(text: str) -> str:
+    """Replace em and en dashes with the plain hyphen.
+
+    House typographic rule: the permitted dash on this site is the hyphen. That
+    applies to data as much as to prose, because data is what gets rendered. An
+    en dash inside an Epoch organisation name reached a chart tooltip on the
+    capability page and was only caught by scanning the built HTML.
+
+    This changes presentation and not meaning, and every figure links to the
+    unaltered original one click away.
+    """
+    return text.replace(EM_DASH, "-").replace(EN_DASH, "-")
+
+
 def load_sources() -> dict[str, dict[str, Any]]:
     with SOURCES_FILE.open(encoding="utf-8") as fh:
         return json.load(fh)["sources"]
@@ -363,6 +385,16 @@ def _self_check() -> None:
         pass
     else:
         raise AssertionError("write_dataset accepted an empty dataset")
+
+    # Dash normalisation, against the real string that got through: an Epoch
+    # organisation name carrying an en dash, which reached a chart tooltip.
+    got = normalise_dashes("Universite de Technologie de Compiegne – CNRS")
+    assert got == "Universite de Technologie de Compiegne - CNRS", got
+    assert normalise_dashes("a — b") == "a - b"
+    assert EM_DASH not in normalise_dashes(f"x{EM_DASH}y{EN_DASH}z")
+    assert EN_DASH not in normalise_dashes(f"x{EM_DASH}y{EN_DASH}z")
+    # A hyphen must survive untouched, or every hyphenated name loses its hyphen.
+    assert normalise_dashes("fine-tuning") == "fine-tuning"
 
     # Idempotence: writing the same records twice must leave the file untouched,
     # or the daily refresh commits timestamp churn forever.
