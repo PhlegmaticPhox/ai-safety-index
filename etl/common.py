@@ -161,21 +161,28 @@ def fetch(
     raise FetchError(f"Could not fetch {source_id!r} from {url}: {last_error}")
 
 
-def read_csv(path: Path) -> list[dict[str, str]]:
+def read_csv(path: Path, encoding: str | None = None) -> list[dict[str, str]]:
     """Read a CSV, tolerating the encodings publishers actually ship.
 
-    Microsoft's diffusion CSV is latin-1 with stray high bytes; Epoch's are UTF-8.
-    Guessing wrong throws a UnicodeDecodeError halfway through a CI run, so try in
-    order rather than assuming.
+    Epoch's files are UTF-8. Microsoft's diffusion CSV is Mac Roman, which is the
+    reason for the `encoding` argument: a fallback chain cannot tell Mac Roman
+    from cp1252, because every byte is valid in both. It decoded happily and
+    silently produced "TYrkiye" for "Turkiye" until the map join surfaced it. A
+    guess that succeeds wrongly is worse than one that fails.
+
+    So: pass `encoding` explicitly whenever the publisher's encoding is known.
+    The chain stays for sources where it genuinely is a guess, and it is ordered
+    so a real UTF-8 file is never mistaken for anything else.
     """
     raw = path.read_bytes()
-    for encoding in ("utf-8-sig", "utf-8", "cp1252", "latin-1"):
+    candidates = (encoding,) if encoding else ("utf-8-sig", "utf-8", "cp1252", "latin-1")
+    for candidate in candidates:
         try:
-            text = raw.decode(encoding)
+            text = raw.decode(candidate)
         except UnicodeDecodeError:
             continue
         return list(csv.DictReader(io.StringIO(text)))
-    raise ValueError(f"Could not decode {path} with any known encoding")
+    raise ValueError(f"Could not decode {path} as {', '.join(candidates)}")
 
 
 def write_dataset(

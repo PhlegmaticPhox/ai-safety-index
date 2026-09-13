@@ -1,0 +1,869 @@
+"""Governance Readiness Index: our own coding, not a redistribution of anyone's.
+
+Why this exists as our own work rather than a scrape: OECD.AI and IAPP both
+publish policy trackers, and both are protected by the EU sui generis database
+right on top of copyright. Bulk-extracting either is the fastest way to get a
+letter. Coding the jurisdictions ourselves from primary instruments avoids that
+entirely, and the result is ours to license CC BY 4.0.
+
+WHAT THIS MEASURES. Presence of governance machinery, not how strict it is. A
+jurisdiction scores for having a binding rule, a regulator, an evaluation body,
+a transparency duty and a published strategy. It does not score for how
+demanding any of those are. South Korea and the EU can therefore tie while
+imposing very different burdens, and that is the index working as designed, not
+a bug. Read it as "how much apparatus exists", never as "how well governed".
+
+WHAT IT IS NOT. Not legal advice, not a compliance tool, not a ranking of
+countries. Scores are a reading of public instruments at the review date, they
+go stale, and reasonable lawyers would code several of these differently.
+
+Every jurisdiction carries the primary instruments it was coded from. Run with
+--check-links to verify those URLs still resolve; a citation that 404s is worse
+than no citation, because it looks like evidence.
+
+    python etl/build_governance.py                # score and write
+    python etl/build_governance.py --self-check   # scoring logic
+    python etl/build_governance.py --check-links  # HEAD every cited instrument
+"""
+
+from __future__ import annotations
+
+import sys
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from common import SSL_CONTEXT, USER_AGENT, utcnow, write_dataset
+
+SOURCE = "governance-readiness-index"
+REVIEWED = "2026-09"
+
+# The five dimensions, with the maximum each can contribute. Anything scored
+# above its maximum is a coding error and fails the build rather than silently
+# capping, because a capped score would look like a deliberate judgement.
+DIMENSIONS = {
+    "binding_law": (
+        3,
+        "Binding rules addressed to AI systems: 0 none, 1 sectoral or partial only, "
+        "2 horizontal instrument adopted but not yet fully applicable, 3 horizontal "
+        "instrument in force and applicable.",
+    ),
+    "oversight_body": (
+        2,
+        "Who supervises: 0 nobody designated, 1 a coordinating or advisory body, "
+        "2 a regulator holding statutory powers over AI.",
+    ),
+    "evaluation_capacity": (
+        2,
+        "Capacity to test models or systems: 0 none, 1 announced or embryonic, "
+        "2 an operating safety or evaluation institute.",
+    ),
+    "transparency_duty": (
+        2,
+        "Duty to tell people: 0 none, 1 a general data-protection route only, "
+        "2 an explicit AI disclosure, labelling or automated-decision duty in law.",
+    ),
+    "strategy": (
+        1,
+        "A published national AI strategy or equivalent policy document: 0 or 1.",
+    ),
+}
+
+MAX_SCORE = sum(maximum for maximum, _ in DIMENSIONS.values())
+
+# The 27 EU member states. The AI Act is a regulation, so it applies directly in
+# each of them, which is why they are coded once at bloc level rather than 27
+# times. National implementation differs, most visibly in who has actually been
+# designated as market surveillance authority, and that difference is NOT scored
+# here. Treat a member state's score as the floor its EU membership guarantees.
+EU_MEMBERS = [
+    ("AUT", "Austria"), ("BEL", "Belgium"), ("BGR", "Bulgaria"), ("HRV", "Croatia"),
+    ("CYP", "Cyprus"), ("CZE", "Czechia"), ("DNK", "Denmark"), ("EST", "Estonia"),
+    ("FIN", "Finland"), ("FRA", "France"), ("DEU", "Germany"), ("GRC", "Greece"),
+    ("HUN", "Hungary"), ("IRL", "Ireland"), ("ITA", "Italy"), ("LVA", "Latvia"),
+    ("LTU", "Lithuania"), ("LUX", "Luxembourg"), ("MLT", "Malta"),
+    ("NLD", "Netherlands"), ("POL", "Poland"), ("PRT", "Portugal"),
+    ("ROU", "Romania"), ("SVK", "Slovakia"), ("SVN", "Slovenia"), ("ESP", "Spain"),
+    ("SWE", "Sweden"),
+]
+
+EU_SCORES = {
+    "binding_law": 3,
+    "oversight_body": 2,
+    "evaluation_capacity": 2,
+    "transparency_duty": 2,
+    "strategy": 1,
+}
+
+EU_NOTE = (
+    "Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and "
+    "applies in stages: prohibitions from February 2025, general-purpose model "
+    "obligations from August 2025, most high-risk obligations from August 2026. "
+    "The AI Office supervises general-purpose models directly; member states "
+    "designate national market surveillance authorities. Article 50 imposes "
+    "disclosure duties for chatbots, synthetic media and emotion recognition."
+)
+
+EU_INSTRUMENTS = [
+    {
+        "title": "Regulation (EU) 2024/1689 (AI Act)",
+        "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+        "year": 2024,
+    },
+    {
+        "title": "European AI Office",
+        "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+        "year": 2024,
+    },
+    {
+        "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+        "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+        "year": 2016,
+    },
+]
+
+# Coded from the instruments listed with each entry. Where an entry scores zero
+# on a dimension, that is a positive finding of absence at the review date, not
+# a gap in our research; the note says which.
+JURISDICTIONS = [
+    {
+        "code": "USA",
+        "name": "United States",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 2,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "No federal horizontal AI statute. Executive Order 14110 was rescinded in "
+            "January 2025 and replaced by Executive Order 14179, which directs policy "
+            "without creating duties on developers. Binding obligations sit in sectoral "
+            "rules and in state law, most substantially Colorado's SB 24-205. The Center "
+            "for AI Standards and Innovation at NIST, formerly the US AI Safety "
+            "Institute, runs model evaluations."
+        ),
+        "instruments": [
+            {"title": "Executive Order 14179", "url": "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence", "year": 2025},
+            {"title": "NIST AI Risk Management Framework", "url": "https://www.nist.gov/itl/ai-risk-management-framework", "year": 2023},
+            {"title": "Colorado SB 24-205", "url": "https://leg.colorado.gov/bills/sb24-205", "year": 2024},
+        ],
+    },
+    {
+        "code": "GBR",
+        "name": "United Kingdom",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 2,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "Deliberately has no horizontal AI statute. The 2023 white paper puts five "
+            "principles into the hands of existing regulators, so binding duties arrive "
+            "through sector law rather than AI law. The AI Security Institute, renamed "
+            "from the AI Safety Institute in February 2025, is among the best resourced "
+            "evaluation bodies anywhere. Automated-decision rights run through UK GDPR."
+        ),
+        "instruments": [
+            {"title": "A pro-innovation approach to AI regulation", "url": "https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach", "year": 2023},
+            {"title": "AI Security Institute", "url": "https://www.aisi.gov.uk/", "year": 2023},
+            {"title": "Online Safety Act 2023", "url": "https://www.legislation.gov.uk/ukpga/2023/50/contents", "year": 2023},
+        ],
+    },
+    {
+        "code": "CHN",
+        "name": "China",
+        "scores": {"binding_law": 3, "oversight_body": 2, "evaluation_capacity": 1,
+                   "transparency_duty": 2, "strategy": 1},
+        "note": (
+            "Scores as horizontal because the binding rules, taken together, reach AI "
+            "services generally, even though they are a stack of administrative measures "
+            "rather than one omnibus act: algorithmic recommendation, deep synthesis, "
+            "generative AI services, and from September 2025 mandatory labelling of "
+            "AI-generated content. The Cyberspace Administration of China registers "
+            "algorithms and enforces. Article 24 of PIPL gives automated-decision rights."
+        ),
+        "instruments": [
+            {"title": "Interim Measures for Generative AI Services", "url": "https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm", "year": 2023},
+            {"title": "Measures for Labelling AI-Generated Content", "url": "https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm", "year": 2025},
+            {"title": "Personal Information Protection Law", "url": "http://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313088.html", "year": 2021},
+        ],
+    },
+    {
+        "code": "KOR",
+        "name": "South Korea",
+        "scores": {"binding_law": 3, "oversight_body": 2, "evaluation_capacity": 2,
+                   "transparency_duty": 2, "strategy": 1},
+        "note": (
+            "The AI Framework Act, passed in January 2025 and in force from January 2026, "
+            "makes Korea the second jurisdiction after the EU with a horizontal AI statute "
+            "actually applying. It carries notification duties for generative output and "
+            "high-impact systems, enforced by the Ministry of Science and ICT. The Korea "
+            "AI Safety Institute opened in November 2024. Scoring level with the EU means "
+            "the machinery exists, not that the obligations are equally demanding."
+        ),
+        "instruments": [
+            {"title": "Basic Act on AI Development and Trust", "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156668296", "year": 2025},
+            {"title": "Korea AI Safety Institute", "url": "https://www.aisi.re.kr/", "year": 2024},
+            {"title": "Personal Information Protection Act", "url": "https://www.pipc.go.kr/eng/", "year": 2023},
+        ],
+    },
+    {
+        "code": "JPN",
+        "name": "Japan",
+        "scores": {"binding_law": 2, "oversight_body": 1, "evaluation_capacity": 2,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The AI Promotion Act of May 2025 is horizontal in scope but carries no "
+            "penalties and imposes cooperation duties rather than compliance duties, so "
+            "it scores below an applicable binding regime. The AI Strategy Headquarters "
+            "coordinates across government. Japan's AI Safety Institute has been running "
+            "evaluations since February 2024."
+        ),
+        "instruments": [
+            {"title": "Act on Promotion of R&D and Utilization of AI-Related Technologies", "url": "https://www.cas.go.jp/jp/houan/217.html", "year": 2025},
+            {"title": "Japan AI Safety Institute", "url": "https://aisi.go.jp/", "year": 2024},
+            {"title": "AI Guidelines for Business", "url": "https://www.meti.go.jp/english/press/2024/0419_002.html", "year": 2024},
+        ],
+    },
+    {
+        "code": "CAN",
+        "name": "Canada",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 1,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The Artificial Intelligence and Data Act died on the order paper when "
+            "Parliament was prorogued in January 2025, so Canada has no horizontal AI "
+            "statute. The Directive on Automated Decision-Making binds federal "
+            "institutions but not the wider market. The Canadian AI Safety Institute was "
+            "announced in November 2024."
+        ),
+        "instruments": [
+            {"title": "Directive on Automated Decision-Making", "url": "https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592", "year": 2019},
+            {"title": "Canadian AI Safety Institute", "url": "https://ised-isde.canada.ca/site/ised/en/canadian-artificial-intelligence-safety-institute", "year": 2024},
+            {"title": "Pan-Canadian Artificial Intelligence Strategy", "url": "https://ised-isde.canada.ca/site/ai-strategy/en", "year": 2017},
+        ],
+    },
+    {
+        "code": "AUS",
+        "name": "Australia",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "No horizontal AI statute and no AI regulator. The Voluntary AI Safety "
+            "Standard is guidance; the mandatory guardrails for high-risk AI proposed in "
+            "September 2024 have not been legislated. Binding duties on AI use exist "
+            "inside government through the DTA policy, and in privacy, consumer, online "
+            "safety and financial services law. Australia has no AI evaluation institute."
+        ),
+        "instruments": [
+            {"title": "Voluntary AI Safety Standard", "url": "https://www.industry.gov.au/publications/voluntary-ai-safety-standard", "year": 2024},
+            {"title": "Proposals paper: mandatory guardrails for AI in high-risk settings", "url": "https://consult.industry.gov.au/ai-mandatory-guardrails", "year": 2024},
+            {"title": "Policy for the responsible use of AI in government", "url": "https://www.digital.gov.au/policy/ai/policy", "year": 2024},
+        ],
+    },
+    {
+        "code": "SGP",
+        "name": "Singapore",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 2,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "Governs AI through frameworks and testing rather than statute. AI Verify "
+            "gives Singapore genuine evaluation capacity, and the Digital Trust Centre "
+            "was designated its AI safety institute in 2024. Binding duties arrive "
+            "through the PDPA and sector regulators, not through AI law."
+        ),
+        "instruments": [
+            {"title": "Model AI Governance Framework for Generative AI", "url": "https://www.pdpc.gov.sg/help-and-resources/2020/01/model-ai-governance-framework", "year": 2024},
+            {"title": "AI Verify Foundation", "url": "https://aiverifyfoundation.sg/", "year": 2023},
+            {"title": "National AI Strategy 2.0", "url": "https://file.go.gov.sg/nais2023.pdf", "year": 2023},
+        ],
+    },
+    {
+        "code": "IND",
+        "name": "India",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 1,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "No AI statute. MeitY governs by advisory, which is persuasive rather than "
+            "binding, with amendments to the IT Rules reaching synthetic media. The "
+            "Digital Personal Data Protection Act 2023 is passed but its rules were still "
+            "phasing in. An India AI Safety Institute was announced in January 2025."
+        ),
+        "instruments": [
+            {"title": "Digital Personal Data Protection Act 2023", "url": "https://www.meity.gov.in/data-protection-framework", "year": 2023},
+            {"title": "IndiaAI Mission", "url": "https://indiaai.gov.in/", "year": 2024},
+            {"title": "India AI Governance Guidelines", "url": "https://www.meity.gov.in/", "year": 2025},
+        ],
+    },
+    {
+        "code": "BRA",
+        "name": "Brazil",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "PL 2338/2023, the closest thing to a Brazilian AI Act, passed the Senate in "
+            "December 2024 and has not completed passage, so it creates no duties yet. "
+            "Article 20 of the LGPD gives a right to review of automated decisions, "
+            "supervised by the ANPD, which the bill would also make the AI coordinator."
+        ),
+        "instruments": [
+            {"title": "PL 2338/2023", "url": "https://www25.senado.leg.br/web/atividade/materias/-/materia/157233", "year": 2023},
+            {"title": "Lei Geral de Protecao de Dados", "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm", "year": 2018},
+            {"title": "Plano Brasileiro de Inteligencia Artificial", "url": "https://www.gov.br/participamaisbrasil/pbia-2024-2028", "year": 2024},
+        ],
+    },
+    {
+        "code": "CHE",
+        "name": "Switzerland",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The Federal Council decided in February 2025 to ratify the Council of Europe "
+            "AI Convention and to regulate sectorally rather than horizontally, so binding "
+            "AI duties will arrive through existing sector law. The revised Federal Act on "
+            "Data Protection carries the automated-decision route."
+        ),
+        "instruments": [
+            {"title": "Federal Council AI regulation decision", "url": "https://www.admin.ch/gov/en/start/documentation/media-releases.msg-id-104110.html", "year": 2025},
+            {"title": "Federal Act on Data Protection", "url": "https://www.fedlex.admin.ch/eli/cc/2022/491/en", "year": 2023},
+        ],
+    },
+    {
+        "code": "NOR",
+        "name": "Norway",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "In the EEA but not the EU, so the AI Act does not apply automatically and "
+            "must be incorporated into the EEA Agreement first. Until that completes, "
+            "Norway's binding position is GDPR plus sector law, with Datatilsynet running "
+            "a regulatory sandbox for AI."
+        ),
+        "instruments": [
+            {"title": "Datatilsynet regulatory sandbox for AI", "url": "https://www.datatilsynet.no/en/regulations-and-tools/sandbox-for-artificial-intelligence/", "year": 2020},
+            {"title": "National Strategy for Artificial Intelligence", "url": "https://www.regjeringen.no/en/dokumenter/nasjonal-strategi-for-kunstig-intelligens/id2685594/", "year": 2020},
+        ],
+    },
+    {
+        "code": "ISR",
+        "name": "Israel",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The 2023 Policy on AI Regulation and Ethics is explicitly sectoral and "
+            "non-binding, leaving existing regulators to act within their own remits. No "
+            "AI statute, no AI regulator, no evaluation institute."
+        ),
+        "instruments": [
+            {"title": "Policy on Artificial Intelligence Regulation and Ethics", "url": "https://www.gov.il/en/pages/ai_2023", "year": 2023},
+            {"title": "Protection of Privacy Law", "url": "https://www.gov.il/en/departments/the_privacy_protection_authority", "year": 1981},
+        ],
+    },
+    {
+        "code": "ARE",
+        "name": "United Arab Emirates",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "Heavy state investment and an early ministerial portfolio for AI, but no "
+            "horizontal AI statute. Binding rules exist inside the financial free zones, "
+            "notably the DIFC data protection regulations covering autonomous systems, "
+            "which do not reach the wider federal market."
+        ),
+        "instruments": [
+            {"title": "UAE National Strategy for Artificial Intelligence 2031", "url": "https://ai.gov.ae/strategy/", "year": 2017},
+            {"title": "DIFC Data Protection Law", "url": "https://www.difc.ae/business/laws-and-regulations/legal-database/difc-laws/data-protection-law-difc-law-no-5-2020", "year": 2020},
+        ],
+    },
+    {
+        "code": "SAU",
+        "name": "Saudi Arabia",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "SDAIA sets AI policy and published AI ethics principles, which are guidance "
+            "rather than law. The Personal Data Protection Law became enforceable in 2024 "
+            "and carries the automated-decision route. No AI statute."
+        ),
+        "instruments": [
+            {"title": "SDAIA AI Ethics Principles", "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-ethics-principles.pdf", "year": 2023},
+            {"title": "Personal Data Protection Law", "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/Personal%20Data%20English%20V2-23April2023-%20Reviewed-.pdf", "year": 2021},
+        ],
+    },
+    {
+        "code": "TUR",
+        "name": "Turkey",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "An AI bill was introduced in 2024 and has not been enacted. Binding duties "
+            "run through KVKK, the data protection law, which mirrors pre-GDPR European "
+            "drafting. National AI Strategy published 2021."
+        ),
+        "instruments": [
+            {"title": "National Artificial Intelligence Strategy", "url": "https://cbddo.gov.tr/en/national-ai-strategy/", "year": 2021},
+            {"title": "Law on Protection of Personal Data (KVKK)", "url": "https://www.kvkk.gov.tr/Icerik/6649/Personal-Data-Protection-Law", "year": 2016},
+        ],
+    },
+    {
+        "code": "MEX",
+        "name": "Mexico",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "Several AI bills have been introduced and none enacted. Oversight is "
+            "unsettled: INAI, the data protection authority, was abolished in 2025 and its "
+            "functions moved into the executive, which is a reduction in independent "
+            "supervision rather than an increase in AI capacity."
+        ),
+        "instruments": [
+            {"title": "Ley Federal de Proteccion de Datos Personales", "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm", "year": 2025},
+            {"title": "Estrategia de Inteligencia Artificial MX", "url": "https://www.gob.mx/", "year": 2018},
+        ],
+    },
+    {
+        "code": "IDN",
+        "name": "Indonesia",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The 2023 circular letter on AI ethics is explicitly non-binding. The Personal "
+            "Data Protection Law became fully effective in October 2024 and is the binding "
+            "route. A presidential regulation on AI was in draft at the review date."
+        ),
+        "instruments": [
+            {"title": "Personal Data Protection Law (UU 27/2022)", "url": "https://jdih.setneg.go.id/", "year": 2022},
+            {"title": "Stranas KA national AI strategy", "url": "https://ai-innovation.id/", "year": 2020},
+        ],
+    },
+    {
+        "code": "VNM",
+        "name": "Vietnam",
+        "scores": {"binding_law": 2, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 2, "strategy": 1},
+        "note": (
+            "The Law on Digital Technology Industry, passed in June 2025 and effective "
+            "January 2026, carries an AI chapter with risk classification and a duty to "
+            "mark AI-generated content. It scores 2 rather than 3 because the AI "
+            "provisions sit inside a broader industry law rather than a dedicated "
+            "horizontal instrument. Worth noting against Australia: Vietnam has a binding "
+            "AI labelling duty and Australia does not."
+        ),
+        "instruments": [
+            {"title": "Law on Digital Technology Industry", "url": "https://datafiles.chinhphu.vn/", "year": 2025},
+            {"title": "National Strategy on AI Research and Development", "url": "https://vanban.chinhphu.vn/", "year": 2021},
+        ],
+    },
+    {
+        "code": "NZL",
+        "name": "New Zealand",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "Deliberately light touch. The first national AI strategy was approved in "
+            "2025 and explicitly rules out new AI legislation for now. The Algorithm "
+            "Charter binds signatory agencies only. Privacy Act 2020 is the binding route."
+        ),
+        "instruments": [
+            {"title": "New Zealand's Strategy for Artificial Intelligence", "url": "https://www.mbie.govt.nz/dmsdocument/31530-new-zealands-strategy-for-artificial-intelligence-investing-with-confidence-pdf", "year": 2025},
+            {"title": "Algorithm Charter for Aotearoa New Zealand", "url": "https://www.data.govt.nz/leadership/advisory-and-governance/algorithm-charter/", "year": 2020},
+        ],
+    },
+    {
+        "code": "ZAF",
+        "name": "South Africa",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The National AI Policy Framework of 2024 sets direction without creating "
+            "duties. Section 71 of POPIA restricts decisions based solely on automated "
+            "processing and is enforced by the Information Regulator. No AI statute."
+        ),
+        "instruments": [
+            {"title": "National AI Policy Framework", "url": "https://www.dcdt.gov.za/", "year": 2024},
+            {"title": "Protection of Personal Information Act", "url": "https://inforegulator.org.za/", "year": 2013},
+        ],
+    },
+    {
+        "code": "NGA",
+        "name": "Nigeria",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The National AI Strategy was published in 2024 after an unusually open "
+            "drafting process. Binding duties run through the Nigeria Data Protection Act "
+            "2023 and NITDA, not through AI law."
+        ),
+        "instruments": [
+            {"title": "National Artificial Intelligence Strategy", "url": "https://ncair.nitda.gov.ng/", "year": 2024},
+            {"title": "Nigeria Data Protection Act", "url": "https://ndpc.gov.ng/", "year": 2023},
+        ],
+    },
+    {
+        "code": "KEN",
+        "name": "Kenya",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The National AI Strategy 2025 to 2030 was launched in March 2025. Section 35 "
+            "of the Data Protection Act gives rights against solely automated decisions, "
+            "enforced by the Office of the Data Protection Commissioner. No AI statute."
+        ),
+        "instruments": [
+            {"title": "Kenya National AI Strategy 2025-2030", "url": "https://ict.go.ke/", "year": 2025},
+            {"title": "Data Protection Act", "url": "https://www.odpc.go.ke/", "year": 2019},
+        ],
+    },
+    {
+        "code": "CHL",
+        "name": "Chile",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "An AI bill has been before Congress since 2024 without being enacted. Law "
+            "21.719, the new data protection statute, creates a real data protection "
+            "agency and automated-decision rights, but phases in over two years from its "
+            "December 2024 publication."
+        ),
+        "instruments": [
+            {"title": "Politica Nacional de Inteligencia Artificial (Ministerio de Ciencia)", "url": "https://minciencia.gob.cl/", "year": 2021},
+            {"title": "Ley 21.719 de proteccion de datos personales", "url": "https://www.bcn.cl/leychile/navegar?idNorma=1208650", "year": 2024},
+        ],
+    },
+    {
+        "code": "ARG",
+        "name": "Argentina",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "No AI statute. The data protection authority issued recommendations for "
+            "trustworthy AI in 2023, which are guidance. Law 25.326 is the binding route "
+            "and predates modern automated-decision drafting."
+        ),
+        "instruments": [
+            {"title": "Recomendaciones para una inteligencia artificial fiable", "url": "https://www.argentina.gob.ar/aaip", "year": 2023},
+            {"title": "Ley 25.326 de Proteccion de los Datos Personales", "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/norma.htm", "year": 2000},
+        ],
+    },
+    {
+        "code": "COL",
+        "name": "Colombia",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "CONPES 4144 set national AI policy in February 2025. Binding duties run "
+            "through Law 1581 on data protection, supervised by the Superintendencia de "
+            "Industria y Comercio. No AI statute."
+        ),
+        "instruments": [
+            {"title": "CONPES 4144 Politica Nacional de Inteligencia Artificial", "url": "https://www.dnp.gov.co/", "year": 2025},
+            {"title": "Ley 1581 de 2012", "url": "https://www.sic.gov.co/tema/proteccion-de-datos-personales", "year": 2012},
+        ],
+    },
+    {
+        "code": "RUS",
+        "name": "Russia",
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "Federal Law 258-FZ creates experimental legal regimes, which are binding but "
+            "bounded to specific pilots rather than general in application. The AI Code of "
+            "Ethics is voluntary and industry-signed. National AI Development Strategy to "
+            "2030 updated in 2024."
+        ),
+        "instruments": [
+            {"title": "National AI Development Strategy to 2030", "url": "http://publication.pravo.gov.ru/document/0001202402150013", "year": 2024},
+            {"title": "Federal Law 258-FZ on experimental legal regimes", "url": "http://publication.pravo.gov.ru/Document/View/0001202007310018", "year": 2020},
+        ],
+    },
+    {
+        "code": "MYS",
+        "name": "Malaysia",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The National AI Office opened in December 2024 to coordinate policy, and the "
+            "national AI governance guidelines published that year are voluntary. The "
+            "PDPA is the binding route. No AI statute."
+        ),
+        "instruments": [
+            {"title": "National Guidelines on AI Governance and Ethics", "url": "https://mosti.gov.my/", "year": 2024},
+            {"title": "Personal Data Protection Act 2010", "url": "https://www.pdp.gov.my/jpdpv2/", "year": 2010},
+        ],
+    },
+    {
+        "code": "THA",
+        "name": "Thailand",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 1,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "A royal decree on AI service business has been in draft since 2022 without "
+            "taking effect. ETDA's AI Governance Center gives Thailand some assessment "
+            "capacity short of a testing institute. PDPA is the binding route."
+        ),
+        "instruments": [
+            {"title": "Thailand National AI Strategy", "url": "https://ai.in.th/", "year": 2022},
+            {"title": "Personal Data Protection Act", "url": "https://www.pdpc.or.th/", "year": 2019},
+        ],
+    },
+    {
+        "code": "UKR",
+        "name": "Ukraine",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The 2023 White Paper sets a bottom-up path toward eventual AI Act alignment "
+            "as part of the EU accession process, starting with voluntary codes. No "
+            "binding AI instrument at the review date."
+        ),
+        "instruments": [
+            {"title": "White Paper on AI Regulation in Ukraine", "url": "https://cip.gov.ua/en/news/bila-kniga-z-regulyuvannya-shtuchnogo-intelektu-v-ukrayini", "year": 2023},
+        ],
+    },
+    {
+        "code": "EGY",
+        "name": "Egypt",
+        "scores": {"binding_law": 0, "oversight_body": 1, "evaluation_capacity": 0,
+                   "transparency_duty": 1, "strategy": 1},
+        "note": (
+            "The National AI Strategy was first published in 2021 and a second edition "
+            "followed. The Personal Data Protection Law of 2020 is the binding route and "
+            "its executive regulations were slow to arrive. No AI statute."
+        ),
+        "instruments": [
+            {"title": "Egypt National Artificial Intelligence Strategy", "url": "https://mcit.gov.eg/en/Artificial_Intelligence", "year": 2021},
+            {"title": "Personal Data Protection Law 151 of 2020", "url": "https://mcit.gov.eg/en/Publication/Publication_Summary/9578", "year": 2020},
+        ],
+    },
+]
+
+
+def score_of(entry: dict) -> int:
+    """Total a jurisdiction, refusing to cap silently.
+
+    A dimension scored above its maximum is a coding mistake. Capping it would
+    produce a number that looks like a judgement someone made, so it raises.
+    """
+    total = 0
+    for dimension, (maximum, _) in DIMENSIONS.items():
+        if dimension not in entry["scores"]:
+            raise ValueError(f"{entry['code']}: missing dimension {dimension!r}")
+        value = entry["scores"][dimension]
+        if not isinstance(value, int) or value < 0 or value > maximum:
+            raise ValueError(
+                f"{entry['code']}: {dimension}={value!r} outside 0..{maximum}"
+            )
+        total += value
+    extra = set(entry["scores"]) - set(DIMENSIONS)
+    if extra:
+        raise ValueError(f"{entry['code']}: unknown dimension(s) {sorted(extra)}")
+    return total
+
+
+def build_records() -> list[dict]:
+    records = []
+    seen: set[str] = set()
+
+    for entry in JURISDICTIONS:
+        if entry["code"] in seen:
+            raise ValueError(f"duplicate jurisdiction code {entry['code']!r}")
+        seen.add(entry["code"])
+        total = score_of(entry)
+        records.append(
+            {
+                "code": entry["code"],
+                "name": entry["name"],
+                "basis": "national",
+                "scores": entry["scores"],
+                "total": total,
+                "readiness": round(total / MAX_SCORE * 100),
+                "note": entry["note"],
+                "instruments": entry["instruments"],
+                "reviewed": REVIEWED,
+                "source_id": SOURCE,
+            }
+        )
+
+    eu_total = score_of({"code": "EU", "scores": EU_SCORES})
+    for code, name in EU_MEMBERS:
+        if code in seen:
+            raise ValueError(f"{code} is coded nationally and as an EU member")
+        seen.add(code)
+        records.append(
+            {
+                "code": code,
+                "name": name,
+                "basis": "eu-harmonised",
+                "scores": dict(EU_SCORES),
+                "total": eu_total,
+                "readiness": round(eu_total / MAX_SCORE * 100),
+                "note": (
+                    f"Scored at EU level. {EU_NOTE} National implementation differs, most "
+                    f"visibly in which authority has been designated, and that difference "
+                    f"is not scored here. Read this as the floor {name}'s EU membership "
+                    f"guarantees, not as a complete account of {name}'s own measures."
+                ),
+                "instruments": EU_INSTRUMENTS,
+                "reviewed": REVIEWED,
+                "source_id": SOURCE,
+            }
+        )
+
+    records.sort(key=lambda r: (-r["readiness"], r["name"]))
+    return records
+
+
+def _probe(url: str) -> tuple[str, object]:
+    """Classify one citation URL as ok, blocked, unreachable or DEAD.
+
+    The distinction matters and the first version of this got it wrong. Plenty
+    of government sites refuse HEAD, refuse anything that is not a browser, sit
+    behind a bot wall, or simply time out from here. None of that means the
+    citation is wrong, and treating it as wrong would push us to replace good
+    primary links with worse ones. Only a definite 404 or 410 is evidence that
+    the link is bad.
+
+    We do not spoof a browser to get around a bot wall. A publisher blocking
+    robots is entitled to, and the answer is to report "blocked", not to lie
+    about who is asking.
+    """
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en",
+    }
+    last = "unknown"
+    for method in ("HEAD", "GET"):
+        try:
+            request = urllib.request.Request(url, headers=headers, method=method)
+            with urllib.request.urlopen(request, timeout=40, context=SSL_CONTEXT) as response:
+                # urlopen follows redirects, so a 2xx here is a resolved page.
+                return "ok", response.status
+        except urllib.error.HTTPError as exc:
+            if exc.code in (404, 410):
+                return "DEAD", exc.code
+            if exc.code in (403, 401, 429):
+                last = ("blocked", exc.code)
+                continue
+            last = ("blocked", exc.code)
+        except Exception as exc:  # noqa: BLE001
+            last = ("unreachable", type(exc).__name__)
+    return last if isinstance(last, tuple) else ("unreachable", last)
+
+
+def check_links(records: list[dict]) -> int:
+    """Probe every cited instrument. A citation that 404s looks like evidence.
+
+    Exits non-zero only on a definite 404 or 410. Blocked and unreachable are
+    printed so a human can eyeball them, because a run that fails on someone
+    else's bot wall would train us to ignore it.
+    """
+    seen: set[str] = set()
+    buckets: dict[str, list[tuple[str, str, object]]] = {"blocked": [], "unreachable": [], "DEAD": []}
+
+    for record in records:
+        for instrument in record["instruments"]:
+            url = instrument["url"]
+            if url in seen:
+                continue
+            seen.add(url)
+            verdict, detail = _probe(url)
+            print(f"  {verdict:<11} {str(detail):<20} {record['code']}  {url}")
+            if verdict != "ok":
+                buckets[verdict].append((record["code"], url, detail))
+
+    print(
+        f"\n{len(seen)} unique URLs: {len(seen) - sum(len(v) for v in buckets.values())} ok, "
+        f"{len(buckets['blocked'])} blocked, {len(buckets['unreachable'])} unreachable, "
+        f"{len(buckets['DEAD'])} dead"
+    )
+    for label in ("DEAD", "blocked", "unreachable"):
+        for code, url, detail in buckets[label]:
+            print(f"  {label}: {detail}  {code}  {url}")
+    return len(buckets["DEAD"])
+
+
+def run(offline: bool = False) -> None:
+    """Hand-coded, so there is nothing to fetch and offline changes nothing."""
+    records = build_records()
+    write_dataset(
+        "governance-readiness",
+        records,
+        source_ids=[SOURCE],
+        unit="readiness score, 0 to 100",
+        notes=(
+            f"Our own coding of {len(records)} jurisdictions against five dimensions "
+            f"({', '.join(DIMENSIONS)}), reviewed {REVIEWED}. Measures how much "
+            "governance machinery exists, not how strict it is, so a high score is not a "
+            "compliment and a low one is not an accusation. The 27 EU member states are "
+            "scored once at bloc level because the AI Act is a regulation applying "
+            "directly; their national measures are not separately scored. Not legal "
+            "advice. Every jurisdiction lists the primary instruments it was coded from."
+        ),
+        retrieved=utcnow(),
+    )
+
+
+def _self_check() -> None:
+    records = build_records()
+
+    assert len(records) == len(JURISDICTIONS) + len(EU_MEMBERS), "record count"
+    assert MAX_SCORE == 10, f"MAX_SCORE drifted to {MAX_SCORE}"
+
+    # Every record must carry at least one primary instrument. An uncited score
+    # is exactly the thing this site exists not to publish.
+    for record in records:
+        assert record["instruments"], f"{record['code']} has no cited instrument"
+        for instrument in record["instruments"]:
+            assert instrument["url"].startswith("http"), f"{record['code']}: bad url"
+            assert instrument["title"], f"{record['code']}: untitled instrument"
+        assert 0 <= record["readiness"] <= 100, f"{record['code']} out of range"
+        assert record["source_id"] == SOURCE
+
+    # Scoring must reject a dimension above its maximum rather than capping. A
+    # cap would publish a number nobody chose.
+    try:
+        score_of({"code": "TEST", "scores": {**EU_SCORES, "strategy": 2}})
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("score_of capped an over-range dimension instead of failing")
+
+    # And reject an unknown dimension, which is how a renamed key would slip in
+    # scoring zero while looking coded.
+    try:
+        score_of({"code": "TEST", "scores": {**EU_SCORES, "safety_institute": 1}})
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("score_of accepted an unknown dimension")
+
+    # And a missing one.
+    partial = dict(EU_SCORES)
+    del partial["strategy"]
+    try:
+        score_of({"code": "TEST", "scores": partial})
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("score_of accepted a missing dimension")
+
+    # Codes must be unique across national and EU-harmonised entries, or the map
+    # join silently paints one country twice.
+    codes = [r["code"] for r in records]
+    assert len(codes) == len(set(codes)), "duplicate jurisdiction codes"
+    assert all(len(c) == 3 and c.isupper() for c in codes), "codes must be ISO alpha-3"
+
+    # The two ends of the scale must actually differ, or the map is one colour.
+    assert records[0]["readiness"] > records[-1]["readiness"], "no spread in scores"
+
+    print(
+        f"build_governance.py self-check passed: {len(records)} jurisdictions, "
+        f"{records[-1]['readiness']} to {records[0]['readiness']}"
+    )
+
+
+if __name__ == "__main__":
+    if "--self-check" in sys.argv:
+        _self_check()
+    elif "--check-links" in sys.argv:
+        raise SystemExit(1 if check_links(build_records()) else 0)
+    else:
+        _self_check()
+        run()

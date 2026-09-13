@@ -23,6 +23,10 @@ MODULES = [
     "fetch_microsoft_diffusion",
     "fetch_epoch",
     "fetch_policy_feeds",
+    # Hand-coded rather than fetched, so it runs identically offline. It is in
+    # this list because it is a dataset like any other and has to pass the same
+    # licence guard and idempotence check.
+    "build_governance",
 ]
 
 

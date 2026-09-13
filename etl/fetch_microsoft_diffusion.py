@@ -34,7 +34,10 @@ def parse_percent(value: str) -> float | None:
 
 def run(offline: bool = False) -> None:
     path, retrieved = fetch(SOURCE_ID, offline=offline)
-    rows = read_csv(path)
+    # Mac Roman, not cp1252. Both decode every byte in this file without error,
+    # and cp1252 turns the u-umlaut in Turkiye into a Y-umlaut, which then fails
+    # to match any ISO country name on the map. Declared rather than guessed.
+    rows = read_csv(path, encoding="mac_roman")
     if not rows:
         raise ValueError("Microsoft diffusion CSV parsed to zero rows")
 
@@ -99,5 +102,26 @@ def _normalise_period(header: str) -> str:
     return f"{year}-{part}"
 
 
+def _self_check() -> None:
+    """The encoding is the thing that broke, so that is the thing to check.
+
+    Runs against the cached file, so it needs a prior fetch but no network.
+    """
+    from common import RAW
+
+    path = RAW / f"{SOURCE_ID}.csv"
+    if not path.exists():
+        print("  skipped: no cached CSV to check against")
+        return
+
+    names = {(row.get("Economy") or "").strip() for row in read_csv(path, encoding="mac_roman")}
+    assert "Türkiye" in names, "Mac Roman decode lost the u-umlaut in Turkiye"
+    assert "TŸrkiye" not in names, "cp1252 mojibake is back in the economy names"
+    print(f"  encoding self-check passed: {len(names)} economies decoded")
+
+
 if __name__ == "__main__":
-    run(offline="--offline" in sys.argv)
+    if "--self-check" in sys.argv:
+        _self_check()
+    else:
+        run(offline="--offline" in sys.argv)

@@ -1,0 +1,1875 @@
+{
+  "dataset": "governance-readiness",
+  "generated": "2026-09-13T05:53:25+00:00",
+  "retrieved": "2026-09-13T05:53:25+00:00",
+  "sources": [
+    "governance-readiness-index"
+  ],
+  "unit": "readiness score, 0 to 100",
+  "notes": "Our own coding of 58 jurisdictions against five dimensions (binding_law, oversight_body, evaluation_capacity, transparency_duty, strategy), reviewed 2026-09. Measures how much governance machinery exists, not how strict it is, so a high score is not a compliment and a low one is not an accusation. The 27 EU member states are scored once at bloc level because the AI Act is a regulation applying directly; their national measures are not separately scored. Not legal advice. Every jurisdiction lists the primary instruments it was coded from.",
+  "count": 58,
+  "records": [
+    {
+      "code": "AUT",
+      "name": "Austria",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Austria's EU membership guarantees, not as a complete account of Austria's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "BEL",
+      "name": "Belgium",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Belgium's EU membership guarantees, not as a complete account of Belgium's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "BGR",
+      "name": "Bulgaria",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Bulgaria's EU membership guarantees, not as a complete account of Bulgaria's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "HRV",
+      "name": "Croatia",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Croatia's EU membership guarantees, not as a complete account of Croatia's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "CYP",
+      "name": "Cyprus",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Cyprus's EU membership guarantees, not as a complete account of Cyprus's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "CZE",
+      "name": "Czechia",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Czechia's EU membership guarantees, not as a complete account of Czechia's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "DNK",
+      "name": "Denmark",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Denmark's EU membership guarantees, not as a complete account of Denmark's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "EST",
+      "name": "Estonia",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Estonia's EU membership guarantees, not as a complete account of Estonia's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "FIN",
+      "name": "Finland",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Finland's EU membership guarantees, not as a complete account of Finland's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "FRA",
+      "name": "France",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor France's EU membership guarantees, not as a complete account of France's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "DEU",
+      "name": "Germany",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Germany's EU membership guarantees, not as a complete account of Germany's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "GRC",
+      "name": "Greece",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Greece's EU membership guarantees, not as a complete account of Greece's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "HUN",
+      "name": "Hungary",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Hungary's EU membership guarantees, not as a complete account of Hungary's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "IRL",
+      "name": "Ireland",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Ireland's EU membership guarantees, not as a complete account of Ireland's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ITA",
+      "name": "Italy",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Italy's EU membership guarantees, not as a complete account of Italy's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "LVA",
+      "name": "Latvia",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Latvia's EU membership guarantees, not as a complete account of Latvia's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "LTU",
+      "name": "Lithuania",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Lithuania's EU membership guarantees, not as a complete account of Lithuania's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "LUX",
+      "name": "Luxembourg",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Luxembourg's EU membership guarantees, not as a complete account of Luxembourg's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "MLT",
+      "name": "Malta",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Malta's EU membership guarantees, not as a complete account of Malta's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "NLD",
+      "name": "Netherlands",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Netherlands's EU membership guarantees, not as a complete account of Netherlands's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "POL",
+      "name": "Poland",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Poland's EU membership guarantees, not as a complete account of Poland's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "PRT",
+      "name": "Portugal",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Portugal's EU membership guarantees, not as a complete account of Portugal's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ROU",
+      "name": "Romania",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Romania's EU membership guarantees, not as a complete account of Romania's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "SVK",
+      "name": "Slovakia",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Slovakia's EU membership guarantees, not as a complete account of Slovakia's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "SVN",
+      "name": "Slovenia",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Slovenia's EU membership guarantees, not as a complete account of Slovenia's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "KOR",
+      "name": "South Korea",
+      "basis": "national",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "The AI Framework Act, passed in January 2025 and in force from January 2026, makes Korea the second jurisdiction after the EU with a horizontal AI statute actually applying. It carries notification duties for generative output and high-impact systems, enforced by the Ministry of Science and ICT. The Korea AI Safety Institute opened in November 2024. Scoring level with the EU means the machinery exists, not that the obligations are equally demanding.",
+      "instruments": [
+        {
+          "title": "Basic Act on AI Development and Trust",
+          "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156668296",
+          "year": 2025
+        },
+        {
+          "title": "Korea AI Safety Institute",
+          "url": "https://www.aisi.re.kr/",
+          "year": 2024
+        },
+        {
+          "title": "Personal Information Protection Act",
+          "url": "https://www.pipc.go.kr/eng/",
+          "year": 2023
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ESP",
+      "name": "Spain",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Spain's EU membership guarantees, not as a complete account of Spain's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "SWE",
+      "name": "Sweden",
+      "basis": "eu-harmonised",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 2,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 10,
+      "readiness": 100,
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Sweden's EU membership guarantees, not as a complete account of Sweden's own measures.",
+      "instruments": [
+        {
+          "title": "Regulation (EU) 2024/1689 (AI Act)",
+          "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+          "year": 2024
+        },
+        {
+          "title": "European AI Office",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+          "year": 2024
+        },
+        {
+          "title": "Regulation (EU) 2016/679 (GDPR), Article 22",
+          "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "CHN",
+      "name": "China",
+      "basis": "national",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 2,
+        "evaluation_capacity": 1,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 9,
+      "readiness": 90,
+      "note": "Scores as horizontal because the binding rules, taken together, reach AI services generally, even though they are a stack of administrative measures rather than one omnibus act: algorithmic recommendation, deep synthesis, generative AI services, and from September 2025 mandatory labelling of AI-generated content. The Cyberspace Administration of China registers algorithms and enforces. Article 24 of PIPL gives automated-decision rights.",
+      "instruments": [
+        {
+          "title": "Interim Measures for Generative AI Services",
+          "url": "https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm",
+          "year": 2023
+        },
+        {
+          "title": "Measures for Labelling AI-Generated Content",
+          "url": "https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm",
+          "year": 2025
+        },
+        {
+          "title": "Personal Information Protection Law",
+          "url": "http://www.npc.gov.cn/npc/c2/c30834/202108/t20210820_313088.html",
+          "year": 2021
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "JPN",
+      "name": "Japan",
+      "basis": "national",
+      "scores": {
+        "binding_law": 2,
+        "oversight_body": 1,
+        "evaluation_capacity": 2,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 7,
+      "readiness": 70,
+      "note": "The AI Promotion Act of May 2025 is horizontal in scope but carries no penalties and imposes cooperation duties rather than compliance duties, so it scores below an applicable binding regime. The AI Strategy Headquarters coordinates across government. Japan's AI Safety Institute has been running evaluations since February 2024.",
+      "instruments": [
+        {
+          "title": "Act on Promotion of R&D and Utilization of AI-Related Technologies",
+          "url": "https://www.cas.go.jp/jp/houan/217.html",
+          "year": 2025
+        },
+        {
+          "title": "Japan AI Safety Institute",
+          "url": "https://aisi.go.jp/",
+          "year": 2024
+        },
+        {
+          "title": "AI Guidelines for Business",
+          "url": "https://www.meti.go.jp/english/press/2024/0419_002.html",
+          "year": 2024
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "SGP",
+      "name": "Singapore",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 2,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 6,
+      "readiness": 60,
+      "note": "Governs AI through frameworks and testing rather than statute. AI Verify gives Singapore genuine evaluation capacity, and the Digital Trust Centre was designated its AI safety institute in 2024. Binding duties arrive through the PDPA and sector regulators, not through AI law.",
+      "instruments": [
+        {
+          "title": "Model AI Governance Framework for Generative AI",
+          "url": "https://www.pdpc.gov.sg/help-and-resources/2020/01/model-ai-governance-framework",
+          "year": 2024
+        },
+        {
+          "title": "AI Verify Foundation",
+          "url": "https://aiverifyfoundation.sg/",
+          "year": 2023
+        },
+        {
+          "title": "National AI Strategy 2.0",
+          "url": "https://file.go.gov.sg/nais2023.pdf",
+          "year": 2023
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "GBR",
+      "name": "United Kingdom",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 2,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 6,
+      "readiness": 60,
+      "note": "Deliberately has no horizontal AI statute. The 2023 white paper puts five principles into the hands of existing regulators, so binding duties arrive through sector law rather than AI law. The AI Security Institute, renamed from the AI Safety Institute in February 2025, is among the best resourced evaluation bodies anywhere. Automated-decision rights run through UK GDPR.",
+      "instruments": [
+        {
+          "title": "A pro-innovation approach to AI regulation",
+          "url": "https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach",
+          "year": 2023
+        },
+        {
+          "title": "AI Security Institute",
+          "url": "https://www.aisi.gov.uk/",
+          "year": 2023
+        },
+        {
+          "title": "Online Safety Act 2023",
+          "url": "https://www.legislation.gov.uk/ukpga/2023/50/contents",
+          "year": 2023
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "USA",
+      "name": "United States",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 2,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 6,
+      "readiness": 60,
+      "note": "No federal horizontal AI statute. Executive Order 14110 was rescinded in January 2025 and replaced by Executive Order 14179, which directs policy without creating duties on developers. Binding obligations sit in sectoral rules and in state law, most substantially Colorado's SB 24-205. The Center for AI Standards and Innovation at NIST, formerly the US AI Safety Institute, runs model evaluations.",
+      "instruments": [
+        {
+          "title": "Executive Order 14179",
+          "url": "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence",
+          "year": 2025
+        },
+        {
+          "title": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+          "year": 2023
+        },
+        {
+          "title": "Colorado SB 24-205",
+          "url": "https://leg.colorado.gov/bills/sb24-205",
+          "year": 2024
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "VNM",
+      "name": "Vietnam",
+      "basis": "national",
+      "scores": {
+        "binding_law": 2,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 6,
+      "readiness": 60,
+      "note": "The Law on Digital Technology Industry, passed in June 2025 and effective January 2026, carries an AI chapter with risk classification and a duty to mark AI-generated content. It scores 2 rather than 3 because the AI provisions sit inside a broader industry law rather than a dedicated horizontal instrument. Worth noting against Australia: Vietnam has a binding AI labelling duty and Australia does not.",
+      "instruments": [
+        {
+          "title": "Law on Digital Technology Industry",
+          "url": "https://datafiles.chinhphu.vn/",
+          "year": 2025
+        },
+        {
+          "title": "National Strategy on AI Research and Development",
+          "url": "https://vanban.chinhphu.vn/",
+          "year": 2021
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "CAN",
+      "name": "Canada",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 1,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 5,
+      "readiness": 50,
+      "note": "The Artificial Intelligence and Data Act died on the order paper when Parliament was prorogued in January 2025, so Canada has no horizontal AI statute. The Directive on Automated Decision-Making binds federal institutions but not the wider market. The Canadian AI Safety Institute was announced in November 2024.",
+      "instruments": [
+        {
+          "title": "Directive on Automated Decision-Making",
+          "url": "https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592",
+          "year": 2019
+        },
+        {
+          "title": "Canadian AI Safety Institute",
+          "url": "https://ised-isde.canada.ca/site/ised/en/canadian-artificial-intelligence-safety-institute",
+          "year": 2024
+        },
+        {
+          "title": "Pan-Canadian Artificial Intelligence Strategy",
+          "url": "https://ised-isde.canada.ca/site/ai-strategy/en",
+          "year": 2017
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "IND",
+      "name": "India",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 1,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 5,
+      "readiness": 50,
+      "note": "No AI statute. MeitY governs by advisory, which is persuasive rather than binding, with amendments to the IT Rules reaching synthetic media. The Digital Personal Data Protection Act 2023 is passed but its rules were still phasing in. An India AI Safety Institute was announced in January 2025.",
+      "instruments": [
+        {
+          "title": "Digital Personal Data Protection Act 2023",
+          "url": "https://www.meity.gov.in/data-protection-framework",
+          "year": 2023
+        },
+        {
+          "title": "IndiaAI Mission",
+          "url": "https://indiaai.gov.in/",
+          "year": 2024
+        },
+        {
+          "title": "India AI Governance Guidelines",
+          "url": "https://www.meity.gov.in/",
+          "year": 2025
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "AUS",
+      "name": "Australia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "No horizontal AI statute and no AI regulator. The Voluntary AI Safety Standard is guidance; the mandatory guardrails for high-risk AI proposed in September 2024 have not been legislated. Binding duties on AI use exist inside government through the DTA policy, and in privacy, consumer, online safety and financial services law. Australia has no AI evaluation institute.",
+      "instruments": [
+        {
+          "title": "Voluntary AI Safety Standard",
+          "url": "https://www.industry.gov.au/publications/voluntary-ai-safety-standard",
+          "year": 2024
+        },
+        {
+          "title": "Proposals paper: mandatory guardrails for AI in high-risk settings",
+          "url": "https://consult.industry.gov.au/ai-mandatory-guardrails",
+          "year": 2024
+        },
+        {
+          "title": "Policy for the responsible use of AI in government",
+          "url": "https://www.digital.gov.au/policy/ai/policy",
+          "year": 2024
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "BRA",
+      "name": "Brazil",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "PL 2338/2023, the closest thing to a Brazilian AI Act, passed the Senate in December 2024 and has not completed passage, so it creates no duties yet. Article 20 of the LGPD gives a right to review of automated decisions, supervised by the ANPD, which the bill would also make the AI coordinator.",
+      "instruments": [
+        {
+          "title": "PL 2338/2023",
+          "url": "https://www25.senado.leg.br/web/atividade/materias/-/materia/157233",
+          "year": 2023
+        },
+        {
+          "title": "Lei Geral de Protecao de Dados",
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+          "year": 2018
+        },
+        {
+          "title": "Plano Brasileiro de Inteligencia Artificial",
+          "url": "https://www.gov.br/participamaisbrasil/pbia-2024-2028",
+          "year": 2024
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "NOR",
+      "name": "Norway",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "In the EEA but not the EU, so the AI Act does not apply automatically and must be incorporated into the EEA Agreement first. Until that completes, Norway's binding position is GDPR plus sector law, with Datatilsynet running a regulatory sandbox for AI.",
+      "instruments": [
+        {
+          "title": "Datatilsynet regulatory sandbox for AI",
+          "url": "https://www.datatilsynet.no/en/regulations-and-tools/sandbox-for-artificial-intelligence/",
+          "year": 2020
+        },
+        {
+          "title": "National Strategy for Artificial Intelligence",
+          "url": "https://www.regjeringen.no/en/dokumenter/nasjonal-strategi-for-kunstig-intelligens/id2685594/",
+          "year": 2020
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "RUS",
+      "name": "Russia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "Federal Law 258-FZ creates experimental legal regimes, which are binding but bounded to specific pilots rather than general in application. The AI Code of Ethics is voluntary and industry-signed. National AI Development Strategy to 2030 updated in 2024.",
+      "instruments": [
+        {
+          "title": "National AI Development Strategy to 2030",
+          "url": "http://publication.pravo.gov.ru/document/0001202402150013",
+          "year": 2024
+        },
+        {
+          "title": "Federal Law 258-FZ on experimental legal regimes",
+          "url": "http://publication.pravo.gov.ru/Document/View/0001202007310018",
+          "year": 2020
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "CHE",
+      "name": "Switzerland",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "The Federal Council decided in February 2025 to ratify the Council of Europe AI Convention and to regulate sectorally rather than horizontally, so binding AI duties will arrive through existing sector law. The revised Federal Act on Data Protection carries the automated-decision route.",
+      "instruments": [
+        {
+          "title": "Federal Council AI regulation decision",
+          "url": "https://www.admin.ch/gov/en/start/documentation/media-releases.msg-id-104110.html",
+          "year": 2025
+        },
+        {
+          "title": "Federal Act on Data Protection",
+          "url": "https://www.fedlex.admin.ch/eli/cc/2022/491/en",
+          "year": 2023
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "THA",
+      "name": "Thailand",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 1,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "A royal decree on AI service business has been in draft since 2022 without taking effect. ETDA's AI Governance Center gives Thailand some assessment capacity short of a testing institute. PDPA is the binding route.",
+      "instruments": [
+        {
+          "title": "Thailand National AI Strategy",
+          "url": "https://ai.in.th/",
+          "year": 2022
+        },
+        {
+          "title": "Personal Data Protection Act",
+          "url": "https://www.pdpc.or.th/",
+          "year": 2019
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ARE",
+      "name": "United Arab Emirates",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 4,
+      "readiness": 40,
+      "note": "Heavy state investment and an early ministerial portfolio for AI, but no horizontal AI statute. Binding rules exist inside the financial free zones, notably the DIFC data protection regulations covering autonomous systems, which do not reach the wider federal market.",
+      "instruments": [
+        {
+          "title": "UAE National Strategy for Artificial Intelligence 2031",
+          "url": "https://ai.gov.ae/strategy/",
+          "year": 2017
+        },
+        {
+          "title": "DIFC Data Protection Law",
+          "url": "https://www.difc.ae/business/laws-and-regulations/legal-database/difc-laws/data-protection-law-difc-law-no-5-2020",
+          "year": 2020
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ARG",
+      "name": "Argentina",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "No AI statute. The data protection authority issued recommendations for trustworthy AI in 2023, which are guidance. Law 25.326 is the binding route and predates modern automated-decision drafting.",
+      "instruments": [
+        {
+          "title": "Recomendaciones para una inteligencia artificial fiable",
+          "url": "https://www.argentina.gob.ar/aaip",
+          "year": 2023
+        },
+        {
+          "title": "Ley 25.326 de Proteccion de los Datos Personales",
+          "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/60000-64999/64790/norma.htm",
+          "year": 2000
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "CHL",
+      "name": "Chile",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "An AI bill has been before Congress since 2024 without being enacted. Law 21.719, the new data protection statute, creates a real data protection agency and automated-decision rights, but phases in over two years from its December 2024 publication.",
+      "instruments": [
+        {
+          "title": "Politica Nacional de Inteligencia Artificial (Ministerio de Ciencia)",
+          "url": "https://minciencia.gob.cl/",
+          "year": 2021
+        },
+        {
+          "title": "Ley 21.719 de proteccion de datos personales",
+          "url": "https://www.bcn.cl/leychile/navegar?idNorma=1208650",
+          "year": 2024
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "COL",
+      "name": "Colombia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "CONPES 4144 set national AI policy in February 2025. Binding duties run through Law 1581 on data protection, supervised by the Superintendencia de Industria y Comercio. No AI statute.",
+      "instruments": [
+        {
+          "title": "CONPES 4144 Politica Nacional de Inteligencia Artificial",
+          "url": "https://www.dnp.gov.co/",
+          "year": 2025
+        },
+        {
+          "title": "Ley 1581 de 2012",
+          "url": "https://www.sic.gov.co/tema/proteccion-de-datos-personales",
+          "year": 2012
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "EGY",
+      "name": "Egypt",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The National AI Strategy was first published in 2021 and a second edition followed. The Personal Data Protection Law of 2020 is the binding route and its executive regulations were slow to arrive. No AI statute.",
+      "instruments": [
+        {
+          "title": "Egypt National Artificial Intelligence Strategy",
+          "url": "https://mcit.gov.eg/en/Artificial_Intelligence",
+          "year": 2021
+        },
+        {
+          "title": "Personal Data Protection Law 151 of 2020",
+          "url": "https://mcit.gov.eg/en/Publication/Publication_Summary/9578",
+          "year": 2020
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "IDN",
+      "name": "Indonesia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The 2023 circular letter on AI ethics is explicitly non-binding. The Personal Data Protection Law became fully effective in October 2024 and is the binding route. A presidential regulation on AI was in draft at the review date.",
+      "instruments": [
+        {
+          "title": "Personal Data Protection Law (UU 27/2022)",
+          "url": "https://jdih.setneg.go.id/",
+          "year": 2022
+        },
+        {
+          "title": "Stranas KA national AI strategy",
+          "url": "https://ai-innovation.id/",
+          "year": 2020
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ISR",
+      "name": "Israel",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The 2023 Policy on AI Regulation and Ethics is explicitly sectoral and non-binding, leaving existing regulators to act within their own remits. No AI statute, no AI regulator, no evaluation institute.",
+      "instruments": [
+        {
+          "title": "Policy on Artificial Intelligence Regulation and Ethics",
+          "url": "https://www.gov.il/en/pages/ai_2023",
+          "year": 2023
+        },
+        {
+          "title": "Protection of Privacy Law",
+          "url": "https://www.gov.il/en/departments/the_privacy_protection_authority",
+          "year": 1981
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "KEN",
+      "name": "Kenya",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The National AI Strategy 2025 to 2030 was launched in March 2025. Section 35 of the Data Protection Act gives rights against solely automated decisions, enforced by the Office of the Data Protection Commissioner. No AI statute.",
+      "instruments": [
+        {
+          "title": "Kenya National AI Strategy 2025-2030",
+          "url": "https://ict.go.ke/",
+          "year": 2025
+        },
+        {
+          "title": "Data Protection Act",
+          "url": "https://www.odpc.go.ke/",
+          "year": 2019
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "MYS",
+      "name": "Malaysia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The National AI Office opened in December 2024 to coordinate policy, and the national AI governance guidelines published that year are voluntary. The PDPA is the binding route. No AI statute.",
+      "instruments": [
+        {
+          "title": "National Guidelines on AI Governance and Ethics",
+          "url": "https://mosti.gov.my/",
+          "year": 2024
+        },
+        {
+          "title": "Personal Data Protection Act 2010",
+          "url": "https://www.pdp.gov.my/jpdpv2/",
+          "year": 2010
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "MEX",
+      "name": "Mexico",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "Several AI bills have been introduced and none enacted. Oversight is unsettled: INAI, the data protection authority, was abolished in 2025 and its functions moved into the executive, which is a reduction in independent supervision rather than an increase in AI capacity.",
+      "instruments": [
+        {
+          "title": "Ley Federal de Proteccion de Datos Personales",
+          "url": "https://www.diputados.gob.mx/LeyesBiblio/index.htm",
+          "year": 2025
+        },
+        {
+          "title": "Estrategia de Inteligencia Artificial MX",
+          "url": "https://www.gob.mx/",
+          "year": 2018
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "NZL",
+      "name": "New Zealand",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "Deliberately light touch. The first national AI strategy was approved in 2025 and explicitly rules out new AI legislation for now. The Algorithm Charter binds signatory agencies only. Privacy Act 2020 is the binding route.",
+      "instruments": [
+        {
+          "title": "New Zealand's Strategy for Artificial Intelligence",
+          "url": "https://www.mbie.govt.nz/dmsdocument/31530-new-zealands-strategy-for-artificial-intelligence-investing-with-confidence-pdf",
+          "year": 2025
+        },
+        {
+          "title": "Algorithm Charter for Aotearoa New Zealand",
+          "url": "https://www.data.govt.nz/leadership/advisory-and-governance/algorithm-charter/",
+          "year": 2020
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "NGA",
+      "name": "Nigeria",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The National AI Strategy was published in 2024 after an unusually open drafting process. Binding duties run through the Nigeria Data Protection Act 2023 and NITDA, not through AI law.",
+      "instruments": [
+        {
+          "title": "National Artificial Intelligence Strategy",
+          "url": "https://ncair.nitda.gov.ng/",
+          "year": 2024
+        },
+        {
+          "title": "Nigeria Data Protection Act",
+          "url": "https://ndpc.gov.ng/",
+          "year": 2023
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "SAU",
+      "name": "Saudi Arabia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "SDAIA sets AI policy and published AI ethics principles, which are guidance rather than law. The Personal Data Protection Law became enforceable in 2024 and carries the automated-decision route. No AI statute.",
+      "instruments": [
+        {
+          "title": "SDAIA AI Ethics Principles",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-ethics-principles.pdf",
+          "year": 2023
+        },
+        {
+          "title": "Personal Data Protection Law",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/Personal%20Data%20English%20V2-23April2023-%20Reviewed-.pdf",
+          "year": 2021
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "ZAF",
+      "name": "South Africa",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The National AI Policy Framework of 2024 sets direction without creating duties. Section 71 of POPIA restricts decisions based solely on automated processing and is enforced by the Information Regulator. No AI statute.",
+      "instruments": [
+        {
+          "title": "National AI Policy Framework",
+          "url": "https://www.dcdt.gov.za/",
+          "year": 2024
+        },
+        {
+          "title": "Protection of Personal Information Act",
+          "url": "https://inforegulator.org.za/",
+          "year": 2013
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "TUR",
+      "name": "Turkey",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "An AI bill was introduced in 2024 and has not been enacted. Binding duties run through KVKK, the data protection law, which mirrors pre-GDPR European drafting. National AI Strategy published 2021.",
+      "instruments": [
+        {
+          "title": "National Artificial Intelligence Strategy",
+          "url": "https://cbddo.gov.tr/en/national-ai-strategy/",
+          "year": 2021
+        },
+        {
+          "title": "Law on Protection of Personal Data (KVKK)",
+          "url": "https://www.kvkk.gov.tr/Icerik/6649/Personal-Data-Protection-Law",
+          "year": 2016
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "UKR",
+      "name": "Ukraine",
+      "basis": "national",
+      "scores": {
+        "binding_law": 0,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 3,
+      "readiness": 30,
+      "note": "The 2023 White Paper sets a bottom-up path toward eventual AI Act alignment as part of the EU accession process, starting with voluntary codes. No binding AI instrument at the review date.",
+      "instruments": [
+        {
+          "title": "White Paper on AI Regulation in Ukraine",
+          "url": "https://cip.gov.ua/en/news/bila-kniga-z-regulyuvannya-shtuchnogo-intelektu-v-ukrayini",
+          "year": 2023
+        }
+      ],
+      "reviewed": "2026-09",
+      "source_id": "governance-readiness-index"
+    }
+  ]
+}

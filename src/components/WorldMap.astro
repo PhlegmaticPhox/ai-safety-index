@@ -1,0 +1,134 @@
+---
+/**
+ * Build-time SVG choropleth. Ships as markup: no client JavaScript, no tile
+ * requests, no map library, nothing to load before the reader sees the data.
+ *
+ * Interaction is native. Each country carries a <title>, which browsers and
+ * screen readers surface without help from us, and is wrapped in an anchor to
+ * its row in the table below, so clicking a shape takes you to the numbers
+ * rather than opening a popup that a keyboard cannot reach.
+ */
+import { projectWorld, type CountryShape } from "../lib/geo";
+
+export interface MapDatum {
+  /** ISO alpha-3. */
+  code: string;
+  /** Bucket index into `buckets`, chosen by the caller. */
+  bucket: number;
+  /** Full text for the native tooltip. */
+  title: string;
+  /** Optional in-page anchor to scroll to on click. */
+  href?: string;
+}
+
+interface Props {
+  data: MapDatum[];
+  /** Fill per bucket, low to high. */
+  buckets: string[];
+  /** Accessible description of what the map shows. */
+  label: string;
+  width?: number;
+  /** Coordinate decimal places. 0 is fine below about 700px wide. */
+  places?: number;
+}
+
+const { data, buckets, label, width = 1000, places = 1 } = Astro.props;
+const world = projectWorld(width, places);
+const byCode = new Map(data.map((d) => [d.code, d]));
+
+// Painting a shape whose bucket is out of range would produce a silent
+// transparent country that reads as "no data". Fail the build instead.
+for (const datum of data) {
+  if (datum.bucket < 0 || datum.bucket >= buckets.length) {
+    throw new Error(
+      `WorldMap: ${datum.code} has bucket ${datum.bucket}, outside 0..${buckets.length - 1}`,
+    );
+  }
+}
+
+const covered = world.shapes.filter((s) => s.code && byCode.has(s.code)).length;
+
+interface Painted extends CountryShape {
+  datum?: MapDatum;
+}
+const painted: Painted[] = world.shapes.map((shape) => ({
+  ...shape,
+  datum: shape.code ? byCode.get(shape.code) : undefined,
+}));
+---
+
+<figure class="map">
+  <svg
+    viewBox={`0 0 ${world.width} ${world.height}`}
+    role="img"
+    aria-label={`${label}. ${covered} of ${world.shapes.length} countries have data; the rest are unshaded.`}
+    class="map__svg"
+  >
+    <path d={world.sphere} class="map__sphere"></path>
+
+    {
+      painted.map((shape) =>
+        shape.datum ? (
+          <a href={shape.datum.href ?? undefined} class="map__link">
+            <path d={shape.d} class="map__shape" style={`fill:${buckets[shape.datum.bucket]}`}>
+              <title>{shape.datum.title}</title>
+            </path>
+          </a>
+        ) : (
+          <path d={shape.d} class="map__shape map__shape--empty">
+            <title>{`${shape.name}: not in this dataset`}</title>
+          </path>
+        ),
+      )
+    }
+  </svg>
+</figure>
+
+<style>
+  .map {
+    margin: 0;
+  }
+
+  .map__svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    /* The sphere outline is the frame; nothing else draws a box. */
+    overflow: visible;
+  }
+
+  .map__sphere {
+    fill: var(--surface);
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .map__shape {
+    stroke: var(--bg);
+    stroke-width: 0.4;
+    transition: opacity 0.15s var(--ease);
+  }
+
+  .map__shape--empty {
+    fill: var(--surface-2);
+  }
+
+  /* Hover and keyboard focus behave identically. A map you can only read with a
+     mouse is a map half the audience cannot read. */
+  .map__link:hover .map__shape,
+  .map__link:focus-visible .map__shape {
+    opacity: 0.72;
+    stroke: var(--ink);
+    stroke-width: 0.9;
+  }
+
+  .map__link:focus-visible {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map__shape {
+      transition: none;
+    }
+  }
+</style>

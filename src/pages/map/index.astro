@@ -1,0 +1,682 @@
+---
+/**
+ * Exposure against governance readiness.
+ *
+ * The comparison this page exists to make, and why it is a fair one: both
+ * measures describe the same population. Exposure is the share of working-age
+ * people in an economy actually using AI tools. Readiness is how much machinery
+ * that economy's jurisdiction has to govern AI. One says what people are
+ * meeting; the other says what stands behind them when it goes wrong. A gap
+ * between the two is a real thing to point at.
+ *
+ * This is deliberately not compute against regulation. Where models are trained
+ * says nothing about where they are used or who governs that use, and the EU AI
+ * Act binds on placing on the market within the EU regardless of where training
+ * happened. That comparison would have looked striking and meant nothing.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import WorldMap, { type MapDatum } from "../../components/WorldMap.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { alpha3, percentileRanks } from "../../lib/geo";
+
+import exposureFile from "../../../data/processed/ai-exposure.json";
+import governanceFile from "../../../data/processed/governance-readiness.json";
+
+interface ExposureRecord {
+  entity: string;
+  latest: number;
+  latest_period: string;
+  source_id: string;
+}
+
+interface GovernanceRecord {
+  code: string;
+  name: string;
+  basis: "national" | "eu-harmonised";
+  scores: Record<string, number>;
+  total: number;
+  readiness: number;
+  note: string;
+  instruments: Array<{ title: string; url: string; year: number }>;
+  reviewed: string;
+  source_id: string;
+}
+
+const exposure = exposureFile as Dataset<ExposureRecord>;
+const governance = governanceFile as Dataset<GovernanceRecord>;
+
+const cites = [...new Set([...exposure.sources, ...governance.sources, "natural-earth"])];
+assertRenderable(...cites);
+
+const period = exposure.records[0]?.latest_period ?? "";
+
+/* Join. Exposure is keyed by economy name, governance by ISO alpha-3, so the
+   name has to resolve to a code first. Anything that does not resolve is
+   counted and reported rather than dropped quietly: a silent drop is how a
+   map ends up missing a country nobody notices. */
+const exposureByCode = new Map<string, ExposureRecord>();
+const unresolved: string[] = [];
+for (const record of exposure.records) {
+  const code = alpha3(record.entity);
+  if (!code) {
+    unresolved.push(record.entity);
+    continue;
+  }
+  exposureByCode.set(code, record);
+}
+
+const governanceByCode = new Map(governance.records.map((r) => [r.code, r]));
+
+interface Joined {
+  code: string;
+  name: string;
+  exposure: number;
+  readiness: number;
+  basis: GovernanceRecord["basis"];
+  note: string;
+  exposureRank: number;
+  governanceRank: number;
+  gap: number;
+}
+
+const matchedCodes = [...governanceByCode.keys()].filter((c) => exposureByCode.has(c));
+const expRanks = percentileRanks(matchedCodes.map((c) => exposureByCode.get(c)!.latest));
+const govRanks = percentileRanks(matchedCodes.map((c) => governanceByCode.get(c)!.readiness));
+
+const joined: Joined[] = matchedCodes.map((code, i) => {
+  const gov = governanceByCode.get(code)!;
+  return {
+    code,
+    name: gov.name,
+    exposure: exposureByCode.get(code)!.latest,
+    readiness: gov.readiness,
+    basis: gov.basis,
+    note: gov.note,
+    exposureRank: expRanks[i],
+    governanceRank: govRanks[i],
+    gap: expRanks[i] - govRanks[i],
+  };
+});
+
+/* Diverging buckets. Amber means use has run ahead of governance, blue means
+   governance has run ahead of use, and the middle band is where they track each
+   other. Five buckets rather than nine: a reader can hold five categories in
+   their head while looking at a map, and cannot hold nine. */
+const GAP_BUCKETS = [
+  { max: -40, fill: "#5aa9e6", label: "Governance well ahead" },
+  { max: -15, fill: "#3d6d92", label: "Governance ahead" },
+  { max: 15, fill: "#3a4356", label: "Roughly level" },
+  { max: 40, fill: "#97703c", label: "Use ahead" },
+  { max: Infinity, fill: "#f2a950", label: "Use well ahead" },
+];
+
+const bucketFor = (gap: number) => GAP_BUCKETS.findIndex((b) => gap < b.max);
+
+const gapData: MapDatum[] = joined.map((row) => ({
+  code: row.code,
+  bucket: bucketFor(row.gap),
+  href: `#j-${row.code}`,
+  title:
+    `${row.name}: ${row.exposure.toFixed(1)}% using AI tools (rank ${Math.round(row.exposureRank)}), ` +
+    `readiness ${row.readiness} of 100 (rank ${Math.round(row.governanceRank)}). ` +
+    `Gap ${row.gap > 0 ? "+" : ""}${Math.round(row.gap)}.`,
+}));
+
+/* The two single-variable maps, so a reader can see each layer on its own
+   before being asked to read the difference between them. Five equal-count
+   bands each, because both distributions are skewed and equal-width bands would
+   put almost everything in one colour. */
+function quantileBuckets(values: number[], count: number): number[] {
+  const sorted = [...values].sort((a, b) => a - b);
+  return Array.from(
+    { length: count - 1 },
+    (_, i) => sorted[Math.floor(((i + 1) / count) * sorted.length)],
+  );
+}
+
+const AMBER_RAMP = ["#3a4356", "#6b5740", "#a87c3f", "#d29746", "#f2a950"];
+const BLUE_RAMP = ["#3a4356", "#3c5871", "#43738f", "#4d8fbc", "#5aa9e6"];
+
+const expCuts = quantileBuckets(joined.map((r) => r.exposure), 5);
+const govCuts = quantileBuckets(joined.map((r) => r.readiness), 5);
+const bandOf = (value: number, cuts: number[]) => cuts.filter((c) => value >= c).length;
+
+const exposureData: MapDatum[] = joined.map((row) => ({
+  code: row.code,
+  bucket: bandOf(row.exposure, expCuts),
+  href: `#j-${row.code}`,
+  title: `${row.name}: ${row.exposure.toFixed(1)}% of working-age population using AI tools, ${period}`,
+}));
+
+const governanceData: MapDatum[] = joined.map((row) => ({
+  code: row.code,
+  bucket: bandOf(row.readiness, govCuts),
+  href: `#j-${row.code}`,
+  title: `${row.name}: governance readiness ${row.readiness} of 100`,
+}));
+
+/* Scatter. The diagonal is where rank in use equals rank in governance, so
+   distance from it is the quantity the first map colours. */
+const PLOT = { w: 620, h: 420, pad: 44 };
+const px = (rank: number) => PLOT.pad + (rank / 100) * (PLOT.w - PLOT.pad * 2);
+const py = (rank: number) => PLOT.h - PLOT.pad - (rank / 100) * (PLOT.h - PLOT.pad * 2);
+
+// Label only the points a reader is likely to be looking for, plus the extremes
+// of the gap. Labelling all of them produces an unreadable thicket.
+const ALWAYS_LABEL = new Set(["USA", "CHN", "GBR", "DEU", "IND", "AUS", "JPN", "KOR", "BRA"]);
+const extremes = [...joined].sort((a, b) => b.gap - a.gap);
+const labelled = new Set([
+  ...ALWAYS_LABEL,
+  ...extremes.slice(0, 3).map((r) => r.code),
+  ...extremes.slice(-3).map((r) => r.code),
+]);
+
+const ranked = [...joined].sort((a, b) => b.gap - a.gap);
+const widestUseAhead = ranked[0];
+const widestGovAhead = ranked[ranked.length - 1];
+const useAheadCount = joined.filter((r) => r.gap >= 15).length;
+const govAheadCount = joined.filter((r) => r.gap <= -15).length;
+
+const checked = freshness(governance.retrieved);
+const euCount = joined.filter((r) => r.basis === "eu-harmonised").length;
+
+// Coded but absent from the exposure data, so absent from every view here. Named
+// rather than left as a silent difference between "58 coded" and "53 shown".
+const unmatched = governance.records
+  .filter((r) => !exposureByCode.has(r.code))
+  .map((r) => r.name);
+---
+
+<Base
+  title="Exposure against governance readiness | AI Safety Index"
+  description="Where AI use has run ahead of the machinery to govern it, and where it has not. Two maps, one scatter, and the table behind both."
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Exposure against governance readiness</h1>
+        <p class="masthead__meta mono">
+          {joined.length} jurisdictions
+          <span aria-hidden="true">/</span>
+          {governance.count} coded
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Both measures describe the same population. One is the share of working-age people
+        actually using AI tools. The other is how much machinery their jurisdiction has to
+        govern it. Where the two diverge, people are meeting a technology their government has
+        not yet built the apparatus to answer for.
+      </p>
+    </div>
+  </section>
+
+  <!-- 1. THE DIVERGENCE MAP. -->
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The gap</h2>
+        <p>
+          Rank in use, minus rank in governance readiness. {useAheadCount} jurisdictions sit
+          meaningfully ahead in use, {govAheadCount} meaningfully ahead in governance.
+        </p>
+      </div>
+
+      <WorldMap
+        data={gapData}
+        buckets={GAP_BUCKETS.map((b) => b.fill)}
+        label="World map of the gap between rank in AI use and rank in governance readiness"
+        width={1040}
+      />
+
+      <div class="legend">
+        <ul class="legend__scale">
+          {
+            GAP_BUCKETS.map((bucket) => (
+              <li>
+                <span class="legend__swatch" style={`background:${bucket.fill}`} aria-hidden="true" />
+                {bucket.label}
+              </li>
+            ))
+          }
+          <li>
+            <span class="legend__swatch legend__swatch--empty" aria-hidden="true"></span>
+            Not in both datasets
+          </li>
+        </ul>
+        <p class="legend__cite">
+          <Provenance
+            source={[...exposure.sources, ...governance.sources, "natural-earth"]}
+            retrieved={governance.retrieved}
+            note="Gap is the difference between percentile ranks within the 58 jurisdictions present in both datasets."
+            label="map"
+          />
+        </p>
+      </div>
+
+      <p class="caveat">
+        {widestUseAhead.name} has the widest gap in the direction of use, {widestGovAhead.name} the
+        widest in the direction of governance. Neither is a verdict. A jurisdiction can score low
+        on readiness because it has deliberately chosen not to legislate, and a high score does not
+        mean the rules are good, proportionate or enforced. Read the map as a question about where
+        to look, not as an answer.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. THE TWO LAYERS ON THEIR OWN. -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The two layers separately</h2>
+        <p>
+          The gap map hides the levels it is built from. These are those levels, each in five
+          equal-count bands.
+        </p>
+      </div>
+
+      <div class="pair">
+        <figure class="pair__item">
+          <figcaption>
+            Share of working-age population using AI tools, {period}
+            <Provenance source={exposure.sources} retrieved={exposure.retrieved} label="map" />
+          </figcaption>
+          <WorldMap
+            data={exposureData}
+            buckets={AMBER_RAMP}
+            label="World map of the share of working-age population using AI tools"
+            width={560}
+            places={0}
+          />
+          <p class="pair__scale mono">
+            <span>low</span>
+            {AMBER_RAMP.map((fill) => <span class="pair__chip" style={`background:${fill}`} />)}
+            <span>high</span>
+          </p>
+        </figure>
+
+        <figure class="pair__item">
+          <figcaption>
+            Governance readiness, 0 to 100
+            <Provenance source={governance.sources} retrieved={governance.retrieved} label="map" />
+          </figcaption>
+          <WorldMap
+            data={governanceData}
+            buckets={BLUE_RAMP}
+            label="World map of governance readiness score"
+            width={560}
+            places={0}
+          />
+          <p class="pair__scale mono">
+            <span>low</span>
+            {BLUE_RAMP.map((fill) => <span class="pair__chip" style={`background:${fill}`} />)}
+            <span>high</span>
+          </p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SCATTER. -->
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Both axes at once</h2>
+        <p>
+          Each jurisdiction placed by its rank on each measure. The diagonal is where the two
+          ranks match; distance from it is what the first map colours.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${PLOT.w} ${PLOT.h}`}
+            class="scatter"
+            role="img"
+            aria-label={`Scatter plot of rank in AI use against rank in governance readiness for ${joined.length} jurisdictions. The full figures are in the table below.`}
+          >
+            <line
+              x1={px(0)}
+              y1={py(0)}
+              x2={px(100)}
+              y2={py(100)}
+              class="scatter__diag"></line>
+
+            <line x1={PLOT.pad} y1={py(0)} x2={PLOT.w - PLOT.pad} y2={py(0)} class="scatter__axis"
+            ></line>
+            <line x1={px(0)} y1={PLOT.pad} x2={px(0)} y2={PLOT.h - PLOT.pad} class="scatter__axis"
+            ></line>
+
+            {
+              joined.map((row) => (
+                <circle
+                  cx={px(row.exposureRank)}
+                  cy={py(row.governanceRank)}
+                  r={labelled.has(row.code) ? 4 : 3}
+                  class:list={["scatter__dot", row.gap >= 15 && "is-use", row.gap <= -15 && "is-gov"]}
+                >
+                  <title>{`${row.name}: use rank ${Math.round(row.exposureRank)}, governance rank ${Math.round(row.governanceRank)}`}</title>
+                </circle>
+              ))
+            }
+
+            {
+              joined
+                .filter((row) => labelled.has(row.code))
+                .map((row) => (
+                  <text
+                    x={px(row.exposureRank) + 7}
+                    y={py(row.governanceRank) + 3.5}
+                    class="scatter__label"
+                  >
+                    {row.code}
+                  </text>
+                ))
+            }
+
+            <text x={PLOT.w / 2} y={PLOT.h - 10} class="scatter__axis-label" text-anchor="middle">
+              Rank in AI use
+            </text>
+            <text
+              x={14}
+              y={PLOT.h / 2}
+              class="scatter__axis-label"
+              text-anchor="middle"
+              transform={`rotate(-90 14 ${PLOT.h / 2})`}
+            >
+              Rank in governance readiness
+            </text>
+          </svg>
+        </div>
+
+        <p class="caveat">
+          Ranks, not raw values. A use rate is a percentage of a population and a readiness score is
+          a count against a rubric we wrote; subtracting one from the other directly would be
+          meaningless. Ranking each within its own distribution first makes the comparison a
+          statement about relative standing, which is all it can honestly be. It also means the
+          picture moves when the set of jurisdictions changes.
+          <Provenance
+            source={[...exposure.sources, ...governance.sources]}
+            retrieved={governance.retrieved}
+          />
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4. THE TABLE BEHIND ALL THREE. -->
+  <section class="section" id="table">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Every jurisdiction</h2>
+        <p>
+          Ordered by gap, widest use-ahead first. Click any country on a map above to jump to its
+          row.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            AI use, governance readiness and the gap between their ranks, for every jurisdiction
+            present in both datasets.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Jurisdiction</th>
+              <th scope="col" class="ta-end">Using AI tools</th>
+              <th scope="col" class="ta-end">Readiness</th>
+              <th scope="col" class="ta-end">Gap in ranks</th>
+              <th scope="col">Basis</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              ranked.map((row) => (
+                <tr id={`j-${row.code}`}>
+                  <th scope="row">{row.name}</th>
+                  <td class="ta-end num">{row.exposure.toFixed(1)}%</td>
+                  <td class="ta-end num">{row.readiness}</td>
+                  <td class="ta-end num">
+                    <span
+                      class:list={["gap", row.gap >= 15 && "is-use", row.gap <= -15 && "is-gov"]}
+                    >
+                      {row.gap > 0 ? "+" : ""}
+                      {Math.round(row.gap)}
+                    </span>
+                  </td>
+                  <td class="muted-cell">
+                    {row.basis === "eu-harmonised" ? "EU harmonised" : "National"}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        {euCount} of these are EU member states scored once at bloc level, because the AI Act is a
+        regulation applying directly in each of them. Their own national measures are not separately
+        scored, so treat an EU member's number as the floor its membership guarantees rather than a
+        complete account.
+        {
+          unmatched.length > 0 &&
+            ` ${unmatched.length} coded jurisdictions are missing from every view on this page because the exposure data does not cover them: ${unmatched.join(", ")}.`
+        }
+        {
+          unresolved.length > 0 &&
+            ` ${unresolved.length} economies in the exposure data could not be resolved to an ISO country code and are likewise absent.`
+        }
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. HOW THE SCORE IS BUILT. -->
+  <section class="section section--sunk" id="method">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How readiness is scored</h2>
+        <p>
+          Our own coding, from primary instruments, because the established policy trackers are
+          protected databases and bulk-extracting one is not a licence we have.
+        </p>
+      </div>
+
+      <ul class="cards">
+        <li class="card">
+          <span class="card__title">Binding law</span>
+          <p>
+            Rules actually addressed to AI systems. A horizontal instrument in force scores highest;
+            sectoral or partial rules score lower; guidance scores nothing.
+          </p>
+          <span class="card__meta mono">0 to 3</span>
+        </li>
+        <li class="card">
+          <span class="card__title">Oversight body</span>
+          <p>
+            Whether anyone supervises. A regulator holding statutory powers over AI scores above a
+            coordinating or advisory body.
+          </p>
+          <span class="card__meta mono">0 to 2</span>
+        </li>
+        <li class="card">
+          <span class="card__title">Evaluation capacity</span>
+          <p>
+            Whether the jurisdiction can test models or systems itself. An operating safety
+            institute scores above one that has only been announced.
+          </p>
+          <span class="card__meta mono">0 to 2</span>
+        </li>
+        <li class="card">
+          <span class="card__title">Transparency duty</span>
+          <p>
+            Whether people have to be told. An explicit AI disclosure or labelling duty scores above
+            a general data-protection route.
+          </p>
+          <span class="card__meta mono">0 to 2</span>
+        </li>
+        <li class="card">
+          <span class="card__title">Strategy</span>
+          <p>A published national AI strategy or equivalent. Present or absent.</p>
+          <span class="card__meta mono">0 or 1</span>
+        </li>
+      </ul>
+
+      <p class="prose method__note">
+        This measures how much apparatus exists, not how strict it is. South Korea and the EU tie at
+        the top while imposing very different burdens, and that is the index working as designed.
+        Every jurisdiction carries the instruments it was coded from, and a build check probes each
+        of those links, because a citation that returns a 404 looks like evidence and is not. It is
+        not legal advice.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    margin-block-start: 1.25rem;
+  }
+
+  .legend__scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .legend__scale li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .legend__swatch {
+    inline-size: 0.85rem;
+    block-size: 0.85rem;
+    border-radius: var(--r-mark);
+  }
+
+  .legend__swatch--empty {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+
+  .legend__cite {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.5rem 2rem;
+  }
+
+  .pair__item {
+    margin: 0;
+  }
+
+  .pair__item figcaption {
+    margin-block-end: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .pair__scale {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-block-start: 0.6rem;
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .pair__chip {
+    inline-size: 1.6rem;
+    block-size: 0.55rem;
+    border-radius: var(--r-mark);
+  }
+
+  .scatter {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 32rem;
+    block-size: auto;
+  }
+
+  .scatter__diag {
+    stroke: var(--line);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+
+  .scatter__axis {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .scatter__dot {
+    fill: var(--muted);
+    fill-opacity: 0.55;
+  }
+
+  .scatter__dot.is-use {
+    fill: var(--accent);
+    fill-opacity: 0.9;
+  }
+
+  .scatter__dot.is-gov {
+    fill: var(--accent-2);
+    fill-opacity: 0.9;
+  }
+
+  .scatter__label {
+    fill: var(--ink);
+    font-family: var(--f-mono);
+    font-size: 10px;
+  }
+
+  .scatter__axis-label {
+    fill: var(--muted);
+    font-family: var(--f-sans);
+    font-size: 11px;
+  }
+
+  /* Gap sign is carried by the number itself; colour only reinforces it, so a
+     reader who cannot separate the two hues loses nothing. */
+  .gap.is-use {
+    color: var(--accent);
+  }
+
+  .gap.is-gov {
+    color: var(--accent-2);
+  }
+
+  /* The row a map click jumps to has to be findable once you arrive. */
+  .grid-table tbody tr:target th,
+  .grid-table tbody tr:target td {
+    background: var(--accent-wash);
+  }
+
+  .method__note {
+    margin-block-start: 1.5rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+</style>
