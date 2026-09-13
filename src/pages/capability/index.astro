@@ -828,9 +828,11 @@ const checked = freshness(models.retrieved);
         released with open weights and with a compute figure attached; a model with unrecorded
         accessibility falls into the overall line and not this one, so the true open-weight
         frontier can only be at or above what is drawn. Compute figures are frequently
-        estimates. Training compute is also not capability: a smaller, better-trained model can
-        beat a larger one, which is the main reason this gap has narrowed in benchmark terms
-        faster than it has in FLOP.
+        estimates, and they arrive late: recent models with a compute figure attached are almost all
+        open-weight ones, because closed developers do not publish and an outside estimate takes
+        time, so the right-hand end of the overall line is a lower bound too. Training compute is
+        also not capability: a smaller, better-trained model can beat a larger one, which is the
+        main reason this gap has narrowed in benchmark terms faster than it has in FLOP.
       </p>
     </div>
   </section>

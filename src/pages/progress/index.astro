@@ -40,6 +40,8 @@ interface ReleaseRecord {
   model: string;
   organisation: string;
   published: string;
+  domain: string;
+  accessibility: string;
   org_category: string;
   source_id: string;
 }
@@ -173,8 +175,18 @@ const medianMonths = durations.length
   : 0;
 
 /* ---------------------------------------------------------------------------
-   4. Release cadence. How many notable models appear per quarter.
+   4. What shipped most recently, and how often models ship.
+
+   The newest models are the thing a reader tracking the field opens a page like
+   this to find, and no other page here answers it: the homepage names the
+   largest training run, which is usually over a year old.
    --------------------------------------------------------------------------- */
+const newest = [...releases.records]
+  .sort((a, b) => b.published.localeCompare(a.published) || a.model.localeCompare(b.model))
+  .slice(0, 12);
+const newestDate = newest[0]?.published ?? "";
+
+
 const FROM_YEAR = 2019;
 const quarters = new Map<string, number>();
 for (const r of releases.records) {
@@ -469,8 +481,60 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
     </div>
   </section>
 
+  <!-- LATEST -->
+  <section class="section" id="latest">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Most recent notable models</h2>
+        <p>
+          The last {newest.length} entries added to Epoch's model database, newest first, to
+          {newestDate}.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            The twelve most recently published models in Epoch's notable models database, with
+            the organisation behind each and how it was released.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Published</th>
+              <th scope="col">Model</th>
+              <th scope="col">Organisation</th>
+              <th scope="col">Domain</th>
+              <th scope="col">Released as</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              newest.map((row) => (
+                <tr>
+                  <th scope="row" class="num">{row.published}</th>
+                  <td>{row.model}</td>
+                  <td class="muted-cell">{row.organisation}</td>
+                  <td class="muted-cell">{row.domain || "-"}</td>
+                  <td class="muted-cell">{row.accessibility}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        Notability is Epoch's editorial judgement, not a census, and entries are added some days
+        after a model appears, so the very newest releases are missing rather than absent. A
+        training-compute figure usually arrives later still and for closed models often never
+        does, which is why this table does not carry one.
+        <Provenance source={releases.sources} retrieved={releases.retrieved} />
+      </p>
+    </div>
+  </section>
+
   <!-- CADENCE -->
-  <section class="section section--sunk" id="cadence">
+  <section class="section section--sunk section--hatch" id="cadence">
     <div class="wrap">
       <div class="section-head">
         <h2>Notable models released per quarter</h2>
