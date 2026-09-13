@@ -712,11 +712,8 @@ const buildSteps = [
   }
 
   .bento__figure figcaption {
-    position: absolute;
-    inset-block-end: 0;
-    inset-inline: 0;
-    padding: 0.35rem 0.6rem;
-    background: rgb(15 17 21 / 0.72);
+    padding: 0.4rem 0.75rem 0.5rem;
+    background: var(--surface);
     text-align: end;
   }
 
@@ -1130,22 +1127,13 @@ const buildSteps = [
     margin: 0;
     padding: 0;
     list-style: none;
-    counter-reset: step;
   }
 
   .step {
-    counter-increment: step;
     padding-block-start: 0.9rem;
-    border-block-start: 1px solid var(--line);
-  }
-
-  .step h3::before {
-    content: counter(step, decimal-leading-zero);
-    display: block;
-    margin-block-end: 0.5rem;
-    font-family: var(--f-mono);
-    font-size: 0.75rem;
-    color: var(--accent);
+    /* Order is carried by the ol and the reading direction. A numeral above each
+       name would just be the banned "Step 1 / Step 2" label in another font. */
+    border-block-start: 2px solid var(--accent-line);
   }
 
   .step p {
