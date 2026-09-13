@@ -61,7 +61,13 @@ const hidden = rows.slice(top);
 ---
 
 <div class="scroll-x">
-  <table class="bars">
+  <table class="bars bars--fixed">
+    <colgroup>
+      <col />
+      <col class="col-v" />
+      {metaHead && <col class="col-m" />}
+      <col class="col-b" />
+    </colgroup>
     <caption class="visually-hidden">{caption}</caption>
     <thead>
       <tr>
@@ -102,7 +108,13 @@ const hidden = rows.slice(top);
                   Show the remaining <span class="reveal__count">{hidden.length}</span>
                 </summary>
                 <div class="reveal__body">
-                  <table class="bars">
+                  <table class="bars bars--fixed">
+                    <colgroup>
+                      <col />
+                      <col class="col-v" />
+                      {metaHead && <col class="col-m" />}
+                      <col class="col-b" />
+                    </colgroup>
                     <caption class="visually-hidden">
                       {caption} Rows {top + 1} to {rows.length}.
                     </caption>
@@ -136,8 +148,35 @@ const hidden = rows.slice(top);
 </div>
 
 <style>
-  /* The disclosure row spans the table, and the nested table inherits the
-     parent's column widths closely enough that the bars line up. */
+  /* Fixed layout with an explicit colgroup, on both tables.
+     The tail is a second table inside <details>, because a <details> cannot be a
+     child of <tbody>, and two tables size their columns independently: with auto
+     layout the hidden rows laid out their own way and every bar in the tail
+     started a hundred pixels right of the bars above it. Identical colgroups
+     plus table-layout:fixed makes the two agree. */
+  .bars--fixed {
+    table-layout: fixed;
+  }
+
+  .col-v {
+    inline-size: 7.5rem;
+  }
+
+  .col-m {
+    inline-size: 8.5rem;
+  }
+
+  .col-b {
+    inline-size: 46%;
+  }
+
+  /* Fixed layout cannot widen for a long name, so the label wraps rather than
+     spilling over the number beside it. */
+  .bars--fixed th[scope="row"] {
+    white-space: normal;
+    padding-inline-end: 0.75rem;
+  }
+
   .bars__disclose {
     padding: 0;
   }

@@ -41,7 +41,39 @@ EU27 = "EU27_2020"
 
 # Aggregates, not countries. They belong in the EU-wide slices and would double
 # count if they were left in a list of countries.
-AGGREGATES = {"EU27_2020", "EA19", "EA20", "EA21", "EU28", "EU27_2007"}
+AGGREGATES = {"EU27_2020", "EA19", "EA20", "EA21", "EU28", "EU27_2007", "EA"}
+
+
+def assert_countries(records: list[dict]) -> None:
+    """Second, independent guard on the same failure as `is_aggregate`.
+
+    Every country label Eurostat publishes is short. Its grouping labels list
+    their own composition and run past a hundred characters, so if a new grouping
+    code ever evades the prefix rule this catches it on the name instead. A
+    grouping ranked among the countries is not a visible error: it looks exactly
+    like a country with that number.
+    """
+    for record in records:
+        if len(record["name"]) > 40:
+            raise ValueError(
+                f"{record['code']} has a {len(record['name'])}-character label "
+                f"({record['name'][:50]}...), which is a grouping and not a country"
+            )
+
+
+def is_aggregate(geo: str) -> bool:
+    """True for a Eurostat grouping rather than a country.
+
+    The named set is not enough on its own. Eurostat publishes the euro area
+    under the rolling code "EA" as well as the vintaged ones, and that bare code
+    slipped through and was ranked twenty-first among the countries, on a chart
+    whose own caveat said the euro area was excluded.
+
+    So the rule is a prefix rule as well: no ISO 3166-1 alpha-2 country code
+    begins "EU" or "EA". EE, EG, EH, ER, ES and ET all begin with E and none of
+    them collides, which is what makes the prefix safe to use.
+    """
+    return geo in AGGREGATES or geo.startswith(("EU", "EA"))
 
 # The seven technologies the survey asks about individually, in the order the
 # questionnaire uses. E_AI_TANY and the "at least two" and "none" variants are
@@ -156,9 +188,10 @@ def build_by_country(offline: bool) -> None:
             "source_id": SOURCE,
         }
         for coords, value in observations(payload)
-        if coords["geo"] not in AGGREGATES
+        if not is_aggregate(coords["geo"])
     ]
     records.sort(key=lambda r: r["share"], reverse=True)
+    assert_countries(records)
 
     eu = [
         round(v, 1) for c, v in observations(payload) if c["geo"] == EU27
@@ -358,6 +391,25 @@ def _self_check() -> None:
     assert set(TECH_SHORT) == set(TECHNOLOGIES), "technology labels and codes have drifted"
     assert set(SIZE_SHORT) == set(SIZE_ORDER), "size labels and codes have drifted"
     assert EU27 in AGGREGATES, "EU27 must be excluded from the country list"
+
+    # The aggregate filter, against the codes Eurostat actually publishes and
+    # against the one that got through. A grouping ranked among the countries is
+    # not a visible error: it looks exactly like a country with that number.
+    for geo in ("EU27_2020", "EA", "EA19", "EA20", "EU28"):
+        assert is_aggregate(geo), f"{geo} would be ranked as a country"
+    for geo in ("EE", "ES", "EL", "DK", "NO", "TR", "UK"):
+        assert not is_aggregate(geo), f"{geo} would be dropped as an aggregate"
+
+    # The label guard runs inside run(), on the records about to be written,
+    # rather than here. A check that reads the previous run's output refuses to
+    # let the current run fix the thing it is complaining about.
+    assert_countries([{"code": "DK", "name": "Denmark"}])
+    try:
+        assert_countries([{"code": "EA", "name": "Euro area (EA11-1999, " + "x" * 100 + ")"}])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("assert_countries accepted a grouping label")
 
     print("fetch_eurostat self-check passed")
 

@@ -440,7 +440,14 @@ img {
   min-inline-size: 16rem;
 }
 
-.ta-end {
+/* `.bars td` and `.grid-table td` both set text-align, and two class selectors
+   beat one, so a bare `.ta-end` silently lost to them and every number column on
+   the site was left-aligned. It was invisible while the tables used auto layout,
+   because an auto column shrinks to its content and start and end land in the
+   same place; the first fixed-layout table made it obvious. */
+.ta-end,
+.bars .ta-end,
+.grid-table .ta-end {
   text-align: end;
 }
 

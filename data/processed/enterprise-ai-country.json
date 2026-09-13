@@ -1,13 +1,13 @@
 {
   "dataset": "enterprise-ai-country",
-  "generated": "2026-09-13T06:10:16+00:00",
+  "generated": "2026-09-13T08:14:24+00:00",
   "retrieved": "2026-09-13T06:10:16+00:00",
   "sources": [
     "eurostat-ai-enterprises"
   ],
   "unit": "percent of enterprises",
   "notes": "Share of enterprises with ten or more people employed using at least one of seven AI technologies, 2025 survey wave. Covers all activities except agriculture, forestry, fishing, mining and finance. The EU27 figure is 19.9 percent. Self-reported by the enterprise, so it measures what firms say they use and what they recognise as AI.",
-  "count": 34,
+  "count": 33,
   "records": [
     {
       "code": "DK",
@@ -90,13 +90,6 @@
       "code": "MT",
       "name": "Malta",
       "share": 21.5,
-      "year": "2025",
-      "source_id": "eurostat-ai-enterprises"
-    },
-    {
-      "code": "EA",
-      "name": "Euro area (EA11-1999, EA12-2001, EA13-2007, EA15-2008, EA16-2009, EA17-2011, EA18-2014, EA19-2015, EA20-2023, EA21-2026)",
-      "share": 21.4,
       "year": "2025",
       "source_id": "eurostat-ai-enterprises"
     },
