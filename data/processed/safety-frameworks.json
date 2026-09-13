@@ -1,0 +1,161 @@
+{
+  "dataset": "safety-frameworks",
+  "generated": "2026-09-13T08:08:23+00:00",
+  "retrieved": "2026-09-13T08:08:23+00:00",
+  "sources": [
+    "safety-frameworks-index"
+  ],
+  "unit": null,
+  "notes": "Our own reading of each developer's published frontier safety framework, reviewed 2026-09. Self-assessment under self-written frameworks with no common scale and no external audit. Not a ranking.",
+  "count": 8,
+  "records": [
+    {
+      "developer": "Anthropic",
+      "framework": "Responsible Scaling Policy",
+      "scale": "AI Safety Levels, ASL-1 to ASL-4 and above",
+      "levels": 4,
+      "domains": [
+        "CBRN",
+        "cyber",
+        "autonomy"
+      ],
+      "external": true,
+      "halt": "yes",
+      "since": 2023,
+      "url": "https://www.anthropic.com/news/anthropics-responsible-scaling-policy",
+      "note": "The first of these frameworks, and the one the others are written against. Ties defined capability thresholds to required security and deployment standards, and commits to holding deployment until the corresponding standard is met.",
+      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "OpenAI",
+      "framework": "Preparedness Framework",
+      "scale": "Capability levels: Low, Medium, High, Critical",
+      "levels": 4,
+      "domains": [
+        "CBRN",
+        "cyber",
+        "autonomy",
+        "persuasion"
+      ],
+      "external": true,
+      "halt": "yes",
+      "since": 2023,
+      "url": "https://openai.com/index/updating-our-preparedness-framework/",
+      "note": "Tracked categories have changed between versions, with persuasion removed as a tracked category in the 2025 revision. A framework that can be revised by its author is a different kind of object from a statute, which is the general point of this index.",
+      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "Google DeepMind",
+      "framework": "Frontier Safety Framework",
+      "scale": "Critical Capability Levels",
+      "levels": 0,
+      "domains": [
+        "CBRN",
+        "cyber",
+        "ML R&D",
+        "deceptive alignment"
+      ],
+      "external": false,
+      "halt": "qualified",
+      "since": 2024,
+      "url": "https://deepmind.google/discover/blog/strengthening-our-frontier-safety-framework/",
+      "note": "Defines capability levels per domain rather than one ladder, so it has no single level count. The only framework here that names deceptive alignment as a tracked domain in its own right.",
+      "halt_meaning": "Commits to a decision process rather than to an outcome.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "Meta",
+      "framework": "Frontier AI Framework",
+      "scale": "Outcomes-led: moderate, high, critical risk",
+      "levels": 3,
+      "domains": [
+        "CBRN",
+        "cyber"
+      ],
+      "external": false,
+      "halt": "yes",
+      "since": 2025,
+      "url": "https://ai.meta.com/static-resource/meta-frontier-ai-framework/",
+      "note": "Matters more than its length suggests, because Meta releases open weights. A decision not to release is the only mitigation available once weights are out, which makes the pre-release threshold the whole of the policy.",
+      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "Microsoft",
+      "framework": "Frontier Governance Framework",
+      "scale": "Leading indicator thresholds per capability",
+      "levels": 0,
+      "domains": [
+        "CBRN",
+        "cyber",
+        "autonomy"
+      ],
+      "external": true,
+      "halt": "qualified",
+      "since": 2025,
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Microsoft-Frontier-Governance-Framework.pdf",
+      "note": "Published as a Seoul commitment signatory. Covers models Microsoft itself develops, which is a narrower set than the models it deploys.",
+      "halt_meaning": "Commits to a decision process rather than to an outcome.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "Amazon",
+      "framework": "Frontier Model Safety Framework",
+      "scale": "Critical capability thresholds",
+      "levels": 0,
+      "domains": [
+        "CBRN",
+        "cyber",
+        "autonomy"
+      ],
+      "external": false,
+      "halt": "qualified",
+      "since": 2025,
+      "url": "https://www.amazon.science/publications/amazons-frontier-model-safety-framework",
+      "note": "Published as a Seoul commitment signatory ahead of the Paris AI Action Summit.",
+      "halt_meaning": "Commits to a decision process rather than to an outcome.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "xAI",
+      "framework": "Risk Management Framework",
+      "scale": "Benchmark thresholds per risk area",
+      "levels": 0,
+      "domains": [
+        "CBRN",
+        "cyber"
+      ],
+      "external": false,
+      "halt": "qualified",
+      "since": 2025,
+      "url": "https://x.ai/documents/2025.02.20-RMF-Draft.pdf",
+      "note": "The shortest of the frameworks here, and the only one published as a draft. Ties thresholds to specific public benchmark scores, which is more falsifiable than most and also easier to saturate.",
+      "halt_meaning": "Commits to a decision process rather than to an outcome.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    },
+    {
+      "developer": "DeepSeek",
+      "framework": null,
+      "scale": null,
+      "levels": 0,
+      "domains": [],
+      "external": false,
+      "halt": "no-framework",
+      "since": null,
+      "url": "https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024",
+      "note": "Listed as an absence. DeepSeek releases open-weight models at or near the frontier and has published no safety framework, and is not among the Seoul signatories. The linked document is the commitment list it is absent from.",
+      "halt_meaning": "No published framework, so nothing to commit to.",
+      "reviewed": "2026-09",
+      "source_id": "safety-frameworks-index"
+    }
+  ]
+}
