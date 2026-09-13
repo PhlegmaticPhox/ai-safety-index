@@ -5,35 +5,23 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 /**
- * The site's own origin, which every canonical link and every sitemap entry is
- * built from.
+ * The site's own origin. Every canonical link, every og:url and every sitemap
+ * entry is built from it.
  *
- * This briefly threw when SITE_URL was unset in CI. That was added on a wrong
- * diagnosis: the deploy pipeline was believed to be disconnected, when in fact
- * Cloudflare Workers Builds had been building every push all along. Turning a
- * working pipeline into a failing one to fix a dormant problem is the wrong
- * trade, so it warns instead.
+ * Hardcoded, and deliberately not read from the environment. It was an env var
+ * for exactly one day, and in that day it was wrong twice: first defaulting to a
+ * pages.dev domain that does not resolve, then set in the Cloudflare build
+ * variables to a value carrying the scheme twice, which made every canonical on
+ * the live site read `https://https/`. Nothing in the page looks wrong when that
+ * happens, and the deployed sitemap listed thirty-two URLs on a host that does
+ * not exist.
  *
- * The problem it warns about is real but not yet live: with the noindex meta
- * still in place nothing is crawled, so a wrong canonical costs nothing until
- * launch. The old default was a pages.dev domain that does not resolve, which is
- * worse than useless because it looks plausible; localhost is at least obviously
- * not a claim about a public origin.
- *
- * The fix is to hardcode the real origin here. A static site with one domain does
- * not need this to be an environment variable, and the indirection is what let it
- * be wrong unnoticed in the first place.
+ * This site has one domain. A value that never changes does not need a
+ * configuration mechanism, and the mechanism is what allowed it to be wrong
+ * unnoticed. scripts/check-internal-links.mjs now fails the build if what is
+ * rendered here is not a plausible hostname.
  */
-const site = process.env.SITE_URL ?? (() => {
-  if (process.env.CI ?? process.env.WORKERS_CI ?? process.env.CF_PAGES) {
-    console.warn(
-      "WARNING: SITE_URL is not set, so canonical links and the sitemap will " +
-        "point at localhost. Set it in the Cloudflare build variables, or " +
-        "hardcode the origin in astro.config.mjs.",
-    );
-  }
-  return "http://localhost:4321";
-})();
+const site = "https://aisafetytracker.org";
 
 export default defineConfig({
   site,

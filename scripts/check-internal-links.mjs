@@ -103,7 +103,53 @@ assert.deepEqual(
     "normalise it in the ETL rather than in the page.",
 );
 
+/* Canonical origin.
+
+   Every canonical link, og:url and sitemap entry is built from one configured
+   origin, and if that origin is malformed every one of them is wrong at once
+   while the page itself renders perfectly. It shipped: a build variable holding
+   the scheme twice produced `https://https/` on every page of the live site, and
+   a sitemap advertising thirty-two URLs on a host that does not exist.
+
+   The test is deliberately weak on purpose. It does not know the real domain, so
+   it checks the only thing that is knowable from the output alone: that the host
+   is a plausible hostname, and that every page agrees on it. `https://https/`
+   fails because "https" is a single label with no dot. localhost passes, because
+   a local build is not a deployment. */
+const origins = new Map();
+for (const page of pages) {
+  const html = readFileSync(page, "utf8");
+  for (const [, raw] of html.matchAll(
+    /(?:rel="canonical" href|property="og:url" content)="([^"]+)"/g,
+  )) {
+    let url;
+    try {
+      url = new URL(raw);
+    } catch {
+      origins.set(`unparseable: ${raw}`, relative(DIST, page));
+      continue;
+    }
+    origins.set(url.origin, relative(DIST, page));
+  }
+}
+
+assert.equal(
+  origins.size,
+  1,
+  `pages disagree about this site's own origin, which means one of them is wrong:\n  ` +
+    [...origins].map(([origin, page]) => `${origin}  (e.g. ${page})`).join("\n  "),
+);
+
+const [origin] = [...origins.keys()];
+const { hostname } = new URL(origin);
+assert.ok(
+  hostname === "localhost" || (hostname.includes(".") && !hostname.endsWith(".")),
+  `every canonical link and sitemap entry on this build points at "${origin}", and ` +
+    `"${hostname}" is not a hostname. The site origin in astro.config.mjs is malformed; ` +
+    `a value carrying the scheme twice produces exactly this.`,
+);
+
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
-    `${pages.length} pages`,
+    `${pages.length} pages, canonical origin ${origin}`,
 );

@@ -229,14 +229,20 @@ the domain serves something else entirely, and nothing in the build log says so.
 builds the site before committing, and labels its commits `Data refresh` when a dataset moved or
 `Pipeline heartbeat` when only the check time did.
 
-**At launch, remove the `noindex` meta in `src/layouts/Base.astro`.** It is there deliberately so a
-half-built index is not crawled.
+Live at **https://aisafetytracker.org**. Note the mismatch with the site's own name: the domain
+says tracker, the masthead says index. Worth resolving before launch, the more so because the
+Future of Life Institute publishes an established annual report called the AI Safety Index.
 
-**`SITE_URL` has no real default.** Unset, `astro.config.mjs` warns and falls back to localhost,
-so canonical links and the sitemap are wrong until it is set. It does not fail the build: it was
-briefly made fatal, which broke a working deploy pipeline to fix a problem that the `noindex` meta
-makes dormant. Hardcode the real origin here once the domain is settled; a static site with one
-domain does not need this to be an environment variable at all.
+**At launch, remove the `noindex` meta in `src/layouts/Base.astro`.** It is there deliberately so a
+half-built index is not crawled. Until it goes, a wrong canonical costs nothing, which is why the
+origin check warns rather than being treated as urgent.
+
+**The site origin is hardcoded in `astro.config.mjs`** as `https://aisafetytracker.org`, and is
+deliberately not read from the environment. It was an env var for one day and was wrong twice in
+that day: a default pointing at a domain that does not resolve, then a Cloudflare build variable
+holding the scheme twice, which put `https://https/` in every canonical link, every og:url and all
+thirty-two sitemap entries of the live site. `npm run check:built` now fails when the rendered
+origin is not a plausible hostname, verified by sabotage.
 
 ## Working agreement
 
