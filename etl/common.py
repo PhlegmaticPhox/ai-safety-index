@@ -242,6 +242,76 @@ def write_dataset(
     return path
 
 
+def probe(url: str) -> tuple[str, object]:
+    """Classify a citation URL as ok, blocked, unreachable or DEAD.
+
+    Used by the hand-coded indexes to check that every instrument they cite
+    still resolves. A citation that 404s is worse than no citation, because it
+    looks like evidence.
+
+    The distinction between the four verdicts matters, and the first version of
+    this got it wrong by collapsing them. Government sites refuse HEAD, refuse
+    anything that is not a browser, sit behind bot walls, and time out. None of
+    that means the citation is wrong, and treating it as wrong would push us to
+    replace good primary links with worse ones. Only a definite 404 or 410 is
+    evidence that a link is bad.
+
+    We do not spoof a browser to get past a bot wall. A publisher blocking
+    robots is entitled to; the answer is to report "blocked", not to lie about
+    who is asking.
+    """
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en",
+    }
+    last: tuple[str, object] = ("unreachable", "unknown")
+    for method in ("HEAD", "GET"):
+        try:
+            request = urllib.request.Request(url, headers=headers, method=method)
+            with urllib.request.urlopen(request, timeout=40, context=SSL_CONTEXT) as response:
+                # urlopen follows redirects, so a 2xx here is a resolved page.
+                return "ok", response.status
+        except urllib.error.HTTPError as exc:
+            if exc.code in (404, 410):
+                return "DEAD", exc.code
+            last = ("blocked", exc.code)
+        except Exception as exc:  # noqa: BLE001
+            last = ("unreachable", type(exc).__name__)
+    return last
+
+
+def check_links(entries: Iterable[tuple[str, str]]) -> int:
+    """Probe (label, url) pairs. Returns the count of definite 404s.
+
+    Blocked and unreachable are printed but do not fail, because a run that
+    fails on someone else's bot wall trains everyone to ignore it.
+    """
+    seen: set[str] = set()
+    buckets: dict[str, list[tuple[str, str, object]]] = {
+        "blocked": [], "unreachable": [], "DEAD": []
+    }
+
+    for label, url in entries:
+        if url in seen:
+            continue
+        seen.add(url)
+        verdict, detail = probe(url)
+        print(f"  {verdict:<11} {str(detail):<20} {label}  {url}")
+        if verdict != "ok":
+            buckets[verdict].append((label, url, detail))
+
+    ok = len(seen) - sum(len(v) for v in buckets.values())
+    print(
+        f"\n{len(seen)} unique URLs: {ok} ok, {len(buckets['blocked'])} blocked, "
+        f"{len(buckets['unreachable'])} unreachable, {len(buckets['DEAD'])} dead"
+    )
+    for state in ("DEAD", "blocked", "unreachable"):
+        for label, url, detail in buckets[state]:
+            print(f"  {state}: {detail}  {label}  {url}")
+    return len(buckets["DEAD"])
+
+
 def _ext_for(fmt: str | None) -> str:
     return {"csv": ".csv", "json": ".json", "rss": ".xml", "atom": ".xml", "parquet": ".parquet"}.get(
         fmt or "", ".dat"

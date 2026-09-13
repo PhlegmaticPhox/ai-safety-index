@@ -29,13 +29,11 @@ than no citation, because it looks like evidence.
 from __future__ import annotations
 
 import sys
-import urllib.error
-import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import SSL_CONTEXT, USER_AGENT, utcnow, write_dataset
+from common import check_links, utcnow, write_dataset
 
 SOURCE = "governance-readiness-index"
 REVIEWED = "2026-09"
@@ -709,74 +707,14 @@ def build_records() -> list[dict]:
     return records
 
 
-def _probe(url: str) -> tuple[str, object]:
-    """Classify one citation URL as ok, blocked, unreachable or DEAD.
-
-    The distinction matters and the first version of this got it wrong. Plenty
-    of government sites refuse HEAD, refuse anything that is not a browser, sit
-    behind a bot wall, or simply time out from here. None of that means the
-    citation is wrong, and treating it as wrong would push us to replace good
-    primary links with worse ones. Only a definite 404 or 410 is evidence that
-    the link is bad.
-
-    We do not spoof a browser to get around a bot wall. A publisher blocking
-    robots is entitled to, and the answer is to report "blocked", not to lie
-    about who is asking.
-    """
-    headers = {
-        "User-Agent": USER_AGENT,
-        "Accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en",
-    }
-    last = "unknown"
-    for method in ("HEAD", "GET"):
-        try:
-            request = urllib.request.Request(url, headers=headers, method=method)
-            with urllib.request.urlopen(request, timeout=40, context=SSL_CONTEXT) as response:
-                # urlopen follows redirects, so a 2xx here is a resolved page.
-                return "ok", response.status
-        except urllib.error.HTTPError as exc:
-            if exc.code in (404, 410):
-                return "DEAD", exc.code
-            if exc.code in (403, 401, 429):
-                last = ("blocked", exc.code)
-                continue
-            last = ("blocked", exc.code)
-        except Exception as exc:  # noqa: BLE001
-            last = ("unreachable", type(exc).__name__)
-    return last if isinstance(last, tuple) else ("unreachable", last)
-
-
-def check_links(records: list[dict]) -> int:
-    """Probe every cited instrument. A citation that 404s looks like evidence.
-
-    Exits non-zero only on a definite 404 or 410. Blocked and unreachable are
-    printed so a human can eyeball them, because a run that fails on someone
-    else's bot wall would train us to ignore it.
-    """
-    seen: set[str] = set()
-    buckets: dict[str, list[tuple[str, str, object]]] = {"blocked": [], "unreachable": [], "DEAD": []}
-
-    for record in records:
-        for instrument in record["instruments"]:
-            url = instrument["url"]
-            if url in seen:
-                continue
-            seen.add(url)
-            verdict, detail = _probe(url)
-            print(f"  {verdict:<11} {str(detail):<20} {record['code']}  {url}")
-            if verdict != "ok":
-                buckets[verdict].append((record["code"], url, detail))
-
-    print(
-        f"\n{len(seen)} unique URLs: {len(seen) - sum(len(v) for v in buckets.values())} ok, "
-        f"{len(buckets['blocked'])} blocked, {len(buckets['unreachable'])} unreachable, "
-        f"{len(buckets['DEAD'])} dead"
+def check_instrument_links(records: list[dict]) -> int:
+    """Probe every cited instrument. Shared implementation lives in common.py,
+    because the policy index needs exactly the same check."""
+    return check_links(
+        (record["code"], instrument["url"])
+        for record in records
+        for instrument in record["instruments"]
     )
-    for label in ("DEAD", "blocked", "unreachable"):
-        for code, url, detail in buckets[label]:
-            print(f"  {label}: {detail}  {code}  {url}")
-    return len(buckets["DEAD"])
 
 
 def run(offline: bool = False) -> None:
@@ -863,7 +801,7 @@ if __name__ == "__main__":
     if "--self-check" in sys.argv:
         _self_check()
     elif "--check-links" in sys.argv:
-        raise SystemExit(1 if check_links(build_records()) else 0)
+        raise SystemExit(1 if check_instrument_links(build_records()) else 0)
     else:
         _self_check()
         run()

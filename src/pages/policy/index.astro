@@ -1,0 +1,175 @@
+---
+/**
+ * The law and policy index. Australia first, more jurisdictions to follow.
+ *
+ * Hand-written rather than scraped, because the established trackers are
+ * protected databases and bulk-extracting one is not a licence we have.
+ */
+import Base from "../../layouts/Base.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+
+import indexFile from "../../../data/processed/policy-index.json";
+import governanceFile from "../../../data/processed/governance-readiness.json";
+
+interface PolicyRecord {
+  jurisdiction: string;
+  jurisdiction_slug: string;
+  jurisdiction_code: string;
+  title: string;
+  force: string;
+  force_meaning: string;
+  year: number;
+  body: string;
+  topics: string[];
+  note: string;
+  url: string;
+  reviewed: string;
+  source_id: string;
+}
+
+interface GovernanceRecord {
+  code: string;
+  name: string;
+  readiness: number;
+  basis: string;
+  source_id: string;
+}
+
+const policy = indexFile as Dataset<PolicyRecord>;
+const governance = governanceFile as Dataset<GovernanceRecord>;
+const cites = [...new Set([...policy.sources, ...governance.sources])];
+assertRenderable(...cites);
+
+const jurisdictions = [...new Set(policy.records.map((r) => r.jurisdiction_slug))].map((slug) => {
+  const rows = policy.records.filter((r) => r.jurisdiction_slug === slug);
+  const scored = governance.records.find((g) => g.code === rows[0].jurisdiction_code);
+  return {
+    slug,
+    name: rows[0].jurisdiction,
+    code: rows[0].jurisdiction_code,
+    count: rows.length,
+    binding: rows.filter((r) => r.force === "statute" || r.force === "delegated").length,
+    readiness: scored?.readiness ?? null,
+  };
+});
+
+const coveredCodes = new Set(jurisdictions.map((j) => j.code));
+const scoredOnly = governance.records
+  .filter((g) => !coveredCodes.has(g.code) && g.basis === "national")
+  .sort((a, b) => b.readiness - a.readiness);
+
+const checked = freshness(policy.retrieved);
+---
+
+<Base
+  title="AI law and policy | AI Safety Index"
+  description="An index of the law that actually applies to AI, jurisdiction by jurisdiction, with a link to every primary instrument."
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>AI law and policy</h1>
+        <p class="masthead__meta mono">
+          {jurisdictions.length} jurisdiction indexed
+          <span aria-hidden="true">/</span>
+          {policy.count} instruments
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Most of the law that governs AI does not mention AI. An index that only listed
+        instruments with the term in the title would be short, tidy and misleading. This one
+        lists what actually applies, tagged by how binding it is, with a link to the primary
+        source for every entry.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Indexed jurisdictions</h2>
+        <p>Australia first, because it is where this is written and because its position is
+          instructive: no AI statute, and a great deal of law that applies anyway.</p>
+      </div>
+
+      <ul class="cards">
+        {
+          jurisdictions.map((jurisdiction) => (
+            <li class="card">
+              <a href={`/policy/${jurisdiction.slug}/`} class="card__title">
+                {jurisdiction.name}
+              </a>
+              <p>
+                {jurisdiction.count} instruments, {jurisdiction.binding} of them binding law.
+              </p>
+              <span class="card__meta mono">
+                {jurisdiction.readiness !== null
+                  ? `Governance readiness ${jurisdiction.readiness} of 100`
+                  : "Not yet scored"}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="caveat">
+        Not legal advice, not a compliance checklist and not exhaustive. It is a map of where to
+        start reading. Statuses and commencement dates go stale, and every record carries the date
+        it was reviewed.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Scored but not yet indexed</h2>
+        <p>
+          {scoredOnly.length} more jurisdictions have a governance readiness score and the
+          instruments it was coded from, which is a thinner thing than a full index but is
+          sourced the same way.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Jurisdictions with a governance readiness score but no full law index yet.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Jurisdiction</th>
+              <th scope="col" class="ta-end">Readiness</th>
+              <th scope="col" class="bar-col">
+                <span class="visually-hidden">Relative readiness</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              scoredOnly.map((row) => (
+                <tr>
+                  <th scope="row">{row.name}</th>
+                  <td class="ta-end num">{row.readiness}</td>
+                  <td class="bar-col">
+                    <span class="bar bar--thin bar--gov" style={`--w:${row.readiness}%`} aria-hidden="true" />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        Readiness measures how much governance machinery exists, not how strict it is. The scoring
+        rubric and every jurisdiction's cited instruments are on the <a href="/map/#method">map
+        page</a>. The 27 EU member states are scored once at bloc level and are not listed here.
+      </p>
+    </div>
+  </section>
+</Base>

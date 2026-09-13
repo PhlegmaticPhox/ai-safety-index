@@ -1,0 +1,321 @@
+---
+/**
+ * One jurisdiction's law and policy index.
+ *
+ * Grouped by how binding each instrument is, because that is the distinction a
+ * reader needs first and the one press coverage blurs most often. A voluntary
+ * standard and an Act of Parliament are not the same kind of object, however
+ * similar their contents look.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+
+import indexFile from "../../../data/processed/policy-index.json";
+import governanceFile from "../../../data/processed/governance-readiness.json";
+
+interface PolicyRecord {
+  jurisdiction: string;
+  jurisdiction_slug: string;
+  jurisdiction_code: string;
+  title: string;
+  force: string;
+  force_meaning: string;
+  year: number;
+  body: string;
+  topics: string[];
+  note: string;
+  url: string;
+  reviewed: string;
+  source_id: string;
+}
+
+interface GovernanceRecord {
+  code: string;
+  name: string;
+  readiness: number;
+  scores: Record<string, number>;
+  note: string;
+  source_id: string;
+}
+
+const policy = indexFile as Dataset<PolicyRecord>;
+
+export function getStaticPaths() {
+  const records = (indexFile as Dataset<PolicyRecord>).records;
+  return [...new Set(records.map((r) => r.jurisdiction_slug))].map((slug) => ({
+    params: { jurisdiction: slug },
+    props: { slug },
+  }));
+}
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const governance = governanceFile as Dataset<GovernanceRecord>;
+const cites = [...new Set([...policy.sources, ...governance.sources])];
+assertRenderable(...cites);
+
+const rows = policy.records.filter((r) => r.jurisdiction_slug === slug);
+const name = rows[0].jurisdiction;
+const scored = governance.records.find((g) => g.code === rows[0].jurisdiction_code);
+
+/* Ordered from binding to advisory. This order is the argument the page makes. */
+const FORCE_ORDER = [
+  { key: "statute", label: "Acts of Parliament" },
+  { key: "delegated", label: "Rules made under an Act" },
+  { key: "agency-binding", label: "Binding on government only" },
+  { key: "regulator-guidance", label: "Regulator guidance" },
+  { key: "voluntary", label: "Voluntary standards" },
+  { key: "proposal", label: "Proposed, not law" },
+  { key: "review", label: "Reviews and inquiries" },
+];
+
+const groups = FORCE_ORDER.map((force) => ({
+  ...force,
+  meaning: rows.find((r) => r.force === force.key)?.force_meaning ?? "",
+  items: rows
+    .filter((r) => r.force === force.key)
+    .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title)),
+})).filter((group) => group.items.length > 0);
+
+const topics = [...new Set(rows.flatMap((r) => r.topics))].sort();
+const NAMES_AI = /\bAI\b|Artificial Intelligence|Deepfake/i;
+const binding = rows.filter((r) => r.force === "statute" || r.force === "delegated");
+const bindingCount = binding.length;
+/* The number that makes the point: how much of the BINDING law names AI at all.
+   Across the whole list it is about half, which says little, because voluntary
+   standards and consultation papers obviously name their own subject. Among
+   instruments that actually create duties it is a different figure entirely. */
+const bindingNamingAI = binding.filter((r) => NAMES_AI.test(r.title));
+
+const anchor = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 60);
+
+const checked = freshness(policy.retrieved);
+
+const summaries: Record<string, string> = {
+  australia:
+    "No AI statute and no AI regulator. Australia governs AI through law that does not " +
+    "mention it: privacy, consumer, online safety, therapeutic goods, corporations and " +
+    "criminal law. The one genuinely binding AI-specific obligation applies to Commonwealth " +
+    "agencies rather than to the market. Mandatory guardrails for high-risk AI were proposed " +
+    "in 2024 and have not been legislated.",
+};
+---
+
+<Base
+  title={`${name}: AI law and policy | AI Safety Index`}
+  description={`Every instrument relevant to AI in ${name}, tagged by how binding it is, with a link to each primary source.`}
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>{name}</h1>
+        <p class="masthead__meta mono">
+          {rows.length} instruments
+          <span aria-hidden="true">/</span>
+          {bindingCount} binding
+          <span aria-hidden="true">/</span>
+          {bindingNamingAI.length} of those name AI
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">{summaries[slug] ?? ""}</p>
+
+      {
+        scored && (
+          <p class="score">
+            Governance readiness <strong class="num">{scored.readiness}</strong> of 100 on
+            <a href="/map/#method">our index</a>, which measures how much machinery exists rather
+            than how strict it is.
+            <Provenance source={governance.sources} retrieved={governance.retrieved} label="score" />
+          </p>
+        )
+      }
+
+      <nav class="jump" aria-label="Jump to a section">
+        <ul class="chips">
+          {groups.map((group) => (
+            <li>
+              <a href={`#${group.key}`} class="chip">
+                {group.label} <span class="mono">{group.items.length}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  {
+    groups.map((group, i) => (
+      <section class:list={["section", i % 2 === 0 && "section--sunk"]} id={group.key}>
+        <div class="wrap">
+          <div class="section-head">
+            <h2>{group.label}</h2>
+            <p>{group.meaning}</p>
+          </div>
+
+          <ul class="instruments">
+            {group.items.map((item) => (
+              <li class="instrument" id={anchor(item.title)}>
+                <div class="instrument__head">
+                  <a href={item.url} class="instrument__title">
+                    {item.title}
+                  </a>
+                  <span class="instrument__year mono">{item.year}</span>
+                </div>
+                <p class="instrument__body">{item.body}</p>
+                <p class="instrument__note">{item.note}</p>
+                <ul class="topics">
+                  {item.topics.map((topic) => (
+                    <li class="tag">{topic}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section" id="about-this-index">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>About this index</h2>
+      </div>
+
+      <div class="doc">
+        <p>
+          Written by reading the instruments, not by copying a tracker. OECD.AI and the IAPP both
+          publish policy trackers and both are protected by database rights on top of copyright,
+          so extracting either would be a licence we do not have. Doing the reading ourselves
+          avoids that and means the result is ours to license
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+        </p>
+        <p>
+          {bindingCount} of the {rows.length} instruments here are binding law, and
+          {bindingNamingAI.length === 1
+            ? `exactly one of those names AI: the ${bindingNamingAI[0].title}`
+            : `${bindingNamingAI.length} of those name AI`}. That is why the index is built
+          this way. Searching a statute book for "artificial intelligence" returns almost
+          nothing, and would leave a reader believing almost nothing applies.
+        </p>
+        <p>
+          Topics covered: {topics.join(", ")}. A build check probes every citation on this page,
+          because a link that returns a 404 looks like evidence and is not.
+        </p>
+        <p>
+          <strong>This is not legal advice.</strong> It is not a compliance checklist and it is
+          not exhaustive. Commencement dates, proposals and enforcement positions move; the review
+          date is on every record. If something here is wrong,
+          <a href="/corrections/">say so</a> and it gets logged publicly rather than quietly
+          patched.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .score {
+    margin-block-start: 1rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .score strong {
+    color: var(--accent-2);
+    font-weight: 500;
+  }
+
+  .jump {
+    margin-block-start: 1.75rem;
+  }
+
+  .jump .chips {
+    margin-block-end: 0;
+  }
+
+  .instruments {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .instrument {
+    padding-block: 1.15rem;
+    border-block-start: 1px solid var(--line);
+    scroll-margin-block-start: 5rem;
+  }
+
+  .instrument:last-child {
+    border-block-end: 1px solid var(--line);
+  }
+
+  .instrument__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+  }
+
+  .instrument__title {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1.35;
+    max-inline-size: 60ch;
+  }
+
+  .instrument__title:hover {
+    color: var(--accent);
+  }
+
+  .instrument__year {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .instrument__body {
+    margin-block-start: 0.2rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .instrument__note {
+    margin-block-start: 0.5rem;
+    max-inline-size: 78ch;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.7rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics .tag {
+    font-size: 0.6875rem;
+  }
+</style>

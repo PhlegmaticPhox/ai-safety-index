@@ -295,6 +295,20 @@
       "redistribution": "permitted-with-attribution",
       "cadence": "annual",
       "caveats": "Self-reported by enterprises in the ICT usage survey, so it measures what firms say they use and what they recognise as AI. Covers the EU plus a few reporting non-members, and only enterprises with ten or more people employed unless the size dimension says otherwise. Agriculture, forestry, fishing, mining and the financial sector are outside the survey population entirely. Small cells are suppressed rather than zero, and NACE activity classes nest, so shares by industry do not partition anything."
+    },
+    "policy-index": {
+      "name": "AI Law and Policy Index",
+      "publisher": "This site",
+      "publisher_url": "/",
+      "landing_page": "/policy/",
+      "url": null,
+      "format": "json",
+      "licence": "CC-BY-4.0",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "AI Safety Index, \"AI Law and Policy Index\". Licensed CC BY 4.0.",
+      "redistribution": "permitted",
+      "cadence": "quarterly",
+      "caveats": "Our own reading of primary instruments, with a link to each. Not legal advice, not a compliance checklist and not exhaustive. Instruments that never mention AI are included where they apply to it, which is most of the Australian list. Statuses and commencement dates go stale; every record carries its review date."
     }
   }
 }

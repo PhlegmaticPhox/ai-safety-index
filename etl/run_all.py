@@ -28,6 +28,7 @@ MODULES = [
     # this list because it is a dataset like any other and has to pass the same
     # licence guard and idempotence check.
     "build_governance",
+    "build_policy_index",
 ]
 
 

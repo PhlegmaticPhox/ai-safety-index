@@ -1,0 +1,456 @@
+{
+  "dataset": "policy-index",
+  "generated": "2026-09-13T06:24:48+00:00",
+  "retrieved": "2026-09-13T06:24:48+00:00",
+  "sources": [
+    "policy-index"
+  ],
+  "unit": null,
+  "notes": "Our own index of instruments relevant to AI, reviewed 2026-09. Each entry links to the primary source and is tagged by how binding it is, because a voluntary standard and an Act of Parliament are not the same kind of object however similar their contents look. Not legal advice, not a compliance checklist, and not exhaustive. Instruments that never mention AI are included where they apply to it, which for Australia is most of the list.",
+  "count": 25,
+  "records": [
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Privacy Act 1988",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 1988,
+      "body": "Parliament of Australia",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "The main constraint on AI systems that handle personal information. The Australian Privacy Principles apply to collection, use and disclosure regardless of whether a model is involved, which is why an Australian AI compliance question is usually a privacy question first.",
+      "url": "https://www.legislation.gov.au/C2004A03712/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Privacy and Other Legislation Amendment Act 2024",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "Parliament of Australia",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "The first tranche of reform from the Privacy Act Review. Creates a statutory tort for serious invasions of privacy, and requires privacy policies to disclose where personal information is used in automated decisions that significantly affect someone. The automated-decision transparency duty is the closest thing Australia has to an AI transparency obligation, and it commences in December 2026.",
+      "url": "https://www.legislation.gov.au/C2024A00125/asmade/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Online Safety Act 2021",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2021,
+      "body": "Parliament of Australia",
+      "topics": [
+        "safety",
+        "children"
+      ],
+      "note": "Gives the eSafety Commissioner removal powers and the ability to register industry codes and make standards. The codes and standards made under it now reach generative AI services, which is how Australia regulates AI-generated harmful material without an AI statute.",
+      "url": "https://www.legislation.gov.au/C2021A00076/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Criminal Code Amendment (Deepfake Sexual Material) Act 2024",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "Parliament of Australia",
+      "topics": [
+        "safety",
+        "children"
+      ],
+      "note": "Criminalises transmitting sexual material depicting an adult without consent, including material that has been generated or altered. One of the few Australian statutes written with generative models in view.",
+      "url": "https://www.legislation.gov.au/C2024A00081/asmade/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Competition and Consumer Act 2010, Schedule 2 (Australian Consumer Law)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2010,
+      "body": "Parliament of Australia",
+      "topics": [
+        "consumer"
+      ],
+      "note": "Misleading or deceptive conduct and the consumer guarantees apply to claims made about AI products and to products that fail because of them. The ACCC has been explicit that overstating what a model does is ordinary consumer law territory, with no AI-specific provision needed.",
+      "url": "https://www.legislation.gov.au/C2004A00109/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Copyright Act 1968",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 1968,
+      "body": "Parliament of Australia",
+      "topics": [
+        "copyright"
+      ],
+      "note": "Australia has fair dealing for specified purposes, not fair use, and no text and data mining exception. Training on copyright material in Australia has a narrower set of defences available than in the United States, which is the central question the Copyright and AI Reference Group was set up to examine.",
+      "url": "https://www.legislation.gov.au/C1968A00063/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Security of Critical Infrastructure Act 2018",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2018,
+      "body": "Parliament of Australia",
+      "topics": [
+        "security"
+      ],
+      "note": "Risk management obligations for responsible entities in eleven critical sectors. Where an AI system is part of a critical infrastructure asset, the hazard categories and the reporting duties apply to it like anything else.",
+      "url": "https://www.legislation.gov.au/C2018A00029/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Therapeutic Goods Act 1989",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 1989,
+      "body": "Parliament of Australia",
+      "topics": [
+        "health",
+        "safety"
+      ],
+      "note": "Clinical decision-support and diagnostic software can be a medical device and require TGA inclusion in the Register. This is the one area where an Australian AI developer faces pre-market approval rather than after-the-fact enforcement.",
+      "url": "https://www.legislation.gov.au/C2004A03952/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Corporations Act 2001",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2001,
+      "body": "Parliament of Australia",
+      "topics": [
+        "finance",
+        "government use"
+      ],
+      "note": "Directors' duties of care and diligence, and the obligation on financial services licensees to provide services efficiently, honestly and fairly, both reach board-level decisions about deploying AI. ASIC has said so directly.",
+      "url": "https://www.legislation.gov.au/C2004A00818/latest/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Digital ID Act 2024",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "Parliament of Australia",
+      "topics": [
+        "privacy",
+        "security"
+      ],
+      "note": "Accreditation for digital identity providers, with restrictions on biometric information and on using it for anything beyond verification. Relevant to any face-matching or liveness system operating in the accredited scheme.",
+      "url": "https://www.legislation.gov.au/C2024A00025/asmade/text",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Policy for the responsible use of AI in government",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2024,
+      "body": "Digital Transformation Agency",
+      "topics": [
+        "government use",
+        "transparency"
+      ],
+      "note": "Mandatory for non-corporate Commonwealth entities from September 2024. Requires an accountable official and a public transparency statement. This is the most concrete binding AI obligation in Australia, and it binds the government rather than the market.",
+      "url": "https://www.digital.gov.au/policy/ai/policy",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "National framework for the assurance of artificial intelligence in government",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2024,
+      "body": "Data and Digital Ministers Meeting",
+      "topics": [
+        "government use"
+      ],
+      "note": "Agreed by Commonwealth, state and territory ministers. Applies the AI Ethics Principles to government use and sets a common assurance approach across jurisdictions, which matters because most public-facing AI in Australia is deployed by states, not the Commonwealth.",
+      "url": "https://www.finance.gov.au/publications/national-framework-assurance-artificial-intelligence-government",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Voluntary AI Safety Standard",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2024,
+      "body": "Department of Industry, Science and Resources",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "Ten guardrails covering accountability, risk management, testing, human oversight and disclosure. Written to line up with the mandatory guardrails that were proposed at the same time, so an organisation that adopts it is positioned for legislation that has not arrived.",
+      "url": "https://www.industry.gov.au/publications/voluntary-ai-safety-standard",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Australia's AI Ethics Principles",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2019,
+      "body": "Department of Industry, Science and Resources",
+      "topics": [
+        "safety",
+        "discrimination"
+      ],
+      "note": "Eight principles, voluntary since 2019. Their practical significance is that later binding government policy adopts them by reference, which gives them force inside the public sector that they do not have outside it.",
+      "url": "https://www.industry.gov.au/publications/australias-artificial-intelligence-ethics-principles",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "National AI Capability Plan",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2025,
+      "body": "Department of Industry, Science and Resources",
+      "topics": [
+        "government use"
+      ],
+      "note": "The economic strategy rather than the regulatory one: skills, compute, adoption and sovereign capability. Included here because it sets the policy frame the regulatory decisions are being made inside.",
+      "url": "https://www.industry.gov.au/publications/national-ai-capability-plan",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Proposals paper: introducing mandatory guardrails for AI in high-risk settings",
+      "force": "proposal",
+      "force_meaning": "Proposed, consulted on, or before Parliament. Creates no duties yet.",
+      "year": 2024,
+      "body": "Department of Industry, Science and Resources",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "Consulted on in late 2024. Proposed a risk-based regime with ten mandatory guardrails and canvassed three options for giving them effect: a new AI act, framework legislation, or amendments to existing law. Nothing has been legislated, which is the single most important fact in this index.",
+      "url": "https://consult.industry.gov.au/ai-mandatory-guardrails",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Guidance on privacy and the use of commercially available AI products",
+      "force": "regulator-guidance",
+      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "year": 2024,
+      "body": "Office of the Australian Information Commissioner",
+      "topics": [
+        "privacy"
+      ],
+      "note": "What the Australian Privacy Principles require of an organisation buying in a model rather than building one. Includes the OAIC's position that entering personal information into a public generative AI tool is a disclosure.",
+      "url": "https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/guidance-on-privacy-and-the-use-of-commercially-available-ai-products",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Guidance on privacy and developing and training generative AI models",
+      "force": "regulator-guidance",
+      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "year": 2024,
+      "body": "Office of the Australian Information Commissioner",
+      "topics": [
+        "privacy",
+        "copyright"
+      ],
+      "note": "The regulator's view on scraping and on training with personal information, including that publicly available does not mean freely usable under the Privacy Act. Directly relevant to anyone training on Australian web data.",
+      "url": "https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/guidance-on-privacy-and-developing-and-training-generative-ai-models",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "REP 798 Beware the gap: governance arrangements in the face of AI innovation",
+      "force": "regulator-guidance",
+      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "year": 2024,
+      "body": "Australian Securities and Investments Commission",
+      "topics": [
+        "finance",
+        "consumer"
+      ],
+      "note": "A review of AI use across 23 licensees which found governance lagging deployment. ASIC's position is that existing obligations already bite and that boards cannot wait for AI-specific law.",
+      "url": "https://asic.gov.au/regulatory-resources/find-a-document/reports/rep-798-beware-the-gap-governance-arrangements-in-the-face-of-ai-innovation/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Prudential Standard CPS 230 Operational Risk Management",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2023,
+      "body": "Australian Prudential Regulation Authority",
+      "topics": [
+        "finance",
+        "security"
+      ],
+      "note": "Binding on APRA-regulated entities from July 2025. Requires identification of critical operations and management of material service provider risk, which captures dependence on a third-party model provider.",
+      "url": "https://www.apra.gov.au/sites/default/files/2023-07/Prudential%20Standard%20CPS%20230%20Operational%20Risk%20Management%20-%20clean.pdf",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Copyright and Artificial Intelligence Reference Group",
+      "force": "review",
+      "force_meaning": "An inquiry or review. Evidence and recommendations, not obligations.",
+      "year": 2023,
+      "body": "Attorney-General's Department",
+      "topics": [
+        "copyright"
+      ],
+      "note": "The standing forum on whether Australian copyright law needs changing for AI training and AI output. No statutory change has followed, so the Copyright Act as it stands remains the answer.",
+      "url": "https://www.ag.gov.au/rights-and-protections/copyright/copyright-and-artificial-intelligence-reference-group",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Select Committee on Adopting Artificial Intelligence, final report",
+      "force": "review",
+      "force_meaning": "An inquiry or review. Evidence and recommendations, not obligations.",
+      "year": 2024,
+      "body": "Senate of Australia",
+      "topics": [
+        "safety",
+        "consumer",
+        "discrimination"
+      ],
+      "note": "Recommended that general-purpose models be declared high-risk and that Australia legislate a dedicated AI act. The government has not adopted the recommendation, and the gap between this report and the statute book is worth understanding before reading Australian AI coverage.",
+      "url": "https://www.aph.gov.au/Parliamentary_Business/Committees/Senate/Adopting_Artificial_Intelligence_AI/AdoptingAI/Report",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Royal Commission into the Robodebt Scheme, final report",
+      "force": "review",
+      "force_meaning": "An inquiry or review. Evidence and recommendations, not obligations.",
+      "year": 2023,
+      "body": "Commonwealth of Australia",
+      "topics": [
+        "government use",
+        "transparency"
+      ],
+      "note": "Not an AI inquiry, and the most important document here for understanding Australian automated decision-making. An automated income-averaging scheme unlawfully raised debts against hundreds of thousands of people. Its recommendations on transparency and on a legislative basis for automated decisions are the reason government AI policy here is as cautious as it is.",
+      "url": "https://robodebt.royalcommission.gov.au/publications/report",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "Privacy Act Review Report",
+      "force": "review",
+      "force_meaning": "An inquiry or review. Evidence and recommendations, not obligations.",
+      "year": 2023,
+      "body": "Attorney-General's Department",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "116 proposals, agreed or agreed in principle by the government in 2023. The 2024 amendment act delivered the first tranche; the proposals on automated decisions, a fair and reasonable test, and small business exemptions are still outstanding and would change the AI picture substantially.",
+      "url": "https://www.ag.gov.au/rights-and-protections/publications/privacy-act-review-report",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Australia",
+      "jurisdiction_slug": "australia",
+      "jurisdiction_code": "AUS",
+      "title": "NSW Artificial Intelligence Assessment Framework",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2024,
+      "body": "Digital NSW",
+      "topics": [
+        "government use"
+      ],
+      "note": "Mandatory for NSW government AI projects and the most developed state-level instrument. Most public-facing government AI in Australia is deployed by states, so Commonwealth policy alone does not describe what citizens meet.",
+      "url": "https://www.digital.nsw.gov.au/policy/artificial-intelligence/nsw-artificial-intelligence-assessment-framework",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    }
+  ]
+}
