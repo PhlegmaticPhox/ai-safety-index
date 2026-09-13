@@ -1,0 +1,837 @@
+---
+/**
+ * Alignment: what is known about steering these systems, who has promised what
+ * about it, and how much work is going into finding out.
+ *
+ * The "how close is AGI" panel is the one thing on this site that a reader will
+ * arrive wanting and that nobody can honestly answer. It is built from measured
+ * quantities only: how many of the hardest tests have been solved, how the
+ * hardest open one is doing, and the capability that has not moved at all.
+ * Published estimates by other people are referenced as attributed statements
+ * with a link, which is a fact about what they found, not a copy of their data.
+ *
+ * METR's time-horizon measurements are the obvious thing to plot here and are
+ * deliberately absent. Their analysis repository carries no LICENSE file, so no
+ * reuse permission has been granted. That decision is shown on the page rather
+ * than hidden, because a site whose whole argument is licence discipline should
+ * show its own working.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import { assertRenderable, freshness, getSource, type Dataset } from "../../lib/sources";
+
+import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
+import frameworkFile from "../../../data/processed/safety-frameworks.json";
+import researchFile from "../../../data/processed/research-volume.json";
+import feedFile from "../../../data/processed/news-feed.json";
+import type { NewsRecord } from "../../lib/news";
+
+interface BenchmarkRecord {
+  benchmark: string;
+  category: string;
+  tier: string;
+  points: Array<{ month: string; best: number }>;
+  latest_best: number;
+  latest_month: string;
+  first_month: string;
+  saturated_month: string | null;
+  months_to_saturation: number | null;
+  source_id: string;
+}
+
+interface FrameworkRecord {
+  developer: string;
+  framework: string | null;
+  scale: string | null;
+  levels: number;
+  domains: string[];
+  external: boolean;
+  halt: string;
+  halt_meaning: string;
+  since: number | null;
+  url: string;
+  note: string;
+  source_id: string;
+}
+
+interface ResearchRecord {
+  key: string;
+  label: string;
+  role: string;
+  about: string;
+  query: string;
+  scope: string | null;
+  query_url: string;
+  points: Array<{ year: number; count: number }>;
+  total: number;
+  partial_year: number;
+  source_id: string;
+}
+
+const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
+const frameworks = frameworkFile as Dataset<FrameworkRecord>;
+const research = researchFile as Dataset<ResearchRecord>;
+const feed = feedFile as Dataset<NewsRecord>;
+
+const cites = [
+  ...new Set([...benchmarks.sources, ...frameworks.sources, ...research.sources, ...feed.sources]),
+];
+assertRenderable(...cites);
+
+/* The licence decision, read from the registry rather than written out here, so
+   that changing the registry changes the page. */
+const metr = getSource("metr-time-horizons");
+
+/* ---------------------------------------------------------------------------
+   1. The gauge. Fraction of the hardest published tests that are solved.
+   --------------------------------------------------------------------------- */
+const SOLVED_AT = 0.9;
+const solved = benchmarks.records.filter((b) => b.saturated_month);
+const openTests = benchmarks.records.filter((b) => !b.saturated_month);
+const fraction = solved.length / benchmarks.count;
+
+const hardest = [...openTests].sort((a, b) => a.latest_best - b.latest_best)[0];
+const nearest = [...openTests].sort((a, b) => b.latest_best - a.latest_best)[0];
+const learning = benchmarks.records.find((b) => b.category === "Learning from experience");
+
+/* Semicircular arc, drawn at build time. Radius and sweep are chosen so the
+   gauge reads at a glance and the needle position is the fraction itself, with
+   no scaling that could flatter it. */
+const GAUGE = { r: 108, cx: 130, cy: 124, w: 260, h: 148, stroke: 16 };
+const arcPoint = (t: number) => {
+  const angle = Math.PI * (1 - t);
+  return [GAUGE.cx + GAUGE.r * Math.cos(angle), GAUGE.cy - GAUGE.r * Math.sin(angle)];
+};
+const [startX, startY] = arcPoint(0);
+const [endX, endY] = arcPoint(1);
+const [valueX, valueY] = arcPoint(fraction);
+const track = `M${startX.toFixed(1)} ${startY.toFixed(1)} A${GAUGE.r} ${GAUGE.r} 0 0 1 ${endX.toFixed(1)} ${endY.toFixed(1)}`;
+const filled = `M${startX.toFixed(1)} ${startY.toFixed(1)} A${GAUGE.r} ${GAUGE.r} 0 ${fraction > 0.5 ? 1 : 0} 1 ${valueX.toFixed(1)} ${valueY.toFixed(1)}`;
+
+/* ---------------------------------------------------------------------------
+   2. Research volume. Log scale, because the series span five orders of
+      magnitude and a linear axis would render four of the six as a flat line.
+   --------------------------------------------------------------------------- */
+const years = research.records[0].points.map((p) => p.year);
+const partialYear = research.records[0].partial_year;
+/* Margins sized to the longest string each side has to hold, checked against the
+   rendered output rather than guessed. The left has to fit "1,000,000" in the
+   mono face; at 46 it clipped two characters and the axis read ",00,000". The
+   right has to fit "Catastrophic and existential risk"; at 168 it clipped every
+   label longer than 24 characters. */
+const RS = { w: 1040, h: 320, l: 66, r: 256, t: 14, b: 34 };
+const allCounts = research.records.flatMap((r) => r.points.map((p) => p.count)).filter((c) => c > 0);
+const rMin = Math.floor(Math.log10(Math.min(...allCounts)));
+const rMax = Math.ceil(Math.log10(Math.max(...allCounts)));
+const rx = (year: number) =>
+  RS.l + ((year - years[0]) / (years[years.length - 1] - years[0])) * (RS.w - RS.l - RS.r);
+const ry = (count: number) =>
+  RS.h - RS.b - ((Math.log10(Math.max(count, 1)) - rMin) / (rMax - rMin)) * (RS.h - RS.t - RS.b);
+
+/* One hue for capability, one for governance, and the safety areas separated by
+   opacity rather than by inventing four more colours. Lines are labelled at
+   their right end, which is why the right margin is wide. */
+const SERIES_STYLE: Record<string, { stroke: string; opacity: number }> = {
+  capability: { stroke: "var(--ink)", opacity: 0.55 },
+  governance: { stroke: "var(--accent-2)", opacity: 0.9 },
+  safety: { stroke: "var(--accent)", opacity: 1 },
+  interpretability: { stroke: "var(--accent)", opacity: 0.72 },
+  evaluation: { stroke: "var(--accent)", opacity: 0.52 },
+  catastrophic: { stroke: "var(--accent)", opacity: 0.34 },
+};
+
+const rawSeries = research.records.map((record) => {
+  const style = SERIES_STYLE[record.key] ?? SERIES_STYLE[record.role];
+  const d = record.points
+    .filter((p) => p.count > 0)
+    .map((p, i) => `${i === 0 ? "M" : "L"}${rx(p.year).toFixed(1)} ${ry(p.count).toFixed(1)}`)
+    .join(" ");
+  const last = record.points[record.points.length - 1];
+  return { ...record, ...style, d, endY: ry(last.count), lastCount: last.count };
+});
+
+/* Labels sit at the end of their own line, which is the right way to label six
+   series and the wrong way when two lines finish a few pixels apart: governance
+   and safety ended within four pixels of each other and printed on top of one
+   another. Push them apart from the top down, keeping the order, and draw a
+   leader line back to the true end point where a label has moved. */
+const LABEL_GAP = 13;
+const placed = [...rawSeries].sort((a, b) => a.endY - b.endY);
+let cursor = -Infinity;
+for (const item of placed) {
+  const y = Math.max(item.endY, cursor + LABEL_GAP);
+  (item as typeof item & { labelY: number }).labelY = y;
+  cursor = y;
+}
+const series = placed as Array<(typeof rawSeries)[number] & { labelY: number }>;
+
+/* Safety work as a share of frontier-model work, for the most recent complete
+   year. Stated as a ratio because the denominator is a different literature, not
+   a superset: a paper can be in both, and 15 papers per 100 is a comparison of
+   two counts rather than a proportion of one. */
+const capability = research.records.find((r) => r.key === "capability")!;
+const safetyKeys = research.records.filter((r) => r.role === "safety");
+const completeYear = partialYear - 1;
+const at = (record: ResearchRecord, year: number) =>
+  record.points.find((p) => p.year === year)?.count ?? 0;
+const safetyTotal = safetyKeys.reduce((sum, r) => sum + at(r, completeYear), 0);
+const capabilityTotal = at(capability, completeYear);
+const perHundred = capabilityTotal ? (safetyTotal / capabilityTotal) * 100 : 0;
+const safetyTotal2020 = safetyKeys.reduce((sum, r) => sum + at(r, 2020), 0);
+const perHundred2020 = at(capability, 2020) ? (safetyTotal2020 / at(capability, 2020)) * 100 : 0;
+
+/* ---------------------------------------------------------------------------
+   3. Frameworks and incidents.
+   --------------------------------------------------------------------------- */
+const withFramework = frameworks.records.filter((f) => f.framework);
+const halting = withFramework.filter((f) => f.halt === "yes");
+const externallyEvaluated = withFramework.filter((f) => f.external);
+const domainCounts = new Map<string, number>();
+for (const f of withFramework) {
+  for (const d of f.domains) domainCounts.set(d, (domainCounts.get(d) ?? 0) + 1);
+}
+const domains = [...domainCounts.entries()].sort((a, b) => b[1] - a[1]);
+
+const incidents = feed.records
+  .filter((r) => r.kind === "Reported incident")
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const checked = freshness(benchmarks.retrieved);
+const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+---
+
+<Base
+  title="Alignment"
+  description="The measurable state of AI alignment: which capability tests are solved, what developers have promised about stopping, how much safety research exists, and what has gone wrong."
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Alignment</h1>
+        <p class="masthead__meta mono">
+          {withFramework.length} of {frameworks.count} developers with a published framework
+          <span aria-hidden="true">/</span>
+          {research.count} research areas counted
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE GAUGE -->
+  <section class="section section--sunk section--hatch" id="how-close">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How close is AGI?</h2>
+        <p>
+          There is no agreed definition and therefore no agreed distance. These are the
+          measured quantities that bear on the question, each with its source.
+        </p>
+      </div>
+
+      <div class="gauge-row">
+        <figure class="gauge">
+          <svg
+            viewBox={`0 0 ${GAUGE.w} ${GAUGE.h}`}
+            role="img"
+            aria-label={`${solved.length} of ${benchmarks.count} tracked benchmarks are solved past ${pct(SOLVED_AT)}.`}
+          >
+            <path
+              d={track}
+              fill="none"
+              stroke="var(--surface-2)"
+              stroke-width={GAUGE.stroke}
+              stroke-linecap="round"></path>
+            <path
+              d={filled}
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width={GAUGE.stroke}
+              stroke-linecap="round"></path>
+            <text
+              x={GAUGE.cx}
+              y={GAUGE.cy - 26}
+              text-anchor="middle"
+              class="gauge__big">{solved.length}</text>
+            <text x={GAUGE.cx} y={GAUGE.cy - 6} text-anchor="middle" class="gauge__small">
+              of {benchmarks.count}
+            </text>
+          </svg>
+          <figcaption>
+            Tracked benchmarks whose best recorded score has passed {pct(SOLVED_AT)}
+            <Provenance
+              source={benchmarks.sources}
+              retrieved={benchmarks.retrieved}
+              label="figure"
+              note="Epoch AI's benchmark suite, which is 17 tests and not the set of everything worth measuring."
+            />
+          </figcaption>
+        </figure>
+
+        <ul class="facts">
+          <li>
+            <span class="facts__value num">{pct(nearest.latest_best)}</span>
+            <span class="facts__label">
+              best score on {nearest.benchmark}, the nearest test to falling
+            </span>
+          </li>
+          <li>
+            <span class="facts__value num">{pct(hardest.latest_best)}</span>
+            <span class="facts__label">
+              best score on {hardest.benchmark}, the hardest open test
+            </span>
+          </li>
+          {
+            learning && (
+              <li>
+                <span class="facts__value num">{pct(learning.latest_best)}</span>
+                <span class="facts__label">
+                  best score on {learning.benchmark}, which tests whether a model improves at an
+                  unfamiliar task by repeating it
+                </span>
+              </li>
+            )
+          }
+          <li>
+            <span class="facts__value num">{openTests.length}</span>
+            <span class="facts__label">tests still separating the leading models</span>
+          </li>
+        </ul>
+      </div>
+
+      <p class="caveat">
+        What this is not: a measure of general intelligence. It counts how much of the
+        available test supply has been exhausted, which moves both when models improve and
+        when people build harder tests. Ten of the {benchmarks.count} tests are mathematics,
+        and none of them measures acting over days, physical work, or judgement where there is
+        no checkable answer. A reader who takes this as a percentage of the way to AGI has
+        read more into it than it contains.
+      </p>
+
+      <div class="doc doc--tight">
+        <h3>Published estimates by other people</h3>
+        <ul>
+          <li>
+            <a href={metr.landing_page}>{metr.publisher}</a> measures the length of task that
+            frontier agents complete with 50 percent reliability, and reports that this length
+            has roughly doubled every seven months over several years, with a faster doubling
+            in the most recent period. Their measurements are not plotted here:
+            {" "}{metr.caveats.split(".")[1]?.trim()}. Follow the link for their own chart.
+          </li>
+          <li>
+            <a href="https://epoch.ai/benchmarks">Epoch AI</a> publishes the underlying
+            benchmark runs used on this page, and an aggregate capabilities index of its own.
+            Where this page fits a trend, the fit is ours and is labelled as such.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRAMEWORKS -->
+  <section class="section" id="frameworks">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What developers have promised</h2>
+        <p>
+          Published frontier safety frameworks, and what each commits to. Self-written and
+          self-assessed, with no common scale between them.
+        </p>
+      </div>
+
+      <ul class="strip">
+        <li class="strip__item">
+          <span class="strip__value">{withFramework.length}</span>
+          <span class="strip__label">
+            developers with a published framework
+            <Provenance
+              source={frameworks.sources}
+              retrieved={frameworks.retrieved}
+              label="figure"
+            />
+          </span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{halting.length}</span>
+          <span class="strip__label">that commit to stopping, rather than to deciding</span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{externallyEvaluated.length}</span>
+          <span class="strip__label">that commit to evaluation by someone else</span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{domains.length}</span>
+          <span class="strip__label">distinct risk domains named across all of them</span>
+        </li>
+      </ul>
+
+      <div class="scroll-x fw-table">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Frontier safety frameworks by developer, with the scale used, risk domains covered,
+            whether external evaluation is committed to, and what the document says about
+            stopping.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Developer</th>
+              <th scope="col" class="wrap-cell">Framework</th>
+              <th scope="col" class="wrap-cell">Its own scale</th>
+              <th scope="col">Domains</th>
+              <th scope="col">External eval</th>
+              <th scope="col">Commits to stop</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              frameworks.records.map((row) => (
+                <tr class:list={[!row.framework && "is-absent"]}>
+                  <th scope="row">{row.developer}</th>
+                  <td class="wrap-cell">
+                    {row.framework ? (
+                      <a href={row.url}>{row.framework}</a>
+                    ) : (
+                      <span class="muted-cell">none published</span>
+                    )}
+                    {row.since && <span class="muted-cell mono"> {row.since}</span>}
+                  </td>
+                  <td class="wrap-cell muted-cell">{row.scale ?? "-"}</td>
+                  <td class="muted-cell">{row.domains.join(", ") || "-"}</td>
+                  <td>{row.external ? "yes" : "not stated"}</td>
+                  <td title={row.halt_meaning}>{row.halt === "no-framework" ? "-" : row.halt}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <details class="reveal">
+        <summary>
+          What each framework says <span class="reveal__count">{frameworks.count}</span>
+        </summary>
+        <div class="reveal__body">
+          <ul class="notes">
+            {
+              frameworks.records.map((row) => (
+                <li>
+                  <strong>{row.developer}</strong>
+                  {row.note}
+                  <span class="notes__halt">{row.halt_meaning}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </details>
+
+      <p class="caveat">
+        Every column is what a developer says about itself, in a document it wrote and can
+        revise. None of these scales is comparable to any other, none is audited, and one of
+        the two binding instruments that requires a framework at all only started to apply in
+        2026. Read this as an index of promises, not of behaviour.
+        <Provenance source={frameworks.sources} retrieved={frameworks.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- RESEARCH VOLUME -->
+  <section class="section section--sunk" id="research">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How much research goes where</h2>
+        <p>
+          Works indexed by OpenAlex whose title or abstract matches each search phrase, by
+          publication year. Logarithmic axis; every series spans several orders of magnitude.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <figcaption class="chart__cap">
+          <span>
+            Indexed works per year by research area
+            <Provenance
+              source={research.sources}
+              retrieved={research.retrieved}
+              note="Counts are a keyword match on title and abstract, not a field classification. The exact query for each series is listed below the chart."
+            />
+          </span>
+          <span class="chart__meta mono">{years[0]} to {years[years.length - 1]}</span>
+        </figcaption>
+
+        <div class="scroll-x">
+          <svg viewBox={`0 0 ${RS.w} ${RS.h}`} class="plot" role="img"
+            aria-label={`Research volume by area, ${years[0]} to ${years[years.length - 1]}, logarithmic scale.`}>
+            {
+              Array.from({ length: rMax - rMin + 1 }, (_, i) => rMin + i).map((exp) => (
+                <g>
+                  <line
+                    x1={RS.l}
+                    x2={RS.w - RS.r}
+                    y1={ry(10 ** exp)}
+                    y2={ry(10 ** exp)}
+                    stroke="var(--line-soft)"
+                    stroke-width="1"
+                  />
+                  <text x={RS.l - 8} y={ry(10 ** exp) + 3} text-anchor="end" class="ax">
+                    {(10 ** exp).toLocaleString("en-GB")}
+                  </text>
+                </g>
+              ))
+            }
+            {
+              years
+                .filter((y) => y % 2 === 1)
+                .map((year) => (
+                  <text x={rx(year)} y={RS.h - 12} text-anchor="middle" class="ax">
+                    {year}
+                  </text>
+                ))
+            }
+            <line
+              x1={rx(partialYear)}
+              x2={rx(partialYear)}
+              y1={RS.t}
+              y2={RS.h - RS.b}
+              stroke="var(--line)"
+              stroke-width="1"
+              stroke-dasharray="3 3"
+            />
+            {
+              series.map((s) => (
+                <g>
+                  <path
+                    d={s.d}
+                    fill="none"
+                    stroke={s.stroke}
+                    stroke-opacity={s.opacity}
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  {Math.abs(s.labelY - s.endY) > 1 && (
+                    <line
+                      x1={RS.w - RS.r}
+                      x2={RS.w - RS.r + 6}
+                      y1={s.endY}
+                      y2={s.labelY}
+                      stroke={s.stroke}
+                      stroke-opacity={s.opacity * 0.6}
+                      stroke-width="1"
+                    />
+                  )}
+                  <text
+                    x={RS.w - RS.r + 9}
+                    y={s.labelY + 3}
+                    class="ax ax--label"
+                    fill={s.stroke}
+                    fill-opacity={Math.max(s.opacity, 0.7)}
+                  >
+                    {s.label}
+                  </text>
+                </g>
+              ))
+            }
+          </svg>
+        </div>
+
+        <p class="caveat">
+          For every 100 works on frontier models published in {completeYear}, there were
+          {" "}{perHundred.toFixed(0)} on safety, interpretability, evaluation or catastrophic
+          risk. In 2020 the same comparison gave {perHundred2020.toFixed(0)}. Both counts rose;
+          the ratio fell. The dashed line marks {partialYear}, which is incomplete, and
+          indexing lags publication, so the last two points understate every series.
+        </p>
+      </figure>
+
+      <details class="reveal">
+        <summary>
+          The exact query behind each line <span class="reveal__count">{research.count}</span>
+        </summary>
+        <div class="reveal__body">
+          <ul class="queries">
+            {
+              research.records.map((row) => (
+                <li>
+                  <span class="queries__label">{row.label}</span>
+                  <code>{row.query}</code>
+                  {row.scope && (
+                    <code class="queries__scope">and also matching {row.scope}</code>
+                  )}
+                  <span class="queries__about">{row.about}</span>
+                  <a href={row.query_url}>Run this query on OpenAlex</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- INCIDENTS -->
+  <section class="section" id="incidents">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Reported incidents</h2>
+        <p>
+          The most recent entries in the AI Incident Database. Headline and short extract only,
+          linking to the original report.
+        </p>
+      </div>
+
+      <ul class="feed">
+        {
+          incidents.slice(0, 12).map((item) => (
+            <li class="feed__row">
+              <div class="feed__meta">
+                <time class="mono" datetime={item.date}>
+                  {item.date}
+                </time>
+                {item.categories.map((c) => (
+                  <span class="tag">{c}</span>
+                ))}
+              </div>
+              <div class="feed__body">
+                <a href={item.url} class="feed__title">
+                  {item.title}
+                </a>
+                {item.snippet && <p class="feed__snippet">{item.snippet}</p>}
+                <p class="feed__pub">
+                  {item.publisher}
+                  <Provenance source={item.source_id} retrieved={feed.retrieved} label="item" />
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a href="/news/safety/" class="more">All safety items in the feed</a>
+
+      <p class="caveat">
+        Incidents are reported, not sampled. The database records what someone wrote about,
+        which means it measures press attention as much as harm, and an absence of incidents
+        in a country almost always means an absence of reporting rather than an absence of
+        incidents. Licensed ODbL: displayed here, never republished as a dataset.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT IS MISSING -->
+  <section class="section section--sunk">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What this page cannot show</h2>
+      </div>
+      <ul class="cards">
+        <li class="card">
+          <span class="card__title">Whether any model is aligned</span>
+          <p>
+            Nothing here measures that. Every quantity on this page is either a capability
+            score, a promise, or a count of papers.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">Task-length time horizons</span>
+          <p>
+            The best available measure of autonomous capability. Not plotted: the publisher's
+            analysis repository grants no reuse licence.
+          </p>
+          <span class="card__meta mono">
+            <a href={metr.landing_page}>See it at {metr.publisher}</a>
+          </span>
+        </li>
+        <li class="card">
+          <span class="card__title">Evaluation results per model</span>
+          <p>
+            Developers publish dangerous-capability evaluations in system cards as prose, in
+            PDFs, with no common format. There is no dataset to join.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">Incidents that nobody reported</span>
+          <p>
+            Which is most of them. Incident counts are a floor, and a floor that moves with
+            how much attention the press is paying.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .gauge-row {
+    display: grid;
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+    gap: 1.5rem 2.5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 720px) {
+    .gauge-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .gauge {
+    margin: 0;
+  }
+
+  .gauge svg {
+    inline-size: 100%;
+    block-size: auto;
+    display: block;
+  }
+
+  .gauge__big {
+    font-family: var(--f-mono);
+    font-size: 42px;
+    font-weight: 500;
+    fill: var(--ink);
+  }
+
+  .gauge__small {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    fill: var(--muted);
+  }
+
+  .gauge figcaption {
+    margin-block-start: 0.3rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .facts {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .facts li {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.45rem;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .facts li:first-child {
+    border-block-start: 0;
+  }
+
+  .facts__value {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-align: end;
+  }
+
+  .facts__label {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .doc--tight {
+    margin-block-start: 1.25rem;
+  }
+
+  .doc--tight h3 {
+    font-size: 0.9375rem;
+    margin-block-start: 0;
+  }
+
+  .is-absent th[scope="row"] {
+    color: var(--muted);
+  }
+
+  .fw-table td[title] {
+    cursor: help;
+  }
+
+  .notes {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-inline-size: 88ch;
+  }
+
+  .notes li {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .notes strong {
+    color: var(--ink);
+    margin-inline-end: 0.4rem;
+  }
+
+  .notes__halt {
+    display: block;
+    margin-block-start: 0.15rem;
+    font-size: 0.75rem;
+    color: var(--accent-ink);
+  }
+
+  .plot {
+    inline-size: 100%;
+    min-inline-size: 640px;
+    block-size: auto;
+    display: block;
+  }
+
+  .ax {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    fill: var(--muted);
+  }
+
+  .ax--label {
+    font-size: 11px;
+  }
+
+  .queries {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .queries li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.8125rem;
+  }
+
+  .queries__label {
+    font-weight: 500;
+  }
+
+  .queries code {
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    color: var(--accent-ink);
+    word-break: break-word;
+  }
+
+  .queries__scope {
+    opacity: 0.8;
+  }
+
+  .queries__about {
+    color: var(--muted);
+  }
+</style>
