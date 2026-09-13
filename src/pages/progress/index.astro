@@ -1,0 +1,704 @@
+---
+/**
+ * Progress: what models can do, grouped so a non-specialist can read it, and
+ * how fast the tests are running out.
+ *
+ * Split from /capability/ deliberately. Capability is about inputs: compute,
+ * cost, who builds them, how they ship. This page is about outputs: what comes
+ * out the other end, and the rate it is changing.
+ *
+ * The forward extrapolations here are the one place on this site that points
+ * past the last observation. They are labelled as extrapolations of a stated
+ * fit rather than as forecasts, the fit window is printed, and the reason a
+ * straight line is the wrong shape is printed next to it.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import Sparkline from "../../components/Sparkline.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+
+import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
+import releasesFile from "../../../data/processed/model-releases.json";
+
+interface BenchmarkRecord {
+  benchmark: string;
+  category: string;
+  category_note: string;
+  tier: string;
+  tier_meaning: string;
+  points: Array<{ month: string; best: number; model: string }>;
+  first_month: string;
+  latest_month: string;
+  latest_best: number;
+  saturated_month: string | null;
+  months_to_saturation: number | null;
+  runs: number;
+  source_id: string;
+}
+
+interface ReleaseRecord {
+  model: string;
+  organisation: string;
+  published: string;
+  org_category: string;
+  source_id: string;
+}
+
+const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
+const releases = releasesFile as Dataset<ReleaseRecord>;
+const cites = [...new Set([...benchmarks.sources, ...releases.sources])];
+assertRenderable(...cites);
+
+/* A benchmark counts as saturated at 0.9 rather than 0.95. The ETL records the
+   month the frontier first crossed 0.9, and using the same number here keeps the
+   page and the dataset saying one thing. 0.9 is the point past which a benchmark
+   has stopped separating the top few models, which is what saturation means in
+   practice. */
+const SATURATED_AT = 0.9;
+
+const monthIndex = (m: string) => {
+  const [y, mo] = m.split("-").map(Number);
+  return y * 12 + (mo - 1);
+};
+const monthLabel = (index: number) => {
+  const y = Math.floor(index / 12);
+  const m = index % 12;
+  return `${y}-${String(m + 1).padStart(2, "0")}`;
+};
+
+const all = [...benchmarks.records].sort((a, b) => b.latest_best - a.latest_best);
+const saturated = all.filter((b) => b.saturated_month);
+const open = all.filter((b) => !b.saturated_month);
+const hardest = [...open].sort((a, b) => a.latest_best - b.latest_best)[0];
+const latestMonth = all.reduce((m, b) => (b.latest_month > m ? b.latest_month : m), "");
+
+/* ---------------------------------------------------------------------------
+   1. Categories. Our own grouping, stamped on each record by the ETL.
+   --------------------------------------------------------------------------- */
+const categories = [...new Set(all.map((b) => b.category))]
+  .map((name) => {
+    const rows = all.filter((b) => b.category === name);
+    const best = Math.max(...rows.map((b) => b.latest_best));
+    return {
+      name,
+      note: rows[0].category_note,
+      rows,
+      best,
+      done: rows.filter((b) => b.saturated_month).length,
+      // The lead benchmark is the one with the best score, which is the number a
+      // reader will quote, so it has to be named rather than left implicit.
+      leader: rows.reduce((a, b) => (b.latest_best > a.latest_best ? b : a)),
+    };
+  })
+  .sort((a, b) => b.best - a.best);
+
+/* ---------------------------------------------------------------------------
+   2. Tiers, easiest first. The order is fixed here rather than derived, because
+      "who could do this" has an order and the data does not know it.
+   --------------------------------------------------------------------------- */
+const TIER_ORDER = ["school", "general", "olympiad", "professional", "expert", "research", "unsolved"];
+const tiers = TIER_ORDER.map((tier) => {
+  const rows = all.filter((b) => b.tier === tier);
+  return {
+    tier,
+    meaning: rows[0]?.tier_meaning ?? "",
+    rows,
+    best: rows.length ? Math.max(...rows.map((b) => b.latest_best)) : 0,
+    done: rows.filter((b) => b.saturated_month).length,
+  };
+}).filter((t) => t.rows.length > 0);
+
+/* ---------------------------------------------------------------------------
+   3. How long a benchmark stays useful, and where the current ones are headed.
+
+   For each unsaturated benchmark, fit a straight line to the frontier score over
+   the last two years and read off when it would reach 0.9. Scores are bounded
+   above at 1 and real progress on a benchmark is S-shaped, so a straight line
+   overstates near the top and understates at the bottom. That is stated on the
+   figure, not here.
+   --------------------------------------------------------------------------- */
+const FIT_MONTHS = 24;
+
+function fitSlope(points: Array<{ month: string; best: number }>) {
+  if (points.length < 3) return null;
+  const xs = points.map((p) => monthIndex(p.month));
+  const ys = points.map((p) => p.best);
+  const mx = xs.reduce((s, x) => s + x, 0) / xs.length;
+  const my = ys.reduce((s, y) => s + y, 0) / ys.length;
+  const denom = xs.reduce((s, x) => s + (x - mx) ** 2, 0);
+  if (denom === 0) return null;
+  const slope = xs.reduce((s, x, i) => s + (x - mx) * (ys[i] - my), 0) / denom;
+  return { slope, intercept: my - slope * mx };
+}
+
+const latestIndex = monthIndex(latestMonth);
+const projections = open
+  .map((bench) => {
+    const window = bench.points.filter((p) => monthIndex(p.month) >= latestIndex - FIT_MONTHS);
+    const fit = fitSlope(window);
+    if (!fit || fit.slope <= 0) {
+      return { bench, slope: fit?.slope ?? 0, months: null as number | null, reaches: null };
+    }
+    const target = (SATURATED_AT - fit.intercept) / fit.slope;
+    const months = Math.round(target - latestIndex);
+    return {
+      bench,
+      slope: fit.slope,
+      months: months > 0 ? months : 0,
+      reaches: monthLabel(Math.round(target)),
+    };
+  })
+  .sort((a, b) => (a.months ?? 9e9) - (b.months ?? 9e9));
+
+const moving = projections.filter((p) => p.months !== null);
+const stalled = projections.filter((p) => p.months === null);
+
+/* How many tests fell in the last year, which is a rate rather than a level and
+   is the number that moves. Counted from the month the frontier crossed 0.9. */
+const recentlySolved = saturated.filter(
+  (b) => b.saturated_month && monthIndex(b.saturated_month) >= latestIndex - 12,
+).length;
+
+/* Observed time from a benchmark's first recorded run to the month it crossed
+   0.9, for the ones that have. Five points: small enough that the median is
+   reported and no trend is fitted through them. */
+const durations = saturated
+  .map((b) => b.months_to_saturation)
+  .filter((m): m is number => m !== null)
+  .sort((a, b) => a - b);
+const medianMonths = durations.length
+  ? durations.length % 2
+    ? durations[(durations.length - 1) / 2]
+    : (durations[durations.length / 2 - 1] + durations[durations.length / 2]) / 2
+  : 0;
+
+/* ---------------------------------------------------------------------------
+   4. Release cadence. How many notable models appear per quarter.
+   --------------------------------------------------------------------------- */
+const FROM_YEAR = 2019;
+const quarters = new Map<string, number>();
+for (const r of releases.records) {
+  const year = Number(r.published.slice(0, 4));
+  if (year < FROM_YEAR) continue;
+  const q = Math.floor((Number(r.published.slice(5, 7)) - 1) / 3) + 1;
+  const key = `${year}-Q${q}`;
+  quarters.set(key, (quarters.get(key) ?? 0) + 1);
+}
+const cadence = [...quarters.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+const cadenceMax = Math.max(...cadence.map(([, n]) => n));
+// The quarter in progress is incomplete by definition and would read as a drop.
+const partialQuarter = cadence[cadence.length - 1][0];
+
+const checked = freshness(benchmarks.retrieved);
+const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+---
+
+<Base
+  title="Progress"
+  description="What AI models can do, grouped by skill and by difficulty: benchmark scores, how long each test stayed useful, and where the current ones are headed."
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Progress</h1>
+        <p class="masthead__meta mono">
+          {benchmarks.count} benchmarks
+          <span aria-hidden="true">/</span>
+          {categories.length} categories
+          <span aria-hidden="true">/</span>
+          to {latestMonth}
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+        </p>
+      </div>
+
+      <ul class="strip">
+        <li class="strip__item">
+          <span class="strip__value">{saturated.length} of {benchmarks.count}</span>
+          <span class="strip__label">
+            benchmarks solved past {pct(SATURATED_AT)}
+            <Provenance
+              source={benchmarks.sources}
+              retrieved={benchmarks.retrieved}
+              label="figure"
+              note="Counted from the month the running best score first reached 0.9."
+            />
+          </span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{medianMonths}</span>
+          <span class="strip__label">
+            median months from a benchmark's first run to being solved
+          </span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{pct(hardest.latest_best)}</span>
+          <span class="strip__label">best score on {hardest.benchmark}, the hardest open test</span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{recentlySolved}</span>
+          <span class="strip__label">solved in the last twelve months</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section section--sunk" id="categories">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Capability by category</h2>
+        <p>
+          Best score any evaluated model has reached in each area, with the benchmark it came
+          from. Categories are ours; the scores are Epoch's.
+        </p>
+      </div>
+
+      <ul class="cats">
+        {
+          categories.map((cat) => (
+            <li class="cat">
+              <div class="cat__head">
+                <h3>{cat.name}</h3>
+                <span class="cat__score num">{pct(cat.best)}</span>
+              </div>
+              <div
+                class="cat__track"
+                role="img"
+                aria-label={`Best score ${pct(cat.best)}`}
+              >
+                <span class="cat__fill" style={`--w:${(cat.best * 100).toFixed(1)}%`} />
+                <span class="cat__mark" style={`--at:${SATURATED_AT * 100}%`} />
+              </div>
+              <p class="cat__note">{cat.note}</p>
+              <p class="cat__meta mono">
+                {cat.leader.benchmark}
+                <span aria-hidden="true"> / </span>
+                {cat.done} of {cat.rows.length} solved
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="caveat">
+        Ten of the {benchmarks.count} benchmarks Epoch tracks are mathematics, so this grid
+        measures what has been built to test as much as what models can do. There is no
+        benchmark here for long-horizon work, physical tasks or judgement under uncertainty.
+        <Provenance source={benchmarks.sources} retrieved={benchmarks.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- TIERS -->
+  <section class="section" id="tiers">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>By who else could do it</h2>
+        <p>
+          The same benchmarks ordered by the difficulty of the questions rather than the
+          subject. Difficulty tiers are our own reading of what each test contains.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Benchmarks grouped by difficulty tier, with the best recorded score in each.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Tier</th>
+              <th scope="col" class="wrap-cell">Meaning</th>
+              <th scope="col" class="ta-end">Tests</th>
+              <th scope="col" class="ta-end">Solved</th>
+              <th scope="col" class="ta-end">Best score</th>
+              <th scope="col" class="bar-col">
+                <span class="visually-hidden">Best score</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              tiers.map((tier) => (
+                <tr>
+                  <th scope="row" class="cap">{tier.tier}</th>
+                  <td class="wrap-cell muted-cell">{tier.meaning}</td>
+                  <td class="ta-end num">{tier.rows.length}</td>
+                  <td class="ta-end num">{tier.done}</td>
+                  <td class="ta-end num">{pct(tier.best)}</td>
+                  <td class="bar-col">
+                    <span
+                      class="bar"
+                      style={`--w:${(tier.best * 100).toFixed(1)}%`}
+                      aria-hidden="true"
+                    />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTION -->
+  <section class="section section--sunk" id="projection">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>If the current rate held</h2>
+        <p>
+          Each open benchmark's frontier score over the last {FIT_MONTHS} months, extended in a
+          straight line to {pct(SATURATED_AT)}. An extrapolation of a fitted line, not a forecast.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Open benchmarks with the current best score, the fitted monthly rate of improvement,
+            and the month a straight-line extension of that rate would reach 90 percent.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Benchmark</th>
+              <th scope="col">Category</th>
+              <th scope="col" class="ta-end">Best now</th>
+              <th scope="col" class="ta-end">Rate</th>
+              <th scope="col" class="ta-end">Straight line hits {pct(SATURATED_AT)}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              moving.map((row) => (
+                <tr>
+                  <th scope="row">{row.bench.benchmark}</th>
+                  <td class="muted-cell">{row.bench.category}</td>
+                  <td class="ta-end num">{pct(row.bench.latest_best)}</td>
+                  <td class="ta-end num muted-cell">
+                    +{(row.slope * 100).toFixed(1)} pts/month
+                  </td>
+                  <td class="ta-end num">
+                    {row.reaches}
+                    <span class="muted-cell"> ({row.months}mo)</span>
+                  </td>
+                </tr>
+              ))
+            }
+            {
+              stalled.map((row) => (
+                <tr>
+                  <th scope="row">{row.bench.benchmark}</th>
+                  <td class="muted-cell">{row.bench.category}</td>
+                  <td class="ta-end num">{pct(row.bench.latest_best)}</td>
+                  <td class="ta-end num muted-cell">flat or falling</td>
+                  <td class="ta-end muted-cell">not on this trend</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        Two things make these dates optimistic in opposite directions, and neither is corrected
+        for. The series fitted is a running maximum, so it can never fall and a fitted rate can
+        never be negative: a benchmark that has stopped improving reads as zero, never as
+        decline. And a straight line is the wrong shape, because benchmark progress is usually
+        flat, then steep, then flat again against the ceiling, so early numbers here run late
+        and late ones run early. A straight line is used anyway because it is the one shape
+        that cannot be tuned to flatter the result. Rows marked flat or falling have a fitted
+        rate of zero, meaning no evaluated model has beaten the existing best in the window.
+        <Provenance
+          source={benchmarks.sources}
+          retrieved={benchmarks.retrieved}
+          note="Fitted by this site from Epoch's evaluation runs. Epoch publishes no such projection."
+        />
+      </p>
+    </div>
+  </section>
+
+  <!-- FRONTIER LINES -->
+  <section class="section" id="lines">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The frontier on every benchmark</h2>
+        <p>
+          Running best score by month. The dashed line is {pct(SATURATED_AT)}, the point past
+          which a test stops separating the leading models.
+        </p>
+      </div>
+    </div>
+
+    <div class="rail scroll-x">
+      <ul class="rail__track">
+        {
+          all.map((bench) => (
+            <li class="bcard">
+              <p class="bcard__name">{bench.benchmark}</p>
+              <p class="bcard__score num">
+                {(bench.latest_best * 100).toFixed(1)}
+                <span class="bcard__pct">%</span>
+              </p>
+              <Sparkline points={bench.points} marker={SATURATED_AT} />
+              <p class="bcard__meta mono">
+                {bench.first_month} to {bench.latest_month}
+              </p>
+              <p class="bcard__state">
+                {
+                  bench.saturated_month
+                    ? `Solved ${bench.saturated_month}, ${bench.months_to_saturation} months`
+                    : `${bench.category}, ${bench.tier}`
+                }
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="wrap">
+      <p class="caveat">
+        Mixes evaluation runs performed by Epoch AI with externally reported scores, which are
+        not strictly comparable. The line is the best available capability at each point in
+        time, not the typical one, and one unusually strong model moves it permanently.
+        <Provenance source={benchmarks.sources} retrieved={benchmarks.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- CADENCE -->
+  <section class="section section--sunk" id="cadence">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Notable models released per quarter</h2>
+        <p>
+          Models meeting Epoch's notability criteria, by publication quarter since {FROM_YEAR}.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="cadence" role="img" aria-label={`Notable model releases per quarter since ${FROM_YEAR}, peaking at ${cadenceMax}.`}>
+          {
+            cadence.map(([key, n]) => (
+              <span
+                class:list={["cadence__col", key === partialQuarter && "is-partial"]}
+                style={`--h:${(n / cadenceMax) * 100}%`}
+                title={`${key}: ${n} models`}
+              >
+                <span class="cadence__label mono">{key.endsWith("Q1") ? key.slice(2, 4) : ""}</span>
+              </span>
+            ))
+          }
+        </div>
+        <figcaption class="key">
+          <span class="key__item">
+            <span class="key__swatch" />
+            complete quarter
+          </span>
+          <span class="key__item">
+            <span class="key__swatch" style="--swatch:var(--surface-2)" />
+            {partialQuarter}, still in progress
+          </span>
+          <Provenance source={releases.sources} retrieved={releases.retrieved} />
+        </figcaption>
+      </figure>
+
+      <p class="caveat">
+        Counts models Epoch judged notable, which is a curation decision rather than a census.
+        A rise partly reflects more models and partly reflects more attention being paid to
+        them. The final bar covers a quarter that has not finished.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Related</h2>
+      </div>
+      <ul class="cards">
+        <li class="card">
+          <a href="/capability/" class="card__title">Capability</a>
+          <p>What the models cost to build, who builds them, and how they ship.</p>
+        </li>
+        <li class="card">
+          <a href="/alignment/" class="card__title">Alignment</a>
+          <p>What is known about steering these systems, and who has promised what.</p>
+        </li>
+        <li class="card">
+          <a href="/capability/#thresholds" class="card__title">Compute thresholds</a>
+          <p>The training-compute lines written into law, and which models cross them.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Category cards. A track with a saturation marker rather than a plain bar,
+     because the number that matters is distance from the ceiling. */
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cat {
+    padding: 0.8rem 0.9rem;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+  }
+
+  .cat__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .cat__score {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .cat__track {
+    position: relative;
+    block-size: 0.5rem;
+    margin-block: 0.5rem 0.55rem;
+    border-radius: var(--r-mark);
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+
+  .cat__fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--w);
+    background: var(--accent);
+  }
+
+  .cat__mark {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--at);
+    inline-size: 1px;
+    background: var(--ink);
+    opacity: 0.55;
+  }
+
+  .cat__note {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .cat__meta {
+    margin-block-start: 0.4rem;
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .cap {
+    text-transform: capitalize;
+  }
+
+  /* Benchmark rail. Horizontal scroll-snap so seventeen small charts do not
+     become seventeen rows of vertical scrolling. */
+  .rail {
+    padding-inline: clamp(1rem, 3.5vw, 2.5rem);
+    scroll-snap-type: x proximity;
+  }
+
+  .rail__track {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    inline-size: max-content;
+  }
+
+  .bcard {
+    inline-size: 14rem;
+    flex: none;
+    scroll-snap-align: start;
+    padding: 0.75rem 0.85rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+  }
+
+  .bcard__name {
+    font-size: 0.75rem;
+    color: var(--muted);
+    min-block-size: 2.2em;
+    line-height: 1.3;
+  }
+
+  .bcard__score {
+    font-size: 1.375rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-block: 0.15rem 0.3rem;
+  }
+
+  .bcard__pct {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin-inline-start: 0.1rem;
+  }
+
+  .bcard__meta {
+    margin-block-start: 0.35rem;
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .bcard__state {
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  /* Release cadence columns. */
+  .cadence {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    block-size: 140px;
+    padding-block-end: 1.1rem;
+    border-block-end: 1px solid var(--line);
+  }
+
+  .cadence__col {
+    position: relative;
+    flex: 1;
+    min-inline-size: 4px;
+    block-size: var(--h);
+    border-radius: var(--r-mark) var(--r-mark) 0 0;
+    background: var(--accent);
+    opacity: 0.85;
+  }
+
+  .cadence__col.is-partial {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+
+  .cadence__label {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    font-size: 0.625rem;
+    color: var(--muted);
+    padding-block-start: 0.2rem;
+  }
+</style>

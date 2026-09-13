@@ -1,16 +1,20 @@
 {
   "dataset": "benchmark-frontier",
-  "generated": "2026-09-13T04:35:38+00:00",
-  "retrieved": "2026-09-13T04:35:38+00:00",
+  "generated": "2026-09-13T07:56:41+00:00",
+  "retrieved": "2026-09-13T02:56:05+00:00",
   "sources": [
     "epoch-benchmarks"
   ],
   "unit": "score (0 to 1)",
-  "notes": "Best score achieved on each benchmark by any evaluated model, as a running maximum by month. Mixes Epoch's own evaluation runs with externally reported scores, which are not strictly comparable. A rising line shows the best available capability, not the typical one.",
+  "notes": "Best score achieved on each benchmark by any evaluated model, as a running maximum by month. Mixes Epoch's own evaluation runs with externally reported scores, which are not strictly comparable. A rising line shows the best available capability, not the typical one. Category and difficulty tier are our own classification, not Epoch's.",
   "count": 17,
   "records": [
     {
       "benchmark": "OTIS Mock AIME 2024-2025",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "olympiad",
+      "tier_meaning": "Competition problems at national olympiad standard.",
       "points": [
         {
           "month": "2023-03",
@@ -206,11 +210,17 @@
       "first_month": "2023-03",
       "latest_month": "2026-09",
       "latest_best": 1.0,
+      "saturated_month": "2025-08",
+      "months_to_saturation": 29,
       "runs": 38,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-Tier-4-2025-07-01-Public",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "research",
+      "tier_meaning": "Problems that need a working researcher, sometimes hours of one.",
       "points": [
         {
           "month": "2024-06",
@@ -301,11 +311,17 @@
       "first_month": "2024-06",
       "latest_month": "2026-06",
       "latest_best": 1.0,
+      "saturated_month": "2026-06",
+      "months_to_saturation": 24,
       "runs": 17,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-2025-02-28-Public",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "research",
+      "tier_meaning": "Problems that need a working researcher, sometimes hours of one.",
       "points": [
         {
           "month": "2024-06",
@@ -426,11 +442,17 @@
       "first_month": "2024-06",
       "latest_month": "2026-06",
       "latest_best": 1.0,
+      "saturated_month": "2026-02",
+      "months_to_saturation": 20,
       "runs": 23,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "MATH level 5",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "school",
+      "tier_meaning": "Problems a strong secondary-school student could do.",
       "points": [
         {
           "month": "2023-06",
@@ -561,11 +583,17 @@
       "first_month": "2023-06",
       "latest_month": "2025-10",
       "latest_best": 0.9813,
+      "saturated_month": "2024-12",
+      "months_to_saturation": 18,
       "runs": 25,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-Tier-4-v2-Private",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "research",
+      "tier_meaning": "Problems that need a working researcher, sometimes hours of one.",
       "points": [
         {
           "month": "2025-01",
@@ -651,11 +679,17 @@
       "first_month": "2025-01",
       "latest_month": "2026-09",
       "latest_best": 0.976,
+      "saturated_month": "2026-06",
+      "months_to_saturation": 17,
       "runs": 16,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "GPQA diamond",
+      "category": "Science knowledge",
+      "category_note": "Answering science questions that resist search.",
+      "tier": "expert",
+      "tier_meaning": "Problems that need a specialist in the field.",
       "points": [
         {
           "month": "2023-03",
@@ -856,11 +890,17 @@
       "first_month": "2023-03",
       "latest_month": "2026-09",
       "latest_best": 0.9577,
+      "saturated_month": "2025-11",
+      "months_to_saturation": 32,
       "runs": 39,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-Tiers-1-3-v2-Private",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "research",
+      "tier_meaning": "Problems that need a working researcher, sometimes hours of one.",
       "points": [
         {
           "month": "2024-01",
@@ -971,11 +1011,17 @@
       "first_month": "2024-01",
       "latest_month": "2026-09",
       "latest_best": 0.9368,
+      "saturated_month": "2026-09",
+      "months_to_saturation": 32,
       "runs": 21,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "Mystery Game Puzzles",
+      "category": "Games and planning",
+      "category_note": "Choosing well in a game with rules and a long horizon.",
+      "tier": "general",
+      "tier_meaning": "Problems most adults could do, given the time.",
       "points": [
         {
           "month": "2023-06",
@@ -1071,11 +1117,17 @@
       "first_month": "2023-06",
       "latest_month": "2026-09",
       "latest_best": 0.84,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 18,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "SWE-Bench verified",
+      "category": "Software engineering",
+      "category_note": "Making a real codebase pass tests it was failing.",
+      "tier": "professional",
+      "tier_meaning": "Real work from the job, taken from real projects.",
       "points": [
         {
           "month": "2024-11",
@@ -1156,11 +1208,17 @@
       "first_month": "2024-11",
       "latest_month": "2026-06",
       "latest_best": 0.8347,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 15,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "EBR-bench",
+      "category": "Learning from experience",
+      "category_note": "Getting better at an unfamiliar task by repeating it.",
+      "tier": "general",
+      "tier_meaning": "Problems most adults could do, given the time.",
       "points": [
         {
           "month": "2025-08",
@@ -1226,11 +1284,17 @@
       "first_month": "2025-08",
       "latest_month": "2026-09",
       "latest_best": 0.7619,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 12,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "SimpleQA Verified",
+      "category": "Factual accuracy",
+      "category_note": "Answering short factual questions without inventing an answer.",
+      "tier": "general",
+      "tier_meaning": "Problems most adults could do, given the time.",
       "points": [
         {
           "month": "2024-02",
@@ -1341,11 +1405,17 @@
       "first_month": "2024-02",
       "latest_month": "2026-09",
       "latest_best": 0.756,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 21,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "MirrorCode",
+      "category": "Software engineering",
+      "category_note": "Making a real codebase pass tests it was failing.",
+      "tier": "professional",
+      "tier_meaning": "Real work from the job, taken from real projects.",
       "points": [
         {
           "month": "2026-02",
@@ -1381,11 +1451,17 @@
       "first_month": "2026-02",
       "latest_month": "2026-09",
       "latest_best": 0.733,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 6,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "Chess Puzzles",
+      "category": "Games and planning",
+      "category_note": "Choosing well in a game with rules and a long horizon.",
+      "tier": "expert",
+      "tier_meaning": "Problems that need a specialist in the field.",
       "points": [
         {
           "month": "2023-06",
@@ -1546,11 +1622,17 @@
       "first_month": "2023-06",
       "latest_month": "2026-09",
       "latest_best": 0.72,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 31,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-2025-02-28-Private",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "research",
+      "tier_meaning": "Problems that need a working researcher, sometimes hours of one.",
       "points": [
         {
           "month": "2024-06",
@@ -1666,11 +1748,17 @@
       "first_month": "2024-06",
       "latest_month": "2026-05",
       "latest_best": 0.524,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 22,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-Tier-4-2025-07-01-Private",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "research",
+      "tier_meaning": "Problems that need a working researcher, sometimes hours of one.",
       "points": [
         {
           "month": "2024-06",
@@ -1761,11 +1849,17 @@
       "first_month": "2024-06",
       "latest_month": "2026-05",
       "latest_best": 0.479,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 17,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "OEIS Open Lite",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "unsolved",
+      "tier_meaning": "Problems nobody has a published answer to.",
       "points": [
         {
           "month": "2026-04",
@@ -1791,11 +1885,17 @@
       "first_month": "2026-04",
       "latest_month": "2026-07",
       "latest_best": 0.44,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 4,
       "source_id": "epoch-benchmarks"
     },
     {
       "benchmark": "FrontierMath-Erdos",
+      "category": "Mathematics",
+      "category_note": "Solving stated mathematical problems with a checkable answer.",
+      "tier": "unsolved",
+      "tier_meaning": "Problems nobody has a published answer to.",
       "points": [
         {
           "month": "2026-04",
@@ -1821,6 +1921,8 @@
       "first_month": "2026-04",
       "latest_month": "2026-09",
       "latest_best": 0.0294,
+      "saturated_month": null,
+      "months_to_saturation": null,
       "runs": 4,
       "source_id": "epoch-benchmarks"
     }

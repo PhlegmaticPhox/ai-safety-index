@@ -65,6 +65,20 @@ ACCESS_CLASSES = {
 }
 
 
+def _months_between(start: str | None, end: str | None) -> int | None:
+    """Whole months between two "YYYY-MM" strings, or None if either is missing.
+
+    None means "has not happened yet", which is a different statement from zero
+    and must not collapse into it: a benchmark nobody has saturated and one
+    saturated on the day it was published would otherwise print the same number.
+    """
+    if not start or not end:
+        return None
+    sy, sm = (int(part) for part in start.split("-"))
+    ey, em = (int(part) for part in end.split("-"))
+    return (ey - sy) * 12 + (em - sm)
+
+
 def _access(value: str | None) -> str:
     """Group accessibility, keeping "not recorded" distinct from "unreleased".
 
@@ -176,6 +190,60 @@ def _build_thresholds(models: list[dict], retrieved: str) -> None:
     )
 
 
+# Our own grouping of Epoch's benchmarks into things a non-specialist can hold in
+# their head. Epoch's CSV has no category column, so this is a classification we
+# are adding, and it is labelled as ours wherever it is rendered.
+#
+# `tier` answers the question a lay reader actually asks about a benchmark score,
+# which is not "what is GPQA" but "who else could do this". It is a statement
+# about the difficulty of the questions, not about the model.
+#
+# A task that appears upstream and is not listed here fails the build. That is
+# deliberate: the alternative is a silent "Other" bucket that grows until the
+# categories mean nothing, and Epoch adds benchmarks regularly.
+BENCHMARK_CATEGORIES = {
+    "OTIS Mock AIME 2024-2025": ("Mathematics", "olympiad"),
+    "MATH level 5": ("Mathematics", "school"),
+    "FrontierMath-2025-02-28-Public": ("Mathematics", "research"),
+    "FrontierMath-2025-02-28-Private": ("Mathematics", "research"),
+    "FrontierMath-Tiers-1-3-v2-Private": ("Mathematics", "research"),
+    "FrontierMath-Tier-4-2025-07-01-Public": ("Mathematics", "research"),
+    "FrontierMath-Tier-4-2025-07-01-Private": ("Mathematics", "research"),
+    "FrontierMath-Tier-4-v2-Private": ("Mathematics", "research"),
+    "FrontierMath-Erdos": ("Mathematics", "unsolved"),
+    "OEIS Open": ("Mathematics", "unsolved"),
+    "OEIS Open Lite": ("Mathematics", "unsolved"),
+    "GPQA diamond": ("Science knowledge", "expert"),
+    "SimpleQA Verified": ("Factual accuracy", "general"),
+    "SWE-Bench verified": ("Software engineering", "professional"),
+    "MirrorCode": ("Software engineering", "professional"),
+    "Chess Puzzles": ("Games and planning", "expert"),
+    "Mystery Game Puzzles": ("Games and planning", "general"),
+    "EBR-bench": ("Learning from experience", "general"),
+}
+
+# What each tier means, in one line, for the reader who has never met the
+# benchmark. Ordered easiest first, which is the order they are plotted in.
+TIERS = {
+    "school": "Problems a strong secondary-school student could do.",
+    "general": "Problems most adults could do, given the time.",
+    "olympiad": "Competition problems at national olympiad standard.",
+    "professional": "Real work from the job, taken from real projects.",
+    "expert": "Problems that need a specialist in the field.",
+    "research": "Problems that need a working researcher, sometimes hours of one.",
+    "unsolved": "Problems nobody has a published answer to.",
+}
+
+CATEGORY_NOTES = {
+    "Mathematics": "Solving stated mathematical problems with a checkable answer.",
+    "Science knowledge": "Answering science questions that resist search.",
+    "Factual accuracy": "Answering short factual questions without inventing an answer.",
+    "Software engineering": "Making a real codebase pass tests it was failing.",
+    "Games and planning": "Choosing well in a game with rules and a long horizon.",
+    "Learning from experience": "Getting better at an unfamiliar task by repeating it.",
+}
+
+
 def build_benchmarks(offline: bool) -> None:
     path, retrieved = fetch(BENCHMARKS, offline=offline)
     rows = read_csv(path)
@@ -221,13 +289,31 @@ def build_benchmarks(offline: bool) -> None:
                     "model": point["model"],
                 }
             )
+        if task not in BENCHMARK_CATEGORIES:
+            raise ValueError(
+                f"Benchmark {task!r} has no category. Epoch has added a task since this "
+                f"mapping was written. Add it to BENCHMARK_CATEGORIES with a tier rather "
+                f"than letting it fall into an unlabelled bucket."
+            )
+        category, tier = BENCHMARK_CATEGORIES[task]
+
+        # Months from the first recorded run to the first month the frontier
+        # crossed 90 percent. This is how long a benchmark stayed useful, and it
+        # is the number the saturation story is actually about.
+        crossed = next((p["month"] for p in frontier if p["best"] >= 0.9), None)
         records.append(
             {
                 "benchmark": task,
+                "category": category,
+                "category_note": CATEGORY_NOTES[category],
+                "tier": tier,
+                "tier_meaning": TIERS[tier],
                 "points": frontier,
                 "first_month": frontier[0]["month"],
                 "latest_month": frontier[-1]["month"],
                 "latest_best": frontier[-1]["best"],
+                "saturated_month": crossed,
+                "months_to_saturation": _months_between(frontier[0]["month"], crossed),
                 "runs": len(points),
                 "source_id": BENCHMARKS,
             }
@@ -244,7 +330,8 @@ def build_benchmarks(offline: bool) -> None:
             "Best score achieved on each benchmark by any evaluated model, as a running "
             "maximum by month. Mixes Epoch's own evaluation runs with externally reported "
             "scores, which are not strictly comparable. A rising line shows the best "
-            "available capability, not the typical one."
+            "available capability, not the typical one. Category and difficulty tier are "
+            "our own classification, not Epoch's."
         ),
         retrieved=retrieved,
     )
