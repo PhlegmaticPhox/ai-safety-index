@@ -1,0 +1,313 @@
+{
+  "dataset": "enterprise-ai-industry",
+  "generated": "2026-09-13T06:10:19+00:00",
+  "retrieved": "2026-09-13T06:10:19+00:00",
+  "sources": [
+    "eurostat-ai-enterprises"
+  ],
+  "unit": "percent of enterprises",
+  "notes": "EU27 enterprises with ten or more people employed using at least one AI technology, by economic activity, 2025. NACE classes nest: broad groupings and their own components both appear, so this is a lookup rather than a partition and the shares do not sum to anything meaningful.",
+  "count": 50,
+  "records": [
+    {
+      "code": "J62_J63",
+      "label": "Computer programming, consultancy, and information service activities",
+      "share": 65.7,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "J",
+      "label": "Information and communication",
+      "share": 62.5,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "ICT",
+      "label": "Information and Communication Technology - total",
+      "share": 60.1,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "J58-J60",
+      "label": "Publishing, motion picture, video, television programme production; sound recording, programming and broadcasting activities",
+      "share": 56.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "M72",
+      "label": "Scientific research and development",
+      "share": 52.1,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "M73-M75",
+      "label": "Advertising and market research; other professional, scientific and technical activities; veterinary activities",
+      "share": 48.0,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C21",
+      "label": "Manufacture of basic pharmaceutical products and pharmaceutical preparations",
+      "share": 41.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "M",
+      "label": "Professional, scientific and technical activities",
+      "share": 40.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "J61",
+      "label": "Telecommunications",
+      "share": 39.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "L_M",
+      "label": "Real estate activities; professional, scientific and technical activities",
+      "share": 38.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "M69-M71",
+      "label": "Legal and accounting activities; activities of head offices; management consultancy activities; architectural and engineering activities; technical testing and analysis",
+      "share": 37.9,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C26",
+      "label": "Manufacture of computer, electronic and optical products",
+      "share": 37.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "N79",
+      "label": "Travel agency, tour operator and other reservation service and related activities",
+      "share": 35.0,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "D",
+      "label": "Electricity, gas, steam and air conditioning supply",
+      "share": 33.6,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "D35",
+      "label": "Electricity, gas, steam and air conditioning supply",
+      "share": 33.6,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C19",
+      "label": "Manufacture of coke and refined petroleum products",
+      "share": 30.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C20",
+      "label": "Manufacture of chemicals and chemical products",
+      "share": 28.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C27",
+      "label": "Manufacture of electrical equipment",
+      "share": 25.9,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C27_C28",
+      "label": "Manufacture of electrical equipment, machinery and equipment n.e.c.",
+      "share": 25.6,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C28",
+      "label": "Manufacture of machinery and equipment n.e.c.",
+      "share": 25.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "L",
+      "label": "Real estate activities",
+      "share": 24.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "L68",
+      "label": "Real estate activities",
+      "share": 24.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "S951",
+      "label": "Repair of computers and communication equipment",
+      "share": 24.5,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C29_C30",
+      "label": "Manufacture of motor vehicles, trailers, semi-trailers and of other transport equipment",
+      "share": 23.9,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "G46",
+      "label": "Wholesale trade, except of motor vehicles and motorcycles",
+      "share": 23.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "G45-S951_X_K",
+      "label": "Services, without financial sector",
+      "share": 23.0,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C26-C33",
+      "label": "Manufacture of computers, electric and optical products, electrical equipment, machinery and equipment n.e.c, motor vehicles, other transport equipment, furniture, other manufacturing, repair and installation of machinery and equipment",
+      "share": 22.7,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "I55",
+      "label": "Accommodation",
+      "share": 21.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C19-C23",
+      "label": "Manufacture of coke, refined petroleum, chemical and basic pharmaceutical products, rubber and plastics, other non-metallic mineral products",
+      "share": 20.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C10-S951_X_K",
+      "label": "All activities (except agriculture, forestry and fishing, and mining and quarrying), without financial sector",
+      "share": 19.9,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "N",
+      "label": "Administrative and support service activities",
+      "share": 19.9,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "N77-N82_X_N79",
+      "label": "Activities for rental and leasing, employment, security and investigation, services to buildings and landscape, office administrative, office support and other business support",
+      "share": 19.1,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "G",
+      "label": "Wholesale and retail trade; repair of motor vehicles and motorcycles",
+      "share": 18.6,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "D_E",
+      "label": "Electricity, gas, steam and air conditioning supply; water supply; sewerage, waste management and remediation activities",
+      "share": 18.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C",
+      "label": "Manufacturing",
+      "share": 17.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C-E",
+      "label": "Manufacturing, electricity, gas, steam and air conditioning; water supply, sewerage, waste management and remediation activities",
+      "share": 17.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C31-C33",
+      "label": "Manufacture of furniture; jewellery, musical instruments, toys; repair and installation of machinery and equipment",
+      "share": 17.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C22_C23",
+      "label": "Manufacture of rubber and plastic products and other non-metallic mineral products",
+      "share": 16.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C16-C18",
+      "label": "Manufacture of wood, paper, printing and reproduction",
+      "share": 15.6,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "G47",
+      "label": "Retail trade, except of motor vehicles and motorcycles",
+      "share": 15.5,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C-F",
+      "label": "Manufacturing, electricity, gas, steam and air conditioning supply; water supply and construction",
+      "share": 14.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C24_C25",
+      "label": "Manufacture of basic metals and fabricated metal products, except machinery and equipment",
+      "share": 14.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "G45",
+      "label": "Wholesale and retail trade and repair of motor vehicles and motorcycles",
+      "share": 14.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C10-C18",
+      "label": "Manufacture of products based on: food, beverages, tobacco, textile, leather, wood, pulp and paper; publishing and printing",
+      "share": 13.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E",
+      "label": "Water supply; sewerage, waste management and remediation activities",
+      "share": 13.1,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C10-C12",
+      "label": "Manufacture of food products; beverages and tobacco products",
+      "share": 12.5,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "C13-C15",
+      "label": "Manufacture of textiles, wearing apparel, leather and related products",
+      "share": 12.0,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "I",
+      "label": "Accommodation and food service activities",
+      "share": 12.0,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "H",
+      "label": "Transportation and storage",
+      "share": 11.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "F",
+      "label": "Construction",
+      "share": 10.8,
+      "source_id": "eurostat-ai-enterprises"
+    }
+  ]
+}

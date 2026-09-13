@@ -50,6 +50,24 @@ const NAME_ALIASES: Record<string, string> = {
   "Turkiye": "TUR",
 };
 
+/**
+ * Eurostat geo codes that are not ISO 3166-1 alpha-2.
+ *
+ * Eurostat uses EL for Greece and UK for the United Kingdom, both of which are
+ * its own convention rather than the ISO code. Passing either to a library that
+ * expects ISO returns nothing, which drops the country from the join in silence.
+ */
+const EUROSTAT_CODES: Record<string, string> = {
+  EL: "GRC",
+  UK: "GBR",
+};
+
+/** ISO alpha-3 from an alpha-2 code, tolerating Eurostat's two exceptions. */
+export function alpha3FromAlpha2(code: string): string | null {
+  const upper = code.toUpperCase();
+  return EUROSTAT_CODES[upper] ?? countries.alpha2ToAlpha3(upper) ?? null;
+}
+
 /** ISO alpha-3 for a country name, or null when we genuinely cannot tell. */
 export function alpha3(name: string): string | null {
   const alias = NAME_ALIASES[name];

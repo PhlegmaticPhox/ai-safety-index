@@ -1,0 +1,62 @@
+{
+  "dataset": "enterprise-ai-technology",
+  "generated": "2026-09-13T06:10:18+00:00",
+  "retrieved": "2026-09-13T06:10:18+00:00",
+  "sources": [
+    "eurostat-ai-enterprises"
+  ],
+  "unit": "percent of enterprises",
+  "notes": "EU27 enterprises with ten or more people employed, by which AI technology they use, 2025. Shares overlap: a firm using three of them is counted in all three, so these do not sum to the headline adoption rate. Only the seven technologies the questionnaire asks about individually are listed; Eurostat's 'at least one', 'at least two' and 'none' totals are summaries of these and would double count.",
+  "count": 7,
+  "records": [
+    {
+      "code": "E_AI_TTM",
+      "label": "Text mining",
+      "full_label": "Enterprises using AI technologies performing analysis of written language (text mining)",
+      "share": 11.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E_AI_TNLG",
+      "label": "Text or speech generation",
+      "full_label": "Enterprises using AI technologies generating written or spoken language or programming codes (natural language generation, speech synthesis)",
+      "share": 8.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E_AI_TSR",
+      "label": "Speech recognition",
+      "full_label": "Enterprises using AI technologies converting spoken language into machine-readable format (speech recognition)",
+      "share": 7.2,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E_AI_TPA",
+      "label": "Workflow automation or decision support",
+      "full_label": "Enterprises using AI technologies automating different workflows or assisting in decision making (AI based software robotic process automation)",
+      "share": 5.3,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E_AI_TML",
+      "label": "Machine learning for data analysis",
+      "full_label": "Enterprises using machine learning (e.g. deep learning) for data analysis",
+      "share": 5.1,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E_AI_TIR",
+      "label": "Image recognition",
+      "full_label": "Enterprises using AI technologies identifying objects or persons based on images (image recognition, image processing)",
+      "share": 3.8,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "E_AI_TAR",
+      "label": "Autonomous robots and vehicles",
+      "full_label": "Enterprises using AI technologies enabling physical movement of machines via autonomous decisions based on observation of surroundings (autonomous robots, self-driving vehicles, autonomous drones)",
+      "share": 1.4,
+      "source_id": "eurostat-ai-enterprises"
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "dataset": "enterprise-ai-country",
+  "generated": "2026-09-13T06:10:16+00:00",
+  "retrieved": "2026-09-13T06:10:16+00:00",
+  "sources": [
+    "eurostat-ai-enterprises"
+  ],
+  "unit": "percent of enterprises",
+  "notes": "Share of enterprises with ten or more people employed using at least one of seven AI technologies, 2025 survey wave. Covers all activities except agriculture, forestry, fishing, mining and finance. The EU27 figure is 19.9 percent. Self-reported by the enterprise, so it measures what firms say they use and what they recognise as AI.",
+  "count": 34,
+  "records": [
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "share": 42.0,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "share": 37.8,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "share": 35.0,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "share": 34.5,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "LU",
+      "name": "Luxembourg",
+      "share": 33.6,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "share": 33.2,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "AT",
+      "name": "Austria",
+      "share": 29.9,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "share": 28.9,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "share": 26.0,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "EE",
+      "name": "Estonia",
+      "share": 23.4,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "SI",
+      "name": "Slovenia",
+      "share": 21.6,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "MT",
+      "name": "Malta",
+      "share": 21.5,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "EA",
+      "name": "Euro area (EA11-1999, EA12-2001, EA13-2007, EA15-2008, EA16-2009, EA17-2011, EA18-2014, EA19-2015, EA20-2023, EA21-2026)",
+      "share": 21.4,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "share": 21.3,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "share": 20.3,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "share": 19.6,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "share": 18.2,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "SK",
+      "name": "Slovakia",
+      "share": 18.0,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "CZ",
+      "name": "Czechia",
+      "share": 17.6,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "share": 16.4,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "HR",
+      "name": "Croatia",
+      "share": 15.2,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "LV",
+      "name": "Latvia",
+      "share": 12.2,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "share": 11.5,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "BA",
+      "name": "Bosnia and Herzegovina",
+      "share": 10.8,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "HU",
+      "name": "Hungary",
+      "share": 10.4,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "ME",
+      "name": "Montenegro",
+      "share": 10.1,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "RS",
+      "name": "Serbia",
+      "share": 10.1,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "CY",
+      "name": "Cyprus",
+      "share": 9.3,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "AL",
+      "name": "Albania",
+      "share": 9.0,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "EL",
+      "name": "Greece",
+      "share": 8.9,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "BG",
+      "name": "Bulgaria",
+      "share": 8.6,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "share": 8.4,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "TR",
+      "name": "Türkiye",
+      "share": 7.4,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "code": "RO",
+      "name": "Romania",
+      "share": 5.2,
+      "year": "2025",
+      "source_id": "eurostat-ai-enterprises"
+    }
+  ]
+}

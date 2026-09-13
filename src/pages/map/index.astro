@@ -446,8 +446,7 @@ const unmatched = governance.records
                     <span
                       class:list={["gap", row.gap >= 15 && "is-use", row.gap <= -15 && "is-gov"]}
                     >
-                      {row.gap > 0 ? "+" : ""}
-                      {Math.round(row.gap)}
+                      {`${row.gap > 0 ? "+" : ""}${Math.round(row.gap)}`}
                     </span>
                   </td>
                   <td class="muted-cell">

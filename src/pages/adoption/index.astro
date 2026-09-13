@@ -1,0 +1,692 @@
+---
+/**
+ * Adoption: who is actually using AI, on both sides of the employment relation.
+ *
+ * The page exists because the two halves are usually reported separately and
+ * the interesting thing is the gap between them. Eurostat asks enterprises what
+ * they use; Microsoft estimates what populations use. In most of Europe the
+ * population is well ahead of its employers, which is a different picture from
+ * the one either dataset gives on its own.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import StatTile from "../../components/StatTile.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { alpha3, alpha3FromAlpha2 } from "../../lib/geo";
+
+import countryFile from "../../../data/processed/enterprise-ai-country.json";
+import sizeFile from "../../../data/processed/enterprise-ai-size.json";
+import techFile from "../../../data/processed/enterprise-ai-technology.json";
+import industryFile from "../../../data/processed/enterprise-ai-industry.json";
+import exposureFile from "../../../data/processed/ai-exposure.json";
+
+interface CountryRecord {
+  code: string;
+  name: string;
+  share: number;
+  year: string;
+  source_id: string;
+}
+interface SizeRecord {
+  size: string;
+  label: string;
+  share: number;
+  source_id: string;
+}
+interface TechRecord {
+  code: string;
+  label: string;
+  full_label: string;
+  share: number;
+  source_id: string;
+}
+interface IndustryRecord {
+  code: string;
+  label: string;
+  share: number;
+  source_id: string;
+}
+interface ExposureRecord {
+  entity: string;
+  latest: number;
+  latest_period: string;
+  source_id: string;
+}
+
+const byCountry = countryFile as Dataset<CountryRecord>;
+const bySize = sizeFile as Dataset<SizeRecord>;
+const byTech = techFile as Dataset<TechRecord>;
+const byIndustry = industryFile as Dataset<IndustryRecord>;
+const exposure = exposureFile as Dataset<ExposureRecord>;
+
+const cites = [
+  ...new Set([...byCountry.sources, ...exposure.sources]),
+];
+assertRenderable(...cites);
+
+const year = byCountry.records[0]?.year ?? "";
+const period = exposure.records[0]?.latest_period ?? "";
+
+/* Individuals against enterprises. Eurostat is keyed by its own two-letter geo
+   code, Microsoft by economy name, so both go through ISO alpha-3 to meet. */
+const peopleByCode = new Map<string, number>();
+for (const record of exposure.records) {
+  const code = alpha3(record.entity);
+  if (code) peopleByCode.set(code, record.latest);
+}
+
+interface Paired {
+  name: string;
+  firms: number;
+  people: number;
+  gap: number;
+}
+
+const paired: Paired[] = byCountry.records
+  .map((row) => {
+    const iso = alpha3FromAlpha2(row.code);
+    const people = iso ? peopleByCode.get(iso) : undefined;
+    return people === undefined
+      ? null
+      : { name: row.name, firms: row.share, people, gap: people - row.share };
+  })
+  .filter((row): row is Paired => row !== null)
+  .sort((a, b) => b.gap - a.gap);
+
+const pairedMax = Math.max(...paired.flatMap((r) => [r.firms, r.people]));
+const peopleAhead = paired.filter((r) => r.gap > 0).length;
+const medianGap = [...paired].sort((a, b) => a.gap - b.gap)[Math.floor(paired.length / 2)];
+
+/* Size gradient. The single clearest finding in the enterprise data. */
+const sizes = bySize.records;
+const smallest = sizes[0];
+const largest = sizes[sizes.length - 1];
+const sizeMax = Math.max(...sizes.map((s) => s.share));
+
+/* Industry. NACE classes nest, so the aggregates have to be kept out of the
+   ranked lists. Codes containing a digit are divisions or division ranges; bare
+   letters and letter ranges are whole sections that contain them. Filtering to
+   the former is what stops "Information and communication" being ranked against
+   "Computer programming", which is one of its own parts. */
+const industryDetail = byIndustry.records.filter((row) => /\d/.test(row.code));
+const industryTop = industryDetail.slice(0, 14);
+const industryBottom = [...industryDetail].slice(-6).reverse();
+const industryMax = Math.max(...industryDetail.map((r) => r.share));
+const allActivities = byIndustry.records.find((r) => r.code === "C10-S951_X_K");
+
+const techs = byTech.records;
+const techMax = Math.max(...techs.map((t) => t.share));
+
+const countryMax = Math.max(...byCountry.records.map((r) => r.share));
+const checked = freshness(byCountry.retrieved);
+---
+
+<Base
+  title="Adoption | AI Safety Index"
+  description="Who is using AI: enterprises by country, size and industry, set against the share of the population using it."
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Adoption</h1>
+        <p class="masthead__meta mono">
+          {byCountry.count} economies
+          <span aria-hidden="true">/</span>
+          {byIndustry.count} activity classes
+          <span aria-hidden="true">/</span>
+          {year} survey
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Two questions that are usually asked separately. Eurostat asks enterprises what they use.
+        Microsoft estimates what populations use. Setting them side by side shows something
+        neither gives alone: in most of Europe, people are using AI well ahead of the
+        organisations that employ them.
+      </p>
+
+      <div class="bento">
+        <StatTile
+          span={2}
+          emphasis
+          value={largest.share.toFixed(0)}
+          unit="%"
+          label="Large EU enterprises using at least one AI technology"
+          detail={`Against ${smallest.share.toFixed(0)} percent of firms with ${smallest.label.replace(" staff", " people employed")}. Adoption scales with headcount more cleanly than with anything else here.`}
+          source={bySize.sources}
+          retrieved={bySize.retrieved}
+          note="EU27, enterprises with 250 or more people employed, 2025 survey wave."
+        >
+          <ul class="leaders" aria-hidden="true">
+            {
+              sizes.map((row) => (
+                <li>
+                  <span class="leaders__name">{row.label}</span>
+                  <span
+                    class="leaders__bar"
+                    style={`--w:${((row.share / sizeMax) * 100).toFixed(1)}%`}
+                  />
+                  <span class="leaders__val num">{row.share}%</span>
+                </li>
+              ))
+            }
+          </ul>
+        </StatTile>
+
+        <StatTile
+          span={2}
+          value={allActivities ? allActivities.share.toFixed(1) : "n/a"}
+          unit="%"
+          label="All EU enterprises with ten or more staff using AI"
+          detail={`Ranging from ${byCountry.records[0].name} at ${byCountry.records[0].share} percent to ${byCountry.records[byCountry.records.length - 1].name} at ${byCountry.records[byCountry.records.length - 1].share} percent.`}
+          source={byCountry.sources}
+          retrieved={byCountry.retrieved}
+        />
+
+        <StatTile
+          span={2}
+          value={peopleAhead.toString()}
+          unit={`of ${paired.length}`}
+          label="Economies where the population is ahead of its employers"
+          detail={`Median gap ${medianGap.gap > 0 ? "+" : ""}${medianGap.gap.toFixed(0)} points. Two different surveys asking two different questions, so read the direction, not the size.`}
+          source={[...byCountry.sources, ...exposure.sources]}
+          retrieved={exposure.retrieved}
+          note="Share of working-age population using AI tools, minus share of enterprises with ten or more staff using at least one AI technology."
+        />
+
+        <StatTile
+          span={3}
+          value={techs[0].label}
+          label="Most used AI technology in EU enterprises"
+          detail={`${techs[0].share} percent of firms. Shares overlap: a firm using three is counted in all three.`}
+          source={byTech.sources}
+          retrieved={byTech.retrieved}
+        >
+          <ul class="leaders leaders--tech">
+            {
+              techs.slice(1, 5).map((row) => (
+                <li>
+                  <span class="leaders__name">{row.label}</span>
+                  <span
+                    class="leaders__bar"
+                    style={`--w:${((row.share / techMax) * 100).toFixed(1)}%`}
+                    aria-hidden="true"
+                  />
+                  <span class="leaders__val num">{row.share}%</span>
+                </li>
+              ))
+            }
+          </ul>
+        </StatTile>
+
+        <StatTile
+          span={3}
+          value={industryDetail[0].share.toFixed(1)}
+          unit="%"
+          label={`Highest adopting activity: ${industryDetail[0].label.toLowerCase()}`}
+          detail={`Against ${industryDetail[industryDetail.length - 1].share} percent in ${industryDetail[industryDetail.length - 1].label.toLowerCase()}.`}
+          source={byIndustry.sources}
+          retrieved={byIndustry.retrieved}
+          note="EU27, enterprises with ten or more people employed, 2025."
+        >
+          <ul class="leaders leaders--tech">
+            {
+              industryDetail.slice(1, 5).map((row) => (
+                <li>
+                  <span class="leaders__name">{row.label}</span>
+                  <span
+                    class="leaders__bar"
+                    style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
+                    aria-hidden="true"
+                  />
+                  <span class="leaders__val num">{row.share}%</span>
+                </li>
+              ))
+            }
+          </ul>
+        </StatTile>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEOPLE AGAINST FIRMS -->
+  <section class="section section--sunk" id="gap">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>People against their employers</h2>
+        <p>
+          Share of the working-age population using AI tools, against the share of enterprises
+          doing the same. {peopleAhead} of {paired.length} economies have the population ahead.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <table class="grid-table">
+            <caption class="visually-hidden">
+              Share of population and share of enterprises using AI, by economy, ordered by the
+              gap between them.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Economy</th>
+                <th scope="col" class="ta-end">People</th>
+                <th scope="col" class="ta-end">Enterprises</th>
+                <th scope="col" class="ta-end">Gap</th>
+                <th scope="col" class="bar-col">
+                  <span class="visually-hidden">People against enterprises</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                paired.map((row) => (
+                  <tr>
+                    <th scope="row">{row.name}</th>
+                    <td class="ta-end num">{row.people.toFixed(1)}%</td>
+                    <td class="ta-end num">{row.firms.toFixed(1)}%</td>
+                    <td class="ta-end num">
+                      <span class:list={["gap", row.gap > 0 && "is-people"]}>
+                        {`${row.gap > 0 ? "+" : ""}${row.gap.toFixed(0)}`}
+                      </span>
+                    </td>
+                    <td class="bar-col">
+                      <span class="duo" aria-hidden="true">
+                        <span
+                          class="duo__bar duo__bar--people"
+                          style={`--w:${((row.people / pairedMax) * 100).toFixed(1)}%`}
+                        />
+                        <span
+                          class="duo__bar duo__bar--firms"
+                          style={`--w:${((row.firms / pairedMax) * 100).toFixed(1)}%`}
+                        />
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="keyrow">
+          <span class="key"><span class="key__swatch key__swatch--people"></span>Population</span>
+          <span class="key"><span class="key__swatch key__swatch--firms"></span>Enterprises</span>
+          <Provenance
+            source={[...byCountry.sources, ...exposure.sources]}
+            retrieved={byCountry.retrieved}
+            note={`Population figures are ${period}; enterprise figures are the ${year} survey wave.`}
+            label="table"
+          />
+        </div>
+
+        <p class="caveat">
+          These are two surveys asking two different questions, and the gap between them is not a
+          single measured quantity. Eurostat asks a firm whether it uses any of seven named
+          technologies, which a firm can answer "no" to while its staff use a chatbot daily.
+          Microsoft estimates individual use from its own telemetry, scaled by a model. The
+          direction of the gap is worth something; its exact size is not. Both exclude firms with
+          fewer than ten people employed, where most of Europe actually works.
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- SIZE -->
+  <section class="section" id="size">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Adoption scales with headcount</h2>
+        <p>
+          The cleanest gradient in the enterprise data. A firm with 250 or more people employed is
+          more than three times as likely to use AI as one with fewer than 50.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <table class="bars">
+          <caption class="visually-hidden">
+            EU27 enterprises using at least one AI technology, by number of people employed.
+          </caption>
+          <tbody>
+            {
+              sizes.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  <td class="ta-end num">{row.share}%</td>
+                  <td class="bar-col">
+                    <span
+                      class="bar"
+                      style={`--w:${((row.share / sizeMax) * 100).toFixed(1)}%`}
+                      aria-hidden="true"
+                    />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+
+        <p class="caveat">
+          Eurostat also publishes overlapping roll-up classes, 0 to 9 and 10 to 249, which are
+          excluded here: plotting a bar next to the bars it contains counts the same firms twice.
+          Firms with fewer than ten people employed are outside the survey population, so the
+          smallest employers in Europe are missing from every figure on this page.
+          <Provenance source={bySize.sources} retrieved={bySize.retrieved} />
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- INDUSTRY -->
+  <section class="section section--sunk" id="industry">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>By what the firm does</h2>
+        <p>
+          Information and computing at one end, hospitality and construction at the other. The
+          spread across activities is wider than the spread across countries.
+        </p>
+      </div>
+
+      <div class="pair">
+        <figure class="chart">
+          <figcaption class="chart__cap">
+            <span>Highest adoption</span>
+            <span class="chart__meta mono">top {industryTop.length}</span>
+          </figcaption>
+          <table class="bars">
+            <caption class="visually-hidden">
+              Highest adopting economic activities, EU27.
+            </caption>
+            <tbody>
+              {
+                industryTop.map((row) => (
+                  <tr>
+                    <th scope="row" class="wrap-cell">{row.label}</th>
+                    <td class="ta-end num">{row.share}%</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar bar--thin"
+                        style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </figure>
+
+        <figure class="chart">
+          <figcaption class="chart__cap">
+            <span>Lowest adoption</span>
+            <span class="chart__meta mono">bottom {industryBottom.length}</span>
+          </figcaption>
+          <table class="bars">
+            <caption class="visually-hidden">
+              Lowest adopting economic activities, EU27.
+            </caption>
+            <tbody>
+              {
+                industryBottom.map((row) => (
+                  <tr>
+                    <th scope="row" class="wrap-cell">{row.label}</th>
+                    <td class="ta-end num">{row.share}%</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar bar--thin"
+                        style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </figure>
+      </div>
+
+      <p class="caveat">
+        NACE activity classes nest: broad groupings and their own components both appear in
+        Eurostat's table, so these are a lookup rather than a partition and the shares sum to
+        nothing meaningful. The aggregate rows and the broadest groupings are filtered out here so
+        a category is not ranked against its own contents.
+        <Provenance source={byIndustry.sources} retrieved={byIndustry.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY -->
+  <section class="section" id="technology">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What they use it for</h2>
+        <p>
+          The seven technologies the survey asks about individually. Language work leads; the
+          physical ones trail a long way behind.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <table class="bars">
+          <caption class="visually-hidden">
+            EU27 enterprises by AI technology used.
+          </caption>
+          <tbody>
+            {
+              techs.map((row) => (
+                <tr>
+                  <th scope="row" class="wrap-cell">
+                    {row.label}
+                    <span class="full-label">{row.full_label}</span>
+                  </th>
+                  <td class="ta-end num">{row.share}%</td>
+                  <td class="bar-col">
+                    <span
+                      class="bar"
+                      style={`--w:${((row.share / techMax) * 100).toFixed(1)}%`}
+                      aria-hidden="true"
+                    />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+
+        <p class="caveat">
+          Shares overlap and do not sum to the headline rate: a firm using three of these is
+          counted in all three. Labels are shortened for reading; Eurostat's full wording is under
+          each one. The summary indicators Eurostat also publishes, for "at least one", "at least
+          two" and "none", are omitted because they are totals of these seven.
+          <Provenance source={byTech.sources} retrieved={byTech.retrieved} />
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- COUNTRY -->
+  <section class="section section--sunk" id="country">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>By country</h2>
+        <p>
+          Enterprises with ten or more people employed, using at least one AI technology,
+          {year}.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <table class="bars">
+            <caption class="visually-hidden">
+              Share of enterprises using at least one AI technology, by country, {year}.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Country</th>
+                <th scope="col" class="ta-end">Enterprises using AI</th>
+                <th scope="col" class="bar-col">
+                  <span class="visually-hidden">Relative magnitude</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                byCountry.records.map((row) => (
+                  <tr>
+                    <th scope="row">{row.name}</th>
+                    <td class="ta-end num">{row.share}%</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar"
+                        style={`--w:${((row.share / countryMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <p class="caveat">
+          The EU aggregate and the euro area are excluded from this list, because they are made of
+          the countries in it. A few reporting non-members are included, which is Eurostat's own
+          survey population rather than a choice of ours.
+          <Provenance source={byCountry.sources} retrieved={byCountry.retrieved} />
+        </p>
+      </figure>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+    margin-block-start: 1.75rem;
+  }
+
+  .leaders {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0.7rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.75rem;
+  }
+
+  .leaders li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .leaders--tech li {
+    grid-template-columns: minmax(0, 1fr) 4rem auto;
+  }
+
+  .leaders__name {
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .leaders__bar {
+    block-size: 0.3rem;
+    inline-size: var(--w);
+    border-radius: var(--r-mark);
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .leaders__val {
+    color: var(--muted);
+  }
+
+  /* Two bars stacked in one cell, so a row reads as a comparison rather than as
+     two numbers that happen to be adjacent. */
+  .duo {
+    display: grid;
+    gap: 2px;
+  }
+
+  .duo__bar {
+    display: block;
+    inline-size: var(--w);
+    block-size: 0.4rem;
+    border-radius: var(--r-mark);
+  }
+
+  .duo__bar--people {
+    background: var(--accent);
+    opacity: 0.85;
+  }
+
+  .duo__bar--firms {
+    background: var(--accent-2);
+    opacity: 0.85;
+  }
+
+  .keyrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    margin-block-start: 1rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .key {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .key__swatch {
+    inline-size: 0.8rem;
+    block-size: 0.8rem;
+    border-radius: var(--r-mark);
+  }
+
+  .key__swatch--people {
+    background: var(--accent);
+  }
+
+  .key__swatch--firms {
+    background: var(--accent-2);
+  }
+
+  /* Sign is carried by the number; colour only reinforces it. */
+  .gap.is-people {
+    color: var(--accent);
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.5rem 2.5rem;
+  }
+
+  .full-label {
+    display: block;
+    max-inline-size: 46ch;
+    margin-block-start: 0.15rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    white-space: normal;
+  }
+</style>

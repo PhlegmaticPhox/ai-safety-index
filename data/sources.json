@@ -281,6 +281,20 @@
       "redistribution": "permitted-with-attribution",
       "cadence": "daily",
       "caveats": "Departmental news releases are political statements about policy, not neutral descriptions of it. The Open Government Licence forbids suggesting the Government of Canada endorses this site, which it does not."
+    },
+    "eurostat-ai-enterprises": {
+      "name": "Use of artificial intelligence in enterprises",
+      "publisher": "Eurostat",
+      "publisher_url": "https://ec.europa.eu/eurostat",
+      "landing_page": "https://ec.europa.eu/eurostat/web/digital-economy-and-society/database",
+      "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/isoc_eb_ai",
+      "format": "json",
+      "licence": "EC-reuse-2011-833-EU",
+      "licence_url": "https://ec.europa.eu/eurostat/about-us/policies/copyright",
+      "attribution": "Source: Eurostat, isoc_eb_ai and isoc_eb_ain2. Reused under Commission Decision 2011/833/EU.",
+      "redistribution": "permitted-with-attribution",
+      "cadence": "annual",
+      "caveats": "Self-reported by enterprises in the ICT usage survey, so it measures what firms say they use and what they recognise as AI. Covers the EU plus a few reporting non-members, and only enterprises with ten or more people employed unless the size dimension says otherwise. Agriculture, forestry, fishing, mining and the financial sector are outside the survey population entirely. Small cells are suppressed rather than zero, and NACE activity classes nest, so shares by industry do not partition anything."
     }
   }
 }

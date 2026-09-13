@@ -1,0 +1,31 @@
+{
+  "dataset": "enterprise-ai-size",
+  "generated": "2026-09-13T06:10:17+00:00",
+  "retrieved": "2026-09-13T06:10:17+00:00",
+  "sources": [
+    "eurostat-ai-enterprises"
+  ],
+  "unit": "percent of enterprises",
+  "notes": "EU27 enterprises using at least one AI technology, by number of people employed, 2025. The overlapping roll-up classes Eurostat also publishes (0 to 9, 10 to 249) are excluded, because plotting them next to their own components counts the same firms twice.",
+  "count": 3,
+  "records": [
+    {
+      "size": "10-49",
+      "label": "10 to 49 staff",
+      "share": 17.0,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "size": "50-249",
+      "label": "50 to 249 staff",
+      "share": 30.4,
+      "source_id": "eurostat-ai-enterprises"
+    },
+    {
+      "size": "GE250",
+      "label": "250 or more staff",
+      "share": 55.0,
+      "source_id": "eurostat-ai-enterprises"
+    }
+  ]
+}
