@@ -12,6 +12,7 @@ never a hotlinked image. The snippet cap below is the mechanism, not a guideline
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import sys
@@ -50,20 +51,35 @@ def _clean(text: str | None) -> str:
     """
     if not text:
         return ""
-    text = re.sub(r"<[^>]+>", " ", text)
-    text = (
-        text.replace("&amp;", "&")
-        .replace("&lt;", "<")
-        .replace("&gt;", ">")
-        .replace("&quot;", '"')
-        .replace("&#39;", "'")
-        .replace("&nbsp;", " ")
-        .replace("&mdash;", "-")
-        .replace("&ndash;", "-")
-        .replace(" - ", "-")
-        .replace(" - ", "-")
-    )
+    # Unescape and strip twice: some feeds double-encode their markup, and a single
+    # pass leaks literal "<span>" text into the snippet.
+    for _ in range(2):
+        text = html.unescape(text)
+        text = re.sub(r"<[^>]+>", " ", text)
+    # Written as escapes on purpose. Spelling these as literal characters once let a
+    # project-wide dash sweep rewrite this line AND its self-check into a matching
+    # pair that passed while doing nothing.
+    text = text.replace("—", "-").replace("–", "-")
     return re.sub(r"\s+", " ", text).strip()
+
+
+# Drupal-backed feeds, the Commission's among them, put the article title, an author
+# placeholder and a formatted timestamp in front of the body text.
+BOILERPLATE = [
+    re.compile(r"Anonymous\s*\(not verified\)", re.IGNORECASE),
+    re.compile(r"\b\w{3},\s*\d{2}/\d{2}/\d{4}\s*-\s*\d{1,2}:\d{2}\b"),
+    re.compile(r"\bSubmitted by\b.*?\bon\b", re.IGNORECASE),
+]
+
+
+def _strip_preamble(summary: str, title: str) -> str:
+    """Drop the repeated title and feed furniture from the front of a summary."""
+    text = _clean(summary)
+    if title and text.lower().startswith(title.lower()):
+        text = text[len(title):]
+    for pattern in BOILERPLATE:
+        text = pattern.sub(" ", text)
+    return re.sub(r"\s+", " ", text).strip(" .,-")
 
 
 ELLIPSIS = "..."
@@ -189,7 +205,9 @@ def fetch_xml_feed(
     records = []
     for item in items:
         title = item["title"]
-        summary = _clean(item["summary"])
+        # Strip the repeated title, author placeholder and timestamp that
+        # Drupal-backed feeds put in front of the body.
+        summary = _strip_preamble(item["summary"], title)
         if not title or not item["url"]:
             continue
         if needs_filter and not _relevant(title, summary):
@@ -312,10 +330,20 @@ def _self_check() -> None:
     assert _normalise_date("Thu, 11 Sep 2026 10:00:00 +0000") == "2026-09-11"
     assert _normalise_date("nonsense") == ""
 
-    for dashed in ("a - b", "a - b", "x&mdash;y"):
-        assert " - " not in _clean(dashed) and " - " not in _clean(dashed), (
-            f"dash normalisation failed on {dashed!r}"
+    for dashed in ("a — b", "a – b", "x&mdash;y", "p &lt;span&gt;q&lt;/span&gt; r"):
+        cleaned = _clean(dashed)
+        assert "—" not in cleaned and "–" not in cleaned, (
+            f"dash normalisation failed on {dashed!r} -> {cleaned!r}"
         )
+        assert "<" not in cleaned and "&" not in cleaned, (
+            f"markup leaked through _clean on {dashed!r} -> {cleaned!r}"
+        )
+
+    ec = ("State of the Union 2026 Anonymous (not verified) Mon, 08/31/2026 - 16:11 "
+          "The President set out the priorities.")
+    stripped = _strip_preamble(ec, "State of the Union 2026")
+    assert "Anonymous" not in stripped and "08/31/2026" not in stripped, stripped
+    assert stripped.startswith("The President"), stripped
 
     print("fetch_policy_feeds self-check passed")
 
