@@ -78,11 +78,17 @@ site build with no network.
 
 All data is reproduced from third parties under their own licences and remains theirs. Each
 source's terms are recorded in `data/sources.json` and shown in the UI next to the figures it
-produces. Current sources include Epoch AI and Our World in Data (CC BY 4.0), Microsoft's AI
-Diffusion Report (MIT), and the US Federal Register and GOV.UK (public domain / OGL v3.0).
+produces. Current sources include Epoch AI (CC BY 4.0), Microsoft's AI Diffusion Report (MIT),
+Eurostat (Decision 2011/833/EU), OpenAlex (CC0), and the news feed's eight government, preprint
+and incident sources.
 
-Original work in this repository - site code, written explainers, and the Governance Readiness
-Index - is CC BY 4.0.
+Three sources are registered specifically so that using them fails the build: Artificial Analysis,
+the Stanford AI Index, and METR's time-horizon data, none of which grant the reuse this site would
+need. They are linked instead.
+
+Original work in this repository is CC BY 4.0: the site code, the written explainers, and four
+hand-coded datasets - the Governance Readiness Index, the AI Law and Policy Index, the Frontier
+Safety Framework Index and the Compute Threshold Index.
 
 Found an error? Open an issue. Corrections are logged publicly rather than quietly patched.
 
@@ -90,7 +96,15 @@ Found an error? Open an issue. Corrections are logged publicly rather than quiet
 
 ## Checks
 
+Every stage carries a runnable check, and the ones that matter are verified by being deliberately
+broken to confirm they fail.
+
 ```bash
-python etl/common.py    # self-check on the licence guard
+python etl/common.py    # licence guard, idempotence, the dash rule
 npm run build           # type-checks and fails on any licence violation
+npm run check:lib       # render-side logic: ranks, country joins, category drift
+npm run check:built     # against dist/: links, anchors, dashes, canonical origin
 ```
+
+Each ETL module has its own `--self-check`, and the hand-coded indexes have `--check-links`, which
+probes every instrument they cite. See `CLAUDE.md` for the full list.
