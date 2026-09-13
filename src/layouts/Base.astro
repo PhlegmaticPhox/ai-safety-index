@@ -1,0 +1,177 @@
+---
+import "../styles/global.css";
+import { attributionsFor } from "../lib/sources";
+
+interface Props {
+  title: string;
+  description: string;
+  /** source_ids cited anywhere on this page — rendered as the attribution block. */
+  cites?: string[];
+}
+
+const { title, description, cites = [] } = Astro.props;
+const attributions = attributionsFor(...cites);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const year = new Date().getFullYear();
+
+const nav = [
+  { href: "/capability/", label: "Capability" },
+  { href: "/governance/", label: "Governance" },
+  { href: "/map/", label: "Map" },
+  { href: "/learn/", label: "Learn" },
+  { href: "/sources/", label: "Sources" },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <header class="site-head">
+      <div class="wrap site-head__inner">
+        <a href="/" class="brand">AI Safety Index</a>
+        <nav aria-label="Main">
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={Astro.url.pathname.startsWith(item.href) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap">
+        {
+          attributions.length > 0 && (
+            <section class="attribution">
+              <h2>Sources on this page</h2>
+              <ul>
+                {attributions.map((source) => (
+                  <li>
+                    <a href={source.landing_page}>{source.name}</a> — {source.publisher}.{" "}
+                    <a href={source.licence_url}>{source.licence}</a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <p class="colophon">
+          An independent, cited index of AI capability, governance and safety. Figures are
+          reproduced from the sources named above under their respective licences; we claim no
+          ownership of them. Errors are ours — <a href="/corrections/">report one</a>.
+        </p>
+        <p class="colophon">
+          © {year} · Site content <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+          · <a href="/about/">About</a> · <a href="/methodology/">Methodology</a>
+        </p>
+      </div>
+    </footer>
+
+    <style>
+      .site-head {
+        border-block-end: 1px solid var(--c-line);
+        background: var(--c-surface);
+      }
+
+      .site-head__inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.75rem 2rem;
+        padding-block: 1rem;
+      }
+
+      .brand {
+        font-family: var(--f-serif);
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--c-ink);
+        text-decoration: none;
+      }
+
+      .site-head nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1.25rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .site-head nav a {
+        display: inline-block;
+        padding-block: 0.25rem;
+        color: var(--c-muted);
+        text-decoration: none;
+        font-size: 0.9375rem;
+      }
+
+      .site-head nav a:hover,
+      .site-head nav a[aria-current="page"] {
+        color: var(--c-ink);
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+      }
+
+      .site-foot {
+        margin-block-start: 5rem;
+        padding-block: 2.5rem 3.5rem;
+        border-block-start: 1px solid var(--c-line);
+        background: var(--c-surface-sunk);
+        font-size: 0.875rem;
+        color: var(--c-muted);
+      }
+
+      .attribution h2 {
+        font-family: var(--f-sans);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-block: 0 0.5rem;
+      }
+
+      .attribution ul {
+        margin: 0 0 1.5rem;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.3rem;
+        max-inline-size: 60rem;
+      }
+
+      .colophon {
+        max-inline-size: 48rem;
+        margin-block: 0 0.75rem;
+      }
+    </style>
+  </body>
+</html>

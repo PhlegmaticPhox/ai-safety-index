@@ -1,0 +1,296 @@
+---
+import Base from "../layouts/Base.astro";
+import Provenance from "../components/Provenance.astro";
+import { assertRenderable, freshness, type Dataset } from "../lib/sources";
+import exposureFile from "../../data/processed/ai-exposure.json";
+
+interface ExposureRecord {
+  entity: string;
+  values: Record<string, number>;
+  latest_period: string;
+  latest: number;
+  source_id: string;
+}
+
+const exposure = exposureFile as Dataset<ExposureRecord>;
+
+// Render-side licence check. The ETL guards the write; this guards the render,
+// because data can also arrive hand-authored or imported.
+assertRenderable(...exposure.sources);
+
+const records = exposure.records;
+const period = records[0]?.latest_period ?? "";
+const top = records.slice(0, 12);
+const scaleMax = Math.max(...records.map((r) => r.latest));
+
+const sorted = [...records].map((r) => r.latest).sort((a, b) => a - b);
+const median = sorted[Math.floor(sorted.length / 2)];
+const highest = records[0];
+const lowest = records[records.length - 1];
+const spread = highest.latest / lowest.latest;
+
+const age = freshness(exposure.retrieved);
+
+const cites = exposure.sources;
+---
+
+<Base
+  title="AI Safety Index — capability, governance and safety, with its sources shown"
+  description="An independent, cited index of AI capability, governance and safety. Every number links back to where it came from."
+  cites={cites}
+>
+  <section class="hero wrap">
+    <p class="eyebrow">Work in progress · Phase 0</p>
+    <h1>Every number on this site tells you where it came from.</h1>
+    <p class="lede">
+      Capability data, governance data and incident data live on separate sites, in separate
+      formats, aimed at separate audiences. This is an attempt to put them on one screen — and
+      to show the provenance, the licence and the limitations of every figure, rather than
+      asking you to take it on trust.
+    </p>
+  </section>
+
+  <section class="wrap">
+    <h2 id="exposure">How much of the world actually uses AI</h2>
+
+    <p class="prose">
+      Roughly <strong>{median.toFixed(1)}%</strong> of the working-age population in the median
+      economy now uses AI tools.<Provenance
+        source={cites}
+        retrieved={exposure.retrieved}
+        note={`Median across all ${exposure.count} economies in the dataset, latest reported period.`}
+        label="figure"
+      /> The spread is the story: <strong>{highest.entity}</strong> at {highest.latest}% is
+      <strong>{spread.toFixed(0)}×</strong> {lowest.entity} at {lowest.latest}%.
+    </p>
+
+    <p class="prose">
+      Set against that: almost none of the highest-exposure economies have binding AI law in
+      force. Quantifying that half of the picture is what the
+      <a href="/methodology/governance-readiness/">Governance Readiness Index</a> is for, and it
+      is the next thing being built.
+    </p>
+
+    <figure class="chart">
+      <figcaption>
+        <span class="chart__title">
+          Share of working-age population using AI tools, {period}
+          <Provenance source={cites} retrieved={exposure.retrieved} />
+        </span>
+        <span class="chart__meta">
+          Top {top.length} of {exposure.count} economies · updated {age.label}
+        </span>
+      </figcaption>
+
+      <div class="scroll-x">
+        <table class="bars">
+          <caption class="visually-hidden">
+            Share of working-age population actively using AI tools, by economy, {period}.
+            Ranked highest to lowest.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Economy</th>
+              <th scope="col" class="num">Share</th>
+              <th scope="col" class="bar-col">
+                <span class="visually-hidden">Relative magnitude</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              top.map((row) => (
+                <tr>
+                  <th scope="row">{row.entity}</th>
+                  <td class="num">{row.latest.toFixed(1)}%</td>
+                  <td class="bar-col">
+                    <span
+                      class="bar"
+                      style={`--w:${((row.latest / scaleMax) * 100).toFixed(1)}%`}
+                      aria-hidden="true"
+                    />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        This measures Microsoft-visible AI use, scaled by a model of device and internet
+        penetration — not observed total AI use. It is systematically less reliable where
+        Microsoft platform share is low, and it cannot see AI embedded in products people do not
+        recognise as AI. Treat it as one signal, not a measurement.
+      </p>
+    </figure>
+  </section>
+
+  <section class="wrap">
+    <h2>What is being built</h2>
+    <ol class="roadmap">
+      <li data-state="done">
+        <strong>Citation layer</strong> — every figure carries source, licence and retrieval date.
+        The build refuses to render data whose licence forbids it.
+      </li>
+      <li data-state="doing">
+        <strong>Data spine</strong> — model registry, benchmark results, compute clusters,
+        hardware, adoption.
+      </li>
+      <li>
+        <strong>Exposure vs governance map</strong> — where AI is used, against where it is
+        governed, and the gap between.
+      </li>
+      <li><strong>Governance Readiness Index</strong> — 25 jurisdictions coded from primary law.</li>
+      <li><strong>Explainers</strong> — one page, two depths: plain-language and technical.</li>
+      <li><strong>Policy feed</strong> — Federal Register, GOV.UK, European Commission, NIST.</li>
+    </ol>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 8vw, 5.5rem) 1rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+
+  .hero h1 {
+    max-inline-size: 20ch;
+  }
+
+  .chart {
+    margin: 2rem 0 0;
+    padding: 1.25rem 1.25rem 1rem;
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    background: var(--c-surface);
+  }
+
+  .chart figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin-block-end: 1rem;
+  }
+
+  .chart__title {
+    font-weight: 600;
+  }
+
+  .chart__meta {
+    color: var(--c-muted);
+    font-size: 0.8125rem;
+  }
+
+  .bars {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .bars th,
+  .bars td {
+    padding: 0.3rem 0.75rem 0.3rem 0;
+    text-align: start;
+    font-weight: 400;
+    vertical-align: middle;
+  }
+
+  .bars thead th {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+    border-block-end: 1px solid var(--c-line);
+    padding-block-end: 0.5rem;
+  }
+
+  .bars tbody th {
+    white-space: nowrap;
+  }
+
+  .num {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .bar-col {
+    inline-size: 55%;
+    min-inline-size: 8rem;
+    padding-inline-start: 0.75rem;
+  }
+
+  .bar {
+    display: block;
+    inline-size: var(--w);
+    block-size: 0.7rem;
+    border-radius: 2px;
+    background: var(--c-accent);
+  }
+
+  .caveat {
+    max-inline-size: 52rem;
+    margin: 1.25rem 0 0;
+    padding-block-start: 0.85rem;
+    border-block-start: 1px dashed var(--c-line);
+    color: var(--c-muted);
+    font-size: 0.8125rem;
+  }
+
+  .roadmap {
+    max-inline-size: 46rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .roadmap li {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 2.25rem;
+    counter-increment: step;
+    color: var(--c-muted);
+  }
+
+  .roadmap li::before {
+    content: counter(step);
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.55rem;
+    display: grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border: 1px solid var(--c-line);
+    border-radius: 50%;
+    font-size: 0.75rem;
+  }
+
+  .roadmap li[data-state="done"],
+  .roadmap li[data-state="doing"] {
+    color: var(--c-ink);
+  }
+
+  .roadmap li[data-state="done"]::before {
+    content: "✓";
+    border-color: var(--c-accent);
+    background: var(--c-accent);
+    color: var(--c-surface);
+  }
+
+  .roadmap li[data-state="doing"]::before {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+  }
+</style>

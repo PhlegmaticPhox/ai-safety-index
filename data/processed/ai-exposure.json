@@ -1,0 +1,1630 @@
+{
+  "dataset": "ai-exposure",
+  "generated": "2026-09-13T02:05:23+00:00",
+  "retrieved": "2026-09-13T02:00:49+00:00",
+  "sources": [
+    "microsoft-ai-diffusion"
+  ],
+  "unit": "percent of working-age population",
+  "notes": "Share of each economy's working-age population actively using AI tools, estimated from anonymised Microsoft telemetry adjusted for device and internet penetration. Measures Microsoft-visible use, scaled by a model — not observed total AI use.",
+  "count": 147,
+  "records": [
+    {
+      "entity": "United Arab Emirates",
+      "values": {
+        "2025-H1": 59.4,
+        "2025-H2": 64.0,
+        "2026-Q1": 70.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 70.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Singapore",
+      "values": {
+        "2025-H1": 58.6,
+        "2025-H2": 60.9,
+        "2026-Q1": 63.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 63.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Norway",
+      "values": {
+        "2025-H1": 45.3,
+        "2025-H2": 46.4,
+        "2026-Q1": 48.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 48.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Ireland",
+      "values": {
+        "2025-H1": 41.7,
+        "2025-H2": 44.6,
+        "2026-Q1": 48.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 48.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "France",
+      "values": {
+        "2025-H1": 40.9,
+        "2025-H2": 44.0,
+        "2026-Q1": 47.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 47.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Spain",
+      "values": {
+        "2025-H1": 39.7,
+        "2025-H2": 41.8,
+        "2026-Q1": 44.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 44.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "New Zealand",
+      "values": {
+        "2025-H1": 37.6,
+        "2025-H2": 40.5,
+        "2026-Q1": 43.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 43.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "United Kingdom",
+      "values": {
+        "2025-H1": 36.4,
+        "2025-H2": 38.9,
+        "2026-Q1": 42.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 42.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Netherlands",
+      "values": {
+        "2025-H1": 36.3,
+        "2025-H2": 38.9,
+        "2026-Q1": 42.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 42.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Qatar",
+      "values": {
+        "2025-H1": 35.7,
+        "2025-H2": 38.3,
+        "2026-Q1": 41.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 41.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Australia",
+      "values": {
+        "2025-H1": 34.5,
+        "2025-H2": 36.9,
+        "2026-Q1": 39.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 39.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Belgium",
+      "values": {
+        "2025-H1": 33.5,
+        "2025-H2": 36.0,
+        "2026-Q1": 39.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 39.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Israel",
+      "values": {
+        "2025-H1": 33.9,
+        "2025-H2": 36.1,
+        "2026-Q1": 38.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 38.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Switzerland",
+      "values": {
+        "2025-H1": 32.4,
+        "2025-H2": 34.8,
+        "2026-Q1": 37.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 37.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Canada",
+      "values": {
+        "2025-H1": 33.5,
+        "2025-H2": 35.0,
+        "2026-Q1": 37.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 37.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "South Korea",
+      "values": {
+        "2025-H1": 25.9,
+        "2025-H2": 30.7,
+        "2026-Q1": 37.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 37.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Sweden",
+      "values": {
+        "2025-H1": 31.2,
+        "2025-H2": 33.3,
+        "2026-Q1": 36.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 36.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Austria",
+      "values": {
+        "2025-H1": 29.1,
+        "2025-H2": 31.4,
+        "2026-Q1": 34.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 34.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Hungary",
+      "values": {
+        "2025-H1": 27.9,
+        "2025-H2": 29.8,
+        "2026-Q1": 32.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 32.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Taiwan",
+      "values": {
+        "2025-H1": 26.4,
+        "2025-H2": 28.4,
+        "2026-Q1": 31.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 31.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "United States",
+      "values": {
+        "2025-H1": 26.3,
+        "2025-H2": 28.3,
+        "2026-Q1": 31.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 31.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Denmark",
+      "values": {
+        "2025-H1": 26.6,
+        "2025-H2": 28.7,
+        "2026-Q1": 31.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 31.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Germany",
+      "values": {
+        "2025-H1": 26.5,
+        "2025-H2": 28.6,
+        "2026-Q1": 31.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 31.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Poland",
+      "values": {
+        "2025-H1": 26.4,
+        "2025-H2": 28.5,
+        "2026-Q1": 31.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 31.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Italy",
+      "values": {
+        "2025-H1": 25.8,
+        "2025-H2": 27.8,
+        "2026-Q1": 30.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 30.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Czechia",
+      "values": {
+        "2025-H1": 26.0,
+        "2025-H2": 27.8,
+        "2026-Q1": 30.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 30.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Bulgaria",
+      "values": {
+        "2025-H1": 25.4,
+        "2025-H2": 27.3,
+        "2026-Q1": 29.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 29.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Jordan",
+      "values": {
+        "2025-H1": 25.4,
+        "2025-H2": 27.0,
+        "2026-Q1": 29.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 29.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Finland",
+      "values": {
+        "2025-H1": 25.6,
+        "2025-H2": 27.3,
+        "2026-Q1": 29.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 29.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Saudi Arabia",
+      "values": {
+        "2025-H1": 23.7,
+        "2025-H2": 26.2,
+        "2026-Q1": 29.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 29.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Slovenia",
+      "values": {
+        "2025-H1": 24.6,
+        "2025-H2": 26.5,
+        "2026-Q1": 29.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 29.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Costa Rica",
+      "values": {
+        "2025-H1": 25.1,
+        "2025-H2": 26.5,
+        "2026-Q1": 28.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 28.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Lebanon",
+      "values": {
+        "2025-H1": 24.8,
+        "2025-H2": 25.7,
+        "2026-Q1": 27.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 27.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Oman",
+      "values": {
+        "2025-H1": 22.6,
+        "2025-H2": 24.2,
+        "2026-Q1": 26.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 26.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Vietnam",
+      "values": {
+        "2025-H1": 21.2,
+        "2025-H2": 23.5,
+        "2026-Q1": 26.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 26.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Portugal",
+      "values": {
+        "2025-H1": 22.4,
+        "2025-H2": 24.2,
+        "2026-Q1": 26.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 26.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Slovakia",
+      "values": {
+        "2025-H1": 22.1,
+        "2025-H2": 23.8,
+        "2026-Q1": 26.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 26.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Croatia",
+      "values": {
+        "2025-H1": 21.8,
+        "2025-H2": 23.7,
+        "2026-Q1": 26.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 26.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Dominican Republic",
+      "values": {
+        "2025-H1": 22.0,
+        "2025-H2": 22.7,
+        "2026-Q1": 24.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 24.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Uruguay",
+      "values": {
+        "2025-H1": 20.9,
+        "2025-H2": 22.5,
+        "2026-Q1": 24.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 24.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Colombia",
+      "values": {
+        "2025-H1": 20.4,
+        "2025-H2": 22.0,
+        "2026-Q1": 24.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 24.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Lithuania",
+      "values": {
+        "2025-H1": 21.0,
+        "2025-H2": 22.4,
+        "2026-Q1": 24.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 24.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Serbia",
+      "values": {
+        "2025-H1": 19.7,
+        "2025-H2": 21.5,
+        "2026-Q1": 24.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 24.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Jamaica",
+      "values": {
+        "2025-H1": 22.2,
+        "2025-H2": 22.1,
+        "2026-Q1": 24.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 24.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Panama",
+      "values": {
+        "2025-H1": 20.3,
+        "2025-H2": 21.5,
+        "2026-Q1": 23.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 23.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "South Africa",
+      "values": {
+        "2025-H1": 19.3,
+        "2025-H2": 21.1,
+        "2026-Q1": 23.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 23.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Chile",
+      "values": {
+        "2025-H1": 19.6,
+        "2025-H2": 20.8,
+        "2026-Q1": 22.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 22.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Japan",
+      "values": {
+        "2025-H1": 16.7,
+        "2025-H2": 19.1,
+        "2026-Q1": 22.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 22.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Bosnia And Herzegovina",
+      "values": {
+        "2025-H1": 18.2,
+        "2025-H2": 19.5,
+        "2026-Q1": 22.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 22.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Argentina",
+      "values": {
+        "2025-H1": 17.8,
+        "2025-H2": 19.6,
+        "2026-Q1": 21.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 21.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Malaysia",
+      "values": {
+        "2025-H1": 18.3,
+        "2025-H2": 19.7,
+        "2026-Q1": 21.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 21.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Kuwait",
+      "values": {
+        "2025-H1": 17.7,
+        "2025-H2": 19.1,
+        "2026-Q1": 21.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 21.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Greece",
+      "values": {
+        "2025-H1": 17.7,
+        "2025-H2": 19.1,
+        "2026-Q1": 20.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 20.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Georgia",
+      "values": {
+        "2025-H1": 17.3,
+        "2025-H2": 18.2,
+        "2026-Q1": 20.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 20.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Philippines",
+      "values": {
+        "2025-H1": 17.1,
+        "2025-H2": 18.3,
+        "2026-Q1": 20.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 20.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Mexico",
+      "values": {
+        "2025-H1": 16.7,
+        "2025-H2": 17.8,
+        "2026-Q1": 20.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 20.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Ecuador",
+      "values": {
+        "2025-H1": 17.0,
+        "2025-H2": 17.7,
+        "2026-Q1": 19.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 19.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Brazil",
+      "values": {
+        "2025-H1": 15.6,
+        "2025-H2": 17.1,
+        "2026-Q1": 19.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 19.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Moldova",
+      "values": {
+        "2025-H1": 16.6,
+        "2025-H2": 17.0,
+        "2026-Q1": 18.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 18.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Albania",
+      "values": {
+        "2025-H1": 15.8,
+        "2025-H2": 16.5,
+        "2026-Q1": 18.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 18.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "El Salvador",
+      "values": {
+        "2025-H1": 14.6,
+        "2025-H2": 16.2,
+        "2026-Q1": 18.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 18.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Azerbaijan",
+      "values": {
+        "2025-H1": 14.2,
+        "2025-H2": 15.5,
+        "2026-Q1": 17.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 17.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "India",
+      "values": {
+        "2025-H1": 14.2,
+        "2025-H2": 15.7,
+        "2026-Q1": 17.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 17.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Romania",
+      "values": {
+        "2025-H1": 15.3,
+        "2025-H2": 16.2,
+        "2026-Q1": 17.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 17.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "TŸrkiye",
+      "values": {
+        "2025-H1": 13.4,
+        "2025-H2": 14.6,
+        "2026-Q1": 17.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 17.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Mongolia",
+      "values": {
+        "2025-H1": 12.6,
+        "2025-H2": 14.3,
+        "2026-Q1": 16.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 16.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "China",
+      "values": {
+        "2025-H1": 15.4,
+        "2025-H2": 16.3,
+        "2026-Q1": 16.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 16.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Guatemala",
+      "values": {
+        "2025-H1": 13.7,
+        "2025-H2": 14.8,
+        "2026-Q1": 16.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 16.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Peru",
+      "values": {
+        "2025-H1": 13.4,
+        "2025-H2": 14.7,
+        "2026-Q1": 16.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 16.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Kazakhstan",
+      "values": {
+        "2025-H1": 12.7,
+        "2025-H2": 13.7,
+        "2026-Q1": 15.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 15.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Namibia",
+      "values": {
+        "2025-H1": 13.0,
+        "2025-H2": 13.8,
+        "2026-Q1": 15.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 15.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Libya",
+      "values": {
+        "2025-H1": 12.7,
+        "2025-H2": 13.7,
+        "2026-Q1": 15.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 15.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Gabon",
+      "values": {
+        "2025-H1": 12.3,
+        "2025-H2": 13.4,
+        "2026-Q1": 15.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 15.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Botswana",
+      "values": {
+        "2025-H1": 12.8,
+        "2025-H2": 13.7,
+        "2026-Q1": 14.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 14.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Egypt",
+      "values": {
+        "2025-H1": 12.5,
+        "2025-H2": 13.4,
+        "2026-Q1": 14.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 14.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Nepal",
+      "values": {
+        "2025-H1": 12.3,
+        "2025-H2": 13.0,
+        "2026-Q1": 14.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 14.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Indonesia",
+      "values": {
+        "2025-H1": 11.7,
+        "2025-H2": 12.7,
+        "2026-Q1": 14.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 14.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Honduras",
+      "values": {
+        "2025-H1": 12.4,
+        "2025-H2": 13.1,
+        "2026-Q1": 14.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 14.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Senegal",
+      "values": {
+        "2025-H1": 12.4,
+        "2025-H2": 12.9,
+        "2026-Q1": 13.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 13.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Tunisia",
+      "values": {
+        "2025-H1": 12.3,
+        "2025-H2": 12.7,
+        "2026-Q1": 13.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 13.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Algeria",
+      "values": {
+        "2025-H1": 11.3,
+        "2025-H2": 12.0,
+        "2026-Q1": 13.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 13.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Zambia",
+      "values": {
+        "2025-H1": 11.7,
+        "2025-H2": 12.3,
+        "2026-Q1": 13.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 13.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Cote D'Ivoire",
+      "values": {
+        "2025-H1": 10.8,
+        "2025-H2": 11.7,
+        "2026-Q1": 13.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 13.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Bolivia",
+      "values": {
+        "2025-H1": 10.9,
+        "2025-H2": 11.6,
+        "2026-Q1": 12.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 12.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Iran",
+      "values": {
+        "2025-H1": 9.6,
+        "2025-H2": 10.7,
+        "2026-Q1": 12.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 12.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Iraq",
+      "values": {
+        "2025-H1": 10.3,
+        "2025-H2": 11.2,
+        "2026-Q1": 12.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 12.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Thailand",
+      "values": {
+        "2025-H1": 9.1,
+        "2025-H2": 10.7,
+        "2026-Q1": 12.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 12.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Paraguay",
+      "values": {
+        "2025-H1": 10.1,
+        "2025-H2": 11.0,
+        "2026-Q1": 12.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 12.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Nicaragua",
+      "values": {
+        "2025-H1": 10.0,
+        "2025-H2": 10.7,
+        "2026-Q1": 11.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 11.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Morocco",
+      "values": {
+        "2025-H1": 10.5,
+        "2025-H2": 10.9,
+        "2026-Q1": 11.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 11.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Gambia",
+      "values": {
+        "2025-H1": 10.6,
+        "2025-H2": 10.9,
+        "2026-Q1": 11.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 11.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Pakistan",
+      "values": {
+        "2025-H1": 9.7,
+        "2025-H2": 10.3,
+        "2026-Q1": 11.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 11.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Angola",
+      "values": {
+        "2025-H1": 8.9,
+        "2025-H2": 9.7,
+        "2026-Q1": 10.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Madagascar",
+      "values": {
+        "2025-H1": 8.9,
+        "2025-H2": 9.7,
+        "2026-Q1": 10.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Malawi",
+      "values": {
+        "2025-H1": 8.9,
+        "2025-H2": 9.7,
+        "2026-Q1": 10.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Mozambique",
+      "values": {
+        "2025-H1": 8.9,
+        "2025-H2": 9.7,
+        "2026-Q1": 10.9
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.9,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "French Guiana",
+      "values": {
+        "2025-H1": 8.3,
+        "2025-H2": 9.0,
+        "2026-Q1": 10.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Guyana",
+      "values": {
+        "2025-H1": 8.3,
+        "2025-H2": 9.0,
+        "2026-Q1": 10.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Suriname",
+      "values": {
+        "2025-H1": 8.3,
+        "2025-H2": 9.0,
+        "2026-Q1": 10.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Venezuela",
+      "values": {
+        "2025-H1": 8.3,
+        "2025-H2": 9.0,
+        "2026-Q1": 10.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Benin",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Burkina Faso",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Ghana",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Guinea",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Guinea-Bissau",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Liberia",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Mali",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Mauritania",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Niger",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Nigeria",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Sierra Leone",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Togo",
+      "values": {
+        "2025-H1": 8.7,
+        "2025-H2": 9.3,
+        "2026-Q1": 10.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Myanmar",
+      "values": {
+        "2025-H1": 8.4,
+        "2025-H2": 9.1,
+        "2026-Q1": 10.0
+      },
+      "latest_period": "2026-Q1",
+      "latest": 10.0,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Lesotho",
+      "values": {
+        "2025-H1": 8.8,
+        "2025-H2": 9.1,
+        "2026-Q1": 9.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 9.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Belarus",
+      "values": {
+        "2025-H1": 7.6,
+        "2025-H2": 8.4,
+        "2026-Q1": 9.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 9.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Kyrgyzstan",
+      "values": {
+        "2025-H1": 7.6,
+        "2025-H2": 8.2,
+        "2026-Q1": 9.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 9.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Russia",
+      "values": {
+        "2025-H1": 7.6,
+        "2025-H2": 8.0,
+        "2026-Q1": 9.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 9.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Ukraine",
+      "values": {
+        "2025-H1": 9.1,
+        "2025-H2": 9.0,
+        "2026-Q1": 9.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 9.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Kenya",
+      "values": {
+        "2025-H1": 7.8,
+        "2025-H2": 8.1,
+        "2026-Q1": 8.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Cameroon",
+      "values": {
+        "2025-H1": 7.0,
+        "2025-H2": 7.8,
+        "2026-Q1": 8.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Central African Republic",
+      "values": {
+        "2025-H1": 7.0,
+        "2025-H2": 7.8,
+        "2026-Q1": 8.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Chad",
+      "values": {
+        "2025-H1": 7.0,
+        "2025-H2": 7.8,
+        "2026-Q1": 8.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Congo",
+      "values": {
+        "2025-H1": 7.0,
+        "2025-H2": 7.8,
+        "2026-Q1": 8.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Congo (DRC)",
+      "values": {
+        "2025-H1": 7.0,
+        "2025-H2": 7.8,
+        "2026-Q1": 8.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Haiti",
+      "values": {
+        "2025-H1": 7.1,
+        "2025-H2": 7.6,
+        "2026-Q1": 8.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Zimbabwe",
+      "values": {
+        "2025-H1": 6.9,
+        "2025-H2": 7.6,
+        "2026-Q1": 8.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 8.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Bangladesh",
+      "values": {
+        "2025-H1": 6.5,
+        "2025-H2": 7.1,
+        "2026-Q1": 7.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Laos",
+      "values": {
+        "2025-H1": 6.0,
+        "2025-H2": 6.7,
+        "2026-Q1": 7.8
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.8,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Papua New Guinea",
+      "values": {
+        "2025-H1": 7.2,
+        "2025-H2": 7.3,
+        "2026-Q1": 7.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Burundi",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Eritrea",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Ethiopia",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Somalia",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "South Sudan",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Sudan",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Tanzania",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Uganda",
+      "values": {
+        "2025-H1": 6.4,
+        "2025-H2": 6.8,
+        "2026-Q1": 7.6
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.6,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Syria",
+      "values": {
+        "2025-H1": 6.7,
+        "2025-H2": 7.1,
+        "2026-Q1": 7.5
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.5,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Armenia",
+      "values": {
+        "2025-H1": 6.2,
+        "2025-H2": 6.6,
+        "2026-Q1": 7.4
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.4,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Sri Lanka",
+      "values": {
+        "2025-H1": 6.2,
+        "2025-H2": 6.6,
+        "2026-Q1": 7.3
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.3,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Uzbekistan",
+      "values": {
+        "2025-H1": 5.7,
+        "2025-H2": 6.3,
+        "2026-Q1": 7.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Rwanda",
+      "values": {
+        "2025-H1": 6.0,
+        "2025-H2": 6.3,
+        "2026-Q1": 7.2
+      },
+      "latest_period": "2026-Q1",
+      "latest": 7.2,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Cuba",
+      "values": {
+        "2025-H1": 5.7,
+        "2025-H2": 6.1,
+        "2026-Q1": 6.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 6.7,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Afghanistan",
+      "values": {
+        "2025-H1": 5.1,
+        "2025-H2": 5.6,
+        "2026-Q1": 6.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 6.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Tajikistan",
+      "values": {
+        "2025-H1": 5.1,
+        "2025-H2": 5.6,
+        "2026-Q1": 6.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 6.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Turkmenistan",
+      "values": {
+        "2025-H1": 5.1,
+        "2025-H2": 5.6,
+        "2026-Q1": 6.1
+      },
+      "latest_period": "2026-Q1",
+      "latest": 6.1,
+      "source_id": "microsoft-ai-diffusion"
+    },
+    {
+      "entity": "Cambodia",
+      "values": {
+        "2025-H1": 4.6,
+        "2025-H2": 5.1,
+        "2026-Q1": 5.7
+      },
+      "latest_period": "2026-Q1",
+      "latest": 5.7,
+      "source_id": "microsoft-ai-diffusion"
+    }
+  ]
+}

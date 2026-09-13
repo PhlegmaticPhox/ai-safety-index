@@ -1,0 +1,10 @@
+# Normalise to LF in the repo. Authored on Windows, built in Linux CI — without this
+# every file churns line endings on the first CI checkout.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff2 binary
+*.parquet binary
+*.bz2 binary

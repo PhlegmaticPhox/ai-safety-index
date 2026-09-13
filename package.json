@@ -1,0 +1,28 @@
+{
+  "name": "ai-safety-index",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A cited, cross-domain index of AI capability, governance and safety",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "etl": "python etl/run_all.py",
+    "etl:offline": "python etl/run_all.py --offline"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.0.0",
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "typescript": "^5.7.0"
+  },
+  "devDependencies": {
+    "@types/d3-geo": "^3.1.0",
+    "@types/topojson-client": "^3.1.5"
+  }
+}

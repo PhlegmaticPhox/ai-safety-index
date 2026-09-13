@@ -1,0 +1,187 @@
+/* Design tokens.
+   Light is the base definition; dark redefines only the tokens. No colour is ever
+   defined solely inside a media query, so a token always resolves. */
+
+:root {
+  color-scheme: light dark;
+
+  --c-bg: #faf9f7;
+  --c-surface: #ffffff;
+  --c-surface-sunk: #f2f0ec;
+  --c-ink: #1a1a1c;
+  --c-muted: #61605d;
+  --c-line: #dedbd5;
+  --c-accent: #0b5563;
+  --c-accent-ink: #083f4a;
+  --c-accent-wash: #e2eff1;
+  --c-warn: #9a4b16;
+  --c-critical: #8f2d1b;
+
+  --f-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --f-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+
+  --measure: 38rem;
+  --page: 72rem;
+  --radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-bg: #131417;
+    --c-surface: #1b1d21;
+    --c-surface-sunk: #212429;
+    --c-ink: #e7e5e1;
+    --c-muted: #9b9a96;
+    --c-line: #32353b;
+    --c-accent: #6fcbd8;
+    --c-accent-ink: #a5e2ea;
+    --c-accent-wash: #16333a;
+    --c-warn: #e0a06a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --c-bg: #131417;
+  --c-surface: #1b1d21;
+  --c-surface-sunk: #212429;
+  --c-ink: #e7e5e1;
+  --c-muted: #9b9a96;
+  --c-line: #32353b;
+  --c-accent: #6fcbd8;
+  --c-accent-ink: #a5e2ea;
+  --c-accent-wash: #16333a;
+  --c-warn: #e0a06a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--f-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  /* Numbers in running text should not jitter between values. */
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--f-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  margin-block: 0 0.5rem;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 1.2rem + 1vw, 1.9rem);
+  margin-block: 2.5rem 0.75rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-block: 1.75rem 0.5rem;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--c-accent-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--c-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Wide content scrolls inside its own box; the page body never scrolls sideways. */
+.scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.wrap {
+  max-inline-size: var(--page);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+.prose {
+  max-inline-size: var(--measure);
+}
+
+.lede {
+  font-size: 1.175rem;
+  line-height: 1.55;
+  color: var(--c-muted);
+  max-inline-size: var(--measure);
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 0.5rem;
+  inset-block-start: -4rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  transition: inset-block-start 120ms ease;
+}
+
+.skip-link:focus {
+  inset-block-start: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

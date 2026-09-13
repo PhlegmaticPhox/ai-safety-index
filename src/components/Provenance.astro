@@ -1,0 +1,202 @@
+---
+/**
+ * The click-through citation marker. Attach to any number, chart or table.
+ *
+ * Uses the native Popover API: no JavaScript, no focus-trap of our own, native
+ * light-dismiss and Escape handling, and it lives in the top layer so it cannot
+ * be clipped by an ancestor's overflow.
+ *
+ * Everything this emits is PHRASING content — spans only, no div/p/dl. That is
+ * load-bearing, not fussiness: this marker sits inside <p>, and the HTML parser
+ * auto-closes a paragraph when it meets a block-level tag, which silently hoists
+ * the panel out of the paragraph and leaves an empty <p> behind. Layout comes
+ * from CSS display instead. Keep it phrasing-only.
+ */
+import { getSource, freshness } from "../lib/sources";
+
+interface Props {
+  /** One or more source_ids, as carried on the records being displayed. */
+  source: string | string[];
+  /** When this data was retrieved, from the dataset envelope. */
+  retrieved?: string;
+  /** What this specific figure measures, if narrower than the source as a whole. */
+  note?: string;
+  label?: string;
+}
+
+const { source, retrieved, note, label = "source" } = Astro.props;
+const ids = Array.isArray(source) ? source : [source];
+const entries = ids.map((id) => ({ id, ...getSource(id) }));
+const age = retrieved ? freshness(retrieved) : null;
+
+// Stable but unique — multiple markers can cite the same source on one page.
+const popoverId = `prov-${ids.join("-")}-${Math.random().toString(36).slice(2, 8)}`;
+const anchorName = `--${popoverId}`;
+---
+
+<span class="prov">
+  <button
+    type="button"
+    popovertarget={popoverId}
+    class="prov__trigger"
+    style={`anchor-name:${anchorName}`}
+    aria-label={`Show source and licence for this ${label}`}
+  >
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" width="12" height="12">
+      <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+      <path d="M8 7v4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+      <circle cx="8" cy="4.6" r="0.9" fill="currentColor"></circle>
+    </svg>
+  </button>
+
+  <span
+    popover
+    id={popoverId}
+    class="prov__panel"
+    style={`position-anchor:${anchorName}`}
+  >
+    {note && <span class="prov__note">{note}</span>}
+
+    {
+      entries.map((entry) => (
+        <span class="prov__source">
+          <a href={entry.landing_page} class="prov__name">
+            {entry.name}
+          </a>
+          <span class="prov__publisher">{entry.publisher}</span>
+
+          <span class="prov__meta">
+            <span class="prov__key">Licence</span>
+            <span class="prov__val">
+              <a href={entry.licence_url}>{entry.licence}</a>
+            </span>
+            {entry.cadence && (
+              <>
+                <span class="prov__key">Updated</span>
+                <span class="prov__val">{entry.cadence}</span>
+              </>
+            )}
+            {age && (
+              <>
+                <span class="prov__key">Retrieved</span>
+                <span class:list={["prov__val", age.stale && "is-stale"]}>
+                  {age.label}
+                  {age.stale && " — may be out of date"}
+                </span>
+              </>
+            )}
+          </span>
+
+          {entry.caveats && <span class="prov__caveat">{entry.caveats}</span>}
+        </span>
+      ))
+    }
+  </span>
+</span>
+
+<style>
+  .prov {
+    display: inline;
+  }
+
+  .prov__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 24px hit area on a 12px glyph, without disturbing the text baseline. */
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin-inline-start: 0.1em;
+    margin-block: -0.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--c-muted);
+    cursor: help;
+    vertical-align: baseline;
+    transition: color 120ms ease, background-color 120ms ease;
+  }
+
+  .prov__trigger:hover,
+  .prov__trigger:focus-visible {
+    color: var(--c-accent);
+    background: var(--c-accent-wash);
+  }
+
+  .prov__panel:popover-open {
+    display: block;
+  }
+
+  .prov__panel {
+    inline-size: min(28rem, calc(100vw - 2rem));
+    padding: 1rem 1.125rem;
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    background: var(--c-surface);
+    color: var(--c-ink);
+    box-shadow: 0 8px 28px rgb(0 0 0 / 0.16);
+    font-family: var(--f-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: start;
+    /* Attach to the trigger where supported; falls back to the UA's centred
+       position otherwise, which is still perfectly usable. */
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: block-start span-inline-end, block-end span-inline-start,
+      block-start span-inline-start;
+    margin: 0.35rem 0 0;
+  }
+
+  .prov__note {
+    display: block;
+    margin-block-end: 0.75rem;
+    padding-block-end: 0.75rem;
+    border-block-end: 1px solid var(--c-line);
+  }
+
+  .prov__source {
+    display: block;
+  }
+
+  .prov__source + .prov__source {
+    margin-block-start: 1rem;
+    padding-block-start: 1rem;
+    border-block-start: 1px solid var(--c-line);
+  }
+
+  .prov__name {
+    font-weight: 600;
+  }
+
+  .prov__publisher {
+    display: block;
+    margin-block: 0.1rem 0.6rem;
+    color: var(--c-muted);
+  }
+
+  .prov__meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.15rem 0.75rem;
+    margin-block-end: 0.6rem;
+  }
+
+  .prov__key {
+    color: var(--c-muted);
+    font-size: 0.8125rem;
+  }
+
+  .is-stale {
+    color: var(--c-warn);
+  }
+
+  .prov__caveat {
+    display: block;
+    padding-block-start: 0.6rem;
+    border-block-start: 1px dashed var(--c-line);
+    color: var(--c-muted);
+    font-size: 0.8125rem;
+  }
+</style>
