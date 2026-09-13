@@ -606,7 +606,7 @@ const buildSteps = [
         </p>
       </div>
 
-      <ul class="sources">
+      <ul class="cards">
         {
           [
             { name: "Epoch AI", what: "Models, benchmarks, clusters, hardware", lic: "CC BY 4.0", href: "https://epoch.ai/data" },
@@ -616,10 +616,10 @@ const buildSteps = [
             { name: "European Commission", what: "EU digital and AI policy", lic: "Decision 2011/833/EU", href: "https://digital-strategy.ec.europa.eu" },
             { name: "NIST", what: "US standards and evaluation work", lic: "Public domain", href: "https://www.nist.gov" },
           ].map((source) => (
-            <li class="sources__item">
-              <a href={source.href}>{source.name}</a>
+            <li class="card">
+              <a href={source.href} class="card__title">{source.name}</a>
               <p>{source.what}</p>
-              <span class="mono">{source.lic}</span>
+              <span class="card__meta mono">{source.lic}</span>
             </li>
           ))
         }
@@ -629,39 +629,10 @@ const buildSteps = [
 </Base>
 
 <style>
-  /* 1. Opening block. No hero: the page starts in the data. */
-  .section--open {
-    padding-block-start: clamp(1.5rem, 3vw, 2.25rem);
-  }
+  /* Page-specific only. Masthead, tables, feed rows, caveats and the card grid
+     are shared furniture and live in src/styles/global.css. */
 
-  .masthead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.4rem 2rem;
-    margin-block-end: 1.25rem;
-    padding-block-end: 0.9rem;
-    border-block-end: 1px solid var(--line);
-  }
-
-  /* Functional page title at section scale, not a marketing headline. */
-  .masthead h1 {
-    font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);
-  }
-
-  .masthead__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  .is-stale {
-    color: var(--warn);
-  }
-
+  /* 1. Bento. Six columns, mixed spans, no blank padding tiles. */
   .bento {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -759,105 +730,6 @@ const buildSteps = [
     .leaders li {
       grid-template-columns: 6.5rem 1fr auto;
     }
-  }
-
-  /* Alternating grounds stay inside the one dark theme. */
-  .section--sunk {
-    background: var(--surface);
-    border-block: 1px solid var(--line);
-  }
-
-  /* 2 and 5. Tables. */
-  .chart {
-    margin: 0;
-  }
-
-  .chart__cap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0.35rem 1.5rem;
-    margin-block-end: 1rem;
-    font-weight: 500;
-  }
-
-  .chart__meta {
-    color: var(--muted);
-    font-size: 0.75rem;
-    font-weight: 400;
-  }
-
-  .bars,
-  .grid-table {
-    inline-size: 100%;
-    border-collapse: collapse;
-    font-size: 0.9375rem;
-  }
-
-  .bars th,
-  .bars td,
-  .grid-table th,
-  .grid-table td {
-    padding: 0.42rem 0.9rem 0.42rem 0;
-    text-align: start;
-    font-weight: 400;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-
-  .bars thead th,
-  .grid-table thead th {
-    font-size: 0.6875rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-block-end: 1px solid var(--line);
-    padding-block-end: 0.6rem;
-  }
-
-  .grid-table tbody tr + tr th,
-  .grid-table tbody tr + tr td {
-    border-block-start: 1px solid var(--line-soft);
-  }
-
-  .ta-end {
-    text-align: end;
-  }
-
-  .muted-cell {
-    color: var(--muted);
-    font-size: 0.8125rem;
-  }
-
-  .bar-col {
-    inline-size: 46%;
-    min-inline-size: 7rem;
-    padding-inline-start: 0.75rem;
-  }
-
-  .bar {
-    display: block;
-    inline-size: var(--w);
-    block-size: 0.6rem;
-    border-radius: var(--r-mark);
-    background: var(--accent);
-    opacity: 0.85;
-  }
-
-  .bar--thin {
-    block-size: 0.35rem;
-    opacity: 0.6;
-  }
-
-  .caveat {
-    max-inline-size: 74ch;
-    margin-block-start: 1.25rem;
-    padding-block-start: 0.85rem;
-    border-block-start: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 0.8125rem;
-    line-height: 1.6;
   }
 
   /* 3. Benchmark rail. */
@@ -1014,73 +886,9 @@ const buildSteps = [
     border: 1px solid var(--line);
   }
 
-  /* 6. Policy feed. */
-  .feed {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .feed__row {
-    display: grid;
-    grid-template-columns: 11rem minmax(0, 1fr);
-    gap: 1.5rem;
-    padding-block: 1rem;
-    border-block-start: 1px solid var(--line);
-  }
-
-  .feed__row:last-child {
-    border-block-end: 1px solid var(--line);
-  }
-
-  .feed__meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.4rem;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  .feed__title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--ink);
-    text-decoration: none;
-    line-height: 1.4;
-  }
-
-  .feed__title:hover {
-    color: var(--accent);
-  }
-
-  .feed__snippet {
-    margin-block-start: 0.35rem;
-    color: var(--muted);
-    font-size: 0.875rem;
-    max-inline-size: 76ch;
-  }
-
-  .feed__pub {
-    margin-block-start: 0.4rem;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
+  /* 6. Feed tail link. */
   .feed__more {
     margin-block-start: 1.75rem;
-  }
-
-  @media (max-width: 640px) {
-    .feed__row {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-
-    .feed__meta {
-      flex-direction: row;
-      align-items: center;
-    }
   }
 
   /* 7. Process steps. */
@@ -1110,40 +918,5 @@ const buildSteps = [
     margin-block-start: 2rem;
     color: var(--muted);
     font-size: 0.875rem;
-  }
-
-  /* 8. Source wall. */
-  .sources {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: 0.75rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .sources__item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding: 1rem 1.1rem;
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: var(--r);
-  }
-
-  .sources__item a {
-    font-weight: 500;
-  }
-
-  .sources__item p {
-    color: var(--muted);
-    font-size: 0.8125rem;
-    flex: 1;
-  }
-
-  .sources__item span {
-    font-size: 0.6875rem;
-    color: var(--muted);
   }
 </style>
