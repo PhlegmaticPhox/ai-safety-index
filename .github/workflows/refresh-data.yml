@@ -26,9 +26,9 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -62,8 +62,15 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/processed
           if git diff --staged --quiet; then
-            echo "No data changed."
-          else
-            git commit -m "Data refresh $(date -u +%Y-%m-%d)"
-            git push
+            echo "Nothing to commit."
+            exit 0
           fi
+          # Datasets are only rewritten when their records change, so a run that
+          # touches nothing but _status.json is a heartbeat, not a data change.
+          # Saying which keeps the history readable at a glance.
+          if git diff --staged --name-only | grep -qv '_status.json'; then
+            git commit -m "Data refresh $(date -u +%Y-%m-%d)"
+          else
+            git commit -m "Pipeline heartbeat $(date -u +%Y-%m-%d)"
+          fi
+          git push

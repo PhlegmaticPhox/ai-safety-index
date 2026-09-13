@@ -199,6 +199,27 @@ def write_dataset(
 
     PROCESSED.mkdir(parents=True, exist_ok=True)
     path = PROCESSED / f"{name}.json"
+
+    # Skip the write when the records are byte-identical to what is already on
+    # disk. The generated and retrieved stamps move on every run by definition,
+    # so without this a daily scheduled refresh commits timestamp churn forever
+    # and the data history becomes unreviewable. A commit should mean the data
+    # actually changed. Last-checked time lives in _status.json instead.
+    if path.exists():
+        try:
+            existing = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            existing = None
+        if (
+            existing
+            and existing.get("records") == records
+            and existing.get("sources") == source_ids
+            and existing.get("unit") == unit
+            and existing.get("notes") == notes
+        ):
+            print(f"  {path.relative_to(ROOT)}: unchanged ({len(records):,} records)")
+            return path
+
     payload = {
         "dataset": name,
         "generated": utcnow(),
@@ -265,6 +286,25 @@ def _self_check() -> None:
         pass
     else:
         raise AssertionError("write_dataset accepted an empty dataset")
+
+    # Idempotence: writing the same records twice must leave the file untouched,
+    # or the daily refresh commits timestamp churn forever.
+    probe = PROCESSED / "_selfcheck.json"
+    try:
+        rows = [{"a": 1, "source_id": "epoch-notable-models"}]
+        write_dataset("_selfcheck", rows, ["epoch-notable-models"])
+        first = probe.read_bytes()
+        time.sleep(1.1)  # guarantee a different second in the timestamp
+        write_dataset("_selfcheck", rows, ["epoch-notable-models"])
+        if probe.read_bytes() != first:
+            raise AssertionError("write_dataset rewrote an unchanged dataset")
+
+        write_dataset("_selfcheck", [{"a": 2, "source_id": "epoch-notable-models"}],
+                      ["epoch-notable-models"])
+        if probe.read_bytes() == first:
+            raise AssertionError("write_dataset failed to write changed records")
+    finally:
+        probe.unlink(missing_ok=True)
 
     print("common.py self-check passed")
 

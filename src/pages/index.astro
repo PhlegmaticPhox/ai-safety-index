@@ -11,6 +11,7 @@ import benchmarkFile from "../../data/processed/benchmark-frontier.json";
 import clusterFile from "../../data/processed/compute-clusters.json";
 import thresholdFile from "../../data/processed/compute-thresholds.json";
 import feedFile from "../../data/processed/policy-feed.json";
+import statusFile from "../../data/processed/_status.json";
 
 interface ExposureRecord {
   entity: string;
@@ -131,17 +132,13 @@ const powerLeaderMax = Math.max(...powerLeaders.map((c) => c.power_mw));
 const recentFeed = feed.records.slice(0, 8);
 const jurisdictionCount = new Set(feed.records.map((r) => r.jurisdiction)).size;
 
-/* Freshness across every dataset on the page, oldest first. */
-const datasets = [
-  { name: "AI exposure", set: exposure },
-  { name: "Models", set: models },
-  { name: "Benchmarks", set: benchmarks },
-  { name: "Clusters", set: clusters },
-  { name: "Policy", set: feed },
-];
-const oldest = datasets
-  .map((d) => ({ ...d, age: freshness(d.set.retrieved) }))
-  .sort((a, b) => a.set.retrieved.localeCompare(b.set.retrieved))[0];
+/* Datasets are only rewritten when their records change, so their own retrieved
+   stamps say when the data last moved. When the pipeline last LOOKED is a
+   separate fact, and the one that tells a reader this site is still alive. */
+const status = statusFile as { last_checked: string; modules: Record<string, string> };
+const datasets = [exposure, models, benchmarks, clusters, feed];
+const checked = freshness(status.last_checked);
+const failing = Object.entries(status.modules).filter(([, state]) => state !== "ok");
 
 const fmtCompute = (flop: number) => {
   const exp = Math.floor(Math.log10(flop));
@@ -183,9 +180,12 @@ const buildSteps = [
           <span aria-hidden="true">/</span>
           {cites.length} sources
           <span aria-hidden="true">/</span>
-          <span class={oldest.age.stale ? "is-stale" : undefined}>
-            oldest refreshed {oldest.age.label}
-          </span>
+          <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
+          {
+            failing.length > 0 && (
+              <span class="is-stale">/ {failing.length} source(s) failing</span>
+            )
+          }
         </p>
       </div>
 

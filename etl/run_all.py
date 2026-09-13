@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import importlib
+import json
 import sys
 import traceback
 from pathlib import Path
@@ -43,6 +44,11 @@ def main() -> int:
             traceback.print_exc(limit=3)
         print()
 
+    # Datasets only change on disk when their records change, so this one small
+    # file carries "when did we last look", which is what tells a reader the
+    # pipeline is alive rather than abandoned.
+    _write_status(failed, offline)
+
     if failed:
         print(f"{len(failed)} of {len(MODULES)} source(s) failed:")
         for name, exc in failed:
@@ -51,6 +57,22 @@ def main() -> int:
 
     print(f"all {len(MODULES)} source(s) up to date")
     return 0
+
+
+def _write_status(failed: list[tuple[str, Exception]], offline: bool) -> None:
+    from datetime import datetime, timezone
+
+    failed_names = {name for name, _ in failed}
+    status = {
+        "last_checked": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "offline": offline,
+        "modules": {
+            name: ("failed" if name in failed_names else "ok") for name in MODULES
+        },
+    }
+    path = Path(__file__).resolve().parent.parent / "data" / "processed" / "_status.json"
+    path.write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
+    print(f"  wrote {path.name}")
 
 
 if __name__ == "__main__":
