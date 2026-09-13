@@ -52,7 +52,7 @@ ai-safety-index/
 │   ├── fetch_epoch.py
 │   ├── fetch_microsoft_diffusion.py
 │   ├── fetch_owid.py
-│   ├── fetch_policy_feeds.py
+│   ├── fetch_news.py
 │   └── build_governance_index.py
 ├── src/
 │   ├── components/         # Astro islands: charts, map, provenance popover
