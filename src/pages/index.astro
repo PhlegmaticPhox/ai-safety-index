@@ -1,147 +1,263 @@
 ---
+/**
+ * The dashboard.
+ *
+ * One panel per section of the site, each carrying that section's headline
+ * figures and nothing else, with its heading as the way in. Everything that used
+ * to live here in full now lives on the page it belongs to: this page's job is
+ * to tell a reader what is going on and where to click, in one screen and a bit.
+ *
+ * The map is the exception and is here at full width, because "where is this
+ * happening" is the question a reader arrives with and a number cannot answer
+ * it. It steps through reporting periods with no JavaScript; see TimeMap.
+ */
 import Base from "../layouts/Base.astro";
 import Provenance from "../components/Provenance.astro";
-import StatTile from "../components/StatTile.astro";
+import TimeMap from "../components/TimeMap.astro";
+import BarTable from "../components/BarTable.astro";
 import Sparkline from "../components/Sparkline.astro";
+import { alpha3 } from "../lib/geo";
 import { assertRenderable, freshness, type Dataset } from "../lib/sources";
 
 import exposureFile from "../../data/processed/ai-exposure.json";
+import governanceFile from "../../data/processed/governance-readiness.json";
 import modelsFile from "../../data/processed/frontier-models.json";
+import releasesFile from "../../data/processed/model-releases.json";
 import benchmarkFile from "../../data/processed/benchmark-frontier.json";
 import clusterFile from "../../data/processed/compute-clusters.json";
-import thresholdFile from "../../data/processed/compute-thresholds.json";
+import thresholdFile from "../../data/processed/legal-thresholds.json";
+import frameworkFile from "../../data/processed/safety-frameworks.json";
+import researchFile from "../../data/processed/research-volume.json";
+import policyFile from "../../data/processed/policy-index.json";
+import enterpriseFile from "../../data/processed/enterprise-ai-country.json";
 import feedFile from "../../data/processed/news-feed.json";
 import statusFile from "../../data/processed/_status.json";
+import type { NewsRecord } from "../lib/news";
 
 interface ExposureRecord {
   entity: string;
-  latest: number;
+  values: Record<string, number>;
   latest_period: string;
+  latest: number;
+  source_id: string;
+}
+interface GovernanceRecord {
+  code: string;
+  name: string;
+  readiness: number;
+  basis: string;
   source_id: string;
 }
 interface ModelRecord {
   model: string;
   organisation: string;
-  country: string;
   published: string;
   compute_flop: number;
   source_id: string;
 }
+interface ReleaseRecord {
+  model: string;
+  organisation: string;
+  published: string;
+  accessibility: string;
+  source_id: string;
+}
 interface BenchmarkRecord {
   benchmark: string;
+  category: string;
   points: Array<{ month: string; best: number }>;
   latest_best: number;
-  first_month: string;
   latest_month: string;
-  runs: number;
+  saturated_month: string | null;
+  months_to_saturation: number | null;
   source_id: string;
 }
 interface ClusterRecord {
   country: string;
   clusters: number;
   power_mw: number;
-  clusters_with_known_power: number;
   source_id: string;
 }
 interface ThresholdRecord {
-  year: string;
-  above_threshold: number;
-  below_threshold: number;
+  jurisdiction: string;
+  instrument: string;
+  flop: number;
+  exponent: number;
+  status: string;
   source_id: string;
 }
-interface FeedRecord {
-  title: string;
-  snippet: string;
-  url: string;
-  date: string;
-  publisher: string;
+interface FrameworkRecord {
+  developer: string;
+  framework: string | null;
+  halt: string;
+  external: boolean;
+  source_id: string;
+}
+interface ResearchRecord {
+  key: string;
+  role: string;
+  label: string;
+  points: Array<{ year: number; count: number }>;
+  partial_year: number;
+  source_id: string;
+}
+interface PolicyRecord {
   jurisdiction: string;
-  kind: string;
-  categories: string[];
+  jurisdiction_slug: string;
+  title: string;
+  force: string;
+  year: number;
+  source_id: string;
+}
+interface EnterpriseRecord {
+  code: string;
+  name: string;
+  share: number;
+  year: string;
   source_id: string;
 }
 
 const exposure = exposureFile as Dataset<ExposureRecord>;
+const governance = governanceFile as Dataset<GovernanceRecord>;
 const models = modelsFile as Dataset<ModelRecord>;
+const releases = releasesFile as Dataset<ReleaseRecord>;
 const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
 const clusters = clusterFile as Dataset<ClusterRecord>;
 const thresholds = thresholdFile as Dataset<ThresholdRecord>;
-const feed = feedFile as Dataset<FeedRecord>;
+const frameworks = frameworkFile as Dataset<FrameworkRecord>;
+const research = researchFile as Dataset<ResearchRecord>;
+const policy = policyFile as Dataset<PolicyRecord>;
+const enterprise = enterpriseFile as Dataset<EnterpriseRecord>;
+const feed = feedFile as Dataset<NewsRecord>;
 
-const cites = [
-  ...new Set([
-    ...exposure.sources,
-    ...models.sources,
-    ...benchmarks.sources,
-    ...clusters.sources,
-    ...feed.sources,
-  ]),
+const datasets = [
+  exposure, governance, models, releases, benchmarks, clusters,
+  thresholds, frameworks, research, policy, enterprise, feed,
 ];
-
-// Render-side licence guard. The ETL guards the write; this guards the render.
+const cites = [...new Set(datasets.flatMap((d) => d.sources))];
 assertRenderable(...cites);
 
-/* Exposure */
-const exposureRows = exposure.records;
-const period = exposureRows[0]?.latest_period ?? "";
-const sortedExposure = [...exposureRows].map((r) => r.latest).sort((a, b) => a - b);
-const medianExposure = sortedExposure[Math.floor(sortedExposure.length / 2)];
-const topExposure = exposureRows.slice(0, 16);
-const exposureMax = Math.max(...exposureRows.map((r) => r.latest));
-const highest = exposureRows[0];
-const lowest = exposureRows[exposureRows.length - 1];
+/* ---------------------------------------------------------------------------
+   The map. Fixed colour breaks, not per-period quantiles.
 
-// 20-bin distribution across every economy, rendered inside its tile.
-const BINS = 20;
-const binWidth = exposureMax / BINS;
-const exposureBins = Array.from({ length: BINS }, (_, i) =>
-  exposureRows.filter((r) => r.latest >= i * binWidth && r.latest < (i + 1) * binWidth).length,
+   Quantiles recomputed per period would hold the colour distribution constant
+   while the data moved, so a world getting uniformly more exposed would look
+   identical in every frame. Fixed breaks mean a colour means the same share in
+   every period, which is the entire point of stepping through them.
+   --------------------------------------------------------------------------- */
+const BREAKS = [10, 20, 30, 40];
+const RAMP = [
+  "rgb(242 169 80 / 0.16)",
+  "rgb(242 169 80 / 0.34)",
+  "rgb(242 169 80 / 0.55)",
+  "rgb(242 169 80 / 0.78)",
+  "rgb(242 169 80 / 1)",
+];
+const bucketOf = (value: number) => BREAKS.filter((b) => value >= b).length;
+
+const periods = [...new Set(exposure.records.flatMap((r) => Object.keys(r.values)))].sort();
+const mapData = exposure.records
+  .map((record) => {
+    const code = alpha3(record.entity);
+    if (!code) return null;
+    return {
+      code,
+      fills: periods.map((p) => {
+        const value = record.values[p];
+        return value === undefined ? "var(--surface-2)" : RAMP[bucketOf(value)];
+      }),
+      title: `${record.entity}: ${record.latest.toFixed(1)}% in ${record.latest_period}`,
+      href: "/adoption/",
+    };
+  })
+  .filter((d): d is NonNullable<typeof d> => d !== null);
+
+const legend = [
+  { label: "under 10%", colour: RAMP[0] },
+  { label: "10 to 20", colour: RAMP[1] },
+  { label: "20 to 30", colour: RAMP[2] },
+  { label: "30 to 40", colour: RAMP[3] },
+  { label: "40% and over", colour: RAMP[4] },
+];
+
+const latestPeriod = periods[periods.length - 1];
+const firstPeriod = periods[0];
+const ranked = [...exposure.records].sort((a, b) => b.latest - a.latest);
+const sortedLatest = ranked.map((r) => r.latest).sort((a, b) => a - b);
+const medianExposure = sortedLatest[Math.floor(sortedLatest.length / 2)];
+const risen = exposure.records.filter(
+  (r) => r.values[firstPeriod] !== undefined && r.latest > r.values[firstPeriod],
+).length;
+const withBoth = exposure.records.filter((r) => r.values[firstPeriod] !== undefined).length;
+
+const exposureRows = ranked.map((row) => ({
+  label: row.entity,
+  value: row.latest,
+  display: `${row.latest.toFixed(1)}%`,
+  meta:
+    row.values[firstPeriod] !== undefined
+      ? `${row.latest - row.values[firstPeriod] >= 0 ? "+" : ""}${(row.latest - row.values[firstPeriod]).toFixed(1)}`
+      : "-",
+  highlight: row.entity === "Australia",
+}));
+
+/* ---------------------------------------------------------------------------
+   Panel figures. One or two numbers each; the detail is on the section page.
+   --------------------------------------------------------------------------- */
+const SOLVED_AT = 0.9;
+const solved = benchmarks.records.filter((b) => b.saturated_month);
+const openTests = benchmarks.records.filter((b) => !b.saturated_month);
+const hardest = [...openTests].sort((a, b) => a.latest_best - b.latest_best)[0];
+const leadBenchmark = [...benchmarks.records].sort((a, b) => b.points.length - a.points.length)[0];
+const benchMonth = benchmarks.records.reduce(
+  (m, b) => (b.latest_month > m ? b.latest_month : m),
+  "",
 );
-const binPeak = Math.max(...exposureBins);
 
-/* Models and the EU threshold */
 const EU_THRESHOLD = 1e25;
-const aboveThreshold = models.records.filter((m) => m.compute_flop >= EU_THRESHOLD);
-const recentModels = [...models.records]
-  .sort((a, b) => b.published.localeCompare(a.published))
-  .slice(0, 5);
-const latestModel = recentModels[0];
-const thresholdByYear = thresholds.records.filter((r) => Number(r.year) >= 2019);
-const thresholdMax = Math.max(...thresholdByYear.map((r) => r.above_threshold + r.below_threshold));
-const firstCrossingYear = thresholds.records.find((r) => r.above_threshold > 0)?.year ?? "";
-
-/* Benchmarks */
-const SATURATED_AT = 0.95;
-const rankedBenchmarks = benchmarks.records.filter((b) => b.points.length >= 6).slice(0, 8);
-const saturatedCount = benchmarks.records.filter((b) => b.latest_best >= SATURATED_AT).length;
-const topBenchmark = rankedBenchmarks[0];
-
-/* Clusters */
-const topClusters = clusters.records.slice(0, 10);
-const clusterTotal = clusters.records.reduce((sum, c) => sum + c.clusters, 0);
+const aboveEU = models.records.filter((m) => m.compute_flop >= EU_THRESHOLD).length;
+const aboveCA = models.records.filter((m) => m.compute_flop >= 1e26).length;
+const largest = [...models.records].sort((a, b) => b.compute_flop - a.compute_flop)[0];
+const inForce = thresholds.records.filter((t) => t.status === "in force");
+const latestRelease = [...releases.records].sort((a, b) => b.published.localeCompare(a.published))[0];
 const powerTotal = clusters.records.reduce((sum, c) => sum + c.power_mw, 0);
-const maxClusterCount = Math.max(...topClusters.map((c) => c.clusters));
-const usa = clusters.records.find((c) => c.country.includes("United States"));
-const china = clusters.records.find((c) => c.country === "China");
-// Power split across the five best-documented countries, for the tile visual.
-const powerLeaders = [...clusters.records]
-  .filter((c) => c.power_mw > 0)
-  .sort((a, b) => b.power_mw - a.power_mw)
-  .slice(0, 5);
-const powerLeaderMax = Math.max(...powerLeaders.map((c) => c.power_mw));
 
-/* Policy feed. The homepage shows official publications only: research
-   preprints and reported incidents live on the news page, where they can carry
-   the caveats they need. */
-const officialFeed = feed.records.filter((r) => r.kind === "Government publication");
-const recentFeed = officialFeed.slice(0, 8);
-const jurisdictionCount = new Set(officialFeed.map((r) => r.jurisdiction)).size;
+const withFramework = frameworks.records.filter((f) => f.framework);
+const halting = withFramework.filter((f) => f.halt === "yes");
+const capabilityResearch = research.records.find((r) => r.key === "capability")!;
+const completeYear = capabilityResearch.partial_year - 1;
+const countAt = (r: ResearchRecord, y: number) => r.points.find((p) => p.year === y)?.count ?? 0;
+const safetyWorks = research.records
+  .filter((r) => r.role === "safety")
+  .reduce((sum, r) => sum + countAt(r, completeYear), 0);
+const capabilityWorks = countAt(capabilityResearch, completeYear);
+const perHundred = capabilityWorks ? Math.round((safetyWorks / capabilityWorks) * 100) : 0;
 
-/* Datasets are only rewritten when their records change, so their own retrieved
-   stamps say when the data last moved. When the pipeline last LOOKED is a
-   separate fact, and the one that tells a reader this site is still alive. */
+const jurisdictions = [...new Set(policy.records.map((r) => r.jurisdiction_slug))];
+const binding = policy.records.filter((r) => r.force === "statute" || r.force === "delegated");
+const nationalGovernance = governance.records.filter((g) => g.basis === "national");
+const topGovernance = [...nationalGovernance].sort((a, b) => b.readiness - a.readiness)[0];
+
+const enterpriseSorted = [...enterprise.records].sort((a, b) => b.share - a.share);
+const enterpriseTop = enterpriseSorted[0];
+const enterpriseYear = enterprise.records[0]?.year ?? "";
+/* The comparison the adoption page is built on, restated here in one number. */
+const paired = enterprise.records
+  .map((e) => {
+    const people = exposure.records.find((x) => alpha3(x.entity) === alpha3(e.name));
+    return people ? { name: e.name, firms: e.share, people: people.latest } : null;
+  })
+  .filter((p): p is NonNullable<typeof p> => p !== null);
+const peopleAhead = paired.filter((p) => p.people > p.firms).length;
+
+const recentNews = [...feed.records]
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 6);
+const jurisdictionsInFeed = new Set(
+  feed.records.filter((r) => r.kind === "Government publication").map((r) => r.jurisdiction),
+).size;
+
 const status = statusFile as { last_checked: string; modules: Record<string, string> };
-const datasets = [exposure, models, benchmarks, clusters, feed];
 const checked = freshness(status.last_checked);
 const failing = Object.entries(status.modules).filter(([, state]) => state !== "ok");
 
@@ -149,34 +265,16 @@ const fmtCompute = (flop: number) => {
   const exp = Math.floor(Math.log10(flop));
   return `${(flop / 10 ** exp).toFixed(1)}e${exp}`;
 };
-
-const buildSteps = [
-  {
-    name: "Register the source",
-    body: "Every source is declared once with its licence, attribution, cadence and known limitations.",
-  },
-  {
-    name: "Stamp every record",
-    body: "Each processed figure carries a source id, so attribution is a join rather than a habit.",
-  },
-  {
-    name: "Guard both ends",
-    body: "The pipeline refuses to write data whose licence forbids republication. The site refuses to render it.",
-  },
-  {
-    name: "Show it on the figure",
-    body: "Any number opens its own source, licence and retrieval date on click.",
-  },
-];
+const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
 ---
 
 <Base
-  title="AI Safety Index: capability, governance and safety data"
-  description="An independent, cited index of AI capability, governance and safety. Every figure carries its source, licence and retrieval date."
+  title="AI Safety Index"
+  root
+  description="A cited index of AI capability, governance and safety. Current figures on model progress, adoption, law and incidents, with the source, licence and retrieval date on every number."
   cites={cites}
 >
-  <!-- 1. CURRENT FIGURES. Layout family: bento grid, mixed spans. Opens the page. -->
-  <section class="section section--open" id="figures">
+  <section class="section section--open">
     <div class="wrap">
       <div class="masthead">
         <h1>Current figures</h1>
@@ -186,742 +284,443 @@ const buildSteps = [
           {cites.length} sources
           <span aria-hidden="true">/</span>
           <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
-          {
-            failing.length > 0 && (
-              <span class="is-stale">/ {failing.length} source(s) failing</span>
-            )
-          }
+          {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
         </p>
       </div>
 
-      <div class="bento">
-        <StatTile
-          span={2}
-          emphasis
-          value={aboveThreshold.length.toString()}
-          label="Models at or above the EU systemic-risk compute threshold"
-          detail={`First crossed in ${firstCrossingYear}. Article 51 sets it at 1e25 FLOP.`}
-          source={models.sources}
-          retrieved={models.retrieved}
-          note="Counted from models with a reported or estimated training-compute figure. Many values are estimates."
-        >
-          <div class="mini" aria-hidden="true">
-            {
-              thresholdByYear.map((row) => (
-                <span
-                  class="mini__col"
-                  style={`--h:${((row.above_threshold + row.below_threshold) / thresholdMax) * 100}%`}
-                >
-                  <span
-                    class="mini__fill"
-                    style={`--p:${
-                      row.above_threshold + row.below_threshold
-                        ? (row.above_threshold / (row.above_threshold + row.below_threshold)) * 100
-                        : 0
-                    }%`}
-                  />
-                </span>
-              ))
-            }
-          </div>
-        </StatTile>
+      <!-- DASHBOARD. One panel per section; the heading is the way in. -->
+      <div class="dash">
+        <article class="panel-card dash__wide">
+          <h2 class="panel-card__head">
+            <a href="/progress/" class="go">Progress</a>
+            <span class="panel-card__meta mono">to {benchMonth}</span>
+          </h2>
+          <p class="panel-card__lead num">
+            {solved.length}<span class="panel-card__of">of {benchmarks.count}</span>
+          </p>
+          <p class="panel-card__label">
+            tracked benchmarks solved past {pct(SOLVED_AT)}
+            <Provenance
+              source={benchmarks.sources}
+              retrieved={benchmarks.retrieved}
+              label="figure"
+              note="Solved means the best recorded score by any evaluated model has passed 0.9."
+            />
+          </p>
+          <Sparkline points={leadBenchmark.points} marker={SOLVED_AT} />
+          <ul class="panel-card__facts">
+            <li>
+              <span class="num">{pct(hardest.latest_best)}</span> best score on {hardest.benchmark}
+            </li>
+            <li>
+              <span class="num">{openTests.length}</span> tests still separating leading models
+            </li>
+          </ul>
+        </article>
 
-        <StatTile
-          span={2}
-          value={medianExposure.toFixed(1)}
-          unit="%"
-          label="Median share of working-age population using AI tools"
-          detail={`Across ${exposure.count} economies, ${period}.`}
-          source={exposure.sources}
-          retrieved={exposure.retrieved}
-          note={`Median across all ${exposure.count} economies in the dataset.`}
-        >
-          <div class="dist" aria-hidden="true">
-            {
-              exposureBins.map((n) => (
-                <span class="dist__bar" style={`--h:${binPeak ? (n / binPeak) * 100 : 0}%`} />
-              ))
-            }
-          </div>
-        </StatTile>
+        <article class="panel-card dash__wide">
+          <h2 class="panel-card__head">
+            <a href="/capability/" class="go">Capability</a>
+            <span class="panel-card__meta mono">{models.count} with compute</span>
+          </h2>
+          <p class="panel-card__lead num">{aboveEU}</p>
+          <p class="panel-card__label">
+            models at or above the EU systemic-risk threshold of 1e25 FLOP
+            <Provenance
+              source={models.sources}
+              retrieved={models.retrieved}
+              label="figure"
+              note="Counted from models with a reported or estimated training-compute figure. Many are estimates."
+            />
+          </p>
+          <ul class="panel-card__facts">
+            <li>
+              <span class="num">{aboveCA}</span> above 1e26, the Californian threshold
+            </li>
+            <li>
+              <span class="num">{fmtCompute(largest.compute_flop)}</span> largest run, {largest.model}
+            </li>
+            <li>
+              <span class="num">{Math.round(powerTotal).toLocaleString("en-GB")} MW</span>
+              documented cluster power
+            </li>
+          </ul>
+        </article>
 
-        <StatTile
-          span={2}
-          value={saturatedCount.toString()}
-          unit={`of ${benchmarks.count}`}
-          label="Tracked benchmarks scoring above 95 percent"
-          detail="A saturated benchmark stops distinguishing between models."
-          source={benchmarks.sources}
-          retrieved={benchmarks.retrieved}
-          note="A benchmark counts as saturated here when the best recorded score reaches 0.95."
-        >
-          <Sparkline points={topBenchmark.points} marker={SATURATED_AT} />
-        </StatTile>
+        <article class="panel-card dash__wide">
+          <h2 class="panel-card__head">
+            <a href="/alignment/" class="go">Alignment</a>
+            <span class="panel-card__meta mono">{completeYear} research</span>
+          </h2>
+          <p class="panel-card__lead num">{perHundred}</p>
+          <p class="panel-card__label">
+            safety works published per 100 on frontier models
+            <Provenance
+              source={research.sources}
+              retrieved={research.retrieved}
+              label="figure"
+              note="Keyword match on title and abstract in OpenAlex, not a field classification. The queries are printed on the alignment page."
+            />
+          </p>
+          <ul class="panel-card__facts">
+            <li>
+              <span class="num">{withFramework.length} of {frameworks.count}</span> developers
+              publish a safety framework
+            </li>
+            <li>
+              <span class="num">{halting.length}</span> of those commit to stopping rather than
+              deciding
+            </li>
+          </ul>
+        </article>
 
-        <StatTile
-          span={3}
-          value={latestModel.model}
-          label="Most recent model with a published compute figure"
-          detail={`${latestModel.organisation}, ${latestModel.published}, ${fmtCompute(latestModel.compute_flop)} FLOP.`}
-          source={models.sources}
-          retrieved={models.retrieved}
-        >
-          <ul class="leaders leaders--wide">
+        <article class="panel-card">
+          <h2 class="panel-card__head">
+            <a href="/adoption/" class="go">Adoption</a>
+          </h2>
+          <p class="panel-card__lead num">{peopleAhead}<span class="panel-card__of">of {paired.length}</span></p>
+          <p class="panel-card__label">
+            economies where more people use AI than the firms employing them
+            <Provenance
+              source={[...exposure.sources, ...enterprise.sources]}
+              retrieved={enterprise.retrieved}
+              label="figure"
+              note="Population use from Microsoft telemetry; enterprise use from Eurostat's survey. Two different instruments, compared as levels."
+            />
+          </p>
+          <ul class="panel-card__facts">
+            <li>
+              <span class="num">{enterpriseTop.share.toFixed(0)}%</span> of firms in
+              {" "}{enterpriseTop.name}, the highest, {enterpriseYear}
+            </li>
+          </ul>
+        </article>
+
+        <article class="panel-card">
+          <h2 class="panel-card__head">
+            <a href="/map/" class="go">Governance</a>
+          </h2>
+          <p class="panel-card__lead num">{governance.count}</p>
+          <p class="panel-card__label">
+            jurisdictions scored for governance readiness
+            <Provenance
+              source={governance.sources}
+              retrieved={governance.retrieved}
+              label="figure"
+              note="Our own coding from primary instruments. It counts machinery, not quality."
+            />
+          </p>
+          <ul class="panel-card__facts">
+            <li>
+              <span class="num">{nationalGovernance.length}</span> coded individually, the rest
+              inherit the EU score
+            </li>
+            <li>
+              <span class="num">{topGovernance.readiness}</span> highest score, {topGovernance.name}
+            </li>
+          </ul>
+        </article>
+
+        <article class="panel-card">
+          <h2 class="panel-card__head">
+            <a href="/policy/" class="go">Policy</a>
+          </h2>
+          <p class="panel-card__lead num">{policy.count}</p>
+          <p class="panel-card__label">
+            instruments indexed across {jurisdictions.length} jurisdictions
+            <Provenance source={policy.sources} retrieved={policy.retrieved} label="figure" />
+          </p>
+          <ul class="panel-card__facts">
+            <li>
+              <span class="num">{binding.length}</span> of them binding law
+            </li>
+            <li>
+              <span class="num">{inForce.length}</span> compute thresholds in force anywhere
+            </li>
+          </ul>
+        </article>
+
+        <article class="panel-card dash__tall">
+          <h2 class="panel-card__head">
+            <a href="/news/" class="go">News</a>
+            <span class="panel-card__meta mono">{jurisdictionsInFeed} jurisdictions</span>
+          </h2>
+          <ul class="mini-feed">
             {
-              recentModels.slice(1).map((m) => (
+              recentNews.map((item) => (
                 <li>
-                  <span class="leaders__name">{m.model}</span>
-                  <span class="leaders__org">{m.organisation}</span>
-                  <span class="leaders__val num">{m.published}</span>
+                  <time class="mono" datetime={item.date}>
+                    {item.date}
+                  </time>
+                  <a href={item.url}>{item.title}</a>
                 </li>
               ))
             }
           </ul>
-        </StatTile>
-
-        <StatTile
-          span={3}
-          value={Math.round(powerTotal).toLocaleString("en-GB")}
-          unit="MW"
-          label="Documented power capacity across all reported clusters"
-          detail={`${clusterTotal} clusters across ${clusters.count} countries have a location on record. Power is summed only where it is published.`}
-          source={clusters.sources}
-          retrieved={clusters.retrieved}
-          note="Power is summed over the subset of clusters with a published capacity figure."
-        >
-          <ul class="leaders">
-            {
-              powerLeaders.map((c) => (
-                <li>
-                  <span class="leaders__name">{c.country}</span>
-                  <span
-                    class="leaders__bar"
-                    style={`--w:${((c.power_mw / powerLeaderMax) * 100).toFixed(1)}%`}
-                    aria-hidden="true"
-                  />
-                  <span class="leaders__val num">{Math.round(c.power_mw).toLocaleString("en-GB")}</span>
-                </li>
-              ))
-            }
-          </ul>
-        </StatTile>
+          <a href="/news/" class="more">The full feed, by category</a>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- 2. EXPOSURE. Layout family: full-width ranked bar table. -->
-  <section class="section section--sunk">
+  <!-- THE MAP -->
+  <section class="section section--sunk" id="map">
     <div class="wrap">
       <div class="section-head">
-        <h2>AI use by economy</h2>
+        <h2><a href="/adoption/" class="go">Who is using AI</a></h2>
         <p>
-          {highest.entity} sits at {highest.latest}%, about {(highest.latest / lowest.latest).toFixed(0)}
-          times {lowest.entity}. The median economy is at {medianExposure.toFixed(1)}%.
+          Share of each economy's working-age population actively using AI tools. Step through
+          the reporting periods; the colour means the same share in every one.
         </p>
       </div>
 
-      <figure class="chart">
-        <figcaption class="chart__cap">
-          <span>
-            Share of working-age population using AI tools, {period}
-            <Provenance source={exposure.sources} retrieved={exposure.retrieved} />
-          </span>
-          <span class="chart__meta mono">
-            top {topExposure.length} of {exposure.count}
-          </span>
-        </figcaption>
+      <TimeMap
+        periods={periods}
+        data={mapData}
+        legend={legend}
+        label="Share of working-age population using AI tools, by economy"
+        id="use"
+        width={1000}
+        places={1}
+      />
 
-        <div class="scroll-x">
-          <table class="bars">
-            <caption class="visually-hidden">
-              Share of working-age population actively using AI tools by economy, {period},
-              ranked highest to lowest.
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Economy</th>
-                <th scope="col" class="ta-end">Share</th>
-                <th scope="col" class="bar-col">
-                  <span class="visually-hidden">Relative magnitude</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                topExposure.map((row) => (
-                  <tr>
-                    <th scope="row">{row.entity}</th>
-                    <td class="ta-end num">{row.latest.toFixed(1)}%</td>
-                    <td class="bar-col">
-                      <span
-                        class="bar"
-                        style={`--w:${((row.latest / exposureMax) * 100).toFixed(1)}%`}
-                        aria-hidden="true"
-                      />
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <p class="caveat">
-          Estimated from anonymised Microsoft telemetry, adjusted for device and internet
-          penetration. It measures Microsoft-visible use scaled by a model, not observed total AI
-          use, and it cannot see AI embedded in products people do not recognise as AI. One signal,
-          not a measurement.
-        </p>
-      </figure>
-    </div>
-  </section>
-
-  <!-- 3. BENCHMARKS. Layout family: horizontal scroll-snap card rail. -->
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Benchmark saturation</h2>
-        <p>
-          Best score recorded on each benchmark by any evaluated model, as a running maximum. A
-          benchmark at 100 percent has stopped telling you which model is better.
-        </p>
+      <div class="map-side">
+        <ul class="strip">
+          <li class="strip__item">
+            <span class="strip__value">{medianExposure.toFixed(1)}%</span>
+            <span class="strip__label">
+              median economy, {latestPeriod}
+              <Provenance
+                source={exposure.sources}
+                retrieved={exposure.retrieved}
+                label="figure"
+                note="Median across all 147 economies in the dataset."
+              />
+            </span>
+          </li>
+          <li class="strip__item">
+            <span class="strip__value">{ranked[0].latest.toFixed(1)}%</span>
+            <span class="strip__label">{ranked[0].entity}, the highest</span>
+          </li>
+          <li class="strip__item">
+            <span class="strip__value">{risen} of {withBoth}</span>
+            <span class="strip__label">economies rose between {firstPeriod} and {latestPeriod}</span>
+          </li>
+          <li class="strip__item">
+            <span class="strip__value">{exposure.count}</span>
+            <span class="strip__label">economies in the dataset</span>
+          </li>
+        </ul>
       </div>
-    </div>
 
-    <div class="rail scroll-x">
-      <ul class="rail__track">
-        {
-          rankedBenchmarks.map((bench) => (
-            <li class="bcard">
-              <p class="bcard__name">{bench.benchmark}</p>
-              <p class="bcard__score num">
-                {(bench.latest_best * 100).toFixed(1)}
-                <span class="bcard__pct">%</span>
-              </p>
-              <Sparkline points={bench.points} marker={SATURATED_AT} />
-              <p class="bcard__meta mono">
-                {bench.first_month} to {bench.latest_month}
-              </p>
-              <p class="bcard__state">
-                {bench.latest_best >= SATURATED_AT ? "Saturated" : "Still discriminating"}
-              </p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <div class="wrap">
-      <p class="caveat">
-        Mixes evaluation runs performed by Epoch AI with externally reported scores, which are not
-        strictly comparable. The line shows the best available capability at each point in time, not
-        the typical one.
-        <Provenance source={benchmarks.sources} retrieved={benchmarks.retrieved} />
-      </p>
-    </div>
-  </section>
-
-  <!-- 4. THRESHOLD. Layout family: prose with an inline column chart. -->
-  <section class="section section--sunk">
-    <div class="wrap threshold">
-      <h2>Models against the one binding compute threshold</h2>
-      <p class="prose">
-        The EU AI Act presumes a general-purpose model carries systemic risk once cumulative
-        training compute passes 1e25 FLOP. It is the only compute threshold currently written into
-        binding law anywhere, which is why it is the only one plotted. Of the {models.count} models
-        here with a compute figure, {aboveThreshold.length} cross it.
-      </p>
-
-      <figure class="cols">
-        <div class="cols__plot">
-          {
-            thresholdByYear.map((row) => {
-              const total = row.above_threshold + row.below_threshold;
-              return (
-                <div class="cols__year">
-                  <div class="cols__stack" style={`--h:${(total / thresholdMax) * 100}%`}>
-                    <span
-                      class="cols__above"
-                      style={`--part:${total ? (row.above_threshold / total) * 100 : 0}%`}
-                    />
-                  </div>
-                  <span class="cols__label mono">{row.year.slice(2)}</span>
-                </div>
-              );
-            })
-          }
-        </div>
-        <figcaption class="cols__key">
-          <span class="key key--above">At or above 1e25 FLOP</span>
-          <span class="key key--below">Below</span>
-          <Provenance
-            source={models.sources}
-            retrieved={models.retrieved}
-            note="Counted by publication year from models with a reported or estimated training-compute figure."
-          />
-        </figcaption>
-      </figure>
+      <BarTable
+        rows={exposureRows}
+        head="Economy"
+        valueHead={`Share, ${latestPeriod}`}
+        metaHead={`Change since ${firstPeriod}`}
+        top={10}
+        caption={`Share of working-age population using AI tools by economy in ${latestPeriod}, ranked highest to lowest, with the change since ${firstPeriod}.`}
+      />
 
       <p class="caveat">
-        Compute figures are frequently estimates rather than disclosures. Treat borderline cases as
-        indicative, never as a legal finding about any particular model.
+        Estimated from anonymised Microsoft telemetry adjusted for device and internet
+        penetration. It measures Microsoft-visible use scaled by a model, not observed total AI
+        use, and it cannot see AI embedded in products people do not recognise as AI. The
+        tooltip on each country shows its latest value, not the value for the selected period.
+        <Provenance source={exposure.sources} retrieved={exposure.retrieved} />
       </p>
     </div>
   </section>
 
-  <!-- 5. COMPUTE. Layout family: dense multi-column data table. -->
-  <section class="section">
+  <!-- WHAT THIS IS -->
+  <section class="section" id="about">
     <div class="wrap">
       <div class="section-head">
-        <h2>Documented compute by country</h2>
+        <h2>Every number here tells you where it came from</h2>
         <p>
-          China has the most reported clusters. The United States has most of the reported power.
-          That difference measures disclosure as much as capacity.
-        </p>
-      </div>
-
-      <div class="scroll-x">
-        <table class="grid-table">
-          <caption class="visually-hidden">
-            Publicly reported GPU clusters by country, with documented power capacity.
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Country</th>
-              <th scope="col" class="ta-end">Clusters</th>
-              <th scope="col" class="ta-end">Documented power</th>
-              <th scope="col" class="ta-end">With known capacity</th>
-              <th scope="col" class="bar-col">
-                <span class="visually-hidden">Share of clusters</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              topClusters.map((row) => (
-                <tr>
-                  <th scope="row">{row.country}</th>
-                  <td class="ta-end num">{row.clusters}</td>
-                  <td class="ta-end num">{row.power_mw.toLocaleString("en-GB")} MW</td>
-                  <td class="ta-end num muted-cell">
-                    {row.clusters_with_known_power} of {row.clusters}
-                  </td>
-                  <td class="bar-col">
-                    <span
-                      class="bar bar--thin"
-                      style={`--w:${((row.clusters / maxClusterCount) * 100).toFixed(1)}%`}
-                      aria-hidden="true"
-                    />
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <p class="caveat">
-        {china?.country} reports {china?.clusters} clusters at {china?.power_mw.toLocaleString("en-GB")} MW
-        documented, against {usa?.clusters} clusters at {usa?.power_mw.toLocaleString("en-GB")} MW for
-        the United States. Capacity is published for only a minority of Chinese clusters, so the gap
-        shown here is partly a reporting gap.
-        <Provenance source={clusters.sources} retrieved={clusters.retrieved} />
-      </p>
-    </div>
-  </section>
-
-  <!-- 6. POLICY FEED. Layout family: chronological feed rows. -->
-  <section class="section section--sunk">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Recent government publications</h2>
-        <p>
-          From {jurisdictionCount} jurisdictions via official public-domain and open-licence
-          channels. Headline and a short extract only, always linking back to the original.
-        </p>
-      </div>
-
-      <ul class="feed">
-        {
-          recentFeed.map((item) => (
-            <li class="feed__row">
-              <div class="feed__meta">
-                <time class="mono" datetime={item.date}>
-                  {item.date}
-                </time>
-                <span class="tag">{item.jurisdiction}</span>
-              </div>
-              <div class="feed__body">
-                <a href={item.url} class="feed__title">
-                  {item.title}
-                </a>
-                {item.snippet && <p class="feed__snippet">{item.snippet}</p>}
-                <p class="feed__pub">
-                  {item.publisher}
-                  <Provenance source={item.source_id} retrieved={feed.retrieved} label="item" />
-                </p>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
-
-      <a href="/news/" class="btn btn--ghost feed__more">See the full feed</a>
-    </div>
-  </section>
-
-  <!-- 7. METHOD. Layout family: process grid. -->
-  <section class="section" id="how">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>How the citation layer works</h2>
-        <p>
-          Attribution is structural here, not editorial discipline. It is the one architectural rule
-          the whole project rests on.
-        </p>
-      </div>
-
-      <ol class="steps">
-        {
-          buildSteps.map((step) => (
-            <li class="step">
-              <h3>{step.name}</h3>
-              <p>{step.body}</p>
-            </li>
-          ))
-        }
-      </ol>
-
-      <p class="prose steps__note">
-        Two sources are registered specifically so that using them fails the build: Artificial
-        Analysis, whose free tier forbids redistribution, and the Stanford AI Index, which is
-        licensed CC BY-NC-ND and therefore cannot be re-plotted. Both are linked instead.
-      </p>
-    </div>
-  </section>
-
-  <!-- 8. SOURCES. Layout family: source wall grid. -->
-  <section class="section section--sunk">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Sources</h2>
-        <p>
-          No scraping, no paid APIs, no unlicensed reuse. Each of these publishes openly and is
-          credited under its own terms.
+          Each figure carries its source, licence and retrieval date, resolved from one registry
+          when the page is built rather than written by hand.
         </p>
       </div>
 
       <ul class="cards">
-        {
-          [
-            { name: "Epoch AI", what: "Models, benchmarks, clusters, hardware", lic: "CC BY 4.0", href: "https://epoch.ai/data" },
-            { name: "Microsoft AI for Good Lab", what: "AI diffusion by economy", lic: "MIT", href: "https://github.com/microsoft/ai-diffusion-report" },
-            { name: "US Federal Register", what: "Rules, notices, executive actions", lic: "Public domain", href: "https://www.federalregister.gov" },
-            { name: "GOV.UK", what: "UK government announcements", lic: "OGL v3.0", href: "https://www.gov.uk" },
-            { name: "European Commission", what: "EU digital and AI policy", lic: "Decision 2011/833/EU", href: "https://digital-strategy.ec.europa.eu" },
-            { name: "NIST", what: "US standards and evaluation work", lic: "Public domain", href: "https://www.nist.gov" },
-          ].map((source) => (
-            <li class="card">
-              <a href={source.href} class="card__title">{source.name}</a>
-              <p>{source.what}</p>
-              <span class="card__meta mono">{source.lic}</span>
-            </li>
-          ))
-        }
+        <li class="card">
+          <span class="card__title">Click the marker on any figure</span>
+          <p>
+            It opens that number's source, publisher, licence, update cadence, retrieval date
+            and known limitations.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">Two sources are registered to fail the build</span>
+          <p>
+            Artificial Analysis forbids redistribution and the Stanford AI Index is
+            no-derivatives. Wiring either in stops the build rather than shipping.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">No tracking, no accounts, no client JavaScript</span>
+          <p>
+            Charts and maps are rendered to SVG when the site is built. Nothing here measures
+            you.
+          </p>
+        </li>
+        <li class="card">
+          <a href="/sources/" class="card__title">All {cites.length} sources</a>
+          <p>
+            Every source, what it is used for, its licence and what it cannot tell you.
+          </p>
+        </li>
       </ul>
     </div>
   </section>
 </Base>
 
 <style>
-  /* Page-specific only. Masthead, tables, feed rows, caveats and the card grid
-     are shared furniture and live in src/styles/global.css. */
-
-  /* 1. Bento. Six columns, mixed spans, no blank padding tiles. */
-  .bento {
+  /* Dashboard. Twelve columns so panels can be 4, 6 or 12 wide without the
+     half-empty tile that a three-column grid forces at the end of a row. */
+  .dash {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.75rem;
-  }
-
-  /* Tile visuals, all built from data already on the page. */
-  .dist,
-  .mini {
-    display: flex;
-    align-items: flex-end;
-    gap: 2px;
-    block-size: 38px;
-    margin-block-start: 0.6rem;
-  }
-
-  .dist__bar,
-  .mini__col {
-    flex: 1;
-    block-size: max(2px, var(--h));
-    border-radius: var(--r-mark);
-  }
-
-  .dist__bar {
-    background: var(--accent);
-    opacity: 0.55;
-  }
-
-  .mini__col {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    overflow: hidden;
-  }
-
-  .mini__fill {
-    display: block;
-    block-size: var(--p);
-    background: var(--accent);
-  }
-
-  .leaders {
-    display: grid;
-    gap: 0.2rem;
-    margin: 0.7rem 0 0;
-    padding: 0;
-    list-style: none;
-    font-size: 0.75rem;
-  }
-
-  .leaders li {
-    display: grid;
-    grid-template-columns: 8.5rem 1fr auto;
-    align-items: center;
+    grid-template-columns: repeat(12, 1fr);
     gap: 0.6rem;
   }
 
-  .leaders--wide li {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-  }
-
-  .leaders__org {
-    color: var(--muted);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .leaders--wide .leaders__name {
-    color: var(--ink);
-  }
-
-  .leaders__name {
-    color: var(--muted);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .leaders__bar {
-    block-size: 0.3rem;
-    inline-size: var(--w);
-    border-radius: var(--r-mark);
-    background: var(--accent);
-    opacity: 0.6;
-  }
-
-  .leaders__val {
-    color: var(--muted);
-  }
-
-  @media (max-width: 767px) {
-    .leaders li {
-      grid-template-columns: 6.5rem 1fr auto;
-    }
-  }
-
-  /* 3. Benchmark rail. */
-  .rail {
-    padding-block: 0.25rem 1rem;
-  }
-
-  .rail__track {
-    display: flex;
-    gap: 0.75rem;
-    margin: 0;
-    padding-inline: clamp(1rem, 3.5vw, 2.5rem);
-    list-style: none;
-    scroll-snap-type: x mandatory;
-  }
-
-  .bcard {
-    flex: 0 0 15.5rem;
-    scroll-snap-align: start;
+  .panel-card {
+    grid-column: span 4;
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    padding: 1rem 1.1rem 1.1rem;
+    padding: 0.85rem 1rem 1rem;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--r);
     transition: border-color 0.18s var(--ease);
   }
 
-  .bcard:hover {
+  .panel-card:hover {
     border-color: var(--accent-line);
   }
 
-  .bcard__name {
-    font-size: 0.8125rem;
-    color: var(--muted);
-    line-height: 1.4;
-    min-block-size: 2.4em;
+  .dash__wide {
+    grid-column: span 4;
   }
 
-  .bcard__score {
-    font-size: 1.75rem;
+  .dash__tall {
+    grid-column: span 12;
+  }
+
+  @media (min-width: 900px) {
+    .dash__tall {
+      grid-column: span 12;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .panel-card,
+    .dash__wide {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .panel-card,
+    .dash__wide {
+      grid-column: span 12;
+    }
+  }
+
+  .panel-card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.9375rem;
+    margin-block-end: 0.15rem;
+  }
+
+  .panel-card__meta {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .panel-card__lead {
+    font-size: 2rem;
     font-weight: 500;
     letter-spacing: -0.03em;
-    line-height: 1.1;
+    line-height: 1;
+    color: var(--accent);
   }
 
-  .bcard__pct {
-    font-size: 0.875rem;
+  .panel-card__of {
+    margin-inline-start: 0.4rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
     color: var(--muted);
-    margin-inline-start: 0.1rem;
+    letter-spacing: 0;
   }
 
-  .bcard__meta {
-    font-size: 0.6875rem;
+  .panel-card__label {
     color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.4;
   }
 
-  .bcard__state {
+  .panel-card__facts {
+    margin: auto 0 0;
+    padding: 0.55rem 0 0;
+    list-style: none;
+    border-block-start: 1px solid var(--line-soft);
     font-size: 0.75rem;
     color: var(--muted);
-    padding-block-start: 0.5rem;
-    border-block-start: 1px solid var(--line-soft);
+    line-height: 1.5;
   }
 
-  /* 4. Threshold columns. */
-  .threshold h2 {
-    max-inline-size: 24ch;
+  .panel-card__facts li + li {
+    margin-block-start: 0.2rem;
   }
 
-  .threshold .prose {
-    margin-block: 1rem 2rem;
-    color: var(--muted);
+  .panel-card__facts .num {
+    color: var(--ink);
   }
 
-  .cols {
-    margin: 0;
-  }
-
-  .cols__plot {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.4rem;
-    block-size: 170px;
-    padding-block-end: 1.4rem;
-    border-block-end: 1px solid var(--line);
-  }
-
-  .cols__year {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    block-size: 100%;
-    position: relative;
-  }
-
-  .cols__stack {
-    block-size: var(--h);
-    min-block-size: 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    border-radius: var(--r-mark);
-    overflow: hidden;
-  }
-
-  .cols__above {
-    display: block;
-    block-size: var(--part);
-    background: var(--accent);
-  }
-
-  .cols__label {
-    position: absolute;
-    inset-block-end: -1.3rem;
-    inset-inline: 0;
-    text-align: center;
-    font-size: 0.6875rem;
-    color: var(--muted);
-  }
-
-  .cols__key {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 1.25rem;
-    margin-block-start: 1.75rem;
-    font-size: 0.8125rem;
-    color: var(--muted);
-  }
-
-  .key {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-  }
-
-  .key::before {
-    content: "";
-    inline-size: 0.7rem;
-    block-size: 0.7rem;
-    border-radius: var(--r-mark);
-  }
-
-  .key--above::before {
-    background: var(--accent);
-  }
-
-  .key--below::before {
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-  }
-
-  /* 6. Feed tail link. */
-  .feed__more {
-    margin-block-start: 1.75rem;
-  }
-
-  /* 7. Process steps. */
-  .steps {
+  .mini-feed {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-    gap: 0.75rem 2rem;
-    margin: 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 0.2rem 1.75rem;
+    margin: 0.2rem 0 0;
     padding: 0;
     list-style: none;
   }
 
-  .step {
-    padding-block-start: 0.9rem;
-    /* Order is carried by the list and reading direction. A numeral above each
-       name would just be a "Step 1 / Step 2" label in another font. */
-    border-block-start: 2px solid var(--accent-line);
+  .mini-feed li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding-block: 0.3rem;
+    border-block-start: 1px solid var(--line-soft);
+    font-size: 0.8125rem;
   }
 
-  .step p {
-    margin-block-start: 0.4rem;
+  .mini-feed time {
+    flex: none;
+    font-size: 0.6875rem;
     color: var(--muted);
-    font-size: 0.875rem;
   }
 
-  .steps__note {
-    margin-block-start: 2rem;
-    color: var(--muted);
-    font-size: 0.875rem;
+  .mini-feed a {
+    color: var(--ink);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mini-feed a:hover {
+    color: var(--accent);
+  }
+
+  .map-side {
+    margin-block: 0.9rem;
   }
 </style>

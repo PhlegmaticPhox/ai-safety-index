@@ -1,0 +1,156 @@
+---
+/**
+ * A ranked table of label, value and magnitude bar, showing the top rows and
+ * putting the tail behind a native <details>.
+ *
+ * Four pages had grown their own copy of this, and three of them printed every
+ * row of a hundred-row ranking, which buries the figure the section is about
+ * under ninety rows nobody reads. The rule here: the visible rows must be enough
+ * to read the chart, and the tail is the full data rather than the point.
+ *
+ * No JavaScript. <details> is keyboard accessible, and browsers that search
+ * hidden text still find collapsed rows with Ctrl+F.
+ */
+export interface BarRow {
+  label: string;
+  /** The number the bar is scaled from. */
+  value: number;
+  /** What to print, if it is not just the value. */
+  display?: string;
+  /** Optional second column, for a count or a share. */
+  meta?: string;
+  /** Makes the label a link. */
+  href?: string;
+  /** Marks this row as the reader's own point of reference. */
+  highlight?: boolean;
+}
+
+interface Props {
+  rows: BarRow[];
+  /** Column heading for the label column. */
+  head: string;
+  /** Column heading for the value column. */
+  valueHead: string;
+  /** Optional heading for the meta column. Omit and the column is not drawn. */
+  metaHead?: string;
+  /** How many rows to show before the disclosure. */
+  top?: number;
+  /** Scale bars against this. Defaults to the largest value present. */
+  max?: number;
+  /** Extra class on the bar, for the governance hue. */
+  barClass?: string;
+  /** Screen-reader description of the whole table. */
+  caption: string;
+}
+
+const {
+  rows,
+  head,
+  valueHead,
+  metaHead,
+  top = 10,
+  max,
+  barClass = "",
+  caption,
+} = Astro.props;
+
+const peak = max ?? Math.max(...rows.map((r) => r.value), 0);
+const width = (value: number) => (peak > 0 ? ((value / peak) * 100).toFixed(1) : "0");
+const visible = rows.slice(0, top);
+const hidden = rows.slice(top);
+---
+
+<div class="scroll-x">
+  <table class="bars">
+    <caption class="visually-hidden">{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{head}</th>
+        <th scope="col" class="ta-end">{valueHead}</th>
+        {metaHead && <th scope="col" class="ta-end">{metaHead}</th>}
+        <th scope="col" class="bar-col">
+          <span class="visually-hidden">Relative magnitude</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        visible.map((row) => (
+          <tr class:list={[row.highlight && "is-mine"]}>
+            <th scope="row">{row.href ? <a href={row.href}>{row.label}</a> : row.label}</th>
+            <td class="ta-end num">{row.display ?? row.value}</td>
+            {metaHead && <td class="ta-end num muted-cell">{row.meta}</td>}
+            <td class="bar-col">
+              <span
+                class:list={["bar", barClass]}
+                style={`--w:${width(row.value)}%`}
+                aria-hidden="true"
+              />
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+
+    {
+      hidden.length > 0 && (
+        <tbody class="bars__tail">
+          <tr>
+            <td colspan={metaHead ? 4 : 3} class="bars__disclose">
+              <details class="reveal">
+                <summary>
+                  Show the remaining <span class="reveal__count">{hidden.length}</span>
+                </summary>
+                <div class="reveal__body">
+                  <table class="bars">
+                    <caption class="visually-hidden">
+                      {caption} Rows {top + 1} to {rows.length}.
+                    </caption>
+                    <tbody>
+                      {hidden.map((row) => (
+                        <tr class:list={[row.highlight && "is-mine"]}>
+                          <th scope="row">
+                            {row.href ? <a href={row.href}>{row.label}</a> : row.label}
+                          </th>
+                          <td class="ta-end num">{row.display ?? row.value}</td>
+                          {metaHead && <td class="ta-end num muted-cell">{row.meta}</td>}
+                          <td class="bar-col">
+                            <span
+                              class:list={["bar", barClass]}
+                              style={`--w:${width(row.value)}%`}
+                              aria-hidden="true"
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </td>
+          </tr>
+        </tbody>
+      )
+    }
+  </table>
+</div>
+
+<style>
+  /* The disclosure row spans the table, and the nested table inherits the
+     parent's column widths closely enough that the bars line up. */
+  .bars__disclose {
+    padding: 0;
+  }
+
+  .bars__tail .reveal {
+    margin-block-start: 0;
+  }
+
+  .bars__tail table {
+    margin-block-start: -0.2rem;
+  }
+
+  .is-mine th[scope="row"] {
+    color: var(--accent-ink);
+  }
+</style>

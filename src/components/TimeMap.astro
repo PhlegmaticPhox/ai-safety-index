@@ -1,0 +1,254 @@
+---
+/**
+ * A choropleth you can step through time on, with no JavaScript.
+ *
+ * The obvious implementation renders one SVG per period and shows the selected
+ * one. That ships the world's coastlines three times, which is about 120KB of
+ * duplicated path data for a map whose geometry never changes.
+ *
+ * Instead the geometry is rendered once, and each country carries one custom
+ * property per period holding the fill it should have then. A radio input drives
+ * a CSS rule that repoints every shape's fill at a different property. Switching
+ * period is one style recalculation and no network, no script and no reflow of
+ * the path data.
+ *
+ * The trade-off, stated because it is a real one: the native <title> tooltip
+ * cannot change with the period, so it names the country and the latest value
+ * only. The per-period numbers are in the table the map links to.
+ */
+import { projectWorld } from "../lib/geo";
+
+export interface TimeMapDatum {
+  /** ISO alpha-3. */
+  code: string;
+  /** One fill per period, in the same order as `periods`. */
+  fills: string[];
+  /** Native tooltip text. */
+  title: string;
+  /** Where clicking the shape goes. */
+  href?: string;
+}
+
+interface Props {
+  /** Period labels, oldest first. */
+  periods: string[];
+  data: TimeMapDatum[];
+  /** Legend swatches, low to high. */
+  legend: Array<{ label: string; colour: string }>;
+  /** Accessible description. */
+  label: string;
+  /** Which period is selected on load. Defaults to the most recent. */
+  initial?: number;
+  width?: number;
+  places?: number;
+  /** Unique per page: two maps on one page would otherwise share radio names. */
+  id?: string;
+}
+
+const {
+  periods,
+  data,
+  legend,
+  label,
+  initial = periods.length - 1,
+  width = 900,
+  places = 1,
+  id = "tm",
+} = Astro.props;
+
+for (const datum of data) {
+  if (datum.fills.length !== periods.length) {
+    throw new Error(
+      `TimeMap: ${datum.code} has ${datum.fills.length} fills for ${periods.length} ` +
+        `periods. A short array would render the last periods transparent, which reads ` +
+        `as "no data" rather than as a bug.`,
+    );
+  }
+}
+
+const world = projectWorld(width, places);
+const byCode = new Map(data.map((d) => [d.code, d]));
+const covered = world.shapes.filter((s) => s.code && byCode.has(s.code)).length;
+
+/* One rule per period, emitted inline because the selector index is data rather
+   than something a static stylesheet can know.
+
+   The fill is read through a fallback, not a bare var(). A country with no data
+   carries no --vN at all, and an unresolvable var() makes the whole declaration
+   invalid at computed-value time, at which point `fill` falls back to its
+   initial value, which is black. Every unshaded country would have rendered
+   solid black with nothing in the markup looking wrong. The selector is also
+   narrowed to shapes inside a link, which are exactly the ones that have data. */
+const rules = periods
+  .map(
+    (_, i) => `#${id}-${i}:checked ~ .tm__figure .tm__link .tm__shape { fill: var(--v${i}, var(--surface-2)); }
+#${id}-${i}:checked ~ .tm__scale .tm__step:nth-of-type(${i + 1}) { color: var(--ink); border-color: var(--accent); background: var(--accent-wash); }
+#${id}-${i}:focus-visible ~ .tm__scale .tm__step:nth-of-type(${i + 1}) { outline: 2px solid var(--accent); outline-offset: 2px; }
+#${id}-${i}:checked ~ .tm__figure .tm__now::after { content: "${periods[i].replace(/"/g, "")}"; }`,
+  )
+  .join("\n");
+---
+
+<div class="tm">
+  {
+    periods.map((period, i) => (
+      <input
+        class="tm__radio"
+        type="radio"
+        name={id}
+        id={`${id}-${i}`}
+        checked={i === initial}
+        aria-label={`Show ${period}`}
+      />
+    ))
+  }
+
+  <div class="tm__scale" role="group" aria-label="Reporting period">
+    {
+      periods.map((period, i) => (
+        <label class="tm__step" for={`${id}-${i}`}>
+          {period}
+        </label>
+      ))
+    }
+  </div>
+
+  <figure class="tm__figure">
+    <svg
+      viewBox={`0 0 ${world.width} ${world.height}`}
+      role="img"
+      aria-label={`${label}. ${covered} of ${world.shapes.length} countries have data; the rest are unshaded.`}
+      class="tm__svg"
+    >
+      <path d={world.sphere} class="tm__sphere"></path>
+      {
+        world.shapes.map((shape) => {
+          const datum = shape.code ? byCode.get(shape.code) : undefined;
+          if (!datum) {
+            return (
+              <path d={shape.d} class="tm__shape tm__shape--empty">
+                <title>{`${shape.name}: not in this dataset`}</title>
+              </path>
+            );
+          }
+          const vars = datum.fills.map((fill, i) => `--v${i}:${fill}`).join(";");
+          return (
+            <a href={datum.href ?? undefined} class="tm__link">
+              <path d={shape.d} class="tm__shape" style={vars}>
+                <title>{datum.title}</title>
+              </path>
+            </a>
+          );
+        })
+      }
+    </svg>
+
+    <figcaption class="key">
+      <span class="tm__now mono" aria-hidden="true"></span>
+      {
+        legend.map((entry) => (
+          <span class="key__item">
+            <span class="key__swatch" style={`--swatch:${entry.colour}`} />
+            {entry.label}
+          </span>
+        ))
+      }
+      <span class="key__item">
+        <span class="key__swatch" style="--swatch:var(--surface-2)" />
+        no data
+      </span>
+    </figcaption>
+  </figure>
+</div>
+
+<style set:html={rules} is:inline></style>
+
+<style>
+  .tm {
+    display: flow-root;
+  }
+
+  /* Off-screen rather than display:none, so the radios stay focusable and the
+     period stepper is operable from the keyboard. */
+  .tm__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tm__scale {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-block-end: 0.7rem;
+  }
+
+  .tm__step {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: color 0.18s var(--ease), border-color 0.18s var(--ease),
+      background-color 0.18s var(--ease);
+  }
+
+  .tm__step:hover {
+    color: var(--ink);
+  }
+
+  /* Keyboard focus lands on the off-screen input, so the ring is drawn on the
+     matching label by the generated rules above. */
+
+  .tm__figure {
+    margin: 0;
+  }
+
+  .tm__svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .tm__sphere {
+    fill: var(--surface);
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .tm__shape {
+    fill: var(--surface-2);
+    stroke: var(--bg);
+    stroke-width: 0.4;
+    transition: fill 0.35s var(--ease);
+  }
+
+  .tm__shape--empty {
+    fill: var(--surface-2);
+  }
+
+  .tm__link:hover .tm__shape,
+  .tm__link:focus-visible .tm__shape {
+    stroke: var(--ink);
+    stroke-width: 0.9;
+  }
+
+  .tm__link:focus-visible {
+    outline: none;
+  }
+
+  .tm__now {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tm__shape {
+      transition: none;
+    }
+  }
+</style>
