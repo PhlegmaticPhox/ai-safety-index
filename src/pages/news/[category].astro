@@ -1,0 +1,119 @@
+---
+/**
+ * One category of the feed, at its own URL.
+ *
+ * Static routes rather than a client-side filter: the site ships no client
+ * JavaScript, and a category worth having is worth being able to send someone.
+ */
+import Base from "../../layouts/Base.astro";
+import NewsList from "../../components/NewsList.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { CATEGORIES, byDateDesc, type Category, type NewsRecord } from "../../lib/news";
+
+import feedFile from "../../../data/processed/news-feed.json";
+
+export function getStaticPaths() {
+  return CATEGORIES.map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+const feed = feedFile as Dataset<NewsRecord>;
+assertRenderable(...feed.sources);
+
+const all = [...feed.records].sort(byDateDesc);
+const items = all.filter((item) => item.categories.includes(category.slug));
+const counts = new Map(
+  CATEGORIES.map((c) => [c.slug, all.filter((i) => i.categories.includes(c.slug)).length]),
+);
+
+const sources = [...new Set(items.map((i) => i.source_id))];
+const checked = freshness(feed.retrieved);
+
+/* An empty category needs to say why, not just sit blank. The reason is nearly
+   always the same one and it is worth naming: alignment and progress items come
+   overwhelmingly from arXiv, and arXiv announces nothing at weekends, so a feed
+   built on a Sunday genuinely has none. */
+const researchLed = category.slug === "alignment" || category.slug === "progress";
+const emptyReason = researchLed
+  ? "Nothing in this category yet. These items come mostly from arXiv, which announces " +
+    "new submissions on weekdays only, so a feed built at a weekend has none of them. " +
+    "The next weekday refresh fills this in, and items then stay for 120 days."
+  : undefined;
+---
+
+<Base
+  title={`${category.label} | AI Safety Index`}
+  description={category.blurb}
+  cites={sources.length > 0 ? sources : feed.sources}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>{category.label}</h1>
+        <p class="masthead__meta mono">
+          {items.length} of {all.length} items
+          <span aria-hidden="true">/</span>
+          {sources.length} sources
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>fetched {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">{category.blurb}</p>
+
+      <ul class="chips cats">
+        <li><a href="/news/" class="chip">All {all.length}</a></li>
+        {
+          CATEGORIES.map((c) => (
+            <li>
+              <a
+                href={`/news/${c.slug}/`}
+                class="chip"
+                aria-current={c.slug === category.slug ? "true" : undefined}
+              >
+                {c.label} <span class="mono">{counts.get(c.slug)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
+    <div class="wrap">
+      <NewsList
+        items={items}
+        retrieved={feed.retrieved}
+        current={category.slug}
+        emptyReason={emptyReason}
+      />
+
+      <p class="caveat">
+        Categories are assigned by keyword rule over the headline and the extract, never over full
+        text, and an item can carry several. The terms that matched are printed under each item so
+        the filing can be checked rather than trusted. The rule is in
+        <code>etl/fetch_news.py</code> and is a blunt instrument: it will miss things and it will
+        occasionally file something oddly.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cats {
+    margin-block-start: 1.5rem;
+  }
+
+  code {
+    font-family: var(--f-mono);
+    font-size: 0.9em;
+  }
+</style>

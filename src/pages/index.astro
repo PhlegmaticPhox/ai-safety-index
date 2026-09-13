@@ -10,7 +10,7 @@ import modelsFile from "../../data/processed/frontier-models.json";
 import benchmarkFile from "../../data/processed/benchmark-frontier.json";
 import clusterFile from "../../data/processed/compute-clusters.json";
 import thresholdFile from "../../data/processed/compute-thresholds.json";
-import feedFile from "../../data/processed/policy-feed.json";
+import feedFile from "../../data/processed/news-feed.json";
 import statusFile from "../../data/processed/_status.json";
 
 interface ExposureRecord {
@@ -56,6 +56,8 @@ interface FeedRecord {
   date: string;
   publisher: string;
   jurisdiction: string;
+  kind: string;
+  categories: string[];
   source_id: string;
 }
 
@@ -128,9 +130,12 @@ const powerLeaders = [...clusters.records]
   .slice(0, 5);
 const powerLeaderMax = Math.max(...powerLeaders.map((c) => c.power_mw));
 
-/* Policy feed */
-const recentFeed = feed.records.slice(0, 8);
-const jurisdictionCount = new Set(feed.records.map((r) => r.jurisdiction)).size;
+/* Policy feed. The homepage shows official publications only: research
+   preprints and reported incidents live on the news page, where they can carry
+   the caveats they need. */
+const officialFeed = feed.records.filter((r) => r.kind === "Government publication");
+const recentFeed = officialFeed.slice(0, 8);
+const jurisdictionCount = new Set(officialFeed.map((r) => r.jurisdiction)).size;
 
 /* Datasets are only rewritten when their records change, so their own retrieved
    stamps say when the data last moved. When the pipeline last LOOKED is a
@@ -561,7 +566,7 @@ const buildSteps = [
         }
       </ul>
 
-      <a href="/governance/" class="btn btn--ghost feed__more">See the full feed</a>
+      <a href="/news/" class="btn btn--ghost feed__more">See the full feed</a>
     </div>
   </section>
 

@@ -175,14 +175,14 @@
       "publisher": "Responsible AI Collaborative",
       "publisher_url": "https://incidentdatabase.ai",
       "landing_page": "https://incidentdatabase.ai/research/snapshots/",
-      "url": "https://incidentdatabase.ai/research/snapshots/",
-      "format": "snapshot",
+      "url": "https://incidentdatabase.ai/rss.xml",
+      "format": "rss",
       "licence": "ODbL-1.0",
       "licence_url": "https://opendatacommons.org/licenses/odbl/1-0/",
       "attribution": "AI Incident Database, Responsible AI Collaborative. Licensed ODbL 1.0.",
       "redistribution": "share-alike",
-      "cadence": "weekly",
-      "caveats": "ODbL share-alike: we display incidents but must NOT publish a derived database dump without licensing it alike. Their GraphQL API is origin-locked, so weekly tarball snapshots are the only route. Incidents are reported, not sampled - coverage reflects media attention, not incidence."
+      "cadence": "continuous",
+      "caveats": "ODbL share-alike: we display incident headlines with a link back, which is display, and must NOT publish a derived database dump without licensing it alike. Incidents are reported, not sampled, so coverage reflects media attention rather than incidence, and an absence of incidents in a country usually means an absence of reporting."
     },
     "governance-readiness-index": {
       "name": "AI Governance Readiness Index",
@@ -239,6 +239,48 @@
       "redistribution": "permitted",
       "cadence": "irregular",
       "caveats": "Public domain, with no permission needed and no attribution required; we credit it anyway because a boundary is a datum like any other. Consumed through the world-atlas package at build time, at 1:110m, so small island states are absent or a single pixel. Boundaries follow Natural Earth's own editorial choices on disputed territory and are not a position of this site. Antarctica is dropped from our render."
+    },
+    "arxiv-cs-ai": {
+      "name": "arXiv cs.AI new submissions",
+      "publisher": "arXiv",
+      "publisher_url": "https://arxiv.org/",
+      "landing_page": "https://arxiv.org/list/cs.AI/recent",
+      "url": "https://rss.arxiv.org/rss/cs.AI",
+      "format": "rss",
+      "licence": "CC0-1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution": "Thank you to arXiv for use of its open access interoperability.",
+      "redistribution": "permitted",
+      "cadence": "daily",
+      "caveats": "arXiv offers its metadata under CC0. Abstracts remain the authors' work, so we cap the extract at the same 200 characters as every other feed here and always link to the paper. Preprints are not peer reviewed. Volume is high and inclusion in this feed means the day's submissions matched our keyword filter, not that anyone judged the work important."
+    },
+    "arxiv-cs-cy": {
+      "name": "arXiv cs.CY new submissions",
+      "publisher": "arXiv",
+      "publisher_url": "https://arxiv.org/",
+      "landing_page": "https://arxiv.org/list/cs.CY/recent",
+      "url": "https://rss.arxiv.org/rss/cs.CY",
+      "format": "rss",
+      "licence": "CC0-1.0",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution": "Thank you to arXiv for use of its open access interoperability.",
+      "redistribution": "permitted",
+      "cadence": "daily",
+      "caveats": "Computers and Society: where most arXiv work on AI policy, governance and societal impact is filed. Same terms and same caveats as cs.AI. Preprints are not peer reviewed."
+    },
+    "canada-news": {
+      "name": "Canada news, Innovation Science and Economic Development",
+      "publisher": "Government of Canada",
+      "publisher_url": "https://www.canada.ca/",
+      "landing_page": "https://www.canada.ca/en/news.html",
+      "url": null,
+      "format": "atom",
+      "licence": "OGL-Canada-2.0",
+      "licence_url": "https://open.canada.ca/en/open-government-licence-canada",
+      "attribution": "Contains information licensed under the Open Government Licence - Canada.",
+      "redistribution": "permitted-with-attribution",
+      "cadence": "daily",
+      "caveats": "Departmental news releases are political statements about policy, not neutral descriptions of it. The Open Government Licence forbids suggesting the Government of Canada endorses this site, which it does not."
     }
   }
 }

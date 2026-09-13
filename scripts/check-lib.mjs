@@ -86,4 +86,33 @@ assert.equal(geo.alpha3("Not A Country At All"), null, "unknown names must not g
   );
 }
 
+/* News categories are defined twice, once in Python and once in TypeScript.
+   Two copies drift. This is the thing that notices. */
+{
+  const news = await import("../src/lib/news.ts");
+  const feed = JSON.parse(readFileSync("data/processed/news-feed.json", "utf8"));
+  const inData = new Set(feed.records.flatMap((r) => r.categories));
+  const known = new Set(news.CATEGORIES.map((c) => c.slug));
+  const unlabelled = [...inData].filter((slug) => !known.has(slug));
+  assert.deepEqual(
+    unlabelled,
+    [],
+    `categories in the data with no label in src/lib/news.ts: ${unlabelled.join(", ")}. ` +
+      `Add them there, or the chips render blank and the routes 404.`,
+  );
+
+  // Every item must carry at least one category and the terms behind it, or the
+  // "why is this here" line under each row silently shows nothing.
+  for (const record of feed.records) {
+    assert.ok(record.categories?.length > 0, `${record.title}: no categories`);
+    for (const slug of record.categories) {
+      if (slug === "general") continue;
+      assert.ok(
+        record.matched_terms?.[slug]?.length > 0,
+        `${record.title}: filed under ${slug} with no matched terms`,
+      );
+    }
+  }
+}
+
 console.log("check-lib.mjs passed");

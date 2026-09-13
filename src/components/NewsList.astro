@@ -1,0 +1,124 @@
+---
+/**
+ * The feed rows, shared by /news/ and every category page.
+ *
+ * Each row shows which category rules matched it. That is unusual for a news
+ * feed and deliberate: the classification is a keyword rule we wrote, and a site
+ * whose argument is "you can check where this came from" cannot then hand the
+ * reader an unexplained label.
+ */
+import Provenance from "./Provenance.astro";
+import { labelFor, type NewsRecord } from "../lib/news";
+
+interface Props {
+  items: NewsRecord[];
+  retrieved: string;
+  /** When set, the chip for this category is marked as the current one. */
+  current?: string;
+  /** Shown instead of rows when there is nothing, with the reason why. */
+  emptyReason?: string;
+}
+
+const { items, retrieved, current, emptyReason } = Astro.props;
+---
+
+{
+  items.length === 0 ? (
+    <p class="empty">
+      {emptyReason ??
+        "Nothing in this category in the current window. The feed holds 120 days and fills daily."}
+    </p>
+  ) : (
+    <ul class="feed">
+      {items.map((item) => (
+        <li class="feed__row">
+          <div class="feed__meta">
+            <time class="mono" datetime={item.date}>
+              {item.date || "undated"}
+            </time>
+            <span class="tag">{item.kind}</span>
+            {item.doc_type && <span class="tag">{item.doc_type}</span>}
+            {item.jurisdiction && item.jurisdiction !== item.kind && (
+              <span class="tag">{item.jurisdiction}</span>
+            )}
+          </div>
+
+          <div class="feed__body">
+            <a href={item.url} class="feed__title" rel="noopener">
+              {item.title}
+            </a>
+            {item.snippet && <p class="feed__snippet">{item.snippet}</p>}
+
+            <p class="feed__pub">
+              {item.publisher}
+              <Provenance source={item.source_id} retrieved={retrieved} label="item" />
+            </p>
+
+            <ul class="why">
+              {item.categories.map((slug) => (
+                <li>
+                  <a
+                    href={`/news/${slug}/`}
+                    class="chip chip--sm"
+                    aria-current={slug === current ? "true" : undefined}
+                  >
+                    {labelFor(slug)}
+                  </a>
+                  {item.matched_terms[slug]?.length > 0 && (
+                    <span class="why__terms mono">{item.matched_terms[slug].join(", ")}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .empty {
+    padding: 2rem 1.25rem;
+    border: 1px dashed var(--line);
+    border-radius: var(--r);
+    color: var(--muted);
+    font-size: 0.875rem;
+    max-inline-size: 70ch;
+  }
+
+  .why {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .why li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .chip--sm {
+    padding: 0.1rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  /* The terms that put the item in this category. Small on purpose: it is
+     evidence for anyone who wants it, not a thing to read every row. */
+  .why__terms {
+    font-size: 0.6875rem;
+    color: var(--muted);
+    opacity: 0.8;
+  }
+
+  @media (max-width: 640px) {
+    .why__terms {
+      display: none;
+    }
+  }
+</style>

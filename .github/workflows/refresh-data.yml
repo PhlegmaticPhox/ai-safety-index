@@ -40,8 +40,11 @@ jobs:
       - name: Licence guard self-check
         run: python etl/common.py
 
-      - name: Policy feed self-check
-        run: python etl/fetch_policy_feeds.py --self-check
+      - name: News feed self-check
+        run: python etl/fetch_news.py --self-check
+
+      - name: Governance index self-check
+        run: python etl/build_governance.py --self-check
 
       - name: Palette contrast check
         run: python etl/check_contrast.py
@@ -54,6 +57,7 @@ jobs:
       - name: Verify the site still builds
         run: |
           npm ci
+          npm run check:lib
           npm run build
 
       - name: Commit refreshed data

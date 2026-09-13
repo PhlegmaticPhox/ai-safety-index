@@ -1,0 +1,121 @@
+---
+/**
+ * The whole feed, with links into each category.
+ *
+ * Categories are separate routes rather than client-side filters, because the
+ * site ships no client JavaScript and because a category worth having is worth
+ * being able to link to.
+ */
+import Base from "../../layouts/Base.astro";
+import NewsList from "../../components/NewsList.astro";
+import { assertRenderable, freshness, getSource, type Dataset } from "../../lib/sources";
+import { CATEGORIES, byDateDesc, type NewsRecord } from "../../lib/news";
+
+import feedFile from "../../../data/processed/news-feed.json";
+
+const feed = feedFile as Dataset<NewsRecord>;
+assertRenderable(...feed.sources);
+
+const items = [...feed.records].sort(byDateDesc);
+const counts = new Map(
+  CATEGORIES.map((c) => [c.slug, items.filter((i) => i.categories.includes(c.slug)).length]),
+);
+
+const kinds = [...new Set(items.map((i) => i.kind))].sort();
+const publishers = [...new Set(items.map((i) => i.source_id))].map((id) => ({
+  id,
+  ...getSource(id),
+}));
+const checked = freshness(feed.retrieved);
+const oldest = items[items.length - 1]?.date ?? "";
+---
+
+<Base
+  title="News | AI Safety Index"
+  description="Government publications, research preprints and reported incidents on AI, sorted into categories by a rule you can read."
+  cites={feed.sources}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>News</h1>
+        <p class="masthead__meta mono">
+          {items.length} items
+          <span aria-hidden="true">/</span>
+          {publishers.length} sources
+          <span aria-hidden="true">/</span>
+          {oldest} onward
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>fetched {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Official publications, research preprints and reported incidents, from sources whose
+        licences permit it. Headline and a short extract only, always linking back. Every item
+        shows which category rules matched it, so you can disagree with the filing.
+      </p>
+
+      <ul class="chips cats">
+        <li><a href="/news/" class="chip" aria-current="true">All {items.length}</a></li>
+        {
+          CATEGORIES.map((category) => (
+            <li>
+              <a href={`/news/${category.slug}/`} class="chip">
+                {category.label} <span class="mono">{counts.get(category.slug)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
+    <div class="wrap">
+      <NewsList items={items} retrieved={feed.retrieved} />
+
+      <p class="caveat">
+        Item kinds on this page: {kinds.join(", ")}. Departmental communications are political
+        statements about policy rather than neutral descriptions of it. Preprints are not peer
+        reviewed, and appearing here means a keyword rule matched, not that anyone judged the work
+        important. Incidents are reported rather than sampled, so the record tracks media attention
+        as much as it tracks events.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Where these come from</h2>
+        <p>
+          Chosen for licence cleanliness first. There is no Reuters or Wired here because their
+          headlines are not ours to republish, however much they would improve the feed.
+        </p>
+      </div>
+
+      <ul class="cards">
+        {
+          publishers.map((source) => (
+            <li class="card">
+              <a href={source.landing_page} class="card__title">
+                {source.name}
+              </a>
+              <p>{source.publisher}</p>
+              <span class="card__meta mono">
+                <a href={source.licence_url}>{source.licence}</a>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cats {
+    margin-block-start: 1.5rem;
+  }
+</style>

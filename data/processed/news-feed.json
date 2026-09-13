@@ -1,0 +1,983 @@
+{
+  "dataset": "news-feed",
+  "generated": "2026-09-13T06:08:14+00:00",
+  "retrieved": "2026-09-13T06:08:14+00:00",
+  "sources": [
+    "ai-incident-database",
+    "canada-news",
+    "ec-digital-strategy",
+    "gov-uk",
+    "nist",
+    "us-federal-register"
+  ],
+  "unit": null,
+  "notes": "Headline, a short extract of at most 200 characters, and a link back to the original. We do not reproduce full text. A rolling window: items stay for up to 120 days rather than vanishing when a source drops them, because arXiv announces nothing at weekends and government feeds are short. Categories are assigned by keyword rule and each item carries the terms that matched, so the classification can be checked rather than trusted. Departmental communications are political statements about policy, not neutral descriptions of it, and preprints are not peer reviewed.",
+  "count": 56,
+  "records": [
+    {
+      "title": "Anthropic discloses fourth AI hacking incident missed in earlier review",
+      "snippet": "Anthropic on Wednesday disclosed another instance of an AI model hacking external systems during testing, the latest in a growing list of such incidents that have raised concerns about the risk...",
+      "url": "https://www.reuters.com/legal/litigation/anthropic-reports-fourth-cybersecurity-incident-with-early-version-claude-2026-09-09/",
+      "date": "2026-09-10",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "incident",
+          "incidents",
+          "risk"
+        ]
+      }
+    },
+    {
+      "title": "Resentment leads techie to circulate fake obscene images of woman online",
+      "snippet": "New Delhi: A college grudge culminated in online harassment after a 22-year-old man misused a woman’s private photographs on social media to create obscene AI-generated images. Police arrested...",
+      "url": "https://timesofindia.indiatimes.com/city/delhi/resentment-leads-techie-to-circulate-fake-obscene-images-of-woman-online/articleshow/133980172.cms",
+      "date": "2026-09-09",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Government of Canada launches National AI Literacy Initiative",
+      "snippet": "New national partnership with Amii will provide free, practical AI learning for students, educators, workers and communities across Canada",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/government-of-canada-launches-national-ai-literacy-initiative.html",
+      "date": "2026-09-09",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Delhi: Man held for circulating obscene AI-generated photos of college acquaintance",
+      "snippet": "A 22-year-old man was arrested for allegedly using photographs of a college acquaintance taken from her private social media account to create obscene AI-generated images and circulate them...",
+      "url": "https://www.tribuneindia.com/news/delhi/delhi-man-held-for-circulating-obscene-ai-generated-photos-of-college-acquaintance/",
+      "date": "2026-09-09",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "‘A different set of rules’: thermal drone footage shows Musk’s AI power plant flouting clean air regulations",
+      "snippet": "Elon Musk’s artificial intelligence company is continuing to fuel its datacenters with unpermitted gas turbines, an investigation by the Floodlight newsroom shows. Thermal footage captured by...",
+      "url": "https://www.theguardian.com/environment/2026/feb/13/elon-musk-xai-datacenters-air-pollution-mississippi",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "regulations"
+        ]
+      }
+    },
+    {
+      "title": "Pollution from Musk’s unpermitted xAI power project hits hardest in Black communities",
+      "snippet": "Elon Musk's artificial intelligence company xAI has installed 59 natural gas turbines for its Colossus 2 data center project in Tennessee without securing federal clean air permits, according to...",
+      "url": "https://www.reuters.com/world/americas/pollution-musks-unpermitted-xai-power-project-hits-hardest-black-communities-2026-07-14/",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Lyft driver uses AI to falsely accuse Boca Raton man's daughters of damaging car",
+      "snippet": "BOCA RATON, Fla. --- A Boca Raton man is sharing his story after he says his daughters were falsely accused of damaging a Lyft driver's car. He said it was all engineered using AI. Saturday...",
+      "url": "https://www.wpbf.com/article/lyft-driver-ai-falsely-accuse-damaging-car/71341981",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "LYFT DRIVER SCAM: Boca Raton Area Driver Uses AI To Accuse Rider",
+      "snippet": "A driver for ride share company \"Lyft\" is being closely monitored by the platform after he was accused of using artificial intelligence to claim a rider trashed his car. The rider, a teenage girl...",
+      "url": "https://bocanewsnow.com/2026/05/18/lyft-driver-scam-boca-raton-area-driver-uses-ai-to-accuse-rider/",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Justice Department Files to Intervene and Dismiss Lawsuit that Would Hamper America’s AI Innovation and Security",
+      "snippet": "Note: View motion for intervention and dismissal here. Yesterday, the Justice Department's Environment and Natural Resources Division (ENRD) filed a motion to intervene and to dismiss a private...",
+      "url": "https://www.justice.gov/opa/pr/justice-department-files-intervene-and-dismiss-lawsuit-would-hamper-americas-ai-innovation",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "lawsuit"
+        ]
+      }
+    },
+    {
+      "title": "How Claude Code escapes its own denylist and sandbox",
+      "snippet": "In the last ten days: a single person used Claude to breach Mexican government agencies. Cline's own AI-powered triage workflow was compromised via prompt injection. A new Shai-Hulud variant...",
+      "url": "https://ona.com/stories/how-claude-code-escapes-its-own-denylist-and-sandbox",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Government of Canada to launch Canada’s National AI Literacy Initiative",
+      "snippet": "",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/government-of-canada-to-launch-canadas-national-ai-literacy-initiative.html",
+      "date": "2026-09-08",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Google's AI Is Telling Users That Flock Cameras Are Filled With Valuable Gold and Copper",
+      "snippet": "Google's notorious AI Overview just handed would-be Flock vandals a perfect excuse to carve into the company's controversial AI-integrated license plate readers (ALPRs). ALRPs are wildly...",
+      "url": "https://futurism.com/artificial-intelligence/google-ai-overview-flock-alpr-surveillance-hallucination-gold-copper",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Father, daughter speak after Lyft driver is accused of using AI-generated image for damage claim",
+      "snippet": "A father and daughter are speaking out after a recent Lyft ride resulted in a driver being accused of submitting an AI-generated image for a damage claim. Bert Gor of Florida said his teenage...",
+      "url": "https://abcnews.com/GMA/News/father-daughter-speak-after-lyft-driver-accused-ai/story?id=133144373",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "DC court faults lawyers for Deutsche Bank subsidiary over AI hallucination",
+      "snippet": "The District of Columbia Court of Appeals said in a ruling on Thursday, opens new tab that lawyers for a Deutsche Bank subsidiary in a mortgage foreclosure lawsuit cited nonexistent cases...",
+      "url": "https://www.reuters.com/legal/legalindustry/dc-court-faults-lawyers-deutsche-bank-subsidiary-over-ai-hallucination-2026-09-03/",
+      "date": "2026-09-08",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "court",
+          "lawsuit",
+          "ruling"
+        ]
+      }
+    },
+    {
+      "title": "Apply AI Summit",
+      "snippet": "17 November 2026 The EGG (Brussels) The Apply AI Summit will gather high-level stakeholders - from industrial representatives, policymakers and startups - to accelerate AI implementation in...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/apply-ai-summit",
+      "date": "2026-09-07",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "AI sleep data could provide one-week early warning of flu and COVID-19",
+      "snippet": "UKHSA study finds sleep app cough data can detect respiratory illness and signal outbreaks early",
+      "url": "https://www.gov.uk/government/news/ai-sleep-data-could-provide-one-week-early-warning-of-flu-and-covid-19",
+      "date": "2026-09-03",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "doc_type": "",
+      "source_id": "gov-uk",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon to make an announcement on responsible data centre development",
+      "snippet": "The Honourable Evan Solomon, Minister of Artificial Intelligence and Digital Innovation and Minister responsible for the Federal Economic Development Agency for Southern Ontario, will make an...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/minister-solomon-to-make-an-announcement-on-responsible-data-centre-development.html",
+      "date": "2026-09-02",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "£100 million competition to back British AI companies to fix public services",
+      "snippet": "£100 million fund competition will help promising British AI start-ups start in the UK and tackle some of society's biggest challenges",
+      "url": "https://www.gov.uk/government/news/100-million-competition-to-back-british-ai-companies-to-fix-public-services",
+      "date": "2026-08-31",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "doc_type": "",
+      "source_id": "gov-uk",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "State of the Union 2026",
+      "snippet": "16 September 2026 The State of the Union (SOTEU) address is an annual speech by the President of the European Commission to the European Parliament, setting the priorities for the Union for the...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/state-union-2026",
+      "date": "2026-08-31",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "parliament"
+        ]
+      }
+    },
+    {
+      "title": "Commission designates ChatGPT, Reddit, Roblox under Digital Services Act",
+      "snippet": "The Commission has designated ChatGPT as a Very Large Online Search Engine (VLOSE), as well as Reddit and Roblox as Very Large Online Platforms (VLOPs), under the Digital Services Act (DSA). These...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-designates-chatgpt-reddit-roblox-under-digital-services-act",
+      "date": "2026-08-31",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "Digital Services Act",
+          "designated",
+          "designates"
+        ]
+      }
+    },
+    {
+      "title": "Pitching day: Finalists of the Apply AI Startup Award",
+      "snippet": "20 October 2026 Watch the pitches of the top 10 finalists of the Apply AI Startup Award and learn more about the European AI innovation ecosystem. The Apply AI Startup Award recognises innovative...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/pitching-day-finalists-apply-ai-startup-award",
+      "date": "2026-08-24",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Solicitation of Nominations for Membership on the NOAA Science Advisory Board (SAB)",
+      "snippet": "The NOAA Science Advisory Board (SAB) is the only Federal Advisory Committee with responsibility to advise the Under Secretary of Commerce for Oceans and Atmosphere on long- and short-range...",
+      "url": "https://www.federalregister.gov/documents/2026/08/19/2026-16884/solicitation-of-nominations-for-membership-on-the-noaa-science-advisory-board-sab",
+      "date": "2026-08-19",
+      "publisher": "Commerce Department",
+      "jurisdiction": "United States",
+      "doc_type": "Notice",
+      "source_id": "us-federal-register",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Notice of Public Meeting of the Maryland Advisory Committee to the U.S. Commission on Civil Rights",
+      "snippet": "Notice is hereby given, pursuant to the provisions of the rules and regulations of the U.S. Commission on Civil Rights (Commission) and the Federal Advisory Committee Act, that the Maryland...",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16772/notice-of-public-meeting-of-the-maryland-advisory-committee-to-the-us-commission-on-civil-rights",
+      "date": "2026-08-18",
+      "publisher": "Civil Rights Commission",
+      "jurisdiction": "United States",
+      "doc_type": "Notice",
+      "source_id": "us-federal-register",
+      "kind": "Government publication",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "Federal Advisory Committee Act",
+          "regulations"
+        ]
+      }
+    },
+    {
+      "title": "Request for Information (RFI) on Modernizing the National Vulnerability Database in the Age of Artificial Intelligence",
+      "snippet": "The National Institute of Standards and Technology (NIST) established and operates the National Vulnerability Database (NVD), which provides the U.S. government repository of standards-based...",
+      "url": "https://www.federalregister.gov/documents/2026/08/12/2026-16371/request-for-information-rfi-on-modernizing-the-national-vulnerability-database-in-the-age-of",
+      "date": "2026-08-12",
+      "publisher": "Commerce Department",
+      "jurisdiction": "United States",
+      "doc_type": "Notice",
+      "source_id": "us-federal-register",
+      "kind": "Government publication",
+      "categories": [
+        "safety",
+        "governance"
+      ],
+      "matched_terms": {
+        "safety": [
+          "vulnerability"
+        ],
+        "governance": [
+          "institute",
+          "standards"
+        ]
+      }
+    },
+    {
+      "title": "Innovation Advisory Committee",
+      "snippet": "The Commodity Futures Trading Commission (CFTC) announces that on August 20, 2026, from 1:00 p.m. to 4:00 p.m. Eastern Daylight Time, the Innovation Advisory Committee (IAC or Committee) will hold...",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16328/innovation-advisory-committee",
+      "date": "2026-08-11",
+      "publisher": "Commodity Futures Trading Commission",
+      "jurisdiction": "United States",
+      "doc_type": "Notice",
+      "source_id": "us-federal-register",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Join the Inaugural D-TECT Forum",
+      "snippet": "The Drone Tech for Countering Threats (D-TECT) Forum is the EU industrial coordination mechanism for drone and counter-drone technologies. Commission invites interested organisations to join the...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/join-inaugural-d-tect-forum",
+      "date": "2026-08-10",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "threats"
+        ]
+      }
+    },
+    {
+      "title": "NIST Joins National Genesis Mission to Accelerate AI Innovation",
+      "snippet": "NIST will execute two of its efforts through its Centers for AI in Manufacturing and Critical Infrastructure",
+      "url": "https://www.nist.gov/news-events/news/2026/08/nist-joins-national-genesis-mission-accelerate-ai-innovation",
+      "date": "2026-08-04",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Commission starts enforcing AI Act rules and new transparency requirements on 2 August",
+      "snippet": "From 2 August 2026, the European Commission’s AI Office, together with national authorities, will begin enforcing the Artificial Intelligence (AI) Act. On the same date, new transparency rules...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august",
+      "date": "2026-07-31",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "policy",
+        "governance"
+      ],
+      "matched_terms": {
+        "policy": [
+          "AI Act",
+          "ai act"
+        ],
+        "governance": [
+          "authorities",
+          "transparency"
+        ]
+      }
+    },
+    {
+      "title": "EU launches AI Gigafactories call to boost Europe's computing capacity and unlock more than €30 billion in investment",
+      "snippet": "The EU has launched a call for tenders to establish up to seven AI Gigafactories across Europe, as part of its latest major push to accelerate Europe's technological sovereignty and ambition of...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/eu-launches-ai-gigafactories-call-boost-europes-computing-capacity-and-unlock-more-eu30-billion",
+      "date": "2026-07-30",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Notice of Final Issuance on the Adoption of Administration for Native Americans Program Policies and Procedures",
+      "snippet": "ANA is issuing final interpretive rules, general statements of policy, and rules of agency organization, procedure, or practice relating to the following Fiscal Year (FY) 2026 Notices of Funding...",
+      "url": "https://www.federalregister.gov/documents/2026/07/28/2026-15150/notice-of-final-issuance-on-the-adoption-of-administration-for-native-americans-program-policies-and",
+      "date": "2026-07-28",
+      "publisher": "Health and Human Services Department",
+      "jurisdiction": "United States",
+      "doc_type": "Notice",
+      "source_id": "us-federal-register",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "AI-powered robotics in Europe: Live demonstrations and strategic debate",
+      "snippet": "02 September 2026 The European Parliament will host a gathering of policymakers, industry leaders, researchers, alongside live demonstrations of cutting-edge robots, to set the course for the EU’s...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/ai-powered-robotics-europe-live-demonstrations-and-strategic-debate",
+      "date": "2026-07-24",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "parliament"
+        ]
+      }
+    },
+    {
+      "title": "Government of Canada launches public consultation on AI transparency",
+      "snippet": "Public feedback will help shape next steps to advance safe, responsible and reliable AI in Canada",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/07/government-of-canada-launches-public-consultation-on-ai-transparency.html",
+      "date": "2026-07-23",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "policy",
+        "governance"
+      ],
+      "matched_terms": {
+        "policy": [
+          "consultation"
+        ],
+        "governance": [
+          "transparency"
+        ]
+      }
+    },
+    {
+      "title": "Request for Nominations for Members To Serve on National Institute of Standards and Technology Federal Advisory Committees",
+      "snippet": "The National Institute of Standards and Technology (NIST or Institute) invites and requests nomination of individuals for appointment to seven existing Federal Advisory Committees (Committees):...",
+      "url": "https://www.federalregister.gov/documents/2026/07/20/2026-14585/request-for-nominations-for-members-to-serve-on-national-institute-of-standards-and-technology",
+      "date": "2026-07-20",
+      "publisher": "Commerce Department",
+      "jurisdiction": "United States",
+      "doc_type": "Notice",
+      "source_id": "us-federal-register",
+      "kind": "Government publication",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "institute",
+          "standards"
+        ]
+      }
+    },
+    {
+      "title": "Minister Joly announces federal investments backing Canadian mining innovations to strengthen critical minerals supply chains and improve mine restoration",
+      "snippet": "Projects will help advance precision mining and AI-powered ecological restoration technologies",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/07/minister-joly-announces-federal-investments-backing-canadian-mining-innovations-to-strengthen-critical-minerals-supply-chains-and-improve-mine-rest.html",
+      "date": "2026-07-09",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Canada and Republic of Korea sign memorandum of understanding to advance AI innovation and safety",
+      "snippet": "",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/07/canada-and-republic-of-korea-sign-memorandum-of-understanding-to-advance-ai-innovation-and-safety.html",
+      "date": "2026-07-08",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "safety"
+        ]
+      }
+    },
+    {
+      "title": "Government of Canada invests $30 million to launch fifth phase of CanCode program to offer new training opportunities for youth and teachers",
+      "snippet": "More than 1.1 million students and teachers will gain AI knowledge and learn coding skills",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/07/government-of-canada-invests-30-million-to-launch-fifth-phase-of-cancode-program-to-offer-new-training-opportunities-for-youth-and-teachers.html",
+      "date": "2026-07-07",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "training"
+        ]
+      }
+    },
+    {
+      "title": "Canada and Germany strengthen industrial partnership to build resilient semiconductor supply chains",
+      "snippet": "Deepened cooperation will support resilient supply chains and the technologies that power innovation, economic growth and artificial intelligence",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/canada-and-germany-strengthen-industrial-partnership-to-build-resilient-semiconductor-supply-chains.html",
+      "date": "2026-06-30",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Valdez announces investment in Toronto AI company that helps businesses connect with diverse markets",
+      "snippet": "",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/minister-valdez-announces-investment-in-toronto-ai-company-that-helps-businesses-connect-with-diverse-markets.html",
+      "date": "2026-06-25",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Valdez to announce artificial intelligence investment",
+      "snippet": "",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/minister-valdez-to-announce-artificial-intelligence-investment.html",
+      "date": "2026-06-24",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon to announce an investment in health data infrastructure",
+      "snippet": "The Honourable Evan Solomon, Minister of Artificial Intelligence and Digital Innovation and Minister responsible for the Federal Economic Development Agency for Southern Ontario, and Maggie Chi,...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/minister-solomon-to-announce-an-investment-in-health-data-infrastructure.html",
+      "date": "2026-06-22",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "NIST Mathematical Proof Supports Transition to a Continuous-Monitor-and-Update Security Model for AI Systems",
+      "snippet": "The proof extends to AI the logic used by famed mathematician Kurt Gödel, whose incompleteness theorems have had a profound effect on math for nearly a century",
+      "url": "https://www.nist.gov/news-events/news/2026/06/nist-mathematical-proof-supports-transition-continuous-monitor-and-update",
+      "date": "2026-06-09",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon highlights Canada’s National Artificial Intelligence Strategy",
+      "snippet": "Countries around the world are adapting to a new era of innovation as emerging technologies reshape economies, industries and labour markets. Artificial intelligence is a key driver of this...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/minister-solomon-highlights-canadas-national-artificial-intelligence.html",
+      "date": "2026-06-05",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "strategy"
+        ]
+      }
+    },
+    {
+      "title": "New AI Model Shows How to Evacuate for Fires One Safe Step at a Time",
+      "snippet": "A NIST-led team has created a new AI model that can identify safe evacuation routes in a single-story floor plan during a fire, with a multilevel version in the works",
+      "url": "https://www.nist.gov/news-events/news/2026/06/new-ai-model-shows-how-evacuate-fires-one-safe-step-time",
+      "date": "2026-06-04",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon to highlight the launch of Canada’s National Artificial Intelligence Strategy",
+      "snippet": "",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/minister-solomon-to-highlight-the-launch-of-canadas-national-artificial-intelligence-strategy.html",
+      "date": "2026-06-04",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "strategy"
+        ]
+      }
+    },
+    {
+      "title": "Government of Canada officials to hold a media technical briefing regarding Canada’s National Artificial Intelligence Strategy",
+      "snippet": "Officials from Innovation, Science and Economic Development Canada (ISED) and other government departments will hold a technical briefing for the media regarding Canada’s National Artificial...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/government-of-canada-officials-to-hold-a-media-technical-briefing-regarding-canadas-national-artificial-intelligence-strategy.html",
+      "date": "2026-06-03",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "strategy"
+        ]
+      }
+    },
+    {
+      "title": "NIST Expands AI Consortium’s Scope, Calls for New Members",
+      "snippet": "The consortium will focus on AI innovation and adoption, with six task groups concentrating on different aspects of AI measurement science and evaluation",
+      "url": "https://www.nist.gov/news-events/news/2026/05/nist-expands-ai-consortiums-scope-calls-new-members",
+      "date": "2026-05-29",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation"
+        ]
+      }
+    },
+    {
+      "title": "Joint Statement of the Department of Industry, representing the Government of Canada, and the Delegate Ministry for AI and Digital Affairs of the French Republic on Cooperation in Quantum Science and Technologies",
+      "snippet": "Recognizing that Canada and the French Republic are global leaders in scientific research and have strong and diversified science, technology, and innovation relations, with extensive...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/05/joint-statement-of-the-department-of-industry-representing-the-government-of-canada-and-the-delegate-ministry-for-ai-and-digital-affairs-of-the-fre.html",
+      "date": "2026-05-29",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Canada advances priorities on artificial intelligence, quantum technologies and digital innovation at the 2026 G7 Digital Ministers’ Meeting",
+      "snippet": "Artificial intelligence, quantum technologies and digital innovation are reshaping economic growth, productivity and global competitiveness",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/05/canada-advances-priorities-on-artificial-intelligence-quantum-technologies-and-digital-innovation-at-the-2026-g7-digital-ministers-meeting.html",
+      "date": "2026-05-29",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon, His Majesty King Felipe VI of Spain and Spanish Deputy Prime Minister Cuerpo advance Canada-Spain artificial intelligence cooperation through new memorandum of understanding",
+      "snippet": "Canada continues to build on its global leadership in artificial intelligence (AI) by fostering international partnerships that support innovation, attract investment and create new opportunities...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/05/minister-solomon-his-majesty-king-felipe-vi-of-spain-and-spanish-deputy-prime-minister-cuerpo-advance-canadaspain-artificial-intelligence-cooperati.html",
+      "date": "2026-05-20",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon, King of Spain and Spanish Deputy Prime Minister Cuerpo to advance artificial intelligence cooperation at MaRS Discovery District",
+      "snippet": "The Honourable Evan Solomon, Minister of Artificial Intelligence and Digital Innovation and Minister responsible for the Federal Economic Development Agency for Southern Ontario, will attend an...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/05/minister-solomon-king-of-spain-and-spanish-deputy-prime-minister-cuerpo-to-advance-artificial-intelligence-cooperation-at-mars-discovery-district.html",
+      "date": "2026-05-19",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Announcing the \"AI Agent Standards Initiative\" for Interoperable and Secure Innovation",
+      "snippet": "The Initiative will ensure that the next generation of AI is widely adopted with confidence, can function securely on behalf of its users, and can interoperate smoothly across the digital ecosystem",
+      "url": "https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure",
+      "date": "2026-02-17",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "standards"
+        ]
+      }
+    },
+    {
+      "title": "NIST Allocates Over $3 Million to Small Businesses Advancing AI, Biotechnology, Semiconductors, Quantum and More",
+      "snippet": "NIST is allocating funding to eight small businesses in seven states under the Small Business Innovation Research (SBIR) program",
+      "url": "https://www.nist.gov/news-events/news/2026/02/nist-allocates-over-3-million-small-businesses-advancing-ai-biotechnology",
+      "date": "2026-02-10",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "CAISI Issues Request for Information About Securing AI Agent Systems",
+      "snippet": "The Center for AI Standards and Innovation (CAISI) at the U.S. Department of Commerce’s National Institute of Standards and Technology (NIST) has published a Request for Information (RFI) seeking...",
+      "url": "https://www.nist.gov/news-events/news/2026/01/caisi-issues-request-information-about-securing-ai-agent-systems",
+      "date": "2026-01-12",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "institute",
+          "standards"
+        ]
+      }
+    },
+    {
+      "title": "NIST Launches Centers for AI in Manufacturing and Critical Infrastructure",
+      "snippet": "NIST has expanded its collaboration with the nonprofit MITRE Corporation as part of its efforts to ensure U.S. leadership in artificial intelligence",
+      "url": "https://www.nist.gov/news-events/news/2025/12/nist-launches-centers-ai-manufacturing-and-critical-infrastructure",
+      "date": "2025-12-22",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Draft NIST Guidelines Rethink Cybersecurity for the AI Era",
+      "snippet": "New guidelines can help an organization determine ways to incorporate AI into its operations while mitigating cybersecurity risks",
+      "url": "https://www.nist.gov/news-events/news/2025/12/draft-nist-guidelines-rethink-cybersecurity-ai-era",
+      "date": "2025-12-16",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "safety",
+        "governance"
+      ],
+      "matched_terms": {
+        "safety": [
+          "risks"
+        ],
+        "governance": [
+          "guidelines"
+        ]
+      }
+    },
+    {
+      "title": "CAISI Evaluation of DeepSeek AI Models Finds Shortcomings and Risks",
+      "snippet": "The Center for AI Standards and Innovation at NIST evaluated several leading models from DeepSeek, an AI company based in the People’s Republic of China",
+      "url": "https://www.nist.gov/news-events/news/2025/09/caisi-evaluation-deepseek-ai-models-finds-shortcomings-and-risks",
+      "date": "2025-09-30",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "doc_type": "",
+      "source_id": "nist",
+      "kind": "Government publication",
+      "categories": [
+        "safety",
+        "governance"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation",
+          "risks"
+        ],
+        "governance": [
+          "standards"
+        ]
+      }
+    }
+  ]
+}
