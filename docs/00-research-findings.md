@@ -1,4 +1,4 @@
-# Research Findings - AI Safety Index Site
+# Research Findings - AI Safety Tracker Site
 
 Compiled 2026-09-13. Every endpoint below was probed live, not assumed.
 Re-verify before relying on any of it in six months.

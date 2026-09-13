@@ -149,7 +149,45 @@ assert.ok(
     `a value carrying the scheme twice produces exactly this.`,
 );
 
+/* The old name.
+
+   The site was renamed from AI Safety Index to AI Safety Tracker, partly for the
+   domain and partly because the Future of Life Institute publishes an
+   established annual report under the old name. A rename that misses one footer
+   or one og:site_name is the kind of thing nobody notices for months.
+
+   The word "index" on its own is fine and deliberate: it describes what the site
+   is, and our own datasets are still called indexes. Only the full former name is
+   banned. If a page ever needs to cite FLI's report by name, this check is what
+   will stop it, and the right fix then is to narrow the check, not to delete it. */
+const OLD_NAME = "AI Safety Index";
+const stale = pages
+  .filter((page) => readFileSync(page, "utf8").includes(OLD_NAME))
+  .map((page) => relative(DIST, page));
+
+assert.deepEqual(
+  stale,
+  [],
+  `${stale.length} page(s) still carry the old site name "${OLD_NAME}":\n  ` +
+    stale.join("\n  ") +
+    `\nThe site is called AI Safety Tracker.`,
+);
+
+/* The noindex meta is gone and robots.txt invites crawlers, so a stray noindex
+   would now silently deindex a live site. */
+const noindexed = pages
+  .filter((page) => /<meta[^>]+name="robots"[^>]+noindex/i.test(readFileSync(page, "utf8")))
+  .map((page) => relative(DIST, page));
+
+assert.deepEqual(
+  noindexed,
+  [],
+  `${noindexed.length} page(s) carry a noindex robots meta:\n  ` +
+    noindexed.join("\n  ") +
+    `\nThe site is live and meant to be indexed.`,
+);
+
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
-    `${pages.length} pages, canonical origin ${origin}`,
+    `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex`,
 );

@@ -1,6 +1,12 @@
-# AI Safety Index
+# AI Safety Tracker
 
 An independent, cited index of AI capability, governance and safety.
+
+Named for the domain, not the other way round. It was called AI Safety Index until the domain
+made the mismatch obvious, and the rename also clears a collision with the Future of Life
+Institute's AI Safety Index, which is an established annual report on a different subject. The
+word index still describes what the site is and is used freely in prose and in the names of our
+own datasets; it is just not the name.
 
 ## Goals
 
@@ -229,13 +235,14 @@ the domain serves something else entirely, and nothing in the build log says so.
 builds the site before committing, and labels its commits `Data refresh` when a dataset moved or
 `Pipeline heartbeat` when only the check time did.
 
-Live at **https://aisafetytracker.org**. Note the mismatch with the site's own name: the domain
-says tracker, the masthead says index. Worth resolving before launch, the more so because the
-Future of Life Institute publishes an established annual report called the AI Safety Index.
+**Live and indexable at https://aisafetytracker.org.** The `noindex` meta is gone and
+`public/robots.txt` points crawlers at the sitemap, so canonical links, `og:url` and the sitemap
+now matter for real rather than being dormant.
 
-**At launch, remove the `noindex` meta in `src/layouts/Base.astro`.** It is there deliberately so a
-half-built index is not crawled. Until it goes, a wrong canonical costs nothing, which is why the
-origin check warns rather than being treated as urgent.
+The Worker is named `ai-safety-index` and the GitHub repository is `ai-safety-index`, both from
+before the rename. **Neither was renamed and neither should be casually.** Changing the `name` in
+`wrangler.jsonc` does not rename the Worker: it creates a second one and leaves the domain pointing
+at the first, with every build reporting success.
 
 **The site origin is hardcoded in `astro.config.mjs`** as `https://aisafetytracker.org`, and is
 deliberately not read from the environment. It was an env var for one day and was wrong twice in
@@ -284,8 +291,6 @@ Built and not yet done:
   account, which is Matthew's to create and not mine.
 - The Anthropic Economic Index is registered but unused: the release files are 77MB and 219MB,
   which is too much to pull daily without streaming aggregation.
-- The site name collides with the Future of Life Institute's "AI Safety Index", which is an
-  established annual report. Matthew's call whether to rename.
 
 ## What this site has that the others do not
 

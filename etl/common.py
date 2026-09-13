@@ -28,7 +28,11 @@ PROCESSED = DATA / "processed"
 SOURCES_FILE = DATA / "sources.json"
 
 # Identify ourselves honestly. A publisher who wants to block us should be able to.
-USER_AGENT = "AISafetyIndexBot/0.1 (+https://github.com/; data pipeline; contact via repo issues)"
+USER_AGENT = (
+    "AISafetyTrackerBot/0.1 "
+    "(+https://github.com/PhlegmaticPhox/ai-safety-index; data pipeline; "
+    "contact via repo issues)"
+)
 
 # Licence states that must never reach a rendered chart.
 BLOCKED_REDISTRIBUTION = {"prohibited", "no-derivatives"}

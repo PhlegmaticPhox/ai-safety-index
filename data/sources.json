@@ -193,7 +193,7 @@
       "format": "json",
       "licence": "CC-BY-4.0",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution": "AI Safety Index, \"AI Governance Readiness Index\". Licensed CC BY 4.0.",
+      "attribution": "AI Safety Tracker, \"AI Governance Readiness Index\". Licensed CC BY 4.0.",
       "redistribution": "permitted",
       "cadence": "quarterly",
       "caveats": "Our own editorial coding from primary legal sources, not an objective measurement. Every score cites a specific instrument and article. \"Readiness\" means the machinery exists to govern AI. It is emphatically not a judgement that the resulting rules are good, proportionate, or well enforced."
@@ -207,7 +207,7 @@
       "format": "json",
       "licence": "CC-BY-4.0",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution": "AI Safety Index, \"Compute Threshold Index\". Licensed CC BY 4.0.",
+      "attribution": "AI Safety Tracker, \"Compute Threshold Index\". Licensed CC BY 4.0.",
       "redistribution": "permitted",
       "cadence": "quarterly",
       "caveats": "Training-compute thresholds written into law, executive action or published policy, with the text that sets each one. Whether a given model crosses a threshold here is arithmetic on Epoch's compute estimates, most of which are estimates rather than disclosures, and is not a legal finding about any model or developer."
@@ -319,7 +319,7 @@
       "format": "json",
       "licence": "CC-BY-4.0",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution": "AI Safety Index, \"AI Law and Policy Index\". Licensed CC BY 4.0.",
+      "attribution": "AI Safety Tracker, \"AI Law and Policy Index\". Licensed CC BY 4.0.",
       "redistribution": "permitted",
       "cadence": "quarterly",
       "caveats": "Our own reading of primary instruments, with a link to each. Not legal advice, not a compliance checklist and not exhaustive. Instruments that never mention AI are included where they apply to it, which is most of the Australian list. Statuses and commencement dates go stale; every record carries its review date."
@@ -333,7 +333,7 @@
       "format": "json",
       "licence": "CC-BY-4.0",
       "licence_url": "https://creativecommons.org/licenses/by/4.0/",
-      "attribution": "AI Safety Index, \"Frontier Safety Framework Index\". Licensed CC BY 4.0.",
+      "attribution": "AI Safety Tracker, \"Frontier Safety Framework Index\". Licensed CC BY 4.0.",
       "redistribution": "permitted",
       "cadence": "quarterly",
       "caveats": "Our own reading of each developer's published safety framework and model cards. Every field is what the developer says about itself: these are self-assessments under self-written frameworks with no common scale and no external audit, and they are indexed here for exactly that reason. Not a ranking, and not a verification."

@@ -1,0 +1,10 @@
+# Everything here is public, cited, and meant to be found. Nothing is behind a
+# login, there is no user data, and there are no crawl traps: the whole site is
+# static HTML rendered at build time.
+#
+# This replaces the noindex meta the site carried while it was half-built.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://aisafetytracker.org/sitemap-index.xml

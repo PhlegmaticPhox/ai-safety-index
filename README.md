@@ -1,4 +1,4 @@
-# AI Safety Index
+# AI Safety Tracker
 
 An independent, cited index of AI capability, governance and safety.
 

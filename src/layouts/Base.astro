@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import { attributionsFor } from "../lib/sources";
 
-const SITE = "AI Safety Index";
+const SITE = "AI Safety Tracker";
 
 interface Props {
   /**
@@ -17,7 +17,7 @@ interface Props {
   description: string;
   /** source_ids cited anywhere on this page, rendered as the attribution block. */
   cites?: string[];
-  /** Set on the homepage, where "AI Safety Index | AI Safety Index" is absurd. */
+  /** Set on the homepage, where "AI Safety Tracker | AI Safety Tracker" is absurd. */
   root?: boolean;
 }
 
@@ -68,8 +68,6 @@ const nav = [
     <meta name="theme-color" content="#141924" />
     <meta name="color-scheme" content="dark" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <!-- Not launched yet. Remove when the site goes live on its own domain. -->
-    <meta name="robots" content="noindex, nofollow" />
   </head>
 
   <body>
@@ -79,7 +77,7 @@ const nav = [
       <div class="wrap head__inner">
         <a href="/" class="brand">
           <span class="brand__mark" aria-hidden="true"></span>
-          AI Safety Index
+          AI Safety Tracker
         </a>
         <nav aria-label="Main">
           <ul>
@@ -134,7 +132,7 @@ const nav = [
             quietly patched.
           </p>
           <p class="foot__meta">
-            <span>{year} AI Safety Index</span>
+            <span>{year} AI Safety Tracker</span>
             <a href="/about/">About</a>
             <a href="/methodology/">Methodology</a>
             <a href="/sources/">All sources</a>
