@@ -201,13 +201,31 @@ Index, the Frontier Safety Framework Index and the Compute Threshold Index.
 
 ## Deployment
 
-Public repo, `main` branch, Cloudflare Workers static assets on a custom domain. Every push
-rebuilds. `.github/workflows/refresh-data.yml` runs daily at 06:17 UTC, runs all guards before
-fetching, builds the site before committing, and labels its commits `Data refresh` when a dataset
-moved or `Pipeline heartbeat` when only the check time did.
+Public repo, `main` branch, Cloudflare Workers static assets, `wrangler.jsonc` at the root.
+
+**NOT YET CONNECTED. A push deploys nothing.** This section previously said "every push rebuilds",
+which was an assumption written when the config was added and never verified. The evidence: the
+repo has zero GitHub deployment records, which both Cloudflare Pages and Workers Builds create when
+their Git integration is connected, and no workflow here deploys. Whatever is live was put there
+some other way. Do not repeat the claim until a deployment record exists.
+
+When it is connected, connect it at the Cloudflare end (Workers & Pages, import this repository)
+rather than as a GitHub Actions workflow. `refresh-data.yml` pushes with the default `GITHUB_TOKEN`,
+and GitHub deliberately does not trigger workflows from those pushes, so an Actions deploy on
+`push` would fire for hand-made commits and silently skip every daily data refresh. Cloudflare's
+integration watches the repository over a webhook and is not subject to that rule.
+
+`.github/workflows/refresh-data.yml` runs daily at 06:17 UTC, runs all guards before fetching,
+builds the site before committing, and labels its commits `Data refresh` when a dataset moved or
+`Pipeline heartbeat` when only the check time did.
 
 **At launch, remove the `noindex` meta in `src/layouts/Base.astro`.** It is there deliberately so a
 half-built index is not crawled.
+
+**`SITE_URL` has no real default.** `astro.config.mjs` falls back to `ai-safety-index.pages.dev`,
+which does not resolve, so every canonical link and every sitemap entry in a locally built site
+points at nothing. Set `SITE_URL` in the Cloudflare build environment to the real domain, and
+replace the fallback here once that domain is known.
 
 ## Working agreement
 
