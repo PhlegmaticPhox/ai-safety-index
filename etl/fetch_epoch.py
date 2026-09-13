@@ -42,6 +42,31 @@ def _float(value: str | None) -> float | None:
         return None
 
 
+# Epoch's accessibility values collapse to four states a reader can hold in
+# their head. The distinction that matters for safety work is whether the weights
+# are out, because that is the one release decision nobody can walk back.
+ACCESS_CLASSES = {
+    "Open weights (unrestricted)": "Open weights",
+    "Open weights (restricted use)": "Open weights",
+    "Open weights (non-commercial)": "Open weights",
+    "API access": "API only",
+    "Hosted access (no API)": "API only",
+    "Unreleased": "Unreleased",
+}
+
+
+def _access(value: str | None) -> str:
+    """Group accessibility, keeping "not recorded" distinct from "unreleased".
+
+    Conflating the two would turn a gap in Epoch's records into a claim that a
+    model was never released, which is a different and much stronger statement.
+    """
+    value = (value or "").strip()
+    if not value:
+        return "Not recorded"
+    return ACCESS_CLASSES.get(value, "Other")
+
+
 def _year_month(value: str | None) -> str | None:
     """Epoch dates are ISO-ish but occasionally partial. Keep YYYY-MM only."""
     if not value or len(value) < 7:
@@ -74,6 +99,12 @@ def build_models(offline: bool) -> None:
                 "parameters": _float(row.get("Parameters")),
                 "confidence": (row.get("Confidence") or "").strip(),
                 "domain": (row.get("Domain") or "").strip(),
+                # Disclosed for about a third of models. Where it is absent that
+                # is a disclosure gap, not a cheap model, and the site has to say
+                # so wherever the figure is plotted.
+                "cost_usd": _float(row.get("Training compute cost (2023 USD)")),
+                "accessibility": _access(row.get("Model accessibility")),
+                "hardware": (row.get("Training hardware") or "").strip(),
                 "reference": (row.get("Link") or "").strip(),
                 "source_id": MODELS,
             }
@@ -255,8 +286,60 @@ def build_clusters(offline: bool) -> None:
     )
 
 
+def build_releases(offline: bool) -> None:
+    """Every notable model with a publication date, compute figure or not.
+
+    Separate from frontier-models because that dataset requires a compute value
+    and so covers roughly half of what Epoch tracks. Release decisions, domains
+    and who built them are knowable for models whose training compute is not,
+    and filtering those out would bias every count on the capability page toward
+    the labs that publish compute figures.
+    """
+    path, retrieved = fetch(MODELS, offline=offline)
+    rows = read_csv(path)
+
+    records = []
+    for row in rows:
+        published = row.get("Publication date") or ""
+        model = (row.get("Model") or "").strip()
+        if not model or len(published) < 7:
+            continue
+        records.append(
+            {
+                "model": model,
+                "organisation": (row.get("Organization") or "").strip(),
+                "country": (row.get("Country (of organization)") or "").strip(),
+                "published": published[:10],
+                "domain": (row.get("Domain") or "").strip().split(",")[0],
+                "accessibility": _access(row.get("Model accessibility")),
+                "org_category": (row.get("Organization categorization") or "")
+                .strip()
+                .split(",")[0],
+                "source_id": MODELS,
+            }
+        )
+
+    records.sort(key=lambda r: r["published"])
+
+    write_dataset(
+        "model-releases",
+        records,
+        source_ids=[MODELS],
+        unit="models",
+        notes=(
+            "Every notable model with a publication date, whether or not its training "
+            "compute is known. Inclusion in Epoch's database is editorial, not "
+            "exhaustive, so counts describe what has been judged notable rather than "
+            "everything built. Accessibility is missing for a substantial minority and "
+            "is reported as 'not recorded' rather than folded into 'unreleased'."
+        ),
+        retrieved=retrieved,
+    )
+
+
 def run(offline: bool = False) -> None:
     build_models(offline=offline)
+    build_releases(offline=offline)
     build_benchmarks(offline=offline)
     build_clusters(offline=offline)
 

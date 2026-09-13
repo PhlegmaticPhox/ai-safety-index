@@ -1,7 +1,7 @@
 {
   "dataset": "frontier-models",
-  "generated": "2026-09-13T04:35:38+00:00",
-  "retrieved": "2026-09-13T04:35:38+00:00",
+  "generated": "2026-09-13T05:56:20+00:00",
+  "retrieved": "2026-09-13T02:56:05+00:00",
   "sources": [
     "epoch-notable-models"
   ],
@@ -18,6 +18,9 @@
       "parameters": 40.0,
       "confidence": "Confident",
       "domain": "Robotics",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.technologyreview.com/2018/12/19/138508/mighty-mouse/",
       "source_id": "epoch-notable-models"
     },
@@ -30,6 +33,9 @@
       "parameters": 1000.0,
       "confidence": "Likely",
       "domain": "Other",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://blogs.umass.edu/brain-wars/files/2016/03/rosenblatt-1957.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -42,6 +48,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://aitopics.org/doc/classics:504E1BAC/",
       "source_id": "epoch-notable-models"
     },
@@ -54,6 +63,9 @@
       "parameters": 16.0,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/abstract/document/5392560",
       "source_id": "epoch-notable-models"
     },
@@ -66,6 +78,9 @@
       "parameters": 1000.0,
       "confidence": "Speculative",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Perceptron-Simulation-Experiments-Rosenblatt/ae76ce1ba27ac29addce4aab93b927e9bc7f7c67",
       "source_id": "epoch-notable-models"
     },
@@ -78,6 +93,9 @@
       "parameters": 17.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://isl.stanford.edu/~widrow/papers/c1960adaptiveswitching.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -90,6 +108,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Mathematics",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/4066882?denied=",
       "source_id": "epoch-notable-models"
     },
@@ -102,6 +123,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/5392331",
       "source_id": "epoch-notable-models"
     },
@@ -114,6 +138,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Robotics",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/1098193",
       "source_id": "epoch-notable-models"
     },
@@ -126,6 +153,9 @@
       "parameters": 2061.0,
       "confidence": "Likely",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://pubs.aip.org/asa/jasa/article-abstract/40/5/966/754180/Experimental-Studies-in-Speaker-Verification-Using?redirectedFrom=fulltext",
       "source_id": "epoch-notable-models"
     },
@@ -138,6 +168,9 @@
       "parameters": 21600.0,
       "confidence": "Confident",
       "domain": "Other",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://link.springer.com/article/10.1007%2FBF00342633",
       "source_id": "epoch-notable-models"
     },
@@ -150,6 +183,9 @@
       "parameters": 1140576.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://link.springer.com/article/10.1007/BF00344251",
       "source_id": "epoch-notable-models"
     },
@@ -162,6 +198,9 @@
       "parameters": 324.0,
       "confidence": "Likely",
       "domain": "Robotics",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6313077",
       "source_id": "epoch-notable-models"
     },
@@ -174,6 +213,9 @@
       "parameters": 432.0,
       "confidence": "Confident",
       "domain": "Other",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.cs.toronto.edu/~hinton/absps/families.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -186,6 +228,9 @@
       "parameters": 720.0,
       "confidence": "Confident",
       "domain": "Mathematics",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Learning-representations-by-back-propagating-errors-Rumelhart-Hinton/052b1d8ce63b07fec3de9dbb583772d860b7c769",
       "source_id": "epoch-notable-models"
     },
@@ -198,6 +243,9 @@
       "parameters": 18629.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=03A3D3EDF0BAF35405ABCF083411B55E?doi=10.1.1.154.7012&rep=rep1&type=pdf",
       "source_id": "epoch-notable-models"
     },
@@ -210,6 +258,9 @@
       "parameters": 18629.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=03A3D3EDF0BAF35405ABCF083411B55E?doi=10.1.1.154.7012&rep=rep1&type=pdf",
       "source_id": "epoch-notable-models"
     },
@@ -222,6 +273,9 @@
       "parameters": 816.0,
       "confidence": "Confident",
       "domain": "",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.cs.toronto.edu/~hinton/absps/parle.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -234,6 +288,9 @@
       "parameters": 10000.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://aaai.org/papers/00734-aaai88-130-data-driven-execution-of-multi-layered-networks-for-automatic-speech-recognition/",
       "source_id": "epoch-notable-models"
     },
@@ -246,6 +303,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/118669",
       "source_id": "epoch-notable-models"
     },
@@ -258,6 +318,9 @@
       "parameters": 3040.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Performance-Comparisons-Between-Backpropagation-and-Atlas-Cole/e42d2b89fcb4a1a3dfa63408f424f76975ed1e1b",
       "source_id": "epoch-notable-models"
     },
@@ -270,6 +333,9 @@
       "parameters": 2578.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Handwritten-Digit-Recognition-with-a-Network-LeCun-Boser/86ab4cae682fbd49c5a5bedb630e5a40fa7529f6",
       "source_id": "epoch-notable-models"
     },
@@ -282,6 +348,9 @@
       "parameters": 9760.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/6795724",
       "source_id": "epoch-notable-models"
     },
@@ -294,6 +363,9 @@
       "parameters": 27480.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.sciencedirect.com/science/article/abs/pii/B9781558601413500079",
       "source_id": "epoch-notable-models"
     },
@@ -306,6 +378,9 @@
       "parameters": 36.0,
       "confidence": "Confident",
       "domain": "Other",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/A-neural-network-model-for-bankruptcy-prediction-Odom-Sharda/ead9fa02902850a7418fb5ba720f3d9d8ab2f88b",
       "source_id": "epoch-notable-models"
     },
@@ -318,6 +393,9 @@
       "parameters": 72940.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/SEXNET%3A-A-Neural-Network-Identifies-Sex-From-Human-Golomb-Lawrence/cbf90aa78fea0c8a1028705d92bc4bc7808ddeeb",
       "source_id": "epoch-notable-models"
     },
@@ -330,6 +408,9 @@
       "parameters": 8386.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/A-Simple-Weight-Decay-Can-Improve-Generalization-Krogh-Hertz/48e1de7d085808004d5f0493d486669a3d2930b5",
       "source_id": "epoch-notable-models"
     },
@@ -342,6 +423,9 @@
       "parameters": 25000.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://papers.nips.cc/paper/1991/file/68ce199ec2c5517597ce0a4d89620f55-Paper.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -354,6 +438,9 @@
       "parameters": 594.0,
       "confidence": "Likely",
       "domain": "Medicine",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://pubmed.ncbi.nlm.nih.gov/1411538/",
       "source_id": "epoch-notable-models"
     },
@@ -366,6 +453,9 @@
       "parameters": 744.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Signature-Verification-Using-A-%22Siamese%22-Time-Delay-Bromley-Bentz/997dc5d9a058753f034422afe7bd0cc0b8ad808b",
       "source_id": "epoch-notable-models"
     },
@@ -378,6 +468,9 @@
       "parameters": 5620.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Non-Intrusive-Gaze-Tracking-Using-Artificial-Neural-Baluja-Pomerleau/574c0cf98825bf09b0ab7bbfe9ba89cd6090745e",
       "source_id": "epoch-notable-models"
     },
@@ -390,6 +483,9 @@
       "parameters": 1888.0,
       "confidence": "Likely",
       "domain": "Materials science",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.sciencedirect.com/science/article/abs/pii/S0921883108605506",
       "source_id": "epoch-notable-models"
     },
@@ -402,6 +498,9 @@
       "parameters": 206910.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://proceedings.neurips.cc/paper/1994/file/5705e1164a8394aace6018e27d20d237-Paper.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -414,6 +513,9 @@
       "parameters": 72251.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Learning-to-Play-the-Game-of-Chess-Thrun/4bc7a6dcb9e0e6c7a26800532e2a00f5572eea47",
       "source_id": "epoch-notable-models"
     },
@@ -426,6 +528,9 @@
       "parameters": 384000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Recognizing-Handwritten-Digits-Using-Mixtures-of-Hinton-Revow/9dea20c1e5bbb1f543ff08113ffde5380c679f1f",
       "source_id": "epoch-notable-models"
     },
@@ -438,6 +543,9 @@
       "parameters": 4446.0,
       "confidence": "Speculative",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://proceedings.neurips.cc/paper_files/paper/1994/hash/4b0250793549726d5c1ea3906726ebfe-Abstract.html",
       "source_id": "epoch-notable-models"
     },
@@ -450,6 +558,9 @@
       "parameters": 432800.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Laterally-Interconnected-Self-Organizing-Maps-in-Choe-Sirosh/785f5facc76538ceba6f6b9e2d7b641d322e9854",
       "source_id": "epoch-notable-models"
     },
@@ -462,6 +573,9 @@
       "parameters": 13607.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/549237",
       "source_id": "epoch-notable-models"
     },
@@ -474,6 +588,9 @@
       "parameters": 6452.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/655647",
       "source_id": "epoch-notable-models"
     },
@@ -486,6 +603,9 @@
       "parameters": 32015.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Face-recognition%3A-a-convolutional-neural-network-Lawrence-Giles/86890c82b589e24007c56e1f40c5f928a0e04183",
       "source_id": "epoch-notable-models"
     },
@@ -498,6 +618,9 @@
       "parameters": 10504.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://direct.mit.edu/neco/article-abstract/9/8/1735/6109/Long-Short-Term-Memory?redirectedFrom=fulltext",
       "source_id": "epoch-notable-models"
     },
@@ -510,6 +633,9 @@
       "parameters": 60000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -522,6 +648,9 @@
       "parameters": 112000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Text-to-Text-Machine-Translation-Using-the-RECONTRA-Casta%C3%B1o-Casacuberta/47ee046b416d9258952cb8f4b0e2b6e65f334fad",
       "source_id": "epoch-notable-models"
     },
@@ -534,6 +663,9 @@
       "parameters": 66780.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Text-to-Text-Machine-Translation-Using-the-RECONTRA-Casta%C3%B1o-Casacuberta/47ee046b416d9258952cb8f4b0e2b6e65f334fad",
       "source_id": "epoch-notable-models"
     },
@@ -546,6 +678,9 @@
       "parameters": 3925310.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://proceedings.neurips.cc/paper_files/paper/2000/file/1f1baa5b8edac74eb4eaa329f14a0361-Paper.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -558,6 +693,9 @@
       "parameters": 6906980.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://papers.nips.cc/paper_files/paper/2000/file/728f206c2a01bf572b5940d7d9a8fa4c-Paper.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -570,6 +708,9 @@
       "parameters": 12000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.cs.cmu.edu/~efros/courses/LBMV07/Papers/viola-cvpr-01.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -582,6 +723,9 @@
       "parameters": 4124233.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://dl.acm.org/doi/10.5555/944919.944966",
       "source_id": "epoch-notable-models"
     },
@@ -594,6 +738,9 @@
       "parameters": 11904264.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://dl.acm.org/doi/10.5555/944919.944966",
       "source_id": "epoch-notable-models"
     },
@@ -606,6 +753,9 @@
       "parameters": 90575.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Learning-methods-for-generic-object-recognition-to-LeCun-Huang/f354310098e09c1e1dc88758fca36767fd9d084d",
       "source_id": "epoch-notable-models"
     },
@@ -618,6 +768,9 @@
       "parameters": 4096000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Linear-Multilayer-Independent-Component-Analysis-Matsuda-Yamaguchi/7061b01572fbff2e223ce3abb59f397895b1ebf1",
       "source_id": "epoch-notable-models"
     },
@@ -630,6 +783,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Hierarchical-Probabilistic-Neural-Network-Language-Morin-Bengio/c19fbefdeead6a4154a22a9c8551a18b1530033a",
       "source_id": "epoch-notable-models"
     },
@@ -642,6 +798,9 @@
       "parameters": 5711.0,
       "confidence": "Confident",
       "domain": "Search",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://dl.acm.org/doi/abs/10.1145/1102351.1102363",
       "source_id": "epoch-notable-models"
     },
@@ -654,6 +813,9 @@
       "parameters": 90857.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Large-scale-Learning-with-SVM-and-Convolutional-for-Huang-LeCun/cf03fdf52dd6e4249cbbdbd0bffbbbe5ca389feb",
       "source_id": "epoch-notable-models"
     },
@@ -666,6 +828,9 @@
       "parameters": 300000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Large-Language-Models-in-Machine-Translation-Brants-Popat/ba786c46373892554b98df42df7af6f5da343c9d",
       "source_id": "epoch-notable-models"
     },
@@ -678,6 +843,9 @@
       "parameters": 21000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Large-Language-Models-in-Machine-Translation-Brants-Popat/ba786c46373892554b98df42df7af6f5da343c9d",
       "source_id": "epoch-notable-models"
     },
@@ -690,6 +858,9 @@
       "parameters": 30.0,
       "confidence": "Confident",
       "domain": "Other",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/4700287",
       "source_id": "epoch-notable-models"
     },
@@ -702,6 +873,9 @@
       "parameters": 100000000.0,
       "confidence": "Confident",
       "domain": "Other",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://dl.acm.org/doi/abs/10.1145/1553374.1553486?utm_campaign=The+Batch&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-95Z7-X4Dl-RJK6gYKvjyDIrYaGhBeqWoc0ldqyPEKni0Ip6UE7452hr-ygY52z00LBpYgM",
       "source_id": "epoch-notable-models"
     },
@@ -714,6 +888,9 @@
       "parameters": 258800.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/What-is-the-best-multi-stage-architecture-for-Jarrett-Kavukcuoglu/1f88427d7aa8225e47f946ac41a0667d7b69ac52",
       "source_id": "epoch-notable-models"
     },
@@ -726,6 +903,9 @@
       "parameters": 16818176.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/5357786",
       "source_id": "epoch-notable-models"
     },
@@ -738,6 +918,9 @@
       "parameters": 11616256.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/5357786",
       "source_id": "epoch-notable-models"
     },
@@ -750,6 +933,9 @@
       "parameters": 13729792.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/5357786",
       "source_id": "epoch-notable-models"
     },
@@ -762,6 +948,9 @@
       "parameters": 7082000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://proceedings.mlr.press/v9/glorot10a.html",
       "source_id": "epoch-notable-models"
     },
@@ -774,6 +963,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/5540096",
       "source_id": "epoch-notable-models"
     },
@@ -786,6 +978,9 @@
       "parameters": 268664.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Evaluation-of-Pooling-Operations-in-Convolutional-Scherer-M%C3%BCller/5d21006fa32ff69f6b0a646f26ce0db84f2f4d33",
       "source_id": "epoch-notable-models"
     },
@@ -798,6 +993,9 @@
       "parameters": 294912.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Evaluation-of-Pooling-Operations-in-Convolutional-Scherer-M%C3%BCller/5d21006fa32ff69f6b0a646f26ce0db84f2f4d33",
       "source_id": "epoch-notable-models"
     },
@@ -810,6 +1008,9 @@
       "parameters": 70265000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Recurrent-neural-network-based-language-model-Mikolov-Karafi%C3%A1t/9819b600a828a57e1cde047bbe710d3446b30da5",
       "source_id": "epoch-notable-models"
     },
@@ -822,6 +1023,9 @@
       "parameters": 139808256.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX 285",
       "reference": "https://www.semanticscholar.org/paper/Using-very-deep-autoencoders-for-content-based-Krizhevsky-Hinton/88080d28536f36588740737f3b7a1f6c1a409654",
       "source_id": "epoch-notable-models"
     },
@@ -834,6 +1038,9 @@
       "parameters": 4878300.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 480,NVIDIA GeForce GTX 580",
       "reference": "https://people.idsia.ch/~juergen/ijcai2011.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -846,6 +1053,9 @@
       "parameters": 128420.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580,NVIDIA GeForce GTX 480",
       "reference": "https://www.semanticscholar.org/paper/Convolutional-Neural-Network-Committees-for-Ciresan-Meier/260a7615bbffec052d67dffde5bcf9b4687b50ee",
       "source_id": "epoch-notable-models"
     },
@@ -858,6 +1068,9 @@
       "parameters": 120620.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580,NVIDIA GeForce GTX 480",
       "reference": "https://www.semanticscholar.org/paper/Convolutional-Neural-Network-Committees-for-Ciresan-Meier/260a7615bbffec052d67dffde5bcf9b4687b50ee",
       "source_id": "epoch-notable-models"
     },
@@ -870,6 +1083,9 @@
       "parameters": 1388800.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580,NVIDIA GeForce GTX 480",
       "reference": "https://www.semanticscholar.org/paper/A-committee-of-neural-networks-for-traffic-sign-Ciresan-Meier/dd7f8b53e6802787179a961e766760cbbe2d5011",
       "source_id": "epoch-notable-models"
     },
@@ -882,6 +1098,9 @@
       "parameters": 5594010.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580",
       "reference": "https://arxiv.org/abs/1207.0580",
       "source_id": "epoch-notable-models"
     },
@@ -894,6 +1113,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 7.952555832759744,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580",
       "reference": "https://arxiv.org/abs/1207.0580",
       "source_id": "epoch-notable-models"
     },
@@ -906,6 +1128,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580",
       "reference": "https://arxiv.org/abs/1207.0580",
       "source_id": "epoch-notable-models"
     },
@@ -918,6 +1143,9 @@
       "parameters": 1000000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": 16.029257461780738,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1112.6209",
       "source_id": "epoch-notable-models"
     },
@@ -930,6 +1158,9 @@
       "parameters": 102720000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/LSTM-Neural-Networks-for-Language-Modeling-Sundermeyer-Schl%C3%BCter/f9a1b3850dfd837793743565a8af95973d395a4e",
       "source_id": "epoch-notable-models"
     },
@@ -942,6 +1173,9 @@
       "parameters": 60000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 15.56975299843643,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX 580",
       "reference": "https://proceedings.neurips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html",
       "source_id": "epoch-notable-models"
     },
@@ -954,6 +1188,9 @@
       "parameters": 218896.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 3.9045853984413377,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 580",
       "reference": "https://www.semanticscholar.org/paper/Deep-Neural-Networks-Segment-Neuronal-Membranes-in-Ciresan-Giusti/09193e19b59fc8f05bee9d6efbfb1607ca5b6501",
       "source_id": "epoch-notable-models"
     },
@@ -966,6 +1203,9 @@
       "parameters": 47185920.0,
       "confidence": "Speculative",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Large-Scale-Distributed-Deep-Networks-Dean-Corrado/3127190433230b3dc1abd0680bb58dced4bcd90e",
       "source_id": "epoch-notable-models"
     },
@@ -978,6 +1218,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 3255.1839637787602,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1301.3781",
       "source_id": "epoch-notable-models"
     },
@@ -990,6 +1233,9 @@
       "parameters": 101706240.0,
       "confidence": "Likely",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/On-rectified-linear-units-for-speech-processing-Zeiler-Ranzato/64da1980714cfc130632c5b92b9d98c2f6763de6",
       "source_id": "epoch-notable-models"
     },
@@ -1002,6 +1248,9 @@
       "parameters": 51609600.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://ieeexplore.ieee.org/document/6338939",
       "source_id": "epoch-notable-models"
     },
@@ -1014,6 +1263,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Recursive-Deep-Models-for-Semantic-Compositionality-Socher-Perelygin/687bac2d3320083eb4530bf18bb8f8f721477600",
       "source_id": "epoch-notable-models"
     },
@@ -1026,6 +1278,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Recurrent-Continuous-Translation-Models-Kalchbrenner-Blunsom/944a1cfd79dbfb6fef460360a0765ba790f4027a",
       "source_id": "epoch-notable-models"
     },
@@ -1038,6 +1293,9 @@
       "parameters": 692000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1310.4546",
       "source_id": "epoch-notable-models"
     },
@@ -1050,6 +1308,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 12.994002368456531,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX 580",
       "reference": "https://arxiv.org/abs/1311.2901",
       "source_id": "epoch-notable-models"
     },
@@ -1062,6 +1323,9 @@
       "parameters": 942000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 30.028097313317172,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://papers.nips.cc/paper/2013/hash/1cecc7a77928ca8133fa24680a88d2f9-Abstract.html",
       "source_id": "epoch-notable-models"
     },
@@ -1074,6 +1338,9 @@
       "parameters": 836096.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1312.5602",
       "source_id": "epoch-notable-models"
     },
@@ -1086,6 +1353,9 @@
       "parameters": 784000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1312.6114",
       "source_id": "epoch-notable-models"
     },
@@ -1098,6 +1368,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1406.2661",
       "source_id": "epoch-notable-models"
     },
@@ -1110,6 +1383,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 51.65209223027738,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX TITAN",
       "reference": "https://arxiv.org/abs/1406.4729",
       "source_id": "epoch-notable-models"
     },
@@ -1122,6 +1398,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Self-play-Monte-Carlo-tree-search-in-computer-poker-Heinrich-Silver/7b687599b4425aa959036071030e1212a3b359c7",
       "source_id": "epoch-notable-models"
     },
@@ -1134,6 +1413,9 @@
       "parameters": 6144.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1407.4023",
       "source_id": "epoch-notable-models"
     },
@@ -1146,6 +1428,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA Quadro K6000",
       "reference": "https://arxiv.org/abs/1409.0473",
       "source_id": "epoch-notable-models"
     },
@@ -1158,6 +1443,9 @@
       "parameters": 144000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1409.1556",
       "source_id": "epoch-notable-models"
     },
@@ -1170,6 +1458,9 @@
       "parameters": 138000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 239.2376655010467,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX Titan Black",
       "reference": "https://arxiv.org/abs/1409.1556",
       "source_id": "epoch-notable-models"
     },
@@ -1182,6 +1473,9 @@
       "parameters": 1920000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1409.3215",
       "source_id": "epoch-notable-models"
     },
@@ -1194,6 +1488,9 @@
       "parameters": 5000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla C2075",
       "reference": "https://www.comp.nus.edu.sg/~skok/papers/is14.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -1206,6 +1503,9 @@
       "parameters": 6797700.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1409.4842",
       "source_id": "epoch-notable-models"
     },
@@ -1218,6 +1518,9 @@
       "parameters": 706048.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1412.0069",
       "source_id": "epoch-notable-models"
     },
@@ -1230,6 +1533,9 @@
       "parameters": 62000000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1412.1454",
       "source_id": "epoch-notable-models"
     },
@@ -1242,6 +1548,9 @@
       "parameters": 27000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX 780",
       "reference": "https://arxiv.org/abs/1412.6071v4",
       "source_id": "epoch-notable-models"
     },
@@ -1254,6 +1563,9 @@
       "parameters": 2370000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1412.6980",
       "source_id": "epoch-notable-models"
     },
@@ -1266,6 +1578,9 @@
       "parameters": 87048800.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 1394.115708804708,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA Tesla K40t",
       "reference": "https://arxiv.org/abs/1502.01852",
       "source_id": "epoch-notable-models"
     },
@@ -1278,6 +1593,9 @@
       "parameters": 8000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla K40s",
       "reference": "https://aclanthology.org/P15-1151/",
       "source_id": "epoch-notable-models"
     },
@@ -1290,6 +1608,9 @@
       "parameters": 18413568.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla K20m",
       "reference": "https://www.semanticscholar.org/paper/Deep-Recurrent-Neural-Networks-for-Acoustic-Chan-Lane/ae18f67c10a5d4da91f128ec7a6cf7c784122cd5",
       "source_id": "epoch-notable-models"
     },
@@ -1302,6 +1623,9 @@
       "parameters": 37676160.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/U-Net%3A-Convolutional-Networks-for-Biomedical-Image-Ronneberger-Fischer/6364fdaa0a0eccd823a779fcdd489173f938e91a",
       "source_id": "epoch-notable-models"
     },
@@ -1314,6 +1638,9 @@
       "parameters": 5006000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla K40c",
       "reference": "https://arxiv.org/abs/1508.01722",
       "source_id": "epoch-notable-models"
     },
@@ -1326,6 +1653,9 @@
       "parameters": 8209984.0,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": 4828.322276803044,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.nature.com/articles/nature16961",
       "source_id": "epoch-notable-models"
     },
@@ -1338,6 +1668,9 @@
       "parameters": 138000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX TITAN X",
       "reference": "https://arxiv.org/abs/1510.08160",
       "source_id": "epoch-notable-models"
     },
@@ -1350,6 +1683,9 @@
       "parameters": 23626728.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": 1218.1810104797394,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1512.00567",
       "source_id": "epoch-notable-models"
     },
@@ -1362,6 +1698,9 @@
       "parameters": 60200000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1512.03385",
       "source_id": "epoch-notable-models"
     },
@@ -1374,6 +1713,9 @@
       "parameters": 44500000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1512.03385",
       "source_id": "epoch-notable-models"
     },
@@ -1386,6 +1728,9 @@
       "parameters": 66000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1512.05287",
       "source_id": "epoch-notable-models"
     },
@@ -1398,6 +1743,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": 22206.80954117433,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.nature.com/articles/nature16961",
       "source_id": "epoch-notable-models"
     },
@@ -1410,6 +1758,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX TITAN X",
       "reference": "https://arxiv.org/abs/1603.01354",
       "source_id": "epoch-notable-models"
     },
@@ -1422,6 +1773,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1605.06409",
       "source_id": "epoch-notable-models"
     },
@@ -1434,6 +1788,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://link.springer.com/chapter/10.1007/978-3-319-46493-0_38",
       "source_id": "epoch-notable-models"
     },
@@ -1446,6 +1803,9 @@
       "parameters": 21000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1609.07843",
       "source_id": "epoch-notable-models"
     },
@@ -1458,6 +1818,9 @@
       "parameters": 278000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 201331.569937687,
+      "accessibility": "API only",
+      "hardware": "NVIDIA Tesla K80",
       "reference": "https://arxiv.org/abs/1609.08144",
       "source_id": "epoch-notable-models"
     },
@@ -1470,6 +1833,9 @@
       "parameters": 22855952.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 13108.852355728606,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA Tesla K80",
       "reference": "https://arxiv.org/abs/1610.02357",
       "source_id": "epoch-notable-models"
     },
@@ -1482,6 +1848,9 @@
       "parameters": 409536.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://link.springer.com/protocol/10.1007/978-1-4939-6406-2_6",
       "source_id": "epoch-notable-models"
     },
@@ -1494,6 +1863,9 @@
       "parameters": 51000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1611.01462",
       "source_id": "epoch-notable-models"
     },
@@ -1506,6 +1878,9 @@
       "parameters": 37400000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": 21184.441090423978,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1611.01578",
       "source_id": "epoch-notable-models"
     },
@@ -1518,6 +1893,9 @@
       "parameters": 54000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1611.01578",
       "source_id": "epoch-notable-models"
     },
@@ -1530,6 +1908,9 @@
       "parameters": 2600000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 41.25014556779628,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA GeForce GTX TITAN X",
       "reference": "https://arxiv.org/abs/1611.01603v6",
       "source_id": "epoch-notable-models"
     },
@@ -1542,6 +1923,9 @@
       "parameters": 83000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1611.05431",
       "source_id": "epoch-notable-models"
     },
@@ -1554,6 +1938,9 @@
       "parameters": 92000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": 617.1106542,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA GeForce GTX TITAN X",
       "reference": "https://arxiv.org/abs/1611.05725",
       "source_id": "epoch-notable-models"
     },
@@ -1566,6 +1953,9 @@
       "parameters": 44500000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.semanticscholar.org/paper/Finding-Tiny-Faces-Hu-Ramanan/71f51e1b6691343ed031c1ed42efc96a7f1a0619",
       "source_id": "epoch-notable-models"
     },
@@ -1578,6 +1968,9 @@
       "parameters": 814464.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla K40c",
       "reference": "https://www.semanticscholar.org/paper/EnhanceNet%3A-Single-Image-Super-Resolution-Through-Sajjadi-Scholkopf/fddc32f3880688238847077fd927ab3025db7a6a",
       "source_id": "epoch-notable-models"
     },
@@ -1590,6 +1983,9 @@
       "parameters": 2500000.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1701.01724",
       "source_id": "epoch-notable-models"
     },
@@ -1602,6 +1998,9 @@
       "parameters": 8700000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 3874.12265,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla K40t",
       "reference": "https://arxiv.org/abs/1701.06538",
       "source_id": "epoch-notable-models"
     },
@@ -1614,6 +2013,9 @@
       "parameters": 213000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 438.0356518424336,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA P100",
       "reference": "https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -1626,6 +2028,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA GeForce GTX TITAN X",
       "reference": "https://academic.oup.com/bioinformatics/article/33/21/3387/3931857",
       "source_id": "epoch-notable-models"
     },
@@ -1638,6 +2043,9 @@
       "parameters": 44654504.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 17910.759507843868,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA Tesla K80",
       "reference": "https://arxiv.org/abs/1707.02968",
       "source_id": "epoch-notable-models"
     },
@@ -1650,6 +2058,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA M40",
       "reference": "https://arxiv.org/abs/1705.03122",
       "source_id": "epoch-notable-models"
     },
@@ -1662,6 +2073,9 @@
       "parameters": 53000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "NVIDIA M40",
       "reference": "https://arxiv.org/abs/1708.02002",
       "source_id": "epoch-notable-models"
     },
@@ -1674,6 +2088,9 @@
       "parameters": 33000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1708.02182",
       "source_id": "epoch-notable-models"
     },
@@ -1686,6 +2103,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://openai.com/research/dota-2",
       "source_id": "epoch-notable-models"
     },
@@ -1698,6 +2118,9 @@
       "parameters": 19000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1708.04116",
       "source_id": "epoch-notable-models"
     },
@@ -1710,6 +2133,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.ijcai.org/proceedings/2017/0772.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -1722,6 +2148,9 @@
       "parameters": 38000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1708.08863",
       "source_id": "epoch-notable-models"
     },
@@ -1734,6 +2163,9 @@
       "parameters": 26000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1610.02915v4",
       "source_id": "epoch-notable-models"
     },
@@ -1746,6 +2178,9 @@
       "parameters": 11100000.000000002,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1709.05027",
       "source_id": "epoch-notable-models"
     },
@@ -1758,6 +2193,9 @@
       "parameters": 53000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1709.08907",
       "source_id": "epoch-notable-models"
     },
@@ -1770,6 +2208,9 @@
       "parameters": 46400244.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": 1213.8707315707268,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v1",
       "reference": "https://www.nature.com/articles/nature24270",
       "source_id": "epoch-notable-models"
     },
@@ -1782,6 +2223,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": 471445.3247973037,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v1",
       "reference": "https://www.nature.com/articles/nature24270",
       "source_id": "epoch-notable-models"
     },
@@ -1794,6 +2238,9 @@
       "parameters": 34000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1711.00066",
       "source_id": "epoch-notable-models"
     },
@@ -1806,6 +2253,9 @@
       "parameters": 35000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1711.03953",
       "source_id": "epoch-notable-models"
     },
@@ -1818,6 +2268,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": 229918.6146969874,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v2,Google TPU v1",
       "reference": "https://arxiv.org/abs/1712.01815",
       "source_id": "epoch-notable-models"
     },
@@ -1830,6 +2283,9 @@
       "parameters": 135000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://mlsys.org/Conferences/doc/2018/50.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -1842,6 +2298,9 @@
       "parameters": 94000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Not recorded",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1802.05365",
       "source_id": "epoch-notable-models"
     },
@@ -1854,6 +2313,9 @@
       "parameters": 1600000.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": 53.42846804494412,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA P100",
       "reference": "https://arxiv.org/abs/1802.01561",
       "source_id": "epoch-notable-models"
     },
@@ -1866,6 +2328,9 @@
       "parameters": 151000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Quadro GP100",
       "reference": "https://arxiv.org/abs/1803.08240",
       "source_id": "epoch-notable-models"
     },
@@ -1878,6 +2343,9 @@
       "parameters": 56933216.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA M40,NVIDIA GeForce GTX TITAN X",
       "reference": "https://arxiv.org/abs/1804.02767",
       "source_id": "epoch-notable-models"
     },
@@ -1890,6 +2358,9 @@
       "parameters": 829000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 134077.42688552555,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1805.00932",
       "source_id": "epoch-notable-models"
     },
@@ -1902,6 +2373,9 @@
       "parameters": 51000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1805.01500",
       "source_id": "epoch-notable-models"
     },
@@ -1914,6 +2388,9 @@
       "parameters": 32000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1805.08574",
       "source_id": "epoch-notable-models"
     },
@@ -1926,6 +2403,9 @@
       "parameters": 117000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Quadro P600",
       "reference": "https://openai.com/blog/language-unsupervised/",
       "source_id": "epoch-notable-models"
     },
@@ -1938,6 +2418,9 @@
       "parameters": 126001330.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1807.01281",
       "source_id": "epoch-notable-models"
     },
@@ -1950,6 +2433,9 @@
       "parameters": 3320000.0,
       "confidence": "Speculative",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1807.03848",
       "source_id": "epoch-notable-models"
     },
@@ -1962,6 +2448,9 @@
       "parameters": 77360000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla K80",
       "reference": "https://arxiv.org/abs/1807.03848",
       "source_id": "epoch-notable-models"
     },
@@ -1974,6 +2463,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 2442.1618775733145,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 16 GB",
       "reference": "https://arxiv.org/abs/1808.09381",
       "source_id": "epoch-notable-models"
     },
@@ -1986,6 +2478,9 @@
       "parameters": 185000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1808.10143",
       "source_id": "epoch-notable-models"
     },
@@ -1998,6 +2493,9 @@
       "parameters": 90000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 45.373219244858774,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1709.02755v5",
       "source_id": "epoch-notable-models"
     },
@@ -2010,6 +2508,9 @@
       "parameters": 2100000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1809.08826",
       "source_id": "epoch-notable-models"
     },
@@ -2022,6 +2523,9 @@
       "parameters": 247000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 2880.917278699733,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1809.10853",
       "source_id": "epoch-notable-models"
     },
@@ -2034,6 +2538,9 @@
       "parameters": 340000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 1751.4770087736404,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v2",
       "reference": "https://arxiv.org/abs/1810.04805",
       "source_id": "epoch-notable-models"
     },
@@ -2046,6 +2553,9 @@
       "parameters": 180000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1810.06682",
       "source_id": "epoch-notable-models"
     },
@@ -2058,6 +2568,9 @@
       "parameters": 4900000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 935.3300509163912,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v2",
       "reference": "https://arxiv.org/abs/1811.02084",
       "source_id": "epoch-notable-models"
     },
@@ -2070,6 +2583,9 @@
       "parameters": 2900000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 395.71656000308855,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v2",
       "reference": "https://arxiv.org/abs/1811.02084",
       "source_id": "epoch-notable-models"
     },
@@ -2082,6 +2598,9 @@
       "parameters": 46000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1811.04623",
       "source_id": "epoch-notable-models"
     },
@@ -2094,6 +2613,9 @@
       "parameters": 7200000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1811.06477",
       "source_id": "epoch-notable-models"
     },
@@ -2106,6 +2628,9 @@
       "parameters": 26200000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1812.04948",
       "source_id": "epoch-notable-models"
     },
@@ -2118,6 +2643,9 @@
       "parameters": 256999999.99999997,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1901.02860",
       "source_id": "epoch-notable-models"
     },
@@ -2130,6 +2658,9 @@
       "parameters": 764000.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1902.00506",
       "source_id": "epoch-notable-models"
     },
@@ -2142,6 +2673,9 @@
       "parameters": 1500000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 4348.443645,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -2154,6 +2688,9 @@
       "parameters": 2500000.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": 104.91425851608678,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 16 GB",
       "reference": "https://arxiv.org/abs/1902.10565",
       "source_id": "epoch-notable-models"
     },
@@ -2166,6 +2703,9 @@
       "parameters": 110000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 247.26289010271603,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1903.10676",
       "source_id": "epoch-notable-models"
     },
@@ -2178,6 +2718,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA GeForce GTX 1080 Ti",
       "reference": "https://arxiv.org/abs/1902.09492",
       "source_id": "epoch-notable-models"
     },
@@ -2190,6 +2733,9 @@
       "parameters": 23000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1904.03819",
       "source_id": "epoch-notable-models"
     },
@@ -2202,6 +2748,9 @@
       "parameters": 395000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1904.09408",
       "source_id": "epoch-notable-models"
     },
@@ -2214,6 +2763,9 @@
       "parameters": 2038431744.0,
       "confidence": "Likely",
       "domain": "Audio",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://openai.com/index/musenet/",
       "source_id": "epoch-notable-models"
     },
@@ -2226,6 +2778,9 @@
       "parameters": 34000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1905.05513",
       "source_id": "epoch-notable-models"
     },
@@ -2238,6 +2793,9 @@
       "parameters": 100000000000.0,
       "confidence": "Confident",
       "domain": "Recommendation",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1906.00091",
       "source_id": "epoch-notable-models"
     },
@@ -2250,6 +2808,9 @@
       "parameters": 340000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 13644.959135438661,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1906.08237",
       "source_id": "epoch-notable-models"
     },
@@ -2262,6 +2823,9 @@
       "parameters": 256999999.99999997,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1906.01702",
       "source_id": "epoch-notable-models"
     },
@@ -2274,6 +2838,9 @@
       "parameters": 35000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1906.03805",
       "source_id": "epoch-notable-models"
     },
@@ -2286,6 +2853,9 @@
       "parameters": 355000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 85350.2350127364,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/1907.11692",
       "source_id": "epoch-notable-models"
     },
@@ -2298,6 +2868,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.science.org/cms/asset/910714a7-ee2a-486e-9970-42fb893b08d9/pap.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -2310,6 +2883,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA TITAN RTX",
       "reference": "https://www.pnas.org/doi/10.1073/pnas.1914677117",
       "source_id": "epoch-notable-models"
     },
@@ -2322,6 +2898,9 @@
       "parameters": 28303800.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.biorxiv.org/content/10.1101/704874v2.full.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -2334,6 +2913,9 @@
       "parameters": 8300000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 109287.55758939347,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/1909.08053",
       "source_id": "epoch-notable-models"
     },
@@ -2346,6 +2928,9 @@
       "parameters": 1200000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100 SXM3 32 GB",
       "reference": "https://arxiv.org/abs/1909.08053",
       "source_id": "epoch-notable-models"
     },
@@ -2358,6 +2943,9 @@
       "parameters": 3900000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 171818.64196707975,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100S PCIe 32 GB",
       "reference": "https://arxiv.org/abs/1909.08053",
       "source_id": "epoch-notable-models"
     },
@@ -2370,6 +2958,9 @@
       "parameters": 66000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 16 GB",
       "reference": "https://arxiv.org/abs/1910.01108",
       "source_id": "epoch-notable-models"
     },
@@ -2382,6 +2973,9 @@
       "parameters": 5400000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 1080 Ti",
       "reference": "https://arxiv.org/abs/1903.11059",
       "source_id": "epoch-notable-models"
     },
@@ -2394,6 +2988,9 @@
       "parameters": 11000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 78464.68282814459,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1910.10683",
       "source_id": "epoch-notable-models"
     },
@@ -2406,6 +3003,9 @@
       "parameters": 2800000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 17420.709393371122,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1910.10683",
       "source_id": "epoch-notable-models"
     },
@@ -2418,6 +3018,9 @@
       "parameters": 139000000.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": 130654.07330431018,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://www.deepmind.com/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning",
       "source_id": "epoch-notable-models"
     },
@@ -2430,6 +3033,9 @@
       "parameters": 247000000.00000003,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1911.00172",
       "source_id": "epoch-notable-models"
     },
@@ -2442,6 +3048,9 @@
       "parameters": 550000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 77861.31819548723,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/1911.02116",
       "source_id": "epoch-notable-models"
     },
@@ -2454,6 +3063,9 @@
       "parameters": 209000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1911.03864",
       "source_id": "epoch-notable-models"
     },
@@ -2466,6 +3078,9 @@
       "parameters": 335000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 2319.5419478533995,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1911.03894",
       "source_id": "epoch-notable-models"
     },
@@ -2478,6 +3093,9 @@
       "parameters": 480000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 45609.73119622589,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1911.04252v4",
       "source_id": "epoch-notable-models"
     },
@@ -2490,6 +3108,9 @@
       "parameters": 36864000.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1911.08265v2",
       "source_id": "epoch-notable-models"
     },
@@ -2502,6 +3123,9 @@
       "parameters": 141000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1911.12385",
       "source_id": "epoch-notable-models"
     },
@@ -2514,6 +3138,9 @@
       "parameters": 32300000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "http://repository.uwl.ac.uk/id/eprint/6490/1/Loo_etal_IEEE_TNNLS_2019_Major-minor_long_short-term_memory_for_word-level_language_model.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -2526,6 +3153,9 @@
       "parameters": 21300000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "http://repository.uwl.ac.uk/id/eprint/6490/1/Loo_etal_IEEE_TNNLS_2019_Major-minor_long_short-term_memory_for_word-level_language_model.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -2538,6 +3168,9 @@
       "parameters": 159000000.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": 321105.9055,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA P100",
       "reference": "https://cdn.openai.com/dota-2.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -2550,6 +3183,9 @@
       "parameters": 159000000.0,
       "confidence": "Confident",
       "domain": "Games",
+      "cost_usd": 4328311.470477086,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA P100",
       "reference": "https://arxiv.org/abs/1912.06680",
       "source_id": "epoch-notable-models"
     },
@@ -2562,6 +3198,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Robotics",
+      "cost_usd": 1926.8992900057376,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://openreview.net/forum?id=H1gX8C4YPr\nhttps://arxiv.org/abs/1911.00357",
       "source_id": "epoch-notable-models"
     },
@@ -2574,6 +3213,9 @@
       "parameters": 16340840.0,
       "confidence": "Speculative",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.nature.com/articles/s41586-019-1923-7",
       "source_id": "epoch-notable-models"
     },
@@ -2586,6 +3228,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": 14226.054462994534,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2005.09629v2",
       "source_id": "epoch-notable-models"
     },
@@ -2598,6 +3243,9 @@
       "parameters": 2600000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 214809.91213508433,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2001.09977",
       "source_id": "epoch-notable-models"
     },
@@ -2610,6 +3258,9 @@
       "parameters": 240000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce RTX 2080 Ti 11GB",
       "reference": "https://arxiv.org/abs/2002.03184",
       "source_id": "epoch-notable-models"
     },
@@ -2622,6 +3273,9 @@
       "parameters": 235000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 4439.921298510215,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/1909.11942",
       "source_id": "epoch-notable-models"
     },
@@ -2634,6 +3288,9 @@
       "parameters": 17000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 51659.713290894986,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/",
       "source_id": "epoch-notable-models"
     },
@@ -2646,6 +3303,9 @@
       "parameters": 220000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v2",
       "reference": "https://arxiv.org/abs/2002.05202",
       "source_id": "epoch-notable-models"
     },
@@ -2658,6 +3318,9 @@
       "parameters": 126000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2002.09402",
       "source_id": "epoch-notable-models"
     },
@@ -2670,6 +3333,9 @@
       "parameters": 151000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://openreview.net/forum?id=ByxY8CNtvr",
       "source_id": "epoch-notable-models"
     },
@@ -2682,6 +3348,9 @@
       "parameters": 85300000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2003.07845",
       "source_id": "epoch-notable-models"
     },
@@ -2694,6 +3363,9 @@
       "parameters": 335000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2003.10555v1",
       "source_id": "epoch-notable-models"
     },
@@ -2706,6 +3378,9 @@
       "parameters": 225000000.0,
       "confidence": "Speculative",
       "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2003.12140",
       "source_id": "epoch-notable-models"
     },
@@ -2718,6 +3393,9 @@
       "parameters": 7700000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 1753.9255676777682,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/1908.09791",
       "source_id": "epoch-notable-models"
     },
@@ -2730,6 +3408,9 @@
       "parameters": 11000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 59.122086907352475,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2005.00700v3",
       "source_id": "epoch-notable-models"
     },
@@ -2742,6 +3423,9 @@
       "parameters": 60000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 959.9097627206426,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2005.12872",
       "source_id": "epoch-notable-models"
     },
@@ -2754,6 +3438,9 @@
       "parameters": 174600000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 2116866.2428390156,
+      "accessibility": "API only",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/2005.14165",
       "source_id": "epoch-notable-models"
     },
@@ -2766,6 +3453,9 @@
       "parameters": 2300000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 266200.0315979732,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2006.16668",
       "source_id": "epoch-notable-models"
     },
@@ -2778,6 +3468,9 @@
       "parameters": 99000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2008.00623",
       "source_id": "epoch-notable-models"
     },
@@ -2790,6 +3483,9 @@
       "parameters": 340000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2001.11314",
       "source_id": "epoch-notable-models"
     },
@@ -2802,6 +3498,9 @@
       "parameters": 44000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 26.206992435694062,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://dl.acm.org/doi/10.1145/3388440.3412467",
       "source_id": "epoch-notable-models"
     },
@@ -2814,6 +3513,9 @@
       "parameters": 483000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 4186.383565732907,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2010.01057v1",
       "source_id": "epoch-notable-models"
     },
@@ -2826,6 +3528,9 @@
       "parameters": 13000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 179442.0291399545,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://aclanthology.org/2021.naacl-main.41/",
       "source_id": "epoch-notable-models"
     },
@@ -2838,6 +3543,9 @@
       "parameters": 1000000000.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": 9449.541661137231,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2010.10504v2",
       "source_id": "epoch-notable-models"
     },
@@ -2850,6 +3558,9 @@
       "parameters": 335000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 2392.2883349806307,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2010.10906",
       "source_id": "epoch-notable-models"
     },
@@ -2862,6 +3573,9 @@
       "parameters": 317000000.0,
       "confidence": "Confident",
       "domain": "Speech",
+      "cost_usd": 5021.241075362514,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/2006.11477",
       "source_id": "epoch-notable-models"
     },
@@ -2874,6 +3588,9 @@
       "parameters": 632000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 6724.023241261178,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2010.11929",
       "source_id": "epoch-notable-models"
     },
@@ -2886,6 +3603,9 @@
       "parameters": 125000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/1911.06136",
       "source_id": "epoch-notable-models"
     },
@@ -2898,6 +3618,9 @@
       "parameters": 93000000.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": 3841.772612266474,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://www.nature.com/articles/s41586-021-03819-2",
       "source_id": "epoch-notable-models"
     },
@@ -2910,6 +3633,9 @@
       "parameters": 2600000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 7340.099044719796,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2012.00413",
       "source_id": "epoch-notable-models"
     },
@@ -2922,6 +3648,9 @@
       "parameters": 652400000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 924.3248891034536,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://www.pnas.org/doi/abs/10.1073/pnas.2016239118",
       "source_id": "epoch-notable-models"
     },
@@ -2934,6 +3663,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA TITAN Xp",
       "reference": "https://arxiv.org/abs/2012.12624v3",
       "source_id": "epoch-notable-models"
     },
@@ -2946,6 +3678,9 @@
       "parameters": 45000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce GTX 1080 Ti",
       "reference": "https://arxiv.org/abs/2012.13575",
       "source_id": "epoch-notable-models"
     },
@@ -2958,6 +3693,9 @@
       "parameters": 247000000.00000003,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2012.15688",
       "source_id": "epoch-notable-models"
     },
@@ -2970,6 +3708,9 @@
       "parameters": 12000000000.0,
       "confidence": "Likely",
       "domain": "Image generation",
+      "cost_usd": 125818.6901,
+      "accessibility": "API only",
+      "hardware": "NVIDIA Tesla V100 DGXS 16 GB",
       "reference": "https://openai.com/blog/dall-e/\n\nhttps://arxiv.org/abs/2102.12092",
       "source_id": "epoch-notable-models"
     },
@@ -2982,6 +3723,9 @@
       "parameters": 370000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language,Video",
+      "cost_usd": 24638.518413409514,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2103.00020\nhttps://huggingface.co/openai/clip-vit-large-patch14-336",
       "source_id": "epoch-notable-models"
     },
@@ -2994,6 +3738,9 @@
       "parameters": 1571000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 145100.89767585773,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2101.03961",
       "source_id": "epoch-notable-models"
     },
@@ -3006,6 +3753,9 @@
       "parameters": 86000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2012.12877",
       "source_id": "epoch-notable-models"
     },
@@ -3018,6 +3768,9 @@
       "parameters": 2676376.0,
       "confidence": "Confident",
       "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/2102.05107",
       "source_id": "epoch-notable-models"
     },
@@ -3030,6 +3783,9 @@
       "parameters": 100000000.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": 13256.937301517895,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://proceedings.mlr.press/v139/rao21a/rao21a.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -3042,6 +3798,9 @@
       "parameters": 234000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2102.12459",
       "source_id": "epoch-notable-models"
     },
@@ -3054,6 +3813,9 @@
       "parameters": 480000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": 53844.28059190435,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2003.10580",
       "source_id": "epoch-notable-models"
     },
@@ -3066,6 +3828,9 @@
       "parameters": 1002700000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": 13156.86123531961,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://arxiv.org/abs/2105.15082",
       "source_id": "epoch-notable-models"
     },
@@ -3078,6 +3843,9 @@
       "parameters": 9431810048.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2004.13637",
       "source_id": "epoch-notable-models"
     },
@@ -3090,6 +3858,9 @@
       "parameters": 27000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 108672.69136370042,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://mp.weixin.qq.com/s/DAQomIkDa52Sef-ruyH5qg",
       "source_id": "epoch-notable-models"
     },
@@ -3102,6 +3873,9 @@
       "parameters": 3000000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.biorxiv.org/content/10.1101/2020.07.12.199554v3.full.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -3114,6 +3888,9 @@
       "parameters": 420000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 45350.735956744036,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://www.biorxiv.org/content/10.1101/2020.07.12.199554v3 or \nhttps://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9477085",
       "source_id": "epoch-notable-models"
     },
@@ -3126,6 +3903,9 @@
       "parameters": 559000000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": 11274.484326547095,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2105.05233",
       "source_id": "epoch-notable-models"
     },
@@ -3138,6 +3918,9 @@
       "parameters": 17000000.0,
       "confidence": "Likely",
       "domain": "Medicine",
+      "cost_usd": 62.48645493610712,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB",
       "reference": "https://www.nature.com/articles/s41746-021-00455-y",
       "source_id": "epoch-notable-models"
     },
@@ -3150,6 +3933,9 @@
       "parameters": 90100000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2105.12723v4",
       "source_id": "epoch-notable-models"
     },
@@ -3162,6 +3948,9 @@
       "parameters": 4000000000.0,
       "confidence": "Likely",
       "domain": "Image generation",
+      "cost_usd": 60071.706664791694,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Tesla V100 DGXS 16 GB",
       "reference": "https://arxiv.org/abs/2105.13290",
       "source_id": "epoch-notable-models"
     },
@@ -3174,6 +3963,9 @@
       "parameters": 12900000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 92453.37635669747,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2105.13626",
       "source_id": "epoch-notable-models"
     },
@@ -3186,6 +3978,9 @@
       "parameters": 1843000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 3847.8613922131217,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2106.04560",
       "source_id": "epoch-notable-models"
     },
@@ -3198,6 +3993,9 @@
       "parameters": 440000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 2773.3124307816734,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2106.05346v2",
       "source_id": "epoch-notable-models"
     },
@@ -3210,6 +4008,9 @@
       "parameters": 2440000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 1887.1635925610951,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2106.04803v2",
       "source_id": "epoch-notable-models"
     },
@@ -3222,6 +4023,9 @@
       "parameters": 1500000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 6682.2289986716,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2006.03654",
       "source_id": "epoch-notable-models"
     },
@@ -3234,6 +4038,9 @@
       "parameters": 256000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 436.308484475363,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2006.11239",
       "source_id": "epoch-notable-models"
     },
@@ -3246,6 +4053,9 @@
       "parameters": 820000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language",
+      "cost_usd": 32852.91660437908,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2102.05918",
       "source_id": "epoch-notable-models"
     },
@@ -3258,6 +4068,9 @@
       "parameters": 2230000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2106.12423",
       "source_id": "epoch-notable-models"
     },
@@ -3270,6 +4083,9 @@
       "parameters": 1580000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/pdf/2106.12423",
       "source_id": "epoch-notable-models"
     },
@@ -3282,6 +4098,9 @@
       "parameters": 208000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 104.34013401561589,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2104.00298",
       "source_id": "epoch-notable-models"
     },
@@ -3294,6 +4113,9 @@
       "parameters": 12427904.0,
       "confidence": "Speculative",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Tesla K80",
       "reference": "https://arxiv.org/abs/2106.13058",
       "source_id": "epoch-notable-models"
     },
@@ -3306,6 +4128,9 @@
       "parameters": 247000000.00000003,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2106.14448",
       "source_id": "epoch-notable-models"
     },
@@ -3318,6 +4143,9 @@
       "parameters": 10000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 39104.26710360624,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2107.02137",
       "source_id": "epoch-notable-models"
     },
@@ -3330,6 +4158,9 @@
       "parameters": 12000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://openai.com/blog/openai-codex/\nhttps://arxiv.org/abs/2107.03374",
       "source_id": "epoch-notable-models"
     },
@@ -3342,6 +4173,9 @@
       "parameters": 1000000000.0,
       "confidence": "Speculative",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2106.07447",
       "source_id": "epoch-notable-models"
     },
@@ -3354,6 +4188,9 @@
       "parameters": 3472816.0,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": 84799.78517435073,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://deepmind.com/blog/article/generally-capable-agents-emerge-from-open-ended-play\n\nhttps://arxiv.org/abs/2107.12808",
       "source_id": "epoch-notable-models"
     },
@@ -3366,6 +4203,9 @@
       "parameters": 1300000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 34114.252463690456,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2103.01988",
       "source_id": "epoch-notable-models"
     },
@@ -3378,6 +4218,9 @@
       "parameters": 99100000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2107.08430",
       "source_id": "epoch-notable-models"
     },
@@ -3390,6 +4233,9 @@
       "parameters": 3200000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Speech,Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://gitee.com/zidongtaichu/multi-modal-models",
       "source_id": "epoch-notable-models"
     },
@@ -3402,6 +4248,9 @@
       "parameters": 178000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 836700.050829598,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://uploads-ssl.webflow.com/60fd4503684b466578c0d307/61138924626a6981ee09caf6_jurassic_tech_paper.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -3414,6 +4263,9 @@
       "parameters": 110000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA GeForce RTX 2080 Ti 11GB",
       "reference": "https://academic.oup.com/bioinformatics/article/37/15/2112/6128680",
       "source_id": "epoch-notable-models"
     },
@@ -3426,6 +4278,9 @@
       "parameters": 10700000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2105.00572",
       "source_id": "epoch-notable-models"
     },
@@ -3438,6 +4293,9 @@
       "parameters": 137000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2109.01652",
       "source_id": "epoch-notable-models"
     },
@@ -3450,6 +4308,9 @@
       "parameters": 149697024.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2109.02377",
       "source_id": "epoch-notable-models"
     },
@@ -3462,6 +4323,9 @@
       "parameters": 204000000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 441770.0038182093,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://aibusiness.com/nlp/south-korea-s-naver-unveils-hyperscale-ai-platform-language-model-with-more-parameters-than-gpt-3",
       "source_id": "epoch-notable-models"
     },
@@ -3474,6 +4338,9 @@
       "parameters": 11000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2109.09519",
       "source_id": "epoch-notable-models"
     },
@@ -3486,6 +4353,9 @@
       "parameters": 2200000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://www.microsoft.com/en-us/research/blog/microsoft-turing-universal-language-representation-model-t-ulrv5-tops-xtreme-leaderboard-and-trains-100x-faster/",
       "source_id": "epoch-notable-models"
     },
@@ -3498,6 +4368,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 7966.2330131223,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://www.biorxiv.org/content/10.1101/2021.10.04.463034v1",
       "source_id": "epoch-notable-models"
     },
@@ -3510,6 +4383,9 @@
       "parameters": 530000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 3848505.6256471733,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2201.11990",
       "source_id": "epoch-notable-models"
     },
@@ -3522,6 +4398,9 @@
       "parameters": 245730000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 591664.5798708292,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2110.04725",
       "source_id": "epoch-notable-models"
     },
@@ -3534,6 +4413,9 @@
       "parameters": 274000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2110.08743",
       "source_id": "epoch-notable-models"
     },
@@ -3546,6 +4428,9 @@
       "parameters": 249000000.00000003,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2111.00396",
       "source_id": "epoch-notable-models"
     },
@@ -3558,6 +4443,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100,NVIDIA Quadro RTX 6000",
       "reference": "https://proceedings.neurips.cc/paper/2021/hash/9219adc5c42107c4911e249155320648-Abstract.html",
       "source_id": "epoch-notable-models"
     },
@@ -3570,6 +4458,9 @@
       "parameters": 220000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 3114.8690946174474,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://aclanthology.org/2021.emnlp-main.685/",
       "source_id": "epoch-notable-models"
     },
@@ -3582,6 +4473,9 @@
       "parameters": 632000000.0,
       "confidence": "Speculative",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2111.06377",
       "source_id": "epoch-notable-models"
     },
@@ -3594,6 +4488,9 @@
       "parameters": 3000000000.0,
       "confidence": "Confident",
       "domain": "Vision,Video",
+      "cost_usd": 2326.6636503781665,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2111.09883v2",
       "source_id": "epoch-notable-models"
     },
@@ -3606,6 +4503,9 @@
       "parameters": 3070000000.0,
       "confidence": "Likely",
       "domain": "Vision",
+      "cost_usd": 1684.770712126102,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2111.10050",
       "source_id": "epoch-notable-models"
     },
@@ -3618,6 +4518,9 @@
       "parameters": 893000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 106950.61569328007,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2111.11432v1",
       "source_id": "epoch-notable-models"
     },
@@ -3630,6 +4533,9 @@
       "parameters": 870000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Image generation,Video,Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2111.12417",
       "source_id": "epoch-notable-models"
     },
@@ -3642,6 +4548,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2112.03178",
       "source_id": "epoch-notable-models"
     },
@@ -3654,6 +4563,9 @@
       "parameters": 280000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 640616.8522346151,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2112.11446",
       "source_id": "epoch-notable-models"
     },
@@ -3666,6 +4578,9 @@
       "parameters": 1200000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 541437.4162400038,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2112.06905",
       "source_id": "epoch-notable-models"
     },
@@ -3678,6 +4593,9 @@
       "parameters": 110000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2112.09118",
       "source_id": "epoch-notable-models"
     },
@@ -3690,6 +4608,9 @@
       "parameters": 7500000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 104152.22590136188,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2112.10668",
       "source_id": "epoch-notable-models"
     },
@@ -3702,6 +4623,9 @@
       "parameters": 260000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA Tesla V100 DGXS 32 GB,Huawei Ascend 910",
       "reference": "https://arxiv.org/abs/2112.12731",
       "source_id": "epoch-notable-models"
     },
@@ -3714,6 +4638,9 @@
       "parameters": 88000000.0,
       "confidence": "Speculative",
       "domain": "Vision",
+      "cost_usd": 191.44581825616135,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2201.02605",
       "source_id": "epoch-notable-models"
     },
@@ -3726,6 +4653,9 @@
       "parameters": 175000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://arxiv.org/pdf/2203.02155",
       "source_id": "epoch-notable-models"
     },
@@ -3738,6 +4668,9 @@
       "parameters": 41100000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2203.07814",
       "source_id": "epoch-notable-models"
     },
@@ -3750,6 +4683,9 @@
       "parameters": 7500000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2112.04426",
       "source_id": "epoch-notable-models"
     },
@@ -3762,6 +4698,9 @@
       "parameters": 20000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 184272.80736002637,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2204.06745",
       "source_id": "epoch-notable-models"
     },
@@ -3774,6 +4713,9 @@
       "parameters": 16000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Quadro RTX 5000",
       "reference": "https://academic.oup.com/bioinformatics/article/38/8/2102/6502274",
       "source_id": "epoch-notable-models"
     },
@@ -3786,6 +4728,9 @@
       "parameters": 137000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 229949.98625999544,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2201.08239",
       "source_id": "epoch-notable-models"
     },
@@ -3798,6 +4743,9 @@
       "parameters": 269000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2202.08906v2",
       "source_id": "epoch-notable-models"
     },
@@ -3810,6 +4758,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2202.11214",
       "source_id": "epoch-notable-models"
     },
@@ -3822,6 +4773,9 @@
       "parameters": 2700000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA Quadro RTX 8000",
       "reference": "https://arxiv.org/abs/2202.13169",
       "source_id": "epoch-notable-models"
     },
@@ -3834,6 +4788,9 @@
       "parameters": 774000000.0,
       "confidence": "Likely",
       "domain": "Language,Mathematics",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2202.01344",
       "source_id": "epoch-notable-models"
     },
@@ -3846,6 +4803,9 @@
       "parameters": 1843000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2203.05482v3",
       "source_id": "epoch-notable-models"
     },
@@ -3858,6 +4818,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 4897551.634095244,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://platform.openai.com/docs/models/gpt-3-5",
       "source_id": "epoch-notable-models"
     },
@@ -3870,6 +4833,9 @@
       "parameters": 256999999.99999997,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2203.10692",
       "source_id": "epoch-notable-models"
     },
@@ -3882,6 +4848,9 @@
       "parameters": 4000000000.0,
       "confidence": "Likely",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2203.13131",
       "source_id": "epoch-notable-models"
     },
@@ -3894,6 +4863,9 @@
       "parameters": 70000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4,Google TPU v3",
       "reference": "https://arxiv.org/abs/2203.15556",
       "source_id": "epoch-notable-models"
     },
@@ -3906,6 +4878,9 @@
       "parameters": 540350000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 3060364.5969860666,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2204.02311",
       "source_id": "epoch-notable-models"
     },
@@ -3918,6 +4893,9 @@
       "parameters": 3500000000.0,
       "confidence": "Speculative",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://cdn.openai.com/papers/dall-e-2.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -3930,6 +4908,9 @@
       "parameters": 110000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://academic.oup.com/bioinformaticsadvances/article/2/1/vbac023/6564689",
       "source_id": "epoch-notable-models"
     },
@@ -3942,6 +4923,9 @@
       "parameters": 1450000000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": 111248.21698072631,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2112.10752",
       "source_id": "epoch-notable-models"
     },
@@ -3954,6 +4938,9 @@
       "parameters": 9410000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2203.06850",
       "source_id": "epoch-notable-models"
     },
@@ -3966,6 +4953,9 @@
       "parameters": 80000000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language,Video",
+      "cost_usd": 183423.16330597224,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2204.14198",
       "source_id": "epoch-notable-models"
     },
@@ -3978,6 +4968,9 @@
       "parameters": 175000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 733634.637,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2205.01068",
       "source_id": "epoch-notable-models"
     },
@@ -3990,6 +4983,9 @@
       "parameters": 20000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 126785.76203549477,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2205.05131v1",
       "source_id": "epoch-notable-models"
     },
@@ -4002,6 +4998,9 @@
       "parameters": 1180000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Robotics,Games,Language",
+      "cost_usd": 3523.0649800752253,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2205.06175",
       "source_id": "epoch-notable-models"
     },
@@ -4014,6 +5013,9 @@
       "parameters": 7762000000.0,
       "confidence": "Likely",
       "domain": "Image generation",
+      "cost_usd": 7915.823806150154,
+      "accessibility": "API only",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2205.11487",
       "source_id": "epoch-notable-models"
     },
@@ -4026,6 +5028,9 @@
       "parameters": 700000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 15247.43608848737,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2205.13760",
       "source_id": "epoch-notable-models"
     },
@@ -4038,6 +5043,9 @@
       "parameters": 355000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2205.14135",
       "source_id": "epoch-notable-models"
     },
@@ -4050,6 +5058,9 @@
       "parameters": 750000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2206.02369",
       "source_id": "epoch-notable-models"
     },
@@ -4062,6 +5073,9 @@
       "parameters": 2100000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 78043.3756911775,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2205.01917v2",
       "source_id": "epoch-notable-models"
     },
@@ -4074,6 +5088,9 @@
       "parameters": 20000000000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": 427178.712,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2206.10789v1",
       "source_id": "epoch-notable-models"
     },
@@ -4086,6 +5103,9 @@
       "parameters": 6400000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 11850.178410269727,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2206.13517",
       "source_id": "epoch-notable-models"
     },
@@ -4098,6 +5118,9 @@
       "parameters": 540350000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2206.14858",
       "source_id": "epoch-notable-models"
     },
@@ -4110,6 +5133,9 @@
       "parameters": 770000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 4478.145684414144,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2207.01780",
       "source_id": "epoch-notable-models"
     },
@@ -4122,6 +5148,9 @@
       "parameters": 54500000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 50667.25034038439,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://research.facebook.com/publications/no-language-left-behind/",
       "source_id": "epoch-notable-models"
     },
@@ -4134,6 +5163,9 @@
       "parameters": 176247271424.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 995819.1171,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2211.05100",
       "source_id": "epoch-notable-models"
     },
@@ -4146,6 +5178,9 @@
       "parameters": 15000000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 163467.82019979745,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://www.science.org/doi/abs/10.1126/science.ade2574\nhttps://www.biorxiv.org/content/10.1101/2022.07.20.500902v2",
       "source_id": "epoch-notable-models"
     },
@@ -4158,6 +5193,9 @@
       "parameters": 670000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 52400.32118528479,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://www.biorxiv.org/content/10.1101/2022.07.21.500999v1",
       "source_id": "epoch-notable-models"
     },
@@ -4170,6 +5208,9 @@
       "parameters": 19750000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 267943.21130997164,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2208.01448",
       "source_id": "epoch-notable-models"
     },
@@ -4182,6 +5223,9 @@
       "parameters": 130000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 820296.6313095269,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2210.02414",
       "source_id": "epoch-notable-models"
     },
@@ -4194,6 +5238,9 @@
       "parameters": 175000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2208.03188, https://github.com/facebookresearch/ParlAI/blob/main/parlai/zoo/bb3/model_card.md\n\ntraining code: https://parl.ai/projects/bb3/",
       "source_id": "epoch-notable-models"
     },
@@ -4206,6 +5253,9 @@
       "parameters": 1900000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2208.10442",
       "source_id": "epoch-notable-models"
     },
@@ -4218,6 +5268,9 @@
       "parameters": 16900000000.0,
       "confidence": "Likely",
       "domain": "Language,Vision,Multimodal",
+      "cost_usd": 50878.10777366616,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2209.06794v4",
       "source_id": "epoch-notable-models"
     },
@@ -4230,6 +5283,9 @@
       "parameters": 1550000000.0,
       "confidence": "Likely",
       "domain": "Speech",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://cdn.openai.com/papers/whisper.pdf\n\nhttps://arxiv.org/abs/2212.04356",
       "source_id": "epoch-notable-models"
     },
@@ -4242,6 +5298,9 @@
       "parameters": 20240000.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA RTX A6000",
       "reference": "https://arxiv.org/abs/2210.01776, https://docs.nvidia.com/bionemo-framework/latest/models/diffdock.html",
       "source_id": "epoch-notable-models"
     },
@@ -4254,6 +5313,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Other,Games,Mathematics",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://www.nature.com/articles/s41586-022-05172-4",
       "source_id": "epoch-notable-models"
     },
@@ -4266,6 +5328,9 @@
       "parameters": 25000000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.biorxiv.org/content/biorxiv/early/2022/10/11/2022.10.10.511571.full.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -4278,6 +5343,9 @@
       "parameters": 540000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2210.11399",
       "source_id": "epoch-notable-models"
     },
@@ -4290,6 +5358,9 @@
       "parameters": 540000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2210.11416",
       "source_id": "epoch-notable-models"
     },
@@ -4302,6 +5373,9 @@
       "parameters": 9100000000.0,
       "confidence": "Likely",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2211.01324",
       "source_id": "epoch-notable-models"
     },
@@ -4314,6 +5388,9 @@
       "parameters": 35000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2211.01848",
       "source_id": "epoch-notable-models"
     },
@@ -4326,6 +5403,9 @@
       "parameters": 1080000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2211.05778",
       "source_id": "epoch-notable-models"
     },
@@ -4338,6 +5418,9 @@
       "parameters": 1011000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 29374.46909439904,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2211.07636",
       "source_id": "epoch-notable-models"
     },
@@ -4350,6 +5433,9 @@
       "parameters": 120000000000.0,
       "confidence": "Likely",
       "domain": "Language,Biology",
+      "cost_usd": 591076.8943544837,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2211.09085",
       "source_id": "epoch-notable-models"
     },
@@ -4362,6 +5448,9 @@
       "parameters": 330000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 233.0630322095263,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2211.10147",
       "source_id": "epoch-notable-models"
     },
@@ -4374,6 +5463,9 @@
       "parameters": 1500000000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": 745.8360575556148,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2211.10950",
       "source_id": "epoch-notable-models"
     },
@@ -4386,6 +5478,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": 337.8811363173893,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 PCIe",
       "reference": "https://arxiv.org/abs/2211.17091v4",
       "source_id": "epoch-notable-models"
     },
@@ -4398,6 +5493,9 @@
       "parameters": 6000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2212.01853",
       "source_id": "epoch-notable-models"
     },
@@ -4410,6 +5508,9 @@
       "parameters": 86000000.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA Quadro RTX 4000",
       "reference": "https://www.biorxiv.org/content/10.1101/2022.12.15.519894v1.full.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -4422,6 +5523,9 @@
       "parameters": 2700000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2212.14052",
       "source_id": "epoch-notable-models"
     },
@@ -4434,6 +5538,9 @@
       "parameters": 353000000.0,
       "confidence": "Speculative",
       "domain": "Audio,Speech",
+      "cost_usd": 11.40575196486363,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2301.02111",
       "source_id": "epoch-notable-models"
     },
@@ -4446,6 +5553,9 @@
       "parameters": 200000000.0,
       "confidence": "Likely",
       "domain": "Games",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2301.04104v1",
       "source_id": "epoch-notable-models"
     },
@@ -4458,6 +5568,9 @@
       "parameters": 2500000000.0,
       "confidence": "Likely",
       "domain": "Biology",
+      "cost_usd": 51064.70621394041,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://www.biorxiv.org/content/10.1101/2023.01.11.523679v1.full.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -4470,6 +5583,9 @@
       "parameters": 1900000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 4802.398249072418,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2301.06568",
       "source_id": "epoch-notable-models"
     },
@@ -4482,6 +5598,9 @@
       "parameters": 295000000.0,
       "confidence": "Likely",
       "domain": "Image generation",
+      "cost_usd": 390.4861317667304,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2301.11706v3",
       "source_id": "epoch-notable-models"
     },
@@ -4494,6 +5613,9 @@
       "parameters": 1480000000.0,
       "confidence": "Confident",
       "domain": "Vision,Language",
+      "cost_usd": 1960.8225382725811,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2301.12597",
       "source_id": "epoch-notable-models"
     },
@@ -4506,6 +5628,9 @@
       "parameters": 21743000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 285555.57016183576,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2302.05442v1",
       "source_id": "epoch-notable-models"
     },
@@ -4518,6 +5643,9 @@
       "parameters": 65200000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 578026.3043,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2302.13971",
       "source_id": "epoch-notable-models"
     },
@@ -4530,6 +5658,9 @@
       "parameters": 675000000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": 111048.19613085664,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2212.09748",
       "source_id": "epoch-notable-models"
     },
@@ -4542,6 +5673,9 @@
       "parameters": 1000000000.0,
       "confidence": "Likely",
       "domain": "Audio",
+      "cost_usd": 9429.74091062958,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2209.15352",
       "source_id": "epoch-notable-models"
     },
@@ -4554,6 +5688,9 @@
       "parameters": 1800000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": 37334304.976625234,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2303.08774",
       "source_id": "epoch-notable-models"
     },
@@ -4566,6 +5703,9 @@
       "parameters": 40000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 319783.157242365,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2311.16867; https://www.tii.ae/news/abu-dhabi-based-technology-innovation-institute-introduces-falcon-llm-foundational-large",
       "source_id": "epoch-notable-models"
     },
@@ -4578,6 +5718,9 @@
       "parameters": 1085000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Huawei Ascend 910",
       "reference": "https://arxiv.org/abs/2303.10845",
       "source_id": "epoch-notable-models"
     },
@@ -4590,6 +5733,9 @@
       "parameters": 400000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2303.15343",
       "source_id": "epoch-notable-models"
     },
@@ -4602,6 +5748,9 @@
       "parameters": 1000000000.0,
       "confidence": "Confident",
       "domain": "Video",
+      "cost_usd": 18339.96928068276,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2303.16727v2",
       "source_id": "epoch-notable-models"
     },
@@ -4614,6 +5763,9 @@
       "parameters": 50558868480.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 369586.1352802876,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2303.17564",
       "source_id": "epoch-notable-models"
     },
@@ -4626,6 +5778,9 @@
       "parameters": 636000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 15888.411228475235,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2304.02643",
       "source_id": "epoch-notable-models"
     },
@@ -4638,6 +5793,9 @@
       "parameters": 6700000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 3129.0771365574788,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2204.05999",
       "source_id": "epoch-notable-models"
     },
@@ -4650,6 +5808,9 @@
       "parameters": 1140000000.0,
       "confidence": "Confident",
       "domain": "Vision",
+      "cost_usd": 10203.605181058361,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2304.07193",
       "source_id": "epoch-notable-models"
     },
@@ -4662,6 +5823,9 @@
       "parameters": 13000000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language",
+      "cost_usd": 42.46267260692187,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2304.08485",
       "source_id": "epoch-notable-models"
     },
@@ -4674,6 +5838,9 @@
       "parameters": 15500000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 212217.65075330864,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2305.06161",
       "source_id": "epoch-notable-models"
     },
@@ -4686,6 +5853,9 @@
       "parameters": 340000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 5014266.983518871,
+      "accessibility": "API only",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2305.10403",
       "source_id": "epoch-notable-models"
     },
@@ -4698,6 +5868,9 @@
       "parameters": 13000000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2305.06500",
       "source_id": "epoch-notable-models"
     },
@@ -4710,6 +5883,9 @@
       "parameters": 4000000000.0,
       "confidence": "Speculative",
       "domain": "Multimodal,Vision,Speech,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2305.11172v1",
       "source_id": "epoch-notable-models"
     },
@@ -4722,6 +5898,9 @@
       "parameters": 55000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision,Video",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2305.18565",
       "source_id": "epoch-notable-models"
     },
@@ -4734,6 +5913,9 @@
       "parameters": 1800000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2303.08774",
       "source_id": "epoch-notable-models"
     },
@@ -4746,6 +5928,9 @@
       "parameters": 6600000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 5000.0,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2306.15794",
       "source_id": "epoch-notable-models"
     },
@@ -4758,6 +5943,9 @@
       "parameters": 256000000.0,
       "confidence": "Confident",
       "domain": "Earth science",
+      "cost_usd": 51279.017519054316,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://www.nature.com/articles/s41586-023-06185-3, https://www.huaweicloud.com/intl/en-us/news/20230707180809498.html,\nhttps://www.huawei.com/en/news/2023/7/pangu-ai-model-nature-publish",
       "source_id": "epoch-notable-models"
     },
@@ -4770,6 +5958,9 @@
       "parameters": 100000000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": 1823415.258,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://www.biorxiv.org/content/10.1101/2023.07.05.547496v4",
       "source_id": "epoch-notable-models"
     },
@@ -4782,6 +5973,9 @@
       "parameters": 104000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 1505257.378,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://github.com/InternLM/InternLM-techreport/blob/main/InternLM.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -4794,6 +5988,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 4902644.123383027,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://www.anthropic.com/index/claude-2, https://www-files.anthropic.com/production/images/Model-Card-Claude-2.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -4806,6 +6003,9 @@
       "parameters": 70000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 1102561.194,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://ai.meta.com/research/publications/llama-2-open-foundation-and-fine-tuned-chat-models/\nhttps://arxiv.org/abs/2307.09288",
       "source_id": "epoch-notable-models"
     },
@@ -4818,6 +6018,9 @@
       "parameters": 7000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 114259.38527188865,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://ai.meta.com/research/publications/llama-2-open-foundation-and-fine-tuned-chat-models/",
       "source_id": "epoch-notable-models"
     },
@@ -4830,6 +6033,9 @@
       "parameters": 1500000000.0,
       "confidence": "Speculative",
       "domain": "Audio",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2209.03143",
       "source_id": "epoch-notable-models"
     },
@@ -4842,6 +6048,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://www.nature.com/articles/s42003-023-05133-1",
       "source_id": "epoch-notable-models"
     },
@@ -4854,6 +6063,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA GeForce GTX 1080 Ti",
       "reference": "https://arxiv.org/abs/2309.03099",
       "source_id": "epoch-notable-models"
     },
@@ -4866,6 +6078,9 @@
       "parameters": 13000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Cerebras CS-2",
       "reference": "https://arxiv.org/abs/2308.16149",
       "source_id": "epoch-notable-models"
     },
@@ -4878,6 +6093,9 @@
       "parameters": 56804.0,
       "confidence": "Likely",
       "domain": "Robotics",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA GeForce RTX 3090",
       "reference": "https://www.nature.com/articles/s41586-023-06419-4",
       "source_id": "epoch-notable-models"
     },
@@ -4890,6 +6108,9 @@
       "parameters": 180000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 10743500.868805483,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://falconllm.tii.ae/falcon-180b.html; https://arxiv.org/abs/2311.16867",
       "source_id": "epoch-notable-models"
     },
@@ -4902,6 +6123,9 @@
       "parameters": 200000000000.0,
       "confidence": "Likely",
       "domain": "Language,Image generation",
+      "cost_usd": 7933464.673729055,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100",
       "reference": "https://aws.amazon.com/bedrock/titan/",
       "source_id": "epoch-notable-models"
     },
@@ -4914,6 +6138,9 @@
       "parameters": 13000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA GeForce RTX 3090",
       "reference": "https://arxiv.org/abs/2310.04793; https://github.com/AI4Finance-Foundation/FinGPT",
       "source_id": "epoch-notable-models"
     },
@@ -4926,6 +6153,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA RTX A6000",
       "reference": "https://www.biorxiv.org/content/10.1101/2023.10.09.561603v1",
       "source_id": "epoch-notable-models"
     },
@@ -4938,6 +6168,9 @@
       "parameters": 75000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 8.542235671062665,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2310.17680 (was withdrawn)\n\nhttps://www.microsoft.com/en-us/research/wp-content/uploads/2023/11/CodeFusion-Revised-CameraReady.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -4950,6 +6183,9 @@
       "parameters": 6000000000.0,
       "confidence": "Speculative",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.zhipuai.cn/en/news/76\n\nhttps://huggingface.co/zai-org/chatglm3-6b",
       "source_id": "epoch-notable-models"
     },
@@ -4962,6 +6198,9 @@
       "parameters": 13000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A800 PCIe 40 GB",
       "reference": "https://arxiv.org/abs/2310.19341",
       "source_id": "epoch-notable-models"
     },
@@ -4974,6 +6213,9 @@
       "parameters": 34000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2403.04652",
       "source_id": "epoch-notable-models"
     },
@@ -4986,6 +6228,9 @@
       "parameters": 314000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://x.ai/model-card/, https://x.ai/blog/grok-os",
       "source_id": "epoch-notable-models"
     },
@@ -4998,6 +6243,9 @@
       "parameters": 13000000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2310.03744,",
       "source_id": "epoch-notable-models"
     },
@@ -5010,6 +6258,9 @@
       "parameters": 17000000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2311.03079\nhttps://huggingface.co/THUDM/cogvlm-chat-hf\nhttps://github.com/THUDM/CogVLM",
       "source_id": "epoch-notable-models"
     },
@@ -5022,6 +6273,9 @@
       "parameters": 110000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2104.09864",
       "source_id": "epoch-notable-models"
     },
@@ -5034,6 +6288,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Audio,Speech",
+      "cost_usd": 22.81032329809286,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA V100",
       "reference": "https://arxiv.org/abs/2308.02560",
       "source_id": "epoch-notable-models"
     },
@@ -5046,6 +6303,9 @@
       "parameters": 13000000000.0,
       "confidence": "Likely",
       "domain": "Language,Multimodal,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2311.07362",
       "source_id": "epoch-notable-models"
     },
@@ -5058,6 +6318,9 @@
       "parameters": 19900000000.0,
       "confidence": "Likely",
       "domain": "Vision,Language,Multimodal",
+      "cost_usd": 239188.6875340231,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 40 GB",
       "reference": "https://arxiv.org/abs/2311.07575",
       "source_id": "epoch-notable-models"
     },
@@ -5070,6 +6333,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.science.org/doi/epdf/10.1126/science.adi2336\n\nhttps://arxiv.org/abs/2212.12794",
       "source_id": "epoch-notable-models"
     },
@@ -5082,6 +6348,9 @@
       "parameters": 8000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 214467.02013524104,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://developer.nvidia.com/blog/nvidia-ai-foundation-models-build-custom-enterprise-chatbots-and-co-pilots-with-production-ready-llms/\n\nhttps://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/nemotron-3-8b-base-4k",
       "source_id": "epoch-notable-models"
     },
@@ -5094,6 +6363,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 13461144.182562498,
+      "accessibility": "API only",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://inflection.ai/inflection-2",
       "source_id": "epoch-notable-models"
     },
@@ -5106,6 +6378,9 @@
       "parameters": 72000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/Qwen/Qwen-72B",
       "source_id": "epoch-notable-models"
     },
@@ -5118,6 +6393,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": 30719419.93534952,
+      "accessibility": "API only",
+      "hardware": "Google TPU v4",
       "reference": "https://storage.googleapis.com/deepmind-media/gemini/gemini_1_report.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -5130,6 +6408,9 @@
       "parameters": 7000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2312.06674",
       "source_id": "epoch-notable-models"
     },
@@ -5142,6 +6423,9 @@
       "parameters": 46700000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://mistral.ai/news/mixtral-of-experts/, https://arxiv.org/abs/2401.04088",
       "source_id": "epoch-notable-models"
     },
@@ -5154,6 +6438,9 @@
       "parameters": 13350839296.0,
       "confidence": "Confident",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100 SXM4 80 GB",
       "reference": "https://arxiv.org/abs/2312.07533\nhttps://huggingface.co/Efficient-Large-Model/VILA-13b",
       "source_id": "epoch-notable-models"
     },
@@ -5166,6 +6453,9 @@
       "parameters": 15000000000.0,
       "confidence": "Speculative",
       "domain": "Language,Search",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://www.nature.com/articles/s41586-023-06924-6\nhttps://deepmind.google/discover/blog/funsearch-making-new-discoveries-in-mathematical-sciences-using-large-language-models/",
       "source_id": "epoch-notable-models"
     },
@@ -5178,6 +6468,9 @@
       "parameters": 18000000000.0,
       "confidence": "Likely",
       "domain": "Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2312.08914",
       "source_id": "epoch-notable-models"
     },
@@ -5190,6 +6483,9 @@
       "parameters": 14200000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Amazon Trainium1",
       "reference": "https://arxiv.org/abs/2404.01657",
       "source_id": "epoch-notable-models"
     },
@@ -5202,6 +6498,9 @@
       "parameters": 11000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v3",
       "reference": "https://arxiv.org/abs/2305.13245",
       "source_id": "epoch-notable-models"
     },
@@ -5214,6 +6513,9 @@
       "parameters": 72000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen1.5/",
       "source_id": "epoch-notable-models"
     },
@@ -5226,6 +6528,9 @@
       "parameters": 8000000000.0,
       "confidence": "Confident",
       "domain": "Image generation",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2403.03206\nhttps://stability.ai/news/stable-diffusion-3",
       "source_id": "epoch-notable-models"
     },
@@ -5238,6 +6543,9 @@
       "parameters": 530000000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": 2614019.245,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2402.15627",
       "source_id": "epoch-notable-models"
     },
@@ -5250,6 +6558,9 @@
       "parameters": 250000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.offshore-technology.com/news/saudi-aramco-unveils-industry-first-generative-ai-model/",
       "source_id": "epoch-notable-models"
     },
@@ -5262,6 +6573,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": 11804593.33,
+      "accessibility": "API only",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://inflection.ai/inflection-2-5",
       "source_id": "epoch-notable-models"
     },
@@ -5274,6 +6588,9 @@
       "parameters": 30000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2403.09611",
       "source_id": "epoch-notable-models"
     },
@@ -5286,6 +6603,9 @@
       "parameters": 132000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm",
       "source_id": "epoch-notable-models"
     },
@@ -5298,6 +6618,9 @@
       "parameters": 67000000000.0,
       "confidence": "Speculative",
       "domain": "Multimodal,Language,Vision,Video,Speech",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA A100,NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2404.12387",
       "source_id": "epoch-notable-models"
     },
@@ -5310,6 +6633,9 @@
       "parameters": 70000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://ai.meta.com/blog/meta-llama-3/",
       "source_id": "epoch-notable-models"
     },
@@ -5322,6 +6648,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v5e",
       "reference": "https://arxiv.org/abs/2312.15796",
       "source_id": "epoch-notable-models"
     },
@@ -5334,6 +6663,9 @@
       "parameters": 13493916736.0,
       "confidence": "Confident",
       "domain": "Multimodal,Language,Vision,Video",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://huggingface.co/Efficient-Large-Model/VILA1.5-13b\nhttps://github.com/NVlabs/VILA/tree/bbc609baf326b1b49b93450b48edc516db3737fc/scripts/v1_5/release/13b\nhttps://developer.nvidia.com/blog/visual-language-models-on-nvidia-hardware-with-vila/",
       "source_id": "epoch-notable-models"
     },
@@ -5346,6 +6678,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://www.nature.com/articles/s41586-024-07487-w",
       "source_id": "epoch-notable-models"
     },
@@ -5358,6 +6693,9 @@
       "parameters": 100000000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "",
       "source_id": "epoch-notable-models"
     },
@@ -5370,6 +6708,9 @@
       "parameters": 93000000.0,
       "confidence": "Confident",
       "domain": "Robotics",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Google TPU v4",
       "reference": "https://arxiv.org/abs/2405.12213",
       "source_id": "epoch-notable-models"
     },
@@ -5382,6 +6723,9 @@
       "parameters": 70000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA A100",
       "reference": "https://arxiv.org/abs/2407.15390",
       "source_id": "epoch-notable-models"
     },
@@ -5394,6 +6738,9 @@
       "parameters": 72710000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen2/ \nhttps://arxiv.org/abs/2407.10671",
       "source_id": "epoch-notable-models"
     },
@@ -5406,6 +6753,9 @@
       "parameters": 7188100000.0,
       "confidence": "Confident",
       "domain": "Robotics,Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://openvla.github.io/\nhttps://arxiv.org/abs/2406.09246",
       "source_id": "epoch-notable-models"
     },
@@ -5418,6 +6768,9 @@
       "parameters": 340000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 21271017.96222655,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://blogs.nvidia.com/blog/nemotron-4-synthetic-data-generation-llm-training/",
       "source_id": "epoch-notable-models"
     },
@@ -5430,6 +6783,9 @@
       "parameters": 236000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://github.com/deepseek-ai/DeepSeek-Coder-V2",
       "source_id": "epoch-notable-models"
     },
@@ -5442,6 +6798,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": 25870993.12024943,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://www-cdn.anthropic.com/fed9cc193a14b84131812372d8d5857f8f304c52/Model_Card_Claude_3_Addendum.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -5454,6 +6813,9 @@
       "parameters": 98500000000.0,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "",
       "reference": "https://www.evolutionaryscale.ai/blog/esm3-release",
       "source_id": "epoch-notable-models"
     },
@@ -5466,6 +6828,9 @@
       "parameters": 405000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 52885433.95402246,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://ai.meta.com/research/publications/the-llama-3-herd-of-models/",
       "source_id": "epoch-notable-models"
     },
@@ -5478,6 +6843,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "Google TPU v4",
       "reference": "https://machinelearning.apple.com/research/apple-intelligence-foundation-language-models",
       "source_id": "epoch-notable-models"
     },
@@ -5490,6 +6858,9 @@
       "parameters": 2730000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "Google TPU v5p",
       "reference": "https://machinelearning.apple.com/research/apple-intelligence-foundation-language-models",
       "source_id": "epoch-notable-models"
     },
@@ -5502,6 +6873,9 @@
       "parameters": 72000000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language,Video",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2408.03326",
       "source_id": "epoch-notable-models"
     },
@@ -5514,6 +6888,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language,Vision,Multimodal",
+      "cost_usd": 31602310.530835517,
+      "accessibility": "API only",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://x.ai/blog/grok-2",
       "source_id": "epoch-notable-models"
     },
@@ -5526,6 +6903,9 @@
       "parameters": 236000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/deepseek-ai/DeepSeek-V2.5",
       "source_id": "epoch-notable-models"
     },
@@ -5538,6 +6918,9 @@
       "parameters": 32500000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen2.5/",
       "source_id": "epoch-notable-models"
     },
@@ -5550,6 +6933,9 @@
       "parameters": 72700000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen2.5/",
       "source_id": "epoch-notable-models"
     },
@@ -5562,6 +6948,9 @@
       "parameters": 72700000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen2.5/",
       "source_id": "epoch-notable-models"
     },
@@ -5574,6 +6963,9 @@
       "parameters": 115000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/Tele-AI/TeleChat2-115B",
       "source_id": "epoch-notable-models"
     },
@@ -5586,6 +6978,9 @@
       "parameters": 10600000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
       "source_id": "epoch-notable-models"
     },
@@ -5598,6 +6993,9 @@
       "parameters": 30000000000.0,
       "confidence": "Confident",
       "domain": "Video,Vision",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://ai.meta.com/static-resource/movie-gen-research-paper",
       "source_id": "epoch-notable-models"
     },
@@ -5610,6 +7008,9 @@
       "parameters": 1200000000.0,
       "confidence": "Likely",
       "domain": "Robotics",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 PCIe",
       "reference": "https://arxiv.org/abs/2410.07864",
       "source_id": "epoch-notable-models"
     },
@@ -5622,6 +7023,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://catalog.ngc.nvidia.com/orgs/nim/teams/nvidia/containers/llama-3.1-nemotron-70b-instruct",
       "source_id": "epoch-notable-models"
     },
@@ -5634,6 +7038,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Biology",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA A100",
       "reference": "https://www.chaidiscovery.com/blog/introducing-chai-1\nhttps://www.biorxiv.org/content/10.1101/2024.10.10.615955v2",
       "source_id": "epoch-notable-models"
     },
@@ -5646,6 +7053,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://www.lingyiwanwu.com/en https://platform.lingyiwanwu.com/",
       "source_id": "epoch-notable-models"
     },
@@ -5658,6 +7068,9 @@
       "parameters": 72000000000.0,
       "confidence": "Likely",
       "domain": "Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2409.11402",
       "source_id": "epoch-notable-models"
     },
@@ -5670,6 +7083,9 @@
       "parameters": 72000000000.0,
       "confidence": "Likely",
       "domain": "Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2409.11402",
       "source_id": "epoch-notable-models"
     },
@@ -5682,6 +7098,9 @@
       "parameters": 72000000000.0,
       "confidence": "Confident",
       "domain": "Vision,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2409.11402",
       "source_id": "epoch-notable-models"
     },
@@ -5694,6 +7113,9 @@
       "parameters": 500000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://www.volcengine.com/docs/6360/1264663",
       "source_id": "epoch-notable-models"
     },
@@ -5706,6 +7128,9 @@
       "parameters": 389000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2411.02265",
       "source_id": "epoch-notable-models"
     },
@@ -5718,6 +7143,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Multimodal,Language,Video,Vision",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "Amazon Trainium1,NVIDIA A100,NVIDIA H100 SXM5 80GB",
       "reference": "https://aws.amazon.com/es/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/\n\nhttps://assets.amazon.science/96/7d/0d3e59514abf8fdcfafcdc574300/nova-tech-report-20250317-0810.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -5730,6 +7158,9 @@
       "parameters": 70000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_3/",
       "source_id": "epoch-notable-models"
     },
@@ -5742,6 +7173,9 @@
       "parameters": 32000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2412.04862",
       "source_id": "epoch-notable-models"
     },
@@ -5754,6 +7188,9 @@
       "parameters": 671000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 5390000.0,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H800 SXM5",
       "reference": "https://arxiv.org/abs/2412.19437",
       "source_id": "epoch-notable-models"
     },
@@ -5766,6 +7203,9 @@
       "parameters": 7000000000.0,
       "confidence": "Speculative",
       "domain": "Mathematics,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2502.01456",
       "source_id": "epoch-notable-models"
     },
@@ -5778,6 +7218,9 @@
       "parameters": 8930000000.0,
       "confidence": "Confident",
       "domain": "Vision,Robotics,Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "arxiv.org/abs/2501.14818",
       "source_id": "epoch-notable-models"
     },
@@ -5790,6 +7233,9 @@
       "parameters": 671000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 6770000.0,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "epoch-notable-models"
     },
@@ -5802,6 +7248,9 @@
       "parameters": 3000000000000.0,
       "confidence": "Likely",
       "domain": "Language,Vision,Multimodal",
+      "cost_usd": 217835545.5267339,
+      "accessibility": "API only",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://x.ai/blog/grok-3",
       "source_id": "epoch-notable-models"
     },
@@ -5814,6 +7263,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language,Vision,Multimodal",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://www.anthropic.com/news/claude-3-7-sonnet",
       "source_id": "epoch-notable-models"
     },
@@ -5826,6 +7278,9 @@
       "parameters": null,
       "confidence": "Likely",
       "domain": "Language,Vision,Multimodal",
+      "cost_usd": 366010627.6281514,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://openai.com/index/introducing-gpt-4-5/",
       "source_id": "epoch-notable-models"
     },
@@ -5838,6 +7293,9 @@
       "parameters": 32500000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwq-32b/",
       "source_id": "epoch-notable-models"
     },
@@ -5850,6 +7308,9 @@
       "parameters": 560000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://web.archive.org/web/20250408105622/https://www.dapingtime.com/article/2171.html\n\nhttps://medium.com/data-science-in-your-pocket/tencent-hunyuan-turbo-s-the-fastest-reasoning-llm-d64a02bed5c8\n\nhttps://arxiv.org/abs/2505.15431",
       "source_id": "epoch-notable-models"
     },
@@ -5862,6 +7323,9 @@
       "parameters": 32000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2503.12524",
       "source_id": "epoch-notable-models"
     },
@@ -5874,6 +7338,9 @@
       "parameters": 671000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 5390000.0,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H800 SXM5",
       "reference": "https://arxiv.org/abs/2412.19437",
       "source_id": "epoch-notable-models"
     },
@@ -5886,6 +7353,9 @@
       "parameters": 109000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
       "source_id": "epoch-notable-models"
     },
@@ -5898,6 +7368,9 @@
       "parameters": 400000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
       "source_id": "epoch-notable-models"
     },
@@ -5910,6 +7383,9 @@
       "parameters": 2000000000000.0,
       "confidence": "Likely",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": 44588963.624007165,
+      "accessibility": "Unreleased",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
       "source_id": "epoch-notable-models"
     },
@@ -5922,6 +7398,9 @@
       "parameters": 135000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "Huawei Ascend 910B",
       "reference": "https://arxiv.org/abs/2504.07866",
       "source_id": "epoch-notable-models"
     },
@@ -5934,6 +7413,9 @@
       "parameters": 235000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen3/",
       "source_id": "epoch-notable-models"
     },
@@ -5946,6 +7428,9 @@
       "parameters": null,
       "confidence": "Confident",
       "domain": "Vision,Language,Multimodal,Video",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA H800 SXM5",
       "reference": "https://arxiv.org/abs/2505.07062",
       "source_id": "epoch-notable-models"
     },
@@ -5958,6 +7443,9 @@
       "parameters": 671000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 6770000.0,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://api-docs.deepseek.com/news/news250120",
       "source_id": "epoch-notable-models"
     },
@@ -5970,6 +7458,9 @@
       "parameters": 720000000.0,
       "confidence": "Confident",
       "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "Unreleased",
+      "hardware": "Google TPU v5p,Google TPU v6e Trillium",
       "reference": "https://arxiv.org/abs/2506.10772v1",
       "source_id": "epoch-notable-models"
     },
@@ -5982,6 +7473,9 @@
       "parameters": 3000000000000.0,
       "confidence": "Speculative",
       "domain": "Language,Multimodal,Vision",
+      "cost_usd": 387842678.08636147,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://x.ai/news/grok-4",
       "source_id": "epoch-notable-models"
     },
@@ -5994,6 +7488,9 @@
       "parameters": 1000000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H800 SXM5",
       "reference": "https://moonshotai.github.io/Kimi-K2/",
       "source_id": "epoch-notable-models"
     },
@@ -6006,6 +7503,9 @@
       "parameters": 32000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H200 SXM",
       "reference": "https://arxiv.org/abs/2507.11407",
       "source_id": "epoch-notable-models"
     },
@@ -6018,6 +7518,9 @@
       "parameters": 480000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen3-coder/",
       "source_id": "epoch-notable-models"
     },
@@ -6030,6 +7533,9 @@
       "parameters": 235000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen3/",
       "source_id": "epoch-notable-models"
     },
@@ -6042,6 +7548,9 @@
       "parameters": 235000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://qwenlm.github.io/blog/qwen3/",
       "source_id": "epoch-notable-models"
     },
@@ -6054,6 +7563,9 @@
       "parameters": 355000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2508.06471",
       "source_id": "epoch-notable-models"
     },
@@ -6066,6 +7578,9 @@
       "parameters": 116830000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6078,6 +7593,9 @@
       "parameters": 20910000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6090,6 +7608,9 @@
       "parameters": null,
       "confidence": "Speculative",
       "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://cdn.openai.com/gpt-5-system-card.pdf\nhttps://openai.com/index/introducing-gpt-5/",
       "source_id": "epoch-notable-models"
     },
@@ -6102,6 +7623,9 @@
       "parameters": 560000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2509.01322",
       "source_id": "epoch-notable-models"
     },
@@ -6114,6 +7638,9 @@
       "parameters": 1000000000000.0,
       "confidence": "Speculative",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
       "reference": "https://modelstudio.console.alibabacloud.com/?tab=doc#/doc/?type=model&url=2840914_2&modelId=qwen3-max-preview\n\nhttps://qwen.ai/blog?id=87dc93fc8a590dc718c77e1f6e84c07b474f6c5a&from=home.latest-research-list",
       "source_id": "epoch-notable-models"
     },
@@ -6126,6 +7653,9 @@
       "parameters": 30000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2509.13310",
       "source_id": "epoch-notable-models"
     },
@@ -6138,6 +7668,9 @@
       "parameters": 35300000000.0,
       "confidence": "Confident",
       "domain": "Multimodal,Language,Vision,Speech,Video",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2509.17765",
       "source_id": "epoch-notable-models"
     },
@@ -6150,6 +7683,9 @@
       "parameters": 357000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://z.ai/blog/glm-4.6",
       "source_id": "epoch-notable-models"
     },
@@ -6162,6 +7698,9 @@
       "parameters": 1000000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/inclusionAI/Ling-1T\nhttps://arxiv.org/pdf/2510.22115",
       "source_id": "epoch-notable-models"
     },
@@ -6174,6 +7713,9 @@
       "parameters": 1000000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://moonshotai.github.io/Kimi-K2/thinking",
       "source_id": "epoch-notable-models"
     },
@@ -6186,6 +7728,9 @@
       "parameters": 32000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2512.13961",
       "source_id": "epoch-notable-models"
     },
@@ -6198,6 +7743,9 @@
       "parameters": 31600000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Nano-Technical-Report.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6210,6 +7758,9 @@
       "parameters": 358000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://z.ai/blog/glm-4.7",
       "source_id": "epoch-notable-models"
     },
@@ -6222,6 +7773,9 @@
       "parameters": 102000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/upstage/Solar-Open-100B",
       "source_id": "epoch-notable-models"
     },
@@ -6234,6 +7788,9 @@
       "parameters": 236000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA B200 GPUs",
       "reference": "https://huggingface.co/LGAI-EXAONE",
       "source_id": "epoch-notable-models"
     },
@@ -6246,6 +7803,9 @@
       "parameters": 1040000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H800 SXM5",
       "reference": "https://arxiv.org/abs/2602.02276",
       "source_id": "epoch-notable-models"
     },
@@ -6258,6 +7818,9 @@
       "parameters": 744000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "Huawei Ascend 910C",
       "reference": "https://arxiv.org/pdf/2602.15763 \n\nhttps://z.ai/blog/glm-5",
       "source_id": "epoch-notable-models"
     },
@@ -6270,6 +7833,9 @@
       "parameters": 1040000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA B300 (Blackwell Ultra)",
       "reference": "https://arxiv.org/abs/2603.24477",
       "source_id": "epoch-notable-models"
     },
@@ -6282,6 +7848,9 @@
       "parameters": 5485309424.0,
       "confidence": "Likely",
       "domain": "Vision,Language,Robotics",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA H100 SXM5 80GB",
       "reference": "https://arxiv.org/abs/2605.02881",
       "source_id": "epoch-notable-models"
     },
@@ -6294,6 +7863,9 @@
       "parameters": 33200000000.0,
       "confidence": "Confident",
       "domain": "Language,Multimodal",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "Eunbi Choi, Kibong Choi, Sehyun Chun, Seokhee Hong, Junwon Hwang, Hyojin Jeon, Ahra Jo, Hyunjik Jo, Yeonsik Jo, Joonkee Kim, Seonghwan Kim, Soyeon Kim, Sunkyoung Kim, Yireun Kim, Yongil Kim, Changhun Lee, Haeju Lee, Jinsik Lee, Kyungmin Lee, Sangha Park, Kwangrok Ryoo, Minju Seo, Sejong Yang, Heuiyeen Yeen, Hwan Chang, Stanley Jungkyu Choi, Yejin Choi, Kyubeen Han, Joonwon Jang, Kijeong Jeon, Geunyeong Jeong, Gerrard Jeongwon Jo, Jiyeon Jung, Daeseong Kim, Dohoon Kim, Dohyun Kim, Hyunseo Kim, Minu Kim, Myoungshin Kim, Youchul Kim, Byungoh Ko, Christopher Lee, Edward Hwayoung Lee, Honglak Lee, Jiyoung Lee, Sangeun Lee, Seungwon Lim, Woohyung Lim, Jueun Mun, Jaewoo Park, Jimin Park, Jinho Park, Yongmin Park, Wooseok Seo, Yongwoo Song, Sihyuk Yi, Kyungjae Yoo, Sangyeon Yoon",
       "source_id": "epoch-notable-models"
     },
@@ -6306,6 +7878,9 @@
       "parameters": 1020000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://mimo.xiaomi.com/mimo-v2-5-pro/",
       "source_id": "epoch-notable-models"
     },
@@ -6318,6 +7893,9 @@
       "parameters": 1600000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6330,6 +7908,9 @@
       "parameters": 284000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6342,6 +7923,9 @@
       "parameters": 1040000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA B300 (Blackwell Ultra)",
       "reference": "https://cursor.com/blog/composer-2-5",
       "source_id": "epoch-notable-models"
     },
@@ -6354,6 +7938,9 @@
       "parameters": 550000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://arxiv.org/abs/2512.20856\nhttps://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Ultra-Technical-Report.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6366,6 +7953,9 @@
       "parameters": 250300000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA B200,NVIDIA H200",
       "reference": "https://huggingface.co/upstage/Solar-Open2-250B",
       "source_id": "epoch-notable-models"
     },
@@ -6378,6 +7968,9 @@
       "parameters": 1600000000000.0,
       "confidence": "Likely",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://longcat.chat/blog/longcat-2.0/",
       "source_id": "epoch-notable-models"
     },
@@ -6390,6 +7983,9 @@
       "parameters": 975000000000.0,
       "confidence": "Likely",
       "domain": "Language,Multimodal,Audio,Video,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA GB300 (Blackwell Ultra)",
       "reference": "https://thinkingmachines.ai/news/introducing-inkling/",
       "source_id": "epoch-notable-models"
     },
@@ -6402,6 +7998,9 @@
       "parameters": 2800000000000.0,
       "confidence": "Speculative",
       "domain": "Language,Multimodal,Vision",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/moonshotai/Kimi-K3",
       "source_id": "epoch-notable-models"
     },
@@ -6414,6 +8013,9 @@
       "parameters": 688000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": 12400000.0,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/skt/A.X-K2\nhttps://github.com/SKT-AI/A.X-K2/blob/main/A_X_K2_Tech_Report.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6426,6 +8028,9 @@
       "parameters": 750000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B\nhttps://github.com/LG-AI-EXAONE/K-EXAONE-2.0\nhttps://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/main/assets/K-EXAONE-2.0-Technical-Report.pdf",
       "source_id": "epoch-notable-models"
     },
@@ -6438,6 +8043,9 @@
       "parameters": 314000000000.0,
       "confidence": "Confident",
       "domain": "Language",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "NVIDIA B200",
       "reference": "https://huggingface.co/Motif-Technologies/Motif-3\nhttps://huggingface.co/Motif-Technologies/Motif-3/blob/main/motif_3_technical_report.pdf\nhttps://github.com/MotifTechnologies/motif3-training-example",
       "source_id": "epoch-notable-models"
     },
@@ -6450,6 +8058,9 @@
       "parameters": 320000000000.0,
       "confidence": "Likely",
       "domain": "Language,Vision,Multimodal",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
       "reference": "https://z.ai/blog/glm-5.3-flash",
       "source_id": "epoch-notable-models"
     }

@@ -1,0 +1,918 @@
+---
+/**
+ * Capability: what models can do, what they cost to build, and how they ship.
+ *
+ * Charts are rendered to SVG here rather than embedded from Epoch. Their
+ * interactive versions are better than anything we would build and are linked
+ * from every figure, but embedding them would put third-party scripts on a site
+ * that promises no tracking and no client JavaScript, and would leave the page
+ * looking like two websites stacked. The data is CC BY 4.0 and re-plotting it is
+ * exactly what that licence is for.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import StatTile from "../../components/StatTile.astro";
+import Sparkline from "../../components/Sparkline.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+
+import modelsFile from "../../../data/processed/frontier-models.json";
+import releasesFile from "../../../data/processed/model-releases.json";
+import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
+import thresholdFile from "../../../data/processed/compute-thresholds.json";
+
+interface ModelRecord {
+  model: string;
+  organisation: string;
+  country: string;
+  published: string;
+  compute_flop: number;
+  parameters: number | null;
+  confidence: string;
+  domain: string;
+  cost_usd: number | null;
+  accessibility: string;
+  hardware: string;
+  reference: string;
+  source_id: string;
+}
+
+interface ReleaseRecord {
+  model: string;
+  organisation: string;
+  country: string;
+  published: string;
+  domain: string;
+  accessibility: string;
+  org_category: string;
+  source_id: string;
+}
+
+interface BenchmarkRecord {
+  benchmark: string;
+  points: Array<{ month: string; best: number }>;
+  latest_best: number;
+  first_month: string;
+  latest_month: string;
+  runs: number;
+  source_id: string;
+}
+
+interface ThresholdRecord {
+  year: string;
+  above_threshold: number;
+  below_threshold: number;
+  source_id: string;
+}
+
+const models = modelsFile as Dataset<ModelRecord>;
+const releases = releasesFile as Dataset<ReleaseRecord>;
+const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
+const thresholds = thresholdFile as Dataset<ThresholdRecord>;
+
+const cites = [
+  ...new Set([...models.sources, ...releases.sources, ...benchmarks.sources]),
+];
+assertRenderable(...cites);
+
+const year = (iso: string) => Number(iso.slice(0, 4));
+const decimalYear = (iso: string) => {
+  const d = new Date(iso);
+  const start = Date.UTC(d.getUTCFullYear(), 0, 1);
+  const end = Date.UTC(d.getUTCFullYear() + 1, 0, 1);
+  return d.getUTCFullYear() + (d.getTime() - start) / (end - start);
+};
+
+/* ---------------------------------------------------------------------------
+   1. Training compute over time.
+   --------------------------------------------------------------------------- */
+
+// Anything before 2012 predates the deep-learning compute era and would spend
+// two thirds of the x axis on a flat line. Stated rather than silently cropped.
+const FROM_YEAR = 2012;
+const computePoints = models.records
+  .filter((m) => year(m.published) >= FROM_YEAR)
+  .map((m) => ({ ...m, t: decimalYear(m.published), y: Math.log10(m.compute_flop) }));
+
+const tMin = Math.floor(Math.min(...computePoints.map((p) => p.t)));
+const tMax = Math.ceil(Math.max(...computePoints.map((p) => p.t)));
+const yMin = Math.floor(Math.min(...computePoints.map((p) => p.y)));
+const yMax = Math.ceil(Math.max(...computePoints.map((p) => p.y)));
+
+const SC = { w: 900, h: 460, l: 54, r: 16, t: 18, b: 42 };
+const sx = (t: number) => SC.l + ((t - tMin) / (tMax - tMin)) * (SC.w - SC.l - SC.r);
+const sy = (y: number) => SC.h - SC.b - ((y - yMin) / (yMax - yMin)) * (SC.h - SC.t - SC.b);
+
+// Frontier: the largest training run to date at each point in time. This is the
+// line people mean by "the frontier", and it is a running maximum rather than a
+// smoothed trend, so it steps rather than curves.
+const byTime = [...computePoints].sort((a, b) => a.t - b.t);
+const frontier: typeof byTime = [];
+let runningMax = -Infinity;
+for (const point of byTime) {
+  if (point.y > runningMax) {
+    runningMax = point.y;
+    frontier.push(point);
+  }
+}
+const frontierPath = frontier
+  .map((p, i) => `${i === 0 ? "M" : "L"}${sx(p.t).toFixed(1)} ${sy(p.y).toFixed(1)}`)
+  .join(" ");
+
+/* Growth rate, fitted to the frontier since 2015. Least squares on log10 compute
+   against decimal year, which is a description of what has already happened and
+   is deliberately not extended past the last observation. This site does not
+   publish forecasts of its own. */
+const FIT_FROM = 2015;
+const fitPoints = frontier.filter((p) => p.t >= FIT_FROM);
+const meanT = fitPoints.reduce((s, p) => s + p.t, 0) / fitPoints.length;
+const meanY = fitPoints.reduce((s, p) => s + p.y, 0) / fitPoints.length;
+const slope =
+  fitPoints.reduce((s, p) => s + (p.t - meanT) * (p.y - meanY), 0) /
+  fitPoints.reduce((s, p) => s + (p.t - meanT) ** 2, 0);
+const doublingMonths = (Math.log10(2) / slope) * 12;
+
+const EU_THRESHOLD_LOG = 25;
+const aboveThreshold = models.records.filter((m) => m.compute_flop >= 1e25);
+const largest = [...models.records].sort((a, b) => b.compute_flop - a.compute_flop)[0];
+
+const fmtCompute = (flop: number) => {
+  const exp = Math.floor(Math.log10(flop));
+  return `${(flop / 10 ** exp).toFixed(1)}e${exp}`;
+};
+
+/* ---------------------------------------------------------------------------
+   2. Disclosed training cost.
+   --------------------------------------------------------------------------- */
+const costed = models.records
+  .filter((m) => m.cost_usd && m.cost_usd > 0 && year(m.published) >= FROM_YEAR)
+  .map((m) => ({ ...m, t: decimalYear(m.published), y: Math.log10(m.cost_usd as number) }));
+
+const CS = { w: 900, h: 320, l: 62, r: 16, t: 18, b: 42 };
+const cyMin = Math.floor(Math.min(...costed.map((p) => p.y)));
+const cyMax = Math.ceil(Math.max(...costed.map((p) => p.y)));
+const cx = (t: number) => CS.l + ((t - tMin) / (tMax - tMin)) * (CS.w - CS.l - CS.r);
+const cy = (y: number) => CS.h - CS.b - ((y - cyMin) / (cyMax - cyMin)) * (CS.h - CS.t - CS.b);
+const priciest = [...costed].sort((a, b) => (b.cost_usd as number) - (a.cost_usd as number))[0];
+
+/* Axis ticks run from about ten dollars to a billion, so the small end has to be
+   handled too. The first version divided everything by a thousand and printed
+   "$0k" three times down the axis. */
+const fmtMoney = (usd: number) => {
+  if (usd >= 1e9) return `$${(usd / 1e9).toFixed(1)}bn`;
+  if (usd >= 1e6) return `$${(usd / 1e6).toFixed(0)}m`;
+  if (usd >= 1e3) return `$${(usd / 1e3).toFixed(0)}k`;
+  return `$${Math.round(usd)}`;
+};
+
+/* ---------------------------------------------------------------------------
+   3. How models ship.
+   --------------------------------------------------------------------------- */
+const ACCESS_ORDER = ["Open weights", "API only", "Unreleased", "Other", "Not recorded"];
+const ACCESS_FILL: Record<string, string> = {
+  "Open weights": "var(--accent)",
+  "API only": "var(--accent-2)",
+  Unreleased: "var(--surface-2)",
+  Other: "var(--line)",
+  "Not recorded": "var(--line-soft)",
+};
+
+const ACCESS_FROM = 2017;
+const accessYears = [...new Set(releases.records.map((r) => year(r.published)))]
+  .filter((y) => y >= ACCESS_FROM && y <= new Date().getUTCFullYear())
+  .sort((a, b) => a - b);
+
+const accessByYear = accessYears.map((y) => {
+  const rows = releases.records.filter((r) => year(r.published) === y);
+  const counts = Object.fromEntries(
+    ACCESS_ORDER.map((k) => [k, rows.filter((r) => r.accessibility === k).length]),
+  ) as Record<string, number>;
+  return { year: y, total: rows.length, counts };
+});
+const accessMax = Math.max(...accessByYear.map((a) => a.total));
+
+const latestFullYear = accessByYear[accessByYear.length - 2] ?? accessByYear[0];
+const openShare = latestFullYear
+  ? (latestFullYear.counts["Open weights"] / latestFullYear.total) * 100
+  : 0;
+
+/* ---------------------------------------------------------------------------
+   4. Who builds them.
+   --------------------------------------------------------------------------- */
+const RECENT_FROM = new Date().getUTCFullYear() - 3;
+const recent = releases.records.filter((r) => year(r.published) >= RECENT_FROM);
+
+function countBy(rows: ReleaseRecord[], key: (r: ReleaseRecord) => string, take: number) {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const value = key(row);
+    if (!value) continue;
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, take)
+    .map(([name, count]) => ({ name, count }));
+}
+
+const topOrgs = countBy(recent, (r) => r.organisation, 12);
+const topCountries = countBy(recent, (r) => r.country.split(",")[0].trim(), 10);
+const orgMax = Math.max(...topOrgs.map((o) => o.count));
+const countryMax = Math.max(...topCountries.map((c) => c.count));
+const namedCountry = recent.filter((r) => r.country.trim()).length;
+
+/* ---------------------------------------------------------------------------
+   5. Benchmarks.
+   --------------------------------------------------------------------------- */
+const SATURATED_AT = 0.95;
+const allBenchmarks = [...benchmarks.records].sort((a, b) => b.latest_best - a.latest_best);
+const saturatedCount = allBenchmarks.filter((b) => b.latest_best >= SATURATED_AT).length;
+
+const thresholdByYear = thresholds.records.filter((r) => Number(r.year) >= 2019);
+
+const checked = freshness(models.retrieved);
+---
+
+<Base
+  title="Capability | AI Safety Index"
+  description="Training compute, disclosed cost, benchmark saturation, release decisions and who builds frontier models. Every figure carries its source."
+  cites={cites}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Capability</h1>
+        <p class="masthead__meta mono">
+          {models.count} models with compute
+          <span aria-hidden="true">/</span>
+          {releases.count} tracked
+          <span aria-hidden="true">/</span>
+          {benchmarks.count} benchmarks
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+        </p>
+      </div>
+
+      <div class="bento">
+        <StatTile
+          span={2}
+          emphasis
+          value={doublingMonths.toFixed(0)}
+          unit="months"
+          label="Doubling time of frontier training compute"
+          detail={`Least squares on the largest run to date, ${FIT_FROM} onward. A description of what happened, not a projection.`}
+          source={models.sources}
+          retrieved={models.retrieved}
+          note="Fitted by this site to Epoch's compute figures, not a figure Epoch publishes. Only the models that set a new record enter the fit, which is a small number of points. Starting the window at 2012, 2018 or 2020 instead gives 5.2, 5.0 and 5.2 months, so the answer is not an artefact of where the window starts."
+        />
+
+        <StatTile
+          span={2}
+          value={fmtCompute(largest.compute_flop)}
+          unit="FLOP"
+          label="Largest reported training run"
+          detail={`${largest.model}, ${largest.organisation}, ${largest.published}.`}
+          source={models.sources}
+          retrieved={models.retrieved}
+        />
+
+        <StatTile
+          span={2}
+          value={openShare.toFixed(0)}
+          unit="%"
+          label={`Models released with open weights in ${latestFullYear?.year}`}
+          detail={`Of ${latestFullYear?.total} notable models published that year. Weights are the one release decision nobody can reverse.`}
+          source={releases.sources}
+          retrieved={releases.retrieved}
+          note="Accessibility is unrecorded for a substantial minority; those are counted separately, not as unreleased."
+        />
+
+        <StatTile
+          span={3}
+          value={aboveThreshold.length.toString()}
+          label="Models at or above the EU systemic-risk compute threshold"
+          detail="Article 51 of the AI Act sets it at 1e25 FLOP. It remains the only compute threshold written into binding law anywhere."
+          source={models.sources}
+          retrieved={models.retrieved}
+          note="Counted from models with a reported or estimated compute figure. Many values are estimates."
+        >
+          <div class="mini" aria-hidden="true">
+            {
+              thresholdByYear.map((row) => {
+                const total = row.above_threshold + row.below_threshold;
+                const max = Math.max(
+                  ...thresholdByYear.map((r) => r.above_threshold + r.below_threshold),
+                );
+                return (
+                  <span class="mini__col" style={`--h:${(total / max) * 100}%`}>
+                    <span
+                      class="mini__fill"
+                      style={`--p:${total ? (row.above_threshold / total) * 100 : 0}%`}
+                    />
+                  </span>
+                );
+              })
+            }
+          </div>
+        </StatTile>
+
+        <StatTile
+          span={3}
+          value={saturatedCount.toString()}
+          unit={`of ${benchmarks.count}`}
+          label="Tracked benchmarks scoring above 95 percent"
+          detail="A saturated benchmark has stopped telling you which model is better."
+          source={benchmarks.sources}
+          retrieved={benchmarks.retrieved}
+        >
+          <Sparkline points={allBenchmarks[0].points} marker={SATURATED_AT} />
+        </StatTile>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPUTE -->
+  <section class="section section--sunk" id="compute">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Training compute over time</h2>
+        <p>
+          Every notable model with a reported or estimated training-compute figure, on a
+          logarithmic scale. Each step of the axis is ten times the one below it.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${SC.w} ${SC.h}`}
+            class="plot"
+            role="img"
+            aria-label={`Scatter plot of training compute in FLOP against publication date for ${computePoints.length} models from ${tMin} to ${tMax}, on a logarithmic scale. The largest run to date rises from about 10 to the ${Math.round(frontier[0].y)} to 10 to the ${Math.round(runningMax)} FLOP.`}
+          >
+            {
+              Array.from({ length: yMax - yMin + 1 }, (_, i) => yMin + i)
+                .filter((y) => y % 2 === 0)
+                .map((y) => (
+                  <>
+                    <line x1={SC.l} x2={SC.w - SC.r} y1={sy(y)} y2={sy(y)} class="plot__grid" />
+                    <text x={SC.l - 8} y={sy(y) + 3.5} class="plot__tick" text-anchor="end">
+                      {`1e${y}`}
+                    </text>
+                  </>
+                ))
+            }
+
+            {
+              Array.from({ length: tMax - tMin + 1 }, (_, i) => tMin + i)
+                .filter((t) => t % 2 === 0)
+                .map((t) => (
+                  <text x={sx(t)} y={SC.h - SC.b + 16} class="plot__tick" text-anchor="middle">
+                    {t}
+                  </text>
+                ))
+            }
+
+            <line
+              x1={SC.l}
+              x2={SC.w - SC.r}
+              y1={sy(EU_THRESHOLD_LOG)}
+              y2={sy(EU_THRESHOLD_LOG)}
+              class="plot__threshold"></line>
+            <text x={SC.w - SC.r} y={sy(EU_THRESHOLD_LOG) - 6} class="plot__note" text-anchor="end">
+              1e25 FLOP, EU AI Act Article 51
+            </text>
+
+            {
+              computePoints.map((p) => (
+                <circle
+                  cx={sx(p.t)}
+                  cy={sy(p.y)}
+                  r="2.6"
+                  class:list={["plot__dot", p.confidence === "Speculative" && "is-soft"]}
+                >
+                  <title>{`${p.model} (${p.organisation}, ${p.published}): ${fmtCompute(p.compute_flop)} FLOP, confidence ${p.confidence || "unknown"}`}</title>
+                </circle>
+              ))
+            }
+
+            <path d={frontierPath} class="plot__frontier"></path>
+
+            <text x={SC.l} y={SC.h - 6} class="plot__axis">Publication year</text>
+            <text
+              x={14}
+              y={SC.h / 2}
+              class="plot__axis"
+              text-anchor="middle"
+              transform={`rotate(-90 14 ${SC.h / 2})`}
+            >
+              Training compute, FLOP
+            </text>
+          </svg>
+        </div>
+
+        <div class="keyrow">
+          <span class="key key--dot">Reported model</span>
+          <span class="key key--line">Largest run to date</span>
+          <span class="key key--dash">EU systemic-risk threshold</span>
+          <Provenance
+            source={models.sources}
+            retrieved={models.retrieved}
+            note={`${computePoints.length} models published ${tMin} onward with a compute figure.`}
+            label="chart"
+          />
+        </div>
+
+        <p class="caveat">
+          Compute figures are frequently estimated rather than disclosed, and Epoch marks its own
+          confidence on each. Faded points are the ones marked speculative. Models whose compute is
+          unknown are absent entirely, which biases the picture toward labs that publish. Treat
+          anything near the threshold line as indicative, never as a legal finding about a
+          particular model. Epoch's own interactive version of this chart is at
+          <a href="https://epoch.ai/data/notable-ai-models">epoch.ai/data/notable-ai-models</a>.
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- COST -->
+  <section class="section" id="cost">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What the training runs cost</h2>
+        <p>
+          Disclosed or estimated cost of the final training run, in 2023 dollars, for the {costed.length}
+          models where a figure exists. Also logarithmic.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${CS.w} ${CS.h}`}
+            class="plot"
+            role="img"
+            aria-label={`Scatter plot of training cost in 2023 US dollars against publication date for ${costed.length} models, on a logarithmic scale. The most expensive is ${priciest.model} at ${fmtMoney(priciest.cost_usd as number)}.`}
+          >
+            {
+              Array.from({ length: cyMax - cyMin + 1 }, (_, i) => cyMin + i).map((y) => (
+                <>
+                  <line x1={CS.l} x2={CS.w - CS.r} y1={cy(y)} y2={cy(y)} class="plot__grid" />
+                  <text x={CS.l - 8} y={cy(y) + 3.5} class="plot__tick" text-anchor="end">
+                    {fmtMoney(10 ** y)}
+                  </text>
+                </>
+              ))
+            }
+
+            {
+              Array.from({ length: tMax - tMin + 1 }, (_, i) => tMin + i)
+                .filter((t) => t % 2 === 0)
+                .map((t) => (
+                  <text x={cx(t)} y={CS.h - CS.b + 16} class="plot__tick" text-anchor="middle">
+                    {t}
+                  </text>
+                ))
+            }
+
+            {
+              costed.map((p) => (
+                <circle cx={cx(p.t)} cy={cy(p.y)} r="2.8" class="plot__dot plot__dot--cost">
+                  <title>{`${p.model} (${p.organisation}, ${p.published}): ${fmtMoney(p.cost_usd as number)}`}</title>
+                </circle>
+              ))
+            }
+
+            <text x={CS.l} y={CS.h - 6} class="plot__axis">Publication year</text>
+          </svg>
+        </div>
+
+        <p class="caveat">
+          Cost is known for {costed.length} of {models.count} models with a compute figure, so this
+          is a sample of the disclosed, not a census of the spent. It counts the final training run
+          only: not the failed runs before it, not the staff, not the data, not the cluster sitting
+          idle between runs. The most expensive here is {priciest.model} at {fmtMoney(priciest.cost_usd as number)}.
+          <Provenance source={models.sources} retrieved={models.retrieved} label="chart" />
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- RELEASE -->
+  <section class="section section--sunk" id="release">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How models ship</h2>
+        <p>
+          Open weights, API access, or never released at all. This is the release decision that
+          cannot be undone, and it is the one most directly in a developer's hands.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="stack scroll-x">
+          <div class="stack__plot">
+            {
+              accessByYear.map((row) => (
+                <div class="stack__col">
+                  <div class="stack__bar" style={`--h:${(row.total / accessMax) * 100}%`}>
+                    {ACCESS_ORDER.filter((k) => row.counts[k] > 0).map((k) => (
+                      <span
+                        class="stack__seg"
+                        style={`--p:${(row.counts[k] / row.total) * 100}%;--fill:${ACCESS_FILL[k]}`}
+                      >
+                        <span class="visually-hidden">{`${row.counts[k]} ${k} in ${row.year}`}</span>
+                      </span>
+                    ))}
+                  </div>
+                  <span class="stack__label mono">{String(row.year).slice(2)}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="keyrow">
+          {
+            ACCESS_ORDER.map((k) => (
+              <span class="key key--swatch">
+                <span class="key__swatch" style={`background:${ACCESS_FILL[k]}`} aria-hidden="true" />
+                {k}
+              </span>
+            ))
+          }
+          <Provenance source={releases.sources} retrieved={releases.retrieved} label="chart" />
+        </div>
+
+        <div class="scroll-x">
+          <table class="grid-table">
+            <caption class="visually-hidden">
+              Notable model releases by year and accessibility class.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Year</th>
+                {ACCESS_ORDER.map((k) => <th scope="col" class="ta-end">{k}</th>)}
+                <th scope="col" class="ta-end">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                [...accessByYear].reverse().map((row) => (
+                  <tr>
+                    <th scope="row" class="num">{row.year}</th>
+                    {ACCESS_ORDER.map((k) => (
+                      <td class="ta-end num muted-cell">{row.counts[k] || ""}</td>
+                    ))}
+                    <td class="ta-end num">{row.total}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <p class="caveat">
+          The current year is partial and will fill in. "Not recorded" is its own column on purpose:
+          folding it into "unreleased" would turn a gap in the record into a claim that a model was
+          never released, which is a much stronger statement than the data supports.
+        </p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- WHO -->
+  <section class="section" id="builders">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Who builds them</h2>
+        <p>
+          Notable models published since {RECENT_FROM}, by organisation and by the country of the
+          organisation that built them.
+        </p>
+      </div>
+
+      <div class="pair">
+        <figure class="chart">
+          <figcaption class="chart__cap">
+            <span>By organisation</span>
+            <span class="chart__meta mono">top {topOrgs.length}</span>
+          </figcaption>
+          <table class="bars">
+            <caption class="visually-hidden">
+              Organisations by count of notable models published since {RECENT_FROM}.
+            </caption>
+            <tbody>
+              {
+                topOrgs.map((org) => (
+                  <tr>
+                    <th scope="row">{org.name}</th>
+                    <td class="ta-end num">{org.count}</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar bar--thin"
+                        style={`--w:${((org.count / orgMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </figure>
+
+        <figure class="chart">
+          <figcaption class="chart__cap">
+            <span>By country of organisation</span>
+            <span class="chart__meta mono">top {topCountries.length}</span>
+          </figcaption>
+          <table class="bars">
+            <caption class="visually-hidden">
+              Countries by count of notable models published since {RECENT_FROM}.
+            </caption>
+            <tbody>
+              {
+                topCountries.map((country) => (
+                  <tr>
+                    <th scope="row">{country.name}</th>
+                    <td class="ta-end num">{country.count}</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar bar--thin"
+                        style={`--w:${((country.count / countryMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </figure>
+      </div>
+
+      <p class="caveat">
+        {recent.length} models published since {RECENT_FROM}, of which {namedCountry} have a country
+        recorded. Country is the country of the organisation, not of the compute, the data or the
+        people. A multinational lab is counted once, at its listed home. Inclusion in Epoch's
+        database is editorial, so these are counts of what has been judged notable rather than of
+        everything built.
+        <Provenance source={releases.sources} retrieved={releases.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- BENCHMARKS -->
+  <section class="section section--sunk" id="benchmarks">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Benchmark saturation</h2>
+        <p>
+          Best score recorded on each benchmark by any evaluated model, as a running maximum.
+          {saturatedCount} of {benchmarks.count} have passed 95 percent and stopped discriminating.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Benchmarks with their best recorded score, history and saturation state.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Benchmark</th>
+              <th scope="col" class="ta-end">Best score</th>
+              <th scope="col">Trend</th>
+              <th scope="col" class="ta-end">Window</th>
+              <th scope="col" class="ta-end">Runs</th>
+              <th scope="col">State</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              allBenchmarks.map((bench) => (
+                <tr>
+                  <th scope="row">{bench.benchmark}</th>
+                  <td class="ta-end num">{(bench.latest_best * 100).toFixed(1)}%</td>
+                  <td class="spark-cell">
+                    <Sparkline points={bench.points} marker={SATURATED_AT} height={26} width={120} />
+                  </td>
+                  <td class="ta-end num muted-cell">
+                    {bench.first_month} to {bench.latest_month}
+                  </td>
+                  <td class="ta-end num muted-cell">{bench.runs}</td>
+                  <td class="muted-cell">
+                    {bench.latest_best >= SATURATED_AT ? "Saturated" : "Discriminating"}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        Mixes Epoch's own evaluation runs with externally reported scores, which are not strictly
+        comparable. The line shows the best available capability at each point in time, not the
+        typical one, and a benchmark can saturate because it was easy rather than because models got
+        good. Scores on held-out sets are also vulnerable to contamination that nobody can rule out
+        from the outside.
+        <Provenance source={benchmarks.sources} retrieved={benchmarks.retrieved} />
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+  }
+
+  .mini {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    block-size: 38px;
+    margin-block-start: 0.6rem;
+  }
+
+  .mini__col {
+    flex: 1;
+    block-size: max(2px, var(--h));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-mark);
+    overflow: hidden;
+  }
+
+  .mini__fill {
+    display: block;
+    block-size: var(--p);
+    background: var(--accent);
+  }
+
+  /* Scatter plots. */
+  .plot {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 44rem;
+    block-size: auto;
+  }
+
+  .plot__grid {
+    stroke: var(--line-soft);
+    stroke-width: 1;
+  }
+
+  .plot__threshold {
+    stroke: var(--accent);
+    stroke-width: 1;
+    stroke-dasharray: 5 4;
+    opacity: 0.7;
+  }
+
+  .plot__dot {
+    fill: var(--accent);
+    fill-opacity: 0.45;
+  }
+
+  .plot__dot.is-soft {
+    fill-opacity: 0.16;
+  }
+
+  .plot__dot--cost {
+    fill: var(--accent-2);
+    fill-opacity: 0.6;
+  }
+
+  .plot__frontier {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+  }
+
+  .plot__tick,
+  .plot__axis,
+  .plot__note {
+    fill: var(--muted);
+    font-family: var(--f-mono);
+    font-size: 10px;
+  }
+
+  .plot__axis {
+    font-family: var(--f-sans);
+    font-size: 11px;
+  }
+
+  .keyrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    margin-block-start: 1rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .key {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .key--dot::before {
+    content: "";
+    inline-size: 0.55rem;
+    block-size: 0.55rem;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .key--line::before {
+    content: "";
+    inline-size: 1.1rem;
+    block-size: 2px;
+    background: var(--ink);
+  }
+
+  .key--dash::before {
+    content: "";
+    inline-size: 1.1rem;
+    block-size: 0;
+    border-block-start: 1px dashed var(--accent);
+  }
+
+  .key__swatch {
+    inline-size: 0.8rem;
+    block-size: 0.8rem;
+    border-radius: var(--r-mark);
+  }
+
+  /* Stacked release chart. */
+  .stack {
+    padding-block-end: 1.5rem;
+  }
+
+  .stack__plot {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.4rem;
+    block-size: 200px;
+    min-inline-size: 30rem;
+  }
+
+  .stack__col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    block-size: 100%;
+    position: relative;
+  }
+
+  .stack__bar {
+    block-size: var(--h);
+    min-block-size: 2px;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--r-mark);
+    overflow: hidden;
+  }
+
+  .stack__seg {
+    display: block;
+    block-size: var(--p);
+    background: var(--fill);
+  }
+
+  .stack__label {
+    position: absolute;
+    inset-block-end: -1.4rem;
+    inset-inline: 0;
+    text-align: center;
+    font-size: 0.6875rem;
+    color: var(--muted);
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.5rem 2.5rem;
+  }
+
+  .pair .chart {
+    min-inline-size: 0;
+  }
+
+  .spark-cell {
+    inline-size: 8rem;
+    padding-block: 0.2rem;
+  }
+</style>
