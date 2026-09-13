@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AI Safety Index">
+  <title>AI Safety Index</title>
+  <!-- The mark is one filled cell on graph paper: the ground pattern of the site
+       itself, reduced until it still reads at 16 pixels. No wordmark, because a
+       wordmark at favicon size is a smudge. -->
+  <rect width="32" height="32" rx="7" fill="#141924"/>
+  <g stroke="#313a4e" stroke-width="1.5" shape-rendering="crispEdges">
+    <path d="M6 15.25h20M6 22.25h20M12.25 6v20M19.25 6v20"/>
+  </g>
+  <rect x="19.25" y="6" width="6.75" height="9.25" fill="#f2a950"/>
+</svg>

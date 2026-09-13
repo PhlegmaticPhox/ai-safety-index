@@ -45,6 +45,15 @@
   --f-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "Geist Mono Variable", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
+  /* Background pattern inks. Derived from the palette rather than invented, and
+     kept far below text contrast: the pattern is texture, never information.
+     Verified by etl/check_contrast.py, which reads text pairs, and by eye at
+     100% zoom on an OLED panel where faint grids are most visible. */
+  --grid-ink: rgb(150 175 215 / 0.05);
+  --dot-ink: rgb(150 175 215 / 0.07);
+  --hatch-ink: rgb(150 175 215 / 0.04);
+  --grid-size: 56px;
+
   --r: 12px;
   --r-pill: 999px;
   --r-mark: 2px;
@@ -68,13 +77,48 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
   color: var(--ink);
   font-family: var(--f-sans);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.9375rem;
+  line-height: 1.55;
   font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------------------
+   Ground.
+
+   The page ground is graph paper rather than flat colour: a 56px grid at 5%
+   opacity, which is the texture of the thing this site is (plotted data) rather
+   than decoration borrowed from somewhere else. Sunk sections switch to a dot
+   grid and framed panels to a diagonal hatch, so the three section types are
+   distinguishable without inverting the theme or adding a border.
+
+   All three are CSS gradients. There are no images on this site, and a pattern
+   is not a reason to start.
+   --------------------------------------------------------------------------- */
+body {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-ink) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: center -1px;
+  background-attachment: fixed;
+}
+
+.section--sunk {
+  background-image: radial-gradient(var(--dot-ink) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: center;
+}
+
+.section--hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--hatch-ink) 0 1px,
+    transparent 1px 9px
+  );
 }
 
 h1,
@@ -88,15 +132,15 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  font-size: clamp(1.625rem, 1.35rem + 1.2vw, 2.25rem);
 }
 
 h2 {
-  font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);
+  font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.4375rem);
 }
 
 h3 {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   letter-spacing: -0.01em;
 }
 
@@ -144,19 +188,34 @@ img {
   padding-inline: clamp(1rem, 3.5vw, 2.5rem);
 }
 
-/* Density 7: real information per screen, not an art gallery. */
+/* Density 7: real information per screen, not an art gallery. Section rhythm is
+   deliberately tight. Whitespace here is separation between two things, not a
+   design flourish, so it is sized to the smallest gap that still separates. */
 .section {
-  padding-block: clamp(3rem, 6vw, 4.5rem);
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
 }
 
 .section-head {
-  max-inline-size: var(--measure);
-  margin-block-end: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  margin-block-end: 1rem;
+  padding-block-end: 0.6rem;
+  border-block-end: 1px solid var(--line-soft);
 }
 
+/* The standfirst under a section heading states what the figure shows. It is a
+   caption, not an essay: one or two lines, no argument, no implication drawn
+   for the reader. Capped so it cannot quietly grow into one. */
 .section-head p {
-  margin-block-start: 0.6rem;
+  flex: 1 1 34ch;
+  max-inline-size: 78ch;
+  margin: 0;
   color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 .prose {
@@ -164,7 +223,7 @@ img {
 }
 
 .lede {
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.55;
   color: var(--muted);
 }
@@ -298,14 +357,14 @@ img {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.4rem 2rem;
-  margin-block-end: 1.25rem;
-  padding-block-end: 0.9rem;
+  gap: 0.3rem 2rem;
+  margin-block-end: 0.9rem;
+  padding-block-end: 0.7rem;
   border-block-end: 1px solid var(--line);
 }
 
 .masthead h1 {
-  font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
 }
 
 .masthead__meta {
@@ -317,23 +376,26 @@ img {
 }
 
 .masthead__lede {
-  max-inline-size: 78ch;
-  margin-block-start: 1rem;
+  max-inline-size: 88ch;
+  margin-block-start: 0.7rem;
   color: var(--muted);
+  font-size: 0.875rem;
 }
 
 .is-stale {
   color: var(--warn);
 }
 
-/* Alternating grounds stay inside the one dark theme. No section inverts. */
+/* Alternating grounds stay inside the one dark theme. No section inverts.
+   The dot-grid image is declared with the other patterns above; this sets the
+   colour underneath it. */
 .section--sunk {
-  background: var(--surface);
+  background-color: var(--surface);
   border-block: 1px solid var(--line);
 }
 
 .section--open {
-  padding-block-start: clamp(1.5rem, 3vw, 2.25rem);
+  padding-block-start: clamp(1.1rem, 2vw, 1.6rem);
 }
 
 /* Tables. Two variants: .bars pairs a number with a magnitude bar, .grid-table
@@ -342,14 +404,14 @@ img {
 .grid-table {
   inline-size: 100%;
   border-collapse: collapse;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 
 .bars th,
 .bars td,
 .grid-table th,
 .grid-table td {
-  padding: 0.42rem 0.9rem 0.42rem 0;
+  padding: 0.3rem 0.85rem 0.3rem 0;
   text-align: start;
   font-weight: 400;
   vertical-align: middle;
@@ -363,7 +425,7 @@ img {
   text-transform: uppercase;
   color: var(--muted);
   border-block-end: 1px solid var(--line);
-  padding-block-end: 0.6rem;
+  padding-block-end: 0.45rem;
 }
 
 .grid-table tbody tr + tr th,
@@ -396,7 +458,7 @@ img {
 .bar {
   display: block;
   inline-size: var(--w);
-  block-size: 0.6rem;
+  block-size: 0.5rem;
   border-radius: var(--r-mark);
   background: var(--accent);
   opacity: 0.85;
@@ -423,8 +485,9 @@ img {
   justify-content: space-between;
   align-items: baseline;
   gap: 0.35rem 1.5rem;
-  margin-block-end: 1rem;
+  margin-block-end: 0.7rem;
   font-weight: 500;
+  font-size: 0.875rem;
 }
 
 .chart__meta {
@@ -436,13 +499,13 @@ img {
 /* Every figure that can mislead carries one of these. The rule of the site is
    that a caveat sits with the number, not on a methodology page nobody opens. */
 .caveat {
-  max-inline-size: 74ch;
-  margin-block-start: 1.25rem;
-  padding-block-start: 0.85rem;
+  max-inline-size: 82ch;
+  margin-block-start: 0.9rem;
+  padding-block-start: 0.6rem;
   border-block-start: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.8125rem;
-  line-height: 1.6;
+  font-size: 0.75rem;
+  line-height: 1.55;
 }
 
 /* Chronological rows. Used by the policy feed and the news page. */
@@ -454,10 +517,10 @@ img {
 
 .feed__row {
   display: grid;
-  grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 1.5rem;
-  padding-block: 1rem;
-  border-block-start: 1px solid var(--line);
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 1.25rem;
+  padding-block: 0.7rem;
+  border-block-start: 1px solid var(--line-soft);
 }
 
 .feed__row:last-child {
@@ -474,7 +537,7 @@ img {
 }
 
 .feed__title {
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: var(--ink);
   text-decoration: none;
@@ -486,10 +549,10 @@ img {
 }
 
 .feed__snippet {
-  margin-block-start: 0.35rem;
+  margin-block-start: 0.25rem;
   color: var(--muted);
-  font-size: 0.875rem;
-  max-inline-size: 76ch;
+  font-size: 0.8125rem;
+  max-inline-size: 88ch;
 }
 
 .feed__pub {
@@ -514,8 +577,8 @@ img {
 /* Card grid, for source walls and jurisdiction lists. */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.6rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -524,8 +587,8 @@ img {
 .card {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  padding: 1rem 1.1rem;
+  gap: 0.25rem;
+  padding: 0.8rem 0.9rem;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r);
@@ -534,6 +597,10 @@ img {
 
 .section--sunk .card {
   background: var(--bg);
+}
+
+.card__title {
+  font-size: 0.9375rem;
 }
 
 .card:hover {
@@ -564,9 +631,9 @@ img {
 }
 
 .doc h2 {
-  font-size: 1.25rem;
-  margin-block-start: 2.25rem;
-  padding-block-start: 1rem;
+  font-size: 1.125rem;
+  margin-block-start: 1.6rem;
+  padding-block-start: 0.8rem;
   border-block-start: 1px solid var(--line);
 }
 
@@ -598,8 +665,8 @@ img {
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 1.5rem;
+  gap: 0.35rem;
+  margin: 0 0 1rem;
   padding: 0;
   list-style: none;
 }
@@ -627,4 +694,259 @@ img {
   background: var(--accent-wash);
   border-color: var(--accent-line);
   color: var(--accent-ink);
+}
+
+/* ---------------------------------------------------------------------------
+   Text caret.
+
+   Nothing on this site is editable: there is no form, no input and no
+   contenteditable region anywhere. A blinking caret appearing in a paragraph is
+   therefore always wrong here, whether it comes from the browser's caret
+   browsing mode or from a stray focusable element.
+
+   Text stays selectable; only the insertion point is hidden. The exception list
+   is kept so that adding a real form later restores the caret automatically
+   rather than needing anyone to remember this rule.
+   --------------------------------------------------------------------------- */
+:where(body) {
+  caret-color: transparent;
+}
+
+:where(input, textarea, select, [contenteditable], [contenteditable="true"]) {
+  caret-color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Disclosure.
+
+   Long ranked charts show their top rows and put the tail behind a native
+   <details>. No JavaScript, keyboard accessible for free, and Ctrl+F still finds
+   collapsed content in browsers that search hidden text.
+
+   Rule of use: the visible part must be enough to read the figure. The tail is
+   the full data, not the point.
+   --------------------------------------------------------------------------- */
+.reveal {
+  margin-block-start: 0.4rem;
+  border-block-start: 1px solid var(--line-soft);
+}
+
+.reveal > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-block: 0.5rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.18s var(--ease);
+}
+
+.reveal > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A caret drawn in CSS rather than an icon: this is a control affordance, not
+   an icon in the icon set, and it has to rotate. */
+.reveal > summary::before {
+  content: "";
+  inline-size: 0.42rem;
+  block-size: 0.42rem;
+  border-inline-end: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform 0.18s var(--ease);
+}
+
+.reveal[open] > summary::before {
+  transform: rotate(-135deg) translate(-1px, -1px);
+}
+
+.reveal > summary:hover {
+  color: var(--ink);
+}
+
+.reveal__count {
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+/* The tail of a table continues the table, so it carries no heading row of its
+   own and lines up with the rows above it. */
+.reveal__body {
+  padding-block-end: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Legend.
+
+   Every chart that uses more than one fill carries one of these. Shared because
+   four pages had grown their own near-identical copy.
+   --------------------------------------------------------------------------- */
+.key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.1rem;
+  margin-block-start: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.key__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.key__swatch {
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  border-radius: var(--r-mark);
+  background: var(--swatch, var(--accent));
+  flex: none;
+}
+
+.key__swatch--line {
+  block-size: 0;
+  border-block-start: 2px dashed var(--swatch, var(--line));
+  border-radius: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Metric strip.
+
+   A row of figures with no card around each one. Used where the numbers are a
+   set to be read across, rather than separate claims: a card border per number
+   would imply four unrelated facts.
+   --------------------------------------------------------------------------- */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.strip__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 0.9rem;
+  border-inline-start: 1px solid var(--line-soft);
+}
+
+.strip__item:first-child {
+  border-inline-start: 0;
+}
+
+.strip__value {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.strip__label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------------------
+   Section links.
+
+   A heading that is also the way into the page holding the detail. The arrow is
+   CSS, not an icon, for the same reason the disclosure caret is.
+   --------------------------------------------------------------------------- */
+.go {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.go::after {
+  content: "";
+  inline-size: 0.4rem;
+  block-size: 0.4rem;
+  border-inline-end: 1.5px solid var(--accent);
+  border-block-start: 1.5px solid var(--accent);
+  transform: rotate(45deg);
+  transition: transform 0.18s var(--ease);
+}
+
+.go:hover {
+  color: var(--accent);
+}
+
+.go:hover::after {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+/* A plain right-pointing "more" link, for the end of a section. */
+.more {
+  display: inline-block;
+  margin-block-start: 0.8rem;
+  font-size: 0.8125rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Leader list.
+
+   A compact ranked list that sits inside a stat tile: label, magnitude bar,
+   value. It lived scoped inside the old homepage and moved here when the
+   homepage stopped using it and the capability page started, which briefly left
+   it with no styles at all and rendered as a bulleted list.
+   --------------------------------------------------------------------------- */
+.leaders {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.75rem;
+}
+
+.leaders li {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.leaders__name {
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaders__bar {
+  block-size: 0.3rem;
+  inline-size: var(--w);
+  border-radius: var(--r-mark);
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+.leaders__val {
+  color: var(--muted);
+}
+
+@media (max-width: 767px) {
+  .leaders li {
+    grid-template-columns: 6.5rem 1fr auto;
+  }
 }
