@@ -1,11 +1,16 @@
 ---
 /**
- * The law and policy index. Australia first, more jurisdictions to follow.
+ * The law and policy index.
  *
  * Hand-written rather than scraped, because the established trackers are
  * protected databases and bulk-extracting one is not a licence we have.
+ *
+ * Jurisdiction order comes from the dataset and is deliberate: most binding
+ * AI-specific law first. Re-sorting alphabetically here would throw away the one
+ * comparison the page exists to make.
  */
 import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
 import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
 
 import indexFile from "../../../data/processed/policy-index.json";
@@ -40,18 +45,51 @@ const governance = governanceFile as Dataset<GovernanceRecord>;
 const cites = [...new Set([...policy.sources, ...governance.sources])];
 assertRenderable(...cites);
 
+/* The seven force levels in the dataset, collapsed to five columns. The three
+   kinds of binding instrument read as one thing to a reader asking "does this
+   bite"; the distinction between them is kept on each jurisdiction's own page. */
+const GROUPS = [
+  { key: "binding", label: "Binding law", forces: ["statute", "delegated"] },
+  { key: "government", label: "Binds government", forces: ["agency-binding"] },
+  { key: "guidance", label: "Regulator guidance", forces: ["regulator-guidance"] },
+  { key: "voluntary", label: "Voluntary", forces: ["voluntary"] },
+  { key: "pending", label: "Proposed or in review", forces: ["proposal", "review"] },
+];
+
+/* An instrument that says so in its own title. The number worth having is how
+   small this is next to the binding count, so the test is deliberately generous:
+   anything naming AI, artificial intelligence, deepfakes or synthetic content
+   counts. A narrow test would flatter the point. */
+const NAMES_AI = /\bAI\b|Artificial Intelligence|Deepfake|Synthetic Content/i;
+
+/* The EU is scored once at bloc level and that score is stored against each
+   member state, so the bloc has no readiness record of its own to look up.
+   Reading any harmonised member returns the bloc score by construction. */
+const euScore = governance.records.find((g) => g.basis === "eu-harmonised")?.readiness ?? null;
+
 const jurisdictions = [...new Set(policy.records.map((r) => r.jurisdiction_slug))].map((slug) => {
   const rows = policy.records.filter((r) => r.jurisdiction_slug === slug);
-  const scored = governance.records.find((g) => g.code === rows[0].jurisdiction_code);
+  const code = rows[0].jurisdiction_code;
+  const scored = governance.records.find((g) => g.code === code && g.basis === "national");
+  const counts = Object.fromEntries(
+    GROUPS.map((g) => [g.key, rows.filter((r) => g.forces.includes(r.force)).length]),
+  ) as Record<string, number>;
+  const binding = rows.filter((r) => r.force === "statute" || r.force === "delegated");
   return {
     slug,
     name: rows[0].jurisdiction,
-    code: rows[0].jurisdiction_code,
+    code,
     count: rows.length,
-    binding: rows.filter((r) => r.force === "statute" || r.force === "delegated").length,
-    readiness: scored?.readiness ?? null,
+    counts,
+    binding: binding.length,
+    namesAI: binding.filter((r) => NAMES_AI.test(r.title)).length,
+    readiness: scored?.readiness ?? (code === "EUR" ? euScore : null),
+    isBloc: code === "EUR",
   };
 });
+
+const totalBinding = jurisdictions.reduce((sum, j) => sum + j.binding, 0);
+const totalNaming = jurisdictions.reduce((sum, j) => sum + j.namesAI, 0);
 
 const coveredCodes = new Set(jurisdictions.map((j) => j.code));
 const scoredOnly = governance.records
@@ -62,8 +100,8 @@ const checked = freshness(policy.retrieved);
 ---
 
 <Base
-  title="AI law and policy | AI Safety Index"
-  description="An index of the law that actually applies to AI, jurisdiction by jurisdiction, with a link to every primary instrument."
+  title="Policy"
+  description="An index of the law that actually applies to AI across eleven jurisdictions, tagged by how binding each instrument is, with a link to every primary source."
   cites={cites}
 >
   <section class="section section--open">
@@ -71,7 +109,7 @@ const checked = freshness(policy.retrieved);
       <div class="masthead">
         <h1>AI law and policy</h1>
         <p class="masthead__meta mono">
-          {jurisdictions.length} jurisdiction indexed
+          {jurisdictions.length} jurisdictions
           <span aria-hidden="true">/</span>
           {policy.count} instruments
           <span aria-hidden="true">/</span>
@@ -80,10 +118,10 @@ const checked = freshness(policy.retrieved);
       </div>
 
       <p class="masthead__lede">
-        Most of the law that governs AI does not mention AI. An index that only listed
-        instruments with the term in the title would be short, tidy and misleading. This one
-        lists what actually applies, tagged by how binding it is, with a link to the primary
-        source for every entry.
+        {totalBinding} of the {policy.count} instruments indexed here are binding law, and
+        {" "}{totalNaming} of those name AI in their own title. The rest apply to AI without
+        mentioning it. Every entry is tagged by how binding it is and links to its primary
+        source.
       </p>
     </div>
   </section>
@@ -92,8 +130,10 @@ const checked = freshness(policy.retrieved);
     <div class="wrap">
       <div class="section-head">
         <h2>Indexed jurisdictions</h2>
-        <p>Australia first, because it is where this is written and because its position is
-          instructive: no AI statute, and a great deal of law that applies anyway.</p>
+        <p>
+          Ordered by how much binding AI-specific law is in force, most first. The European
+          Union is indexed once at bloc level, covering all 27 member states.
+        </p>
       </div>
 
       <ul class="cards">
@@ -104,11 +144,12 @@ const checked = freshness(policy.retrieved);
                 {jurisdiction.name}
               </a>
               <p>
-                {jurisdiction.count} instruments, {jurisdiction.binding} of them binding law.
+                {jurisdiction.count} instruments, {jurisdiction.binding} of them binding law,
+                {" "}{jurisdiction.namesAI} of those naming AI.
               </p>
               <span class="card__meta mono">
                 {jurisdiction.readiness !== null
-                  ? `Governance readiness ${jurisdiction.readiness} of 100`
+                  ? `Readiness ${jurisdiction.readiness} of 100${jurisdiction.isBloc ? ", bloc level" : ""}`
                   : "Not yet scored"}
               </span>
             </li>
@@ -118,19 +159,74 @@ const checked = freshness(policy.retrieved);
 
       <p class="caveat">
         Not legal advice, not a compliance checklist and not exhaustive. It is a map of where to
-        start reading. Statuses and commencement dates go stale, and every record carries the date
-        it was reviewed.
+        start reading. Statuses and commencement dates go stale, and every record carries the
+        date it was reviewed.
       </p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="compare">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What each jurisdiction has</h2>
+        <p>
+          Indexed instruments by how binding they are. A jurisdiction with a high voluntary
+          count and a low binding count governs AI mostly by persuasion.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Count of indexed instruments per jurisdiction, grouped by how binding each is, with
+            the governance readiness score.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Jurisdiction</th>
+              {GROUPS.map((group) => <th scope="col" class="ta-end">{group.label}</th>)}
+              <th scope="col" class="ta-end">Total</th>
+              <th scope="col" class="ta-end">Readiness</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              jurisdictions.map((row) => (
+                <tr>
+                  <th scope="row">
+                    <a href={`/policy/${row.slug}/`}>{row.name}</a>
+                  </th>
+                  {GROUPS.map((group) => (
+                    <td class:list={["ta-end", "num", !row.counts[group.key] && "muted-cell"]}>
+                      {row.counts[group.key]}
+                    </td>
+                  ))}
+                  <td class="ta-end num">{row.count}</td>
+                  <td class="ta-end num muted-cell">{row.readiness ?? "-"}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        Counts are of what this index lists, not of what exists. Australia's total is larger
+        than the others because it was indexed first and in more depth, which is a fact about
+        the index rather than about Australian law. Read the columns against each other within a
+        row rather than the totals across rows.
+        <Provenance source={policy.sources} retrieved={policy.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk">
     <div class="wrap">
       <div class="section-head">
         <h2>Scored but not yet indexed</h2>
         <p>
-          {scoredOnly.length} more jurisdictions have a governance readiness score and the
-          instruments it was coded from, which is a thinner thing than a full index but is
+          {scoredOnly.length} further jurisdictions have a governance readiness score and the
+          instruments it was coded from, which is a thinner record than a full index and is
           sourced the same way.
         </p>
       </div>
@@ -156,7 +252,11 @@ const checked = freshness(policy.retrieved);
                   <th scope="row">{row.name}</th>
                   <td class="ta-end num">{row.readiness}</td>
                   <td class="bar-col">
-                    <span class="bar bar--thin bar--gov" style={`--w:${row.readiness}%`} aria-hidden="true" />
+                    <span
+                      class="bar bar--thin bar--gov"
+                      style={`--w:${row.readiness}%`}
+                      aria-hidden="true"
+                    />
                   </td>
                 </tr>
               ))
@@ -166,9 +266,11 @@ const checked = freshness(policy.retrieved);
       </div>
 
       <p class="caveat">
-        Readiness measures how much governance machinery exists, not how strict it is. The scoring
-        rubric and every jurisdiction's cited instruments are on the <a href="/map/#method">map
-        page</a>. The 27 EU member states are scored once at bloc level and are not listed here.
+        Readiness measures how much governance machinery exists, not how strict it is. The
+        scoring rubric and every jurisdiction's cited instruments are on the
+        {" "}<a href="/methodology/governance-readiness/">rubric page</a>. The 27 EU member
+        states are scored once at bloc level and are not listed here.
+        <Provenance source={governance.sources} retrieved={governance.retrieved} />
       </p>
     </div>
   </section>

@@ -1,14 +1,825 @@
 {
   "dataset": "policy-index",
-  "generated": "2026-09-13T06:24:48+00:00",
-  "retrieved": "2026-09-13T06:24:48+00:00",
+  "generated": "2026-09-13T08:07:46+00:00",
+  "retrieved": "2026-09-13T08:07:46+00:00",
   "sources": [
     "policy-index"
   ],
   "unit": null,
-  "notes": "Our own index of instruments relevant to AI, reviewed 2026-09. Each entry links to the primary source and is tagged by how binding it is, because a voluntary standard and an Act of Parliament are not the same kind of object however similar their contents look. Not legal advice, not a compliance checklist, and not exhaustive. Instruments that never mention AI are included where they apply to it, which for Australia is most of the list.",
-  "count": 25,
+  "notes": "Our own index of instruments relevant to AI across 11 jurisdictions, reviewed 2026-09. Each entry links to the primary source and is tagged by how binding it is, because a voluntary standard and an Act of Parliament are not the same kind of object however similar their contents look. Not legal advice, not a compliance checklist, and not exhaustive. Instruments that never mention AI are included where they apply to it, which is most of the list in most jurisdictions.",
+  "count": 78,
   "records": [
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "Regulation (EU) 2024/1689 (Artificial Intelligence Act)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "European Parliament and Council",
+      "topics": [
+        "safety",
+        "transparency",
+        "labelling",
+        "consumer"
+      ],
+      "note": "The only horizontal AI statute in force anywhere. Bans a short list of practices, imposes conformity assessment on high-risk uses, sets transparency duties on systems people interact with, and adds obligations for general-purpose models above 1e25 FLOP of training compute. It applies in stages rather than at once, and those stages have since moved.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "Digital Omnibus on AI",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2026,
+      "body": "European Parliament and Council",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "Amends the AI Act, in force from July 2026, six days before the high-risk obligations were due to bite. Stand-alone high-risk systems move to December 2027 and systems embedded in regulated products to August 2028. The Article 50 transparency duties were not delayed. Treat any compliance date published before July 2026 as out of date.",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/digital-omnibus",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "Regulation (EU) 2016/679 (General Data Protection Regulation)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2016,
+      "body": "European Parliament and Council",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "Predates the AI Act and reaches further in practice. Article 22 restricts decisions based solely on automated processing that produce legal or similarly significant effects, and it is the provision most European automated-decision disputes are actually fought under.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "Regulation (EU) 2022/2065 (Digital Services Act)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2022,
+      "body": "European Parliament and Council",
+      "topics": [
+        "safety",
+        "transparency",
+        "elections"
+      ],
+      "note": "Systemic-risk assessment and mitigation duties on very large platforms and search engines, explicitly including risks from recommender and generative features. Where a model ships inside a large platform, this usually binds before the AI Act does.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2065/oj",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "Directive (EU) 2024/2853 on liability for defective products",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "European Parliament and Council",
+      "topics": [
+        "liability",
+        "consumer",
+        "safety"
+      ],
+      "note": "Brings software and AI systems inside the product liability regime and eases the burden of proof where a claimant could not reasonably be expected to explain how a complex system failed. The separate AI Liability Directive was withdrawn in 2025, so this is what remains.",
+      "url": "https://eur-lex.europa.eu/eli/dir/2024/2853/oj",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "Directive (EU) 2019/790 on copyright in the Digital Single Market",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2019,
+      "body": "European Parliament and Council",
+      "topics": [
+        "copyright"
+      ],
+      "note": "Article 4 permits text and data mining of lawfully accessible works unless the rightsholder reserved the right in a machine-readable way. That reservation is the legal basis for most European objections to training on web data.",
+      "url": "https://eur-lex.europa.eu/eli/dir/2019/790/oj",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "European AI Office",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2024,
+      "body": "European Commission",
+      "topics": [
+        "safety",
+        "government use"
+      ],
+      "note": "Supervises general-purpose model obligations directly rather than leaving them to national authorities. It is the only body anywhere with statutory supervisory powers aimed specifically at frontier models.",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/ai-office",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "European Union",
+      "jurisdiction_slug": "european-union",
+      "jurisdiction_code": "EUR",
+      "title": "General-Purpose AI Code of Practice",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2025,
+      "body": "European Commission and independent experts",
+      "topics": [
+        "safety",
+        "transparency",
+        "copyright"
+      ],
+      "note": "Voluntary, but signing it is the route to presumed conformity with the AI Act's general-purpose model obligations. A voluntary instrument with that consequence sits between guidance and regulation, which is why it is indexed.",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "South Korea",
+      "jurisdiction_slug": "south-korea",
+      "jurisdiction_code": "KOR",
+      "title": "Framework Act on the Development of AI and Establishment of Trust",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "National Assembly of the Republic of Korea",
+      "topics": [
+        "safety",
+        "transparency",
+        "labelling"
+      ],
+      "note": "In force from January 2026. Duties on high-impact AI in listed sectors, labelling of generative output, and a domestic representative requirement for large foreign providers. Administrative fines were given a grace period of about a year, so the obligations bind before the penalties do. Cited in the CSET translation, because Korea's own statute database returns no stable English URL.",
+      "url": "https://cset.georgetown.edu/wp-content/uploads/t0625_south_korea_ai_law_EN.pdf",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "South Korea",
+      "jurisdiction_slug": "south-korea",
+      "jurisdiction_code": "KOR",
+      "title": "Personal Information Protection Act",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2011,
+      "body": "National Assembly of the Republic of Korea",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "Includes a right to refuse or seek an explanation of a fully automated decision, added in 2023. Enforced by the Personal Information Protection Commission, which has been among the more active regulators on generative AI.",
+      "url": "https://www.pipc.go.kr/eng/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "South Korea",
+      "jurisdiction_slug": "south-korea",
+      "jurisdiction_code": "KOR",
+      "title": "Korea AI Safety Institute",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2024,
+      "body": "Ministry of Science and ICT",
+      "topics": [
+        "safety"
+      ],
+      "note": "National evaluation capacity, established alongside the framework Act. Korea is one of a small number of jurisdictions with both a horizontal AI statute and a body able to test models against it.",
+      "url": "https://www.aisi.re.kr/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Interim Measures for the Management of Generative AI Services",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2023,
+      "body": "Cyberspace Administration of China and six other bodies",
+      "topics": [
+        "safety",
+        "transparency",
+        "security"
+      ],
+      "note": "The first binding national rules addressed to generative AI anywhere: security assessment and algorithm filing before public launch, content obligations, and duties on training data.",
+      "url": "https://www.chinalawtranslate.com/en/generative-ai-interim/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Provisions on Deep Synthesis Internet Information Services",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2022,
+      "body": "Cyberspace Administration of China",
+      "topics": [
+        "labelling",
+        "transparency",
+        "safety"
+      ],
+      "note": "Required labelling of synthetic media two years before any comparable Western obligation, and requires consent before generating a likeness of a real person.",
+      "url": "https://www.chinalawtranslate.com/en/deep-synthesis/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Measures for Labelling AI-Generated Synthetic Content",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2025,
+      "body": "Cyberspace Administration of China and three other bodies",
+      "topics": [
+        "labelling",
+        "transparency"
+      ],
+      "note": "In force from September 2025, with a mandatory national standard alongside it. Requires both a label the reader can see and one embedded in file metadata, which is a stronger requirement than the EU's Article 50.",
+      "url": "https://www.chinalawtranslate.com/en/ai-labeling/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Provisions on Algorithmic Recommendation of Internet Information Services",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2021,
+      "body": "Cyberspace Administration of China",
+      "topics": [
+        "transparency",
+        "consumer"
+      ],
+      "note": "Created the algorithm filing regime that the later measures build on, and gave users a right to switch recommendation off. The filing register is the closest thing any jurisdiction has to a public inventory of deployed systems.",
+      "url": "https://www.chinalawtranslate.com/en/algorithms/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Personal Information Protection Law",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2021,
+      "body": "National People's Congress",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "China's general data protection statute, including rules on automated decision-making and a right to an explanation where a decision has a significant effect on an individual.",
+      "url": "https://www.chinalawtranslate.com/en/pipl/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Data Security Law",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2021,
+      "body": "National People's Congress",
+      "topics": [
+        "security",
+        "export control"
+      ],
+      "note": "Classifies data by importance and restricts cross-border transfer of important data, which constrains where training corpora can be assembled and processed.",
+      "url": "https://www.chinalawtranslate.com/en/datasecuritylaw/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "China",
+      "jurisdiction_slug": "china",
+      "jurisdiction_code": "CHN",
+      "title": "Cybersecurity Law",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2016,
+      "body": "National People's Congress",
+      "topics": [
+        "security"
+      ],
+      "note": "The statute the administrative measures are made under. Network operators carry security obligations and a real-name requirement, which is what makes the algorithm filing and security assessment regimes enforceable.",
+      "url": "https://www.chinalawtranslate.com/en/cybersecuritylaw/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "Executive Order 14179, Removing Barriers to American Leadership in AI",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2025,
+      "body": "President of the United States",
+      "topics": [
+        "government use"
+      ],
+      "note": "Revoked Executive Order 14110 and reset federal policy toward removing regulatory barriers. Executive orders bind the executive branch, not the market, and a successor can revoke them in a day, as this one did.",
+      "url": "https://www.federalregister.gov/executive-order/14179",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "Executive Order 14110, Safe, Secure, and Trustworthy AI (revoked)",
+      "force": "review",
+      "force_meaning": "An inquiry or review. Evidence and recommendations, not obligations.",
+      "year": 2023,
+      "body": "President of the United States",
+      "topics": [
+        "safety",
+        "security"
+      ],
+      "note": "Listed because it is still widely cited as current US policy and is not. It introduced the 1e26 FLOP reporting threshold, the second compute threshold written into any official instrument, and was revoked in January 2025.",
+      "url": "https://www.federalregister.gov/executive-order/14110",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "TAKE IT DOWN Act",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2025,
+      "body": "US Congress",
+      "topics": [
+        "safety",
+        "children"
+      ],
+      "note": "Criminalises publication of non-consensual intimate imagery including AI-generated depictions, and requires covered platforms to remove it on notice. One of very few federal statutes that names AI-generated material at all.",
+      "url": "https://www.congress.gov/bill/119th-congress/senate-bill/146",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "Federal Trade Commission Act, section 5",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 1914,
+      "body": "US Congress",
+      "topics": [
+        "consumer",
+        "competition"
+      ],
+      "note": "The general prohibition on unfair or deceptive acts and practices. With no AI statute in place it is the main federal hook for AI claims that do not hold up, and the FTC has used it against several AI products.",
+      "url": "https://www.ftc.gov/legal-library/browse/statutes/federal-trade-commission-act",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "NIST AI Risk Management Framework 1.0",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2023,
+      "body": "National Institute of Standards and Technology",
+      "topics": [
+        "safety",
+        "government use"
+      ],
+      "note": "No legal force, and the most widely adopted AI governance document in the United States. State bills and procurement rules incorporate it by reference, which is how a voluntary framework acquires teeth.",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "California SB 53, Transparency in Frontier Artificial Intelligence Act",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2025,
+      "body": "California State Legislature",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "State law, and the first binding frontier-model transparency statute anywhere: developers above a compute threshold must publish a safety framework and report critical safety incidents. It reaches most frontier labs because most of them are in California.",
+      "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "Colorado SB24-205, Artificial Intelligence Act",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2024,
+      "body": "Colorado General Assembly",
+      "topics": [
+        "discrimination",
+        "consumer",
+        "transparency"
+      ],
+      "note": "The first US state statute imposing duties on developers and deployers of high-risk AI in consequential decisions. Its commencement date has been amended more than once; check the current one before relying on it.",
+      "url": "https://leg.colorado.gov/bills/sb24-205",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United States",
+      "jurisdiction_slug": "united-states",
+      "jurisdiction_code": "USA",
+      "title": "Advanced computing and semiconductor export controls",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2022,
+      "body": "Bureau of Industry and Security, Department of Commerce",
+      "topics": [
+        "export control",
+        "security"
+      ],
+      "note": "The most materially binding AI rules the United States has, and the least discussed as AI policy. They restrict which accelerators can be sold where, which decides who can train large models at all.",
+      "url": "https://www.bis.doc.gov/index.php/policy-guidance/advanced-computing-and-semiconductor-manufacturing-items",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Japan",
+      "jurisdiction_slug": "japan",
+      "jurisdiction_code": "JPN",
+      "title": "Act on Promotion of Research, Development and Utilization of AI-Related Technologies",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2025,
+      "body": "National Diet of Japan",
+      "topics": [
+        "safety",
+        "government use"
+      ],
+      "note": "In full effect from September 2025. It is a promotion statute: it establishes an AI Strategy Headquarters, sets out a basic plan and assigns roles, and creates no prohibitions and no monetary penalties. Japan has an AI Act and does not have AI obligations, and both halves of that matter.",
+      "url": "https://www.japaneselawtranslation.go.jp/en/laws/view/5019",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Japan",
+      "jurisdiction_slug": "japan",
+      "jurisdiction_code": "JPN",
+      "title": "Act on the Protection of Personal Information",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2003,
+      "body": "National Diet of Japan",
+      "topics": [
+        "privacy"
+      ],
+      "note": "The binding constraint on AI systems handling personal data in Japan, enforced by the Personal Information Protection Commission. Where the AI Act creates no duties, this one does.",
+      "url": "https://www.ppc.go.jp/en/legal/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Japan",
+      "jurisdiction_slug": "japan",
+      "jurisdiction_code": "JPN",
+      "title": "Copyright Act, Article 30-4",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 1970,
+      "body": "National Diet of Japan",
+      "topics": [
+        "copyright"
+      ],
+      "note": "One of the most permissive text and data mining provisions in the world: use of a work for machine learning is generally permitted where it is not for enjoying the expression itself. The Agency for Cultural Affairs has since narrowed how widely it reads that, which is what the linked guidance covers.",
+      "url": "https://www.bunka.go.jp/english/policy/copyright/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Japan",
+      "jurisdiction_slug": "japan",
+      "jurisdiction_code": "JPN",
+      "title": "AI Guidelines for Business",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2024,
+      "body": "Ministry of Economy, Trade and Industry, and Ministry of Internal Affairs and Communications",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "The practical governance expectation on Japanese developers and deployers, covering the whole lifecycle. Voluntary, and in a jurisdiction with a penalty-free AI Act it does most of the work.",
+      "url": "https://www.meti.go.jp/english/press/2024/0419_002.html",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "A pro-innovation approach to AI regulation",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2023,
+      "body": "Department for Science, Innovation and Technology",
+      "topics": [
+        "safety",
+        "government use"
+      ],
+      "note": "The white paper setting out the decision not to legislate horizontally, and to have existing regulators apply five cross-sectoral principles inside their own remits instead. Everything else in this list follows from it.",
+      "url": "https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "Data Protection Act 2018",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2018,
+      "body": "Parliament of the United Kingdom",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "With the UK GDPR, the binding constraint on most AI systems processing personal data, including the restriction on solely automated decisions with legal or similarly significant effects.",
+      "url": "https://www.legislation.gov.uk/ukpga/2018/12/contents",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "Data (Use and Access) Act 2025",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2025,
+      "body": "Parliament of the United Kingdom",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "Relaxes the automated-decision rules outside special-category data, moving from a general prohibition toward a safeguards model. The direction of travel is opposite to the EU's, which matters to anyone assuming the two regimes still track each other.",
+      "url": "https://www.legislation.gov.uk/ukpga/2025/18/contents",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "Online Safety Act 2023",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2023,
+      "body": "Parliament of the United Kingdom",
+      "topics": [
+        "safety",
+        "children"
+      ],
+      "note": "Duties of care on user-to-user and search services, enforced by Ofcom. Generative AI chatbots that let users share content fall inside scope, which is the main route by which UK law reaches consumer AI products.",
+      "url": "https://www.legislation.gov.uk/ukpga/2023/50/contents",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "Equality Act 2010",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2010,
+      "body": "Parliament of the United Kingdom",
+      "topics": [
+        "discrimination"
+      ],
+      "note": "The indirect discrimination provisions apply to automated decisions without naming them. In a jurisdiction with no AI statute, this is what an unfair hiring or credit model is most likely to be challenged under.",
+      "url": "https://www.legislation.gov.uk/ukpga/2010/15/contents",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "AI Security Institute",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2023,
+      "body": "Department for Science, Innovation and Technology",
+      "topics": [
+        "safety"
+      ],
+      "note": "State capacity to test frontier models, established before any comparable body elsewhere and renamed from AI Safety Institute in 2025. It cannot compel access: testing happens by agreement with developers.",
+      "url": "https://www.aisi.gov.uk/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "United Kingdom",
+      "jurisdiction_slug": "united-kingdom",
+      "jurisdiction_code": "GBR",
+      "title": "ICO guidance on AI and data protection",
+      "force": "regulator-guidance",
+      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "year": 2023,
+      "body": "Information Commissioner's Office",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "How the data regulator says it will apply existing law to AI. Not law, and the closest thing to an operational compliance standard the UK has.",
+      "url": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Canada",
+      "jurisdiction_slug": "canada",
+      "jurisdiction_code": "CAN",
+      "title": "Personal Information Protection and Electronic Documents Act",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2000,
+      "body": "Parliament of Canada",
+      "topics": [
+        "privacy"
+      ],
+      "note": "The federal private-sector privacy statute, and with provincial equivalents the main binding constraint on commercial AI in Canada. Its reform was bundled into the same bill as the AI statute, so both fell together.",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/P-8.6/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Canada",
+      "jurisdiction_slug": "canada",
+      "jurisdiction_code": "CAN",
+      "title": "Directive on Automated Decision-Making",
+      "force": "agency-binding",
+      "force_meaning": "Binds government agencies only, not the wider market.",
+      "year": 2019,
+      "body": "Treasury Board of Canada Secretariat",
+      "topics": [
+        "government use",
+        "transparency"
+      ],
+      "note": "Requires an Algorithmic Impact Assessment before a federal department deploys an automated decision system, with obligations scaled to the assessed impact level. The first instrument of its kind anywhere and still among the most concrete, and it binds government rather than the market.",
+      "url": "https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32592",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Canada",
+      "jurisdiction_slug": "canada",
+      "jurisdiction_code": "CAN",
+      "title": "Bill C-27, Artificial Intelligence and Data Act (died on the order paper)",
+      "force": "review",
+      "force_meaning": "An inquiry or review. Evidence and recommendations, not obligations.",
+      "year": 2022,
+      "body": "Parliament of Canada",
+      "topics": [
+        "safety",
+        "discrimination"
+      ],
+      "note": "Would have been the second comprehensive national AI statute after the EU's. It died when Parliament was prorogued in January 2025 and has not been reintroduced. Listed because it is still frequently cited as Canadian law.",
+      "url": "https://www.parl.ca/legisinfo/en/bill/44-1/c-27",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Canada",
+      "jurisdiction_slug": "canada",
+      "jurisdiction_code": "CAN",
+      "title": "Voluntary Code of Conduct on Advanced Generative AI Systems",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2023,
+      "body": "Innovation, Science and Economic Development Canada",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "Signed by a list of named Canadian developers. With the statute gone this is the operative federal expectation of generative AI developers, and it carries no consequence for ignoring it.",
+      "url": "https://ised-isde.canada.ca/site/ised/en/voluntary-code-conduct-responsible-development-and-management-advanced-generative-ai-systems",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Brazil",
+      "jurisdiction_slug": "brazil",
+      "jurisdiction_code": "BRA",
+      "title": "Lei 13.709/2018 (Lei Geral de Protecao de Dados)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2018,
+      "body": "National Congress of Brazil",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "Brazil's data protection statute, closely modelled on the GDPR, including a right to review of decisions taken solely on automated processing. Enforced by the ANPD, which is also the proposed AI supervisor.",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Brazil",
+      "jurisdiction_slug": "brazil",
+      "jurisdiction_code": "BRA",
+      "title": "PL 2338/2023 (Marco Legal da Inteligencia Artificial)",
+      "force": "proposal",
+      "force_meaning": "Proposed, consulted on, or before Parliament. Creates no duties yet.",
+      "year": 2023,
+      "body": "National Congress of Brazil",
+      "topics": [
+        "safety",
+        "discrimination",
+        "copyright"
+      ],
+      "note": "Risk-tiered like the EU AI Act, with additions the EU does not have: rights for affected people, and remuneration for copyright holders whose works are used in training. Passed the Senate in December 2024 and is still before the Chamber of Deputies. It creates no duties yet.",
+      "url": "https://www25.senado.leg.br/web/atividade/materias/-/materia/157233",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Brazil",
+      "jurisdiction_slug": "brazil",
+      "jurisdiction_code": "BRA",
+      "title": "Lei 12.965/2014 (Marco Civil da Internet)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2014,
+      "body": "National Congress of Brazil",
+      "topics": [
+        "safety",
+        "privacy"
+      ],
+      "note": "The internet civil rights framework, including platform liability. A 2025 Supreme Court ruling narrowed its safe harbour, which changes the exposure of any platform hosting AI-generated content in Brazil.",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Brazil",
+      "jurisdiction_slug": "brazil",
+      "jurisdiction_code": "BRA",
+      "title": "Lei 8.078/1990 (Codigo de Defesa do Consumidor)",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 1990,
+      "body": "National Congress of Brazil",
+      "topics": [
+        "consumer",
+        "liability"
+      ],
+      "note": "Strict supplier liability for defective products and services. Where an AI product causes harm to a consumer in Brazil, this applies now and does not wait for the AI bill.",
+      "url": "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
     {
       "jurisdiction": "Australia",
       "jurisdiction_slug": "australia",
@@ -449,6 +1260,149 @@
       ],
       "note": "Mandatory for NSW government AI projects and the most developed state-level instrument. Most public-facing government AI in Australia is deployed by states, so Commonwealth policy alone does not describe what citizens meet.",
       "url": "https://www.digital.nsw.gov.au/policy/artificial-intelligence/nsw-artificial-intelligence-assessment-framework",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "India",
+      "jurisdiction_slug": "india",
+      "jurisdiction_code": "IND",
+      "title": "Digital Personal Data Protection Act 2023",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2023,
+      "body": "Parliament of India",
+      "topics": [
+        "privacy"
+      ],
+      "note": "India's first comprehensive data protection statute. Consent-centred, with narrow exemptions and no explicit automated-decision right. Its rules were notified in stages, so the date it binds a given duty is not the date it passed.",
+      "url": "https://www.meity.gov.in/data-protection-framework",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "India",
+      "jurisdiction_slug": "india",
+      "jurisdiction_code": "IND",
+      "title": "Information Technology Act 2000",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2000,
+      "body": "Parliament of India",
+      "topics": [
+        "safety",
+        "security"
+      ],
+      "note": "The statute everything else is made under, including the intermediary rules. Section 79 safe harbour is the lever the government uses on platforms, and by extension on the generative features inside them.",
+      "url": "https://www.indiacode.nic.in/handle/123456789/1999",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "India",
+      "jurisdiction_slug": "india",
+      "jurisdiction_code": "IND",
+      "title": "Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules 2021",
+      "force": "delegated",
+      "force_meaning": "Rules, regulations or codes made under an Act. Binding.",
+      "year": 2021,
+      "body": "Ministry of Electronics and Information Technology",
+      "topics": [
+        "safety",
+        "labelling",
+        "elections"
+      ],
+      "note": "Due diligence duties on intermediaries, amended to reach synthetically generated information and to require it to be labelled. This, not an AI statute, is how India regulates deepfakes.",
+      "url": "https://www.meity.gov.in/content/information-technology-intermediary-guidelines-and-digital-media-ethics-code-rules-2021",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "India",
+      "jurisdiction_slug": "india",
+      "jurisdiction_code": "IND",
+      "title": "India AI Governance Guidelines",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2025,
+      "body": "Ministry of Electronics and Information Technology",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "The national framing: govern AI through existing law and institutions rather than a new statute, with voluntary commitments and a techno-legal approach. India's position is closer to the UK's than to the EU's.",
+      "url": "https://indiaai.gov.in/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "jurisdiction_slug": "singapore",
+      "jurisdiction_code": "SGP",
+      "title": "Model AI Governance Framework for Generative AI",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2024,
+      "body": "Infocomm Media Development Authority and AI Verify Foundation",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "Nine dimensions from accountability and data to incident reporting and security. Voluntary, and widely used as a template outside Singapore, which gives it influence well beyond its legal force.",
+      "url": "https://aiverifyfoundation.sg/resources/mgf-gen-ai/",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "jurisdiction_slug": "singapore",
+      "jurisdiction_code": "SGP",
+      "title": "Personal Data Protection Act 2012",
+      "force": "statute",
+      "force_meaning": "Act of Parliament. Binding on everyone it applies to.",
+      "year": 2012,
+      "body": "Parliament of Singapore",
+      "topics": [
+        "privacy"
+      ],
+      "note": "The binding instrument. Singapore's AI governance work is voluntary; its data protection law is not, and that is where enforcement actually happens.",
+      "url": "https://sso.agc.gov.sg/Act/PDPA2012",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "jurisdiction_slug": "singapore",
+      "jurisdiction_code": "SGP",
+      "title": "Advisory Guidelines on Use of Personal Data in AI Systems",
+      "force": "regulator-guidance",
+      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "year": 2024,
+      "body": "Personal Data Protection Commission",
+      "topics": [
+        "privacy",
+        "transparency"
+      ],
+      "note": "How the regulator reads consent, legitimate interests and business improvement exceptions when personal data is used to train or run a model. The operative compliance document for anyone deploying AI in Singapore. Linked to the guidelines index rather than the document, because the PDPC moves its own document URLs and the deep link 404s.",
+      "url": "https://www.pdpc.gov.sg/guidelines-and-consultation",
+      "reviewed": "2026-09",
+      "source_id": "policy-index"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "jurisdiction_slug": "singapore",
+      "jurisdiction_code": "SGP",
+      "title": "AI Verify",
+      "force": "voluntary",
+      "force_meaning": "Guidance with no legal force. Compliance is a choice.",
+      "year": 2022,
+      "body": "AI Verify Foundation",
+      "topics": [
+        "safety",
+        "transparency"
+      ],
+      "note": "A testing toolkit rather than a document: it runs technical tests and produces a report against the governance principles. Few jurisdictions have turned AI principles into something executable, and this is the clearest attempt.",
+      "url": "https://aiverifyfoundation.sg/",
       "reviewed": "2026-09",
       "source_id": "policy-index"
     }
