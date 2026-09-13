@@ -137,6 +137,15 @@ const jurisdictionCount = new Set(feed.records.map((r) => r.jurisdiction)).size;
 
 const dataAge = freshness(exposure.retrieved);
 
+// 20-bin distribution of all economies, for the sparkline inside the exposure tile.
+const BINS = 20;
+const binWidth = exposureMax / BINS;
+const exposureBins = Array.from({ length: BINS }, (_, i) =>
+  exposureRows.filter((r) => r.latest >= i * binWidth && r.latest < (i + 1) * binWidth).length,
+);
+const binPeak = Math.max(...exposureBins);
+const topBenchmark = rankedBenchmarks[0];
+
 const fmtCompute = (flop: number) => {
   const exp = Math.floor(Math.log10(flop));
   const mantissa = flop / 10 ** exp;
@@ -238,7 +247,13 @@ const buildSteps = [
           source={exposure.sources}
           retrieved={exposure.retrieved}
           note={`Median across all ${exposure.count} economies in the dataset.`}
-        />
+        >
+          <div class="dist" aria-hidden="true">
+            {exposureBins.map((n) => (
+              <span class="dist__bar" style={`--h:${binPeak ? (n / binPeak) * 100 : 0}%`} />
+            ))}
+          </div>
+        </StatTile>
 
         <StatTile
           span={2}
@@ -249,7 +264,9 @@ const buildSteps = [
           source={benchmarks.sources}
           retrieved={benchmarks.retrieved}
           note="A benchmark counts as saturated here when the best recorded score reaches 0.95."
-        />
+        >
+          <Sparkline points={topBenchmark.points} marker={SATURATED_AT} />
+        </StatTile>
 
         <StatTile
           span={3}
@@ -715,6 +732,23 @@ const buildSteps = [
     .hero__figure img {
       aspect-ratio: 16 / 9;
     }
+  }
+
+  /* Distribution strip inside a bento tile: all 147 economies, binned. */
+  .dist {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    block-size: 36px;
+    margin-block-start: 0.6rem;
+  }
+
+  .dist__bar {
+    flex: 1;
+    block-size: max(2px, var(--h));
+    background: var(--accent);
+    opacity: 0.55;
+    border-radius: var(--r-mark);
   }
 
   /* 2. Bento: six cells for six figures, mixed spans, no blank tiles. */
