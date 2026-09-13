@@ -1,0 +1,391 @@
+{
+  "dataset": "research-volume",
+  "generated": "2026-09-13T07:40:59+00:00",
+  "retrieved": "2026-09-13T07:40:51+00:00",
+  "sources": [
+    "openalex"
+  ],
+  "unit": "indexed works per year",
+  "notes": "Works indexed by OpenAlex whose title or abstract matches the stated search phrase, by publication year, 2015 onward. Keyword match, not a field classification. 2026 is a partial year and indexing lags publication, so the last two points understate.",
+  "count": 6,
+  "records": [
+    {
+      "key": "capability",
+      "label": "Frontier model research",
+      "role": "capability",
+      "about": "Work on the systems themselves.",
+      "query": "\"large language model\"|\"foundation model\"|\"generative AI\"",
+      "scope": null,
+      "query_url": "https://openalex.org/works?filter=title_and_abstract.search%3A%22large+language+model%22%7C%22foundation+model%22%7C%22generative+AI%22%2Cfrom_publication_date%3A2015-01-01&group_by=publication_year",
+      "points": [
+        {
+          "year": 2015,
+          "count": 143
+        },
+        {
+          "year": 2016,
+          "count": 168
+        },
+        {
+          "year": 2017,
+          "count": 179
+        },
+        {
+          "year": 2018,
+          "count": 202
+        },
+        {
+          "year": 2019,
+          "count": 217
+        },
+        {
+          "year": 2020,
+          "count": 281
+        },
+        {
+          "year": 2021,
+          "count": 484
+        },
+        {
+          "year": 2022,
+          "count": 1446
+        },
+        {
+          "year": 2023,
+          "count": 18036
+        },
+        {
+          "year": 2024,
+          "count": 59641
+        },
+        {
+          "year": 2025,
+          "count": 122005
+        },
+        {
+          "year": 2026,
+          "count": 184130
+        }
+      ],
+      "total": 386932,
+      "latest_complete": 122005,
+      "partial_year": 2026,
+      "source_id": "openalex"
+    },
+    {
+      "key": "safety",
+      "label": "Safety and alignment",
+      "role": "safety",
+      "about": "Work that names safety or alignment of AI systems as its subject.",
+      "query": "\"AI safety\"|\"AI alignment\"|\"model alignment\"|\"aligned AI\"",
+      "scope": null,
+      "query_url": "https://openalex.org/works?filter=title_and_abstract.search%3A%22AI+safety%22%7C%22AI+alignment%22%7C%22model+alignment%22%7C%22aligned+AI%22%2Cfrom_publication_date%3A2015-01-01&group_by=publication_year",
+      "points": [
+        {
+          "year": 2015,
+          "count": 26
+        },
+        {
+          "year": 2016,
+          "count": 38
+        },
+        {
+          "year": 2017,
+          "count": 61
+        },
+        {
+          "year": 2018,
+          "count": 56
+        },
+        {
+          "year": 2019,
+          "count": 94
+        },
+        {
+          "year": 2020,
+          "count": 96
+        },
+        {
+          "year": 2021,
+          "count": 116
+        },
+        {
+          "year": 2022,
+          "count": 139
+        },
+        {
+          "year": 2023,
+          "count": 325
+        },
+        {
+          "year": 2024,
+          "count": 933
+        },
+        {
+          "year": 2025,
+          "count": 3928
+        },
+        {
+          "year": 2026,
+          "count": 9470
+        }
+      ],
+      "total": 15282,
+      "latest_complete": 3928,
+      "partial_year": 2026,
+      "source_id": "openalex"
+    },
+    {
+      "key": "interpretability",
+      "label": "Interpretability",
+      "role": "safety",
+      "about": "Work on reading what a model has learned. Excludes the older explainable-AI literature.",
+      "query": "\"mechanistic interpretability\"|\"model interpretability\"|\"interpretable machine learning\"",
+      "scope": null,
+      "query_url": "https://openalex.org/works?filter=title_and_abstract.search%3A%22mechanistic+interpretability%22%7C%22model+interpretability%22%7C%22interpretable+machine+learning%22%2Cfrom_publication_date%3A2015-01-01&group_by=publication_year",
+      "points": [
+        {
+          "year": 2015,
+          "count": 88
+        },
+        {
+          "year": 2016,
+          "count": 82
+        },
+        {
+          "year": 2017,
+          "count": 107
+        },
+        {
+          "year": 2018,
+          "count": 248
+        },
+        {
+          "year": 2019,
+          "count": 391
+        },
+        {
+          "year": 2020,
+          "count": 722
+        },
+        {
+          "year": 2021,
+          "count": 985
+        },
+        {
+          "year": 2022,
+          "count": 1314
+        },
+        {
+          "year": 2023,
+          "count": 1986
+        },
+        {
+          "year": 2024,
+          "count": 3897
+        },
+        {
+          "year": 2025,
+          "count": 10642
+        },
+        {
+          "year": 2026,
+          "count": 14594
+        }
+      ],
+      "total": 35056,
+      "latest_complete": 10642,
+      "partial_year": 2026,
+      "source_id": "openalex"
+    },
+    {
+      "key": "evaluation",
+      "label": "Evaluation and red teaming",
+      "role": "safety",
+      "about": "Work on finding out what a model will do when someone tries to make it misbehave.",
+      "query": "\"red teaming\"|\"jailbreak\"|\"adversarial prompt\"|\"prompt injection\"",
+      "scope": null,
+      "query_url": "https://openalex.org/works?filter=title_and_abstract.search%3A%22red+teaming%22%7C%22jailbreak%22%7C%22adversarial+prompt%22%7C%22prompt+injection%22%2Cfrom_publication_date%3A2015-01-01&group_by=publication_year",
+      "points": [
+        {
+          "year": 2015,
+          "count": 59
+        },
+        {
+          "year": 2016,
+          "count": 52
+        },
+        {
+          "year": 2017,
+          "count": 71
+        },
+        {
+          "year": 2018,
+          "count": 59
+        },
+        {
+          "year": 2019,
+          "count": 124
+        },
+        {
+          "year": 2020,
+          "count": 113
+        },
+        {
+          "year": 2021,
+          "count": 91
+        },
+        {
+          "year": 2022,
+          "count": 114
+        },
+        {
+          "year": 2023,
+          "count": 310
+        },
+        {
+          "year": 2024,
+          "count": 1088
+        },
+        {
+          "year": 2025,
+          "count": 2899
+        },
+        {
+          "year": 2026,
+          "count": 8043
+        }
+      ],
+      "total": 13023,
+      "latest_complete": 2899,
+      "partial_year": 2026,
+      "source_id": "openalex"
+    },
+    {
+      "key": "governance",
+      "label": "Governance and regulation",
+      "role": "governance",
+      "about": "Work on the rules around AI systems rather than the systems.",
+      "query": "\"AI governance\"|\"AI regulation\"|\"algorithmic accountability\"",
+      "scope": null,
+      "query_url": "https://openalex.org/works?filter=title_and_abstract.search%3A%22AI+governance%22%7C%22AI+regulation%22%7C%22algorithmic+accountability%22%2Cfrom_publication_date%3A2015-01-01&group_by=publication_year",
+      "points": [
+        {
+          "year": 2015,
+          "count": 5
+        },
+        {
+          "year": 2016,
+          "count": 20
+        },
+        {
+          "year": 2017,
+          "count": 23
+        },
+        {
+          "year": 2018,
+          "count": 46
+        },
+        {
+          "year": 2019,
+          "count": 124
+        },
+        {
+          "year": 2020,
+          "count": 159
+        },
+        {
+          "year": 2021,
+          "count": 211
+        },
+        {
+          "year": 2022,
+          "count": 337
+        },
+        {
+          "year": 2023,
+          "count": 588
+        },
+        {
+          "year": 2024,
+          "count": 1303
+        },
+        {
+          "year": 2025,
+          "count": 5063
+        },
+        {
+          "year": 2026,
+          "count": 14385
+        }
+      ],
+      "total": 22264,
+      "latest_complete": 5063,
+      "partial_year": 2026,
+      "source_id": "openalex"
+    },
+    {
+      "key": "catastrophic",
+      "label": "Catastrophic and existential risk",
+      "role": "safety",
+      "about": "Narrowed to works that also name AI, because these phrases belong to climate and biosecurity research too. Still the loosest series here.",
+      "query": "\"existential risk\"|\"catastrophic risk\"|\"loss of control\"",
+      "scope": "\"artificial intelligence\"|\"machine learning\"|\"AI system\"",
+      "query_url": "https://openalex.org/works?filter=title_and_abstract.search%3A%22existential+risk%22%7C%22catastrophic+risk%22%7C%22loss+of+control%22%2Ctitle_and_abstract.search%3A%22artificial+intelligence%22%7C%22machine+learning%22%7C%22AI+system%22%2Cfrom_publication_date%3A2015-01-01&group_by=publication_year",
+      "points": [
+        {
+          "year": 2015,
+          "count": 9
+        },
+        {
+          "year": 2016,
+          "count": 6
+        },
+        {
+          "year": 2017,
+          "count": 15
+        },
+        {
+          "year": 2018,
+          "count": 25
+        },
+        {
+          "year": 2019,
+          "count": 22
+        },
+        {
+          "year": 2020,
+          "count": 45
+        },
+        {
+          "year": 2021,
+          "count": 32
+        },
+        {
+          "year": 2022,
+          "count": 51
+        },
+        {
+          "year": 2023,
+          "count": 92
+        },
+        {
+          "year": 2024,
+          "count": 140
+        },
+        {
+          "year": 2025,
+          "count": 384
+        },
+        {
+          "year": 2026,
+          "count": 551
+        }
+      ],
+      "total": 1372,
+      "latest_complete": 384,
+      "partial_year": 2026,
+      "source_id": "openalex"
+    }
+  ]
+}
