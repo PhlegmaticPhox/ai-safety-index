@@ -22,7 +22,6 @@ MODULES = [
     "fetch_microsoft_diffusion",
     "fetch_epoch",
     "fetch_policy_feeds",
-    "fetch_media",
 ]
 
 

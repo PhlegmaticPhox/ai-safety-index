@@ -225,20 +225,6 @@
       "redistribution": "no-derivatives",
       "cadence": "annual",
       "caveats": "RULED OUT for charting. No-derivatives means we may not re-plot their figures or restyle their data. Cite, link, and quote sparingly only."
-    },
-    "wikimedia-commons": {
-      "name": "Wikimedia Commons",
-      "publisher": "Wikimedia Foundation contributors",
-      "publisher_url": "https://commons.wikimedia.org",
-      "landing_page": "https://commons.wikimedia.org",
-      "url": "https://commons.wikimedia.org/w/api.php",
-      "format": "json",
-      "licence": "per-file",
-      "licence_url": "https://commons.wikimedia.org/wiki/Commons:Licensing",
-      "attribution": "Individual images are credited to their author under their own licence, shown beside each image.",
-      "redistribution": "permitted-with-attribution",
-      "cadence": "as needed",
-      "caveats": "Each file carries its own licence, so attribution is per image rather than per source. Share-alike files are displayed with credit; we publish no derivative of them. Images here are illustrative and carry no data."
     }
   }
 }
