@@ -1,0 +1,69 @@
+name: Refresh data
+
+# Pulls every source, runs the guards, and commits the result. Cloudflare rebuilds
+# on the resulting push, so this workflow never deploys anything itself.
+#
+# Daily rather than hourly: the fastest-moving source here is a government feed
+# that updates a few times a week, and hammering publishers who give us data for
+# free is how you get blocked.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # 06:17 UTC, off the hour to avoid the stampede
+  workflow_dispatch: # so it can be triggered by hand from the Actions tab
+
+# Least privilege: the job commits data and nothing else.
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ETL dependencies
+        run: pip install --disable-pip-version-check -r etl/requirements.txt
+
+      # Guards run BEFORE the fetch. If the licence check or the snippet cap is
+      # broken, we want to know before writing anything, not after.
+      - name: Licence guard self-check
+        run: python etl/common.py
+
+      - name: Policy feed self-check
+        run: python etl/fetch_policy_feeds.py --self-check
+
+      - name: Palette contrast check
+        run: python etl/check_contrast.py
+
+      - name: Fetch and process every source
+        run: python etl/run_all.py
+
+      # A build here catches a schema change that produced valid JSON the site
+      # cannot render, before that reaches the deployed site.
+      - name: Verify the site still builds
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/processed
+          if git diff --staged --quiet; then
+            echo "No data changed."
+          else
+            git commit -m "Data refresh $(date -u +%Y-%m-%d)"
+            git push
+          fi

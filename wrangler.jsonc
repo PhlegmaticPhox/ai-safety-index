@@ -1,0 +1,17 @@
+{
+  // Cloudflare Workers with static assets. This is Cloudflare's recommended path
+  // for new projects as of 2026; Pages is still supported but is no longer where
+  // the platform is heading. The site is fully static today, so this Worker does
+  // nothing but serve ./dist. Having it here means adding an endpoint later (a
+  // search index, or map tiles) needs no migration.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ai-safety-index",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
