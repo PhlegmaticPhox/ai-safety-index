@@ -98,10 +98,13 @@ EU_SCORES = {
 EU_NOTE = (
     "Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and "
     "applies in stages: prohibitions from February 2025, general-purpose model "
-    "obligations from August 2025, most high-risk obligations from August 2026. "
+    "obligations from August 2025, Article 50 transparency duties from August 2026. "
+    "The Digital Omnibus on AI, in force from July 2026, deferred the high-risk "
+    "obligations to December 2027 for stand-alone Annex III systems and to August "
+    "2028 for systems embedded in regulated products; it did not defer Article 50. "
     "The AI Office supervises general-purpose models directly; member states "
-    "designate national market surveillance authorities. Article 50 imposes "
-    "disclosure duties for chatbots, synthetic media and emotion recognition."
+    "designate national market surveillance authorities. The readiness score counts "
+    "machinery that exists, so deferring when an obligation bites does not lower it."
 )
 
 EU_INSTRUMENTS = [

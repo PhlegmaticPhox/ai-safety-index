@@ -24,11 +24,13 @@ MODULES = [
     "fetch_epoch",
     "fetch_eurostat",
     "fetch_news",
-    # Hand-coded rather than fetched, so it runs identically offline. It is in
-    # this list because it is a dataset like any other and has to pass the same
-    # licence guard and idempotence check.
+    "fetch_openalex",
+    # Hand-coded rather than fetched, so these run identically offline. They are
+    # in this list because they are datasets like any other and have to pass the
+    # same licence guard and idempotence check.
     "build_governance",
     "build_policy_index",
+    "build_frontier_index",
 ]
 
 

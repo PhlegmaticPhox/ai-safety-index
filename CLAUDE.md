@@ -63,13 +63,16 @@ npm run check:built  # against dist/: internal links, same-page anchors, forbidd
 python etl/common.py                             # licence guard, idempotence, dash rule
 python etl/fetch_news.py --self-check            # snippet cap, relevance, categories, language
 python etl/fetch_eurostat.py --self-check        # JSON-stat decoder
+python etl/fetch_openalex.py --self-check        # query narrowing and year range (needs network)
 python etl/build_governance.py --self-check      # scoring rubric
 python etl/build_policy_index.py --self-check    # schema and coverage
+python etl/build_frontier_index.py --self-check  # frameworks and compute thresholds
 python etl/fetch_microsoft_diffusion.py --self-check  # source encoding
 python etl/check_contrast.py                     # palette against WCAG AA
 
 python etl/build_governance.py --check-links     # probe every cited instrument
 python etl/build_policy_index.py --check-links   # same, for the law index
+python etl/build_frontier_index.py --check-links # same, for frameworks and thresholds
 ```
 
 Every check runs in CI before any data is written; `check:built` runs after the build. The
@@ -114,6 +117,24 @@ Each of these cost real debugging time. Do not relearn them.
 - **A `?` in terminal output is usually the Windows console**, not corrupt data. Check the bytes.
 - **`documentElement.scrollWidth` counts clipped descendant overflow.** To test for real horizontal
   scroll, try `window.scrollTo(500, 0)` and see whether `scrollX` moves.
+- **`var(--x)` with no fallback is not transparent, it is invalid.** An unresolvable custom
+  property makes the whole declaration invalid at computed-value time, so `fill` falls back to its
+  initial value, which is black. In `TimeMap` that would have painted every country with no data
+  solid black with nothing in the markup looking wrong. Always `var(--x, fallback)` when the
+  property may be absent.
+- **`getComputedStyle` during a CSS transition returns the animated value**, so reading a colour
+  immediately after toggling a class reports the old one. Verifying a state change means disabling
+  the transition first, not sleeping and hoping.
+- **`10 ** 25 != 1e25` in Python.** One is an exact integer, the other the nearest double. Compare
+  `float(10 ** n) == value`.
+- **A running maximum can never have a negative slope.** Fitting a trend to a frontier series and
+  reporting "no progress" when the slope is negative means that branch can never fire. Say the
+  series is monotone where the fit is shown.
+- **Moving a component's styles out from under it leaves no styles.** `.leaders` lived scoped
+  inside the homepage; when the capability page started using it and the homepage stopped, it
+  rendered as a bulleted list. Shared furniture belongs in `global.css`.
+- **A citation that cannot be verified is not published.** China's draft AI Law has no resolving
+  primary or translated URL, so it is named in the jurisdiction summary and has no index entry.
 
 ## Design lock
 
@@ -124,6 +145,17 @@ Where the skill and the user's instruction conflict, the user's instruction wins
 - **One accent**, amber `#f2a950`, on a blue-slate ground. `--accent-2`, blue, is a DATA hue and
   not a second accent: it encodes governance wherever governance is plotted against exposure or
   capability, and appears nowhere else. `--ok` and `--warn` are for genuine state, never decoration.
+- **Density over whitespace.** Section padding, type scale and table rows are all sized to the
+  smallest gap that still separates two things. If a change makes the page taller without adding
+  information, it is the wrong change.
+- **The ground is graph paper**, not flat colour: a 56px grid at 5% opacity on `body`, a dot grid
+  on `.section--sunk`, a diagonal hatch on `.section--hatch`. All CSS gradients; there are still
+  no images.
+- **Copy on a data page describes the figure and stops.** What it shows, over what period, from
+  whom, and a notable number if there is one. No implication drawn for the reader: the legend and
+  the key are the explanation. Argument belongs on `/about/` and `/methodology/`.
+- **Long ranked lists show ten rows and put the tail in `<details class="reveal">`.** Use the
+  shared `BarTable` component rather than writing another table.
 - **One radius system.** `--r` containers and controls, `--r-pill` tags, `--r-mark` data marks.
 - **Zero em-dashes and en-dashes anywhere**, including source data, which is normalised at ETL
   time by `normalise_dashes` in `common.py` with the unaltered original one link away. The
@@ -140,16 +172,22 @@ Where the skill and the user's instruction conflict, the user's instruction wins
 
 Verified working, with licences, in `data/sources.json`. Backbone is Epoch AI (models, benchmarks,
 clusters, CC BY 4.0), Microsoft AI Diffusion (147 economies, MIT), Eurostat enterprise AI adoption
-(Decision 2011/833/EU), and the news feed's eight: US Federal Register and NIST (public domain),
-GOV.UK (OGL v3.0), European Commission (Decision 2011/833/EU), Government of Canada (OGL Canada),
-arXiv cs.AI and cs.CY (metadata CC0), and the AI Incident Database (ODbL, display only). Map
-geometry is Natural Earth, public domain. Two datasets are our own: the Governance Readiness Index
-and the AI Law and Policy Index, both CC BY 4.0.
+(Decision 2011/833/EU), OpenAlex (research volume, CC0), and the news feed's eight: US Federal
+Register and NIST (public domain), GOV.UK (OGL v3.0), European Commission (Decision 2011/833/EU),
+Government of Canada (OGL Canada), arXiv cs.AI and cs.CY (metadata CC0), and the AI Incident
+Database (ODbL, display only). Map geometry is Natural Earth, public domain.
+
+Four datasets are our own, all CC BY 4.0: the Governance Readiness Index, the AI Law and Policy
+Index, the Frontier Safety Framework Index and the Compute Threshold Index.
 
 **Ruled out, and registered so that using them fails the build:**
 
 - **Artificial Analysis**: free tier forbids redistribution.
 - **Stanford AI Index**: CC BY-NC-ND, so its figures cannot be re-plotted.
+- **METR time horizons**: their analysis repository carries no LICENSE file and its README points
+  at one that is not there, so no reuse permission exists and the default is reserved. Their
+  headline finding is stated as attributed prose with a link, which is a fact rather than their
+  data. `/alignment/` says so on the page.
 
 **Legal constraints** (detail in `docs/00-research-findings.md` section 3):
 
@@ -186,20 +224,48 @@ comparison, be able to state plainly what links the two variables. If you cannot
 
 ## Status
 
-Live pages: homepage, `/capability/`, `/map/`, `/news/` plus six category routes, `/adoption/`,
-`/policy/` and `/policy/australia/`, `/sources/`, `/about/`, `/methodology/` and the governance
-rubric, `/corrections/`, `/privacy/`, `/terms/`.
+The homepage is a dashboard: one panel per section carrying that section's headline figures, with
+the heading as the way in, plus a full-width choropleth that steps through reporting periods with
+no JavaScript (`TimeMap`). Everything else lives on its own page.
+
+Live pages: homepage, `/progress/`, `/capability/`, `/alignment/`, `/adoption/`, `/map/`,
+`/policy/` plus eleven jurisdiction routes, `/news/` plus six category routes, `/sources/`,
+`/about/`, `/methodology/` and the governance rubric, `/corrections/`, `/privacy/`, `/terms/`.
+
+The split between `/progress/` and `/capability/` is inputs against outputs: capability is compute,
+cost, who builds them and how they ship; progress is what comes out and how fast it is changing.
+Benchmarks live on progress. Do not put them back on capability.
 
 Built and not yet done:
 
-- The law index covers Australia only. The structure takes more jurisdictions without changes;
-  each one is a research job, not an engineering one.
+- The law index covers eleven jurisdictions. Australia is far deeper than the rest because it was
+  indexed first, which the page says out loud so the totals are not read as a comparison.
+- `/progress/` is the only page that extends past the last observation. Every such number is
+  labelled an extrapolation of a stated fit, with the window and both directions of bias printed
+  next to it. Keep it that way or take it out.
 - The news feed's alignment and progress categories depend on arXiv, which announces on weekdays
   only. A feed built at a weekend legitimately has none, and the page says so.
 - US industry adoption is missing. Census BTOS has it, and its API needs a key, which needs an
   account, which is Matthew's to create and not mine.
 - The Anthropic Economic Index is registered but unused: the release files are 77MB and 219MB,
   which is too much to pull daily without streaming aggregation.
+- The site name collides with the Future of Life Institute's "AI Safety Index", which is an
+  established annual report. Matthew's call whether to rename.
+
+## What this site has that the others do not
+
+Four joins nobody else publishes. If a change would break one of them, it is the wrong change.
+
+1. **Compute thresholds against actual models** (`/capability/#thresholds`). Every training-compute
+   threshold written into law, with the count of models above each. Four exist, two are the same
+   number, one is revoked and one was vetoed.
+2. **Frontier safety frameworks side by side** (`/alignment/#frameworks`). Eight developers, eight
+   incomparable scales, and who commits to stopping rather than to deciding. Includes the
+   developers who have published nothing, because the absence is the finding.
+3. **Safety research against capability research** (`/alignment/#research`). OpenAlex counts by
+   year with the literal query printed next to every series, so the definition is arguable.
+4. **What law applies where** (`/policy/`). Eleven jurisdictions, and the number the page leads on
+   is how few binding instruments name AI at all.
 
 Phases and exit tests in `docs/02-plan.md`. Unbuilt ideas, scored, in `docs/01-ideas-backlog.md`.
 

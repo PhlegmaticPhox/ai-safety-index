@@ -12,13 +12,13 @@
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import StatTile from "../../components/StatTile.astro";
-import Sparkline from "../../components/Sparkline.astro";
+import BarTable from "../../components/BarTable.astro";
 import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
 
 import modelsFile from "../../../data/processed/frontier-models.json";
 import releasesFile from "../../../data/processed/model-releases.json";
-import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
 import thresholdFile from "../../../data/processed/compute-thresholds.json";
+import legalFile from "../../../data/processed/legal-thresholds.json";
 
 interface ModelRecord {
   model: string;
@@ -47,13 +47,16 @@ interface ReleaseRecord {
   source_id: string;
 }
 
-interface BenchmarkRecord {
-  benchmark: string;
-  points: Array<{ month: string; best: number }>;
-  latest_best: number;
-  first_month: string;
-  latest_month: string;
-  runs: number;
+interface LegalThreshold {
+  jurisdiction: string;
+  instrument: string;
+  flop: number;
+  exponent: number;
+  status: string;
+  applies_to: string;
+  consequence: string;
+  url: string;
+  note: string;
   source_id: string;
 }
 
@@ -66,11 +69,11 @@ interface ThresholdRecord {
 
 const models = modelsFile as Dataset<ModelRecord>;
 const releases = releasesFile as Dataset<ReleaseRecord>;
-const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
 const thresholds = thresholdFile as Dataset<ThresholdRecord>;
+const legal = legalFile as Dataset<LegalThreshold>;
 
 const cites = [
-  ...new Set([...models.sources, ...releases.sources, ...benchmarks.sources]),
+  ...new Set([...models.sources, ...releases.sources, ...legal.sources]),
 ];
 assertRenderable(...cites);
 
@@ -201,7 +204,9 @@ const openShare = latestFullYear
 const RECENT_FROM = new Date().getUTCFullYear() - 3;
 const recent = releases.records.filter((r) => year(r.published) >= RECENT_FROM);
 
-function countBy(rows: ReleaseRecord[], key: (r: ReleaseRecord) => string, take: number) {
+/* Every organisation and country, not a top slice. The page shows ten and puts
+   the rest behind a disclosure, so the tail is one click away rather than gone. */
+function countBy(rows: ReleaseRecord[], key: (r: ReleaseRecord) => string) {
   const counts = new Map<string, number>();
   for (const row of rows) {
     const value = key(row);
@@ -209,23 +214,33 @@ function countBy(rows: ReleaseRecord[], key: (r: ReleaseRecord) => string, take:
     counts.set(value, (counts.get(value) ?? 0) + 1);
   }
   return [...counts.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, take)
-    .map(([name, count]) => ({ name, count }));
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([name, count]) => ({ label: name, value: count }));
 }
 
-const topOrgs = countBy(recent, (r) => r.organisation, 12);
-const topCountries = countBy(recent, (r) => r.country.split(",")[0].trim(), 10);
-const orgMax = Math.max(...topOrgs.map((o) => o.count));
-const countryMax = Math.max(...topCountries.map((c) => c.count));
+const topOrgs = countBy(recent, (r) => r.organisation);
+const topCountries = countBy(recent, (r) => r.country.split(",")[0].trim());
 const namedCountry = recent.filter((r) => r.country.trim()).length;
 
 /* ---------------------------------------------------------------------------
-   5. Benchmarks.
+   5. Compute thresholds written into law.
+
+   The join nobody else makes: a list of legal thresholds on one side, a list of
+   models with compute estimates on the other, and the count of one against the
+   other. Stated as arithmetic rather than as a legal finding, because Epoch's
+   compute figures are mostly estimates and a threshold in a statute is a
+   presumption a developer can argue with.
    --------------------------------------------------------------------------- */
-const SATURATED_AT = 0.95;
-const allBenchmarks = [...benchmarks.records].sort((a, b) => b.latest_best - a.latest_best);
-const saturatedCount = allBenchmarks.filter((b) => b.latest_best >= SATURATED_AT).length;
+const crossings = legal.records.map((rule) => {
+  const crossing = models.records.filter((m) => m.compute_flop >= rule.flop);
+  const firstYear = crossing.length
+    ? Math.min(...crossing.map((m) => year(m.published)))
+    : null;
+  return { ...rule, count: crossing.length, firstYear };
+});
+const crossingMax = Math.max(...crossings.map((c) => c.count), 1);
+const distinctLines = [...new Set(legal.records.map((r) => r.exponent))].sort((a, b) => a - b);
+const inForceRules = legal.records.filter((r) => r.status === "in force");
 
 const thresholdByYear = thresholds.records.filter((r) => Number(r.year) >= 2019);
 
@@ -233,7 +248,7 @@ const checked = freshness(models.retrieved);
 ---
 
 <Base
-  title="Capability | AI Safety Index"
+  title="Capability"
   description="Training compute, disclosed cost, benchmark saturation, release decisions and who builds frontier models. Every figure carries its source."
   cites={cites}
 >
@@ -246,7 +261,7 @@ const checked = freshness(models.retrieved);
           <span aria-hidden="true">/</span>
           {releases.count} tracked
           <span aria-hidden="true">/</span>
-          {benchmarks.count} benchmarks
+          {legal.count} legal thresholds
           <span aria-hidden="true">/</span>
           <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
         </p>
@@ -317,14 +332,28 @@ const checked = freshness(models.retrieved);
 
         <StatTile
           span={3}
-          value={saturatedCount.toString()}
-          unit={`of ${benchmarks.count}`}
-          label="Tracked benchmarks scoring above 95 percent"
-          detail="A saturated benchmark has stopped telling you which model is better."
-          source={benchmarks.sources}
-          retrieved={benchmarks.retrieved}
+          value={crossings.find((c) => c.flop === 1e26)?.count.toString() ?? "0"}
+          label="Models at or above 1e26 FLOP, the Californian threshold"
+          detail={`SB 53 applies to frontier developers above this line. ${inForceRules.length} compute thresholds are in force anywhere in the world.`}
+          source={[...models.sources, ...legal.sources]}
+          retrieved={legal.retrieved}
+          note="Counted by this site from Epoch's compute figures against the threshold written in the instrument. Not a legal finding about any model."
         >
-          <Sparkline points={allBenchmarks[0].points} marker={SATURATED_AT} />
+          <ul class="leaders">
+            {
+              crossings.map((rule) => (
+                <li>
+                  <span class="leaders__name">1e{rule.exponent} {rule.status !== "in force" && `(${rule.status})`}</span>
+                  <span
+                    class="leaders__bar"
+                    style={`--w:${((rule.count / crossingMax) * 100).toFixed(1)}%`}
+                    aria-hidden="true"
+                  />
+                  <span class="leaders__val num">{rule.count}</span>
+                </li>
+              ))
+            }
+          </ul>
         </StatTile>
       </div>
     </div>
@@ -503,8 +532,8 @@ const checked = freshness(models.retrieved);
       <div class="section-head">
         <h2>How models ship</h2>
         <p>
-          Open weights, API access, or never released at all. This is the release decision that
-          cannot be undone, and it is the one most directly in a developer's hands.
+          Notable models by publication year and how they were made available: open weights, API
+          access, or never released.
         </p>
       </div>
 
@@ -595,59 +624,29 @@ const checked = freshness(models.retrieved);
         <figure class="chart">
           <figcaption class="chart__cap">
             <span>By organisation</span>
-            <span class="chart__meta mono">top {topOrgs.length}</span>
+            <span class="chart__meta mono">{topOrgs.length} in total</span>
           </figcaption>
-          <table class="bars">
-            <caption class="visually-hidden">
-              Organisations by count of notable models published since {RECENT_FROM}.
-            </caption>
-            <tbody>
-              {
-                topOrgs.map((org) => (
-                  <tr>
-                    <th scope="row">{org.name}</th>
-                    <td class="ta-end num">{org.count}</td>
-                    <td class="bar-col">
-                      <span
-                        class="bar bar--thin"
-                        style={`--w:${((org.count / orgMax) * 100).toFixed(1)}%`}
-                        aria-hidden="true"
-                      />
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+          <BarTable
+            rows={topOrgs}
+            head="Organisation"
+            valueHead="Models"
+            top={10}
+            caption={`Organisations by count of notable models published since ${RECENT_FROM}.`}
+          />
         </figure>
 
         <figure class="chart">
           <figcaption class="chart__cap">
             <span>By country of organisation</span>
-            <span class="chart__meta mono">top {topCountries.length}</span>
+            <span class="chart__meta mono">{topCountries.length} in total</span>
           </figcaption>
-          <table class="bars">
-            <caption class="visually-hidden">
-              Countries by count of notable models published since {RECENT_FROM}.
-            </caption>
-            <tbody>
-              {
-                topCountries.map((country) => (
-                  <tr>
-                    <th scope="row">{country.name}</th>
-                    <td class="ta-end num">{country.count}</td>
-                    <td class="bar-col">
-                      <span
-                        class="bar bar--thin"
-                        style={`--w:${((country.count / countryMax) * 100).toFixed(1)}%`}
-                        aria-hidden="true"
-                      />
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+          <BarTable
+            rows={topCountries}
+            head="Country"
+            valueHead="Models"
+            top={10}
+            caption={`Countries by count of notable models published since ${RECENT_FROM}.`}
+          />
         </figure>
       </div>
 
@@ -662,47 +661,54 @@ const checked = freshness(models.retrieved);
     </div>
   </section>
 
-  <!-- BENCHMARKS -->
-  <section class="section section--sunk" id="benchmarks">
+  <!-- COMPUTE THRESHOLDS. The join between the capability data and the law. -->
+  <section class="section section--sunk" id="thresholds">
     <div class="wrap">
       <div class="section-head">
-        <h2>Benchmark saturation</h2>
+        <h2>The compute thresholds written into law</h2>
         <p>
-          Best score recorded on each benchmark by any evaluated model, as a running maximum.
-          {saturatedCount} of {benchmarks.count} have passed 95 percent and stopped discriminating.
+          Every training-compute threshold set by a statute, an executive action or an official
+          policy document, and how many models with a published compute figure sit above each.
         </p>
       </div>
 
       <div class="scroll-x">
         <table class="grid-table">
           <caption class="visually-hidden">
-            Benchmarks with their best recorded score, history and saturation state.
+            Training-compute thresholds in law and policy, with the instrument that sets each,
+            its status, and the count of models at or above it.
           </caption>
           <thead>
             <tr>
-              <th scope="col">Benchmark</th>
-              <th scope="col" class="ta-end">Best score</th>
-              <th scope="col">Trend</th>
-              <th scope="col" class="ta-end">Window</th>
-              <th scope="col" class="ta-end">Runs</th>
-              <th scope="col">State</th>
+              <th scope="col">Jurisdiction</th>
+              <th scope="col" class="wrap-cell">Instrument</th>
+              <th scope="col" class="ta-end">Threshold</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="ta-end">Models above</th>
+              <th scope="col" class="ta-end">First crossed</th>
+              <th scope="col" class="bar-col">
+                <span class="visually-hidden">Models above, relative</span>
+              </th>
             </tr>
           </thead>
           <tbody>
             {
-              allBenchmarks.map((bench) => (
-                <tr>
-                  <th scope="row">{bench.benchmark}</th>
-                  <td class="ta-end num">{(bench.latest_best * 100).toFixed(1)}%</td>
-                  <td class="spark-cell">
-                    <Sparkline points={bench.points} marker={SATURATED_AT} height={26} width={120} />
+              crossings.map((rule) => (
+                <tr class:list={[rule.status !== "in force" && "is-inactive"]}>
+                  <th scope="row">{rule.jurisdiction}</th>
+                  <td class="wrap-cell">
+                    <a href={rule.url}>{rule.instrument}</a>
                   </td>
-                  <td class="ta-end num muted-cell">
-                    {bench.first_month} to {bench.latest_month}
-                  </td>
-                  <td class="ta-end num muted-cell">{bench.runs}</td>
-                  <td class="muted-cell">
-                    {bench.latest_best >= SATURATED_AT ? "Saturated" : "Discriminating"}
+                  <td class="ta-end num">1e{rule.exponent}</td>
+                  <td class="muted-cell">{rule.status}</td>
+                  <td class="ta-end num">{rule.count}</td>
+                  <td class="ta-end num muted-cell">{rule.firstYear ?? "-"}</td>
+                  <td class="bar-col">
+                    <span
+                      class="bar bar--thin"
+                      style={`--w:${((rule.count / crossingMax) * 100).toFixed(1)}%`}
+                      aria-hidden="true"
+                    />
                   </td>
                 </tr>
               ))
@@ -711,19 +717,103 @@ const checked = freshness(models.retrieved);
         </table>
       </div>
 
+      <details class="reveal">
+        <summary>
+          What each threshold actually requires
+          <span class="reveal__count">{legal.count}</span>
+        </summary>
+        <div class="reveal__body">
+          <ul class="rules">
+            {
+              legal.records.map((rule) => (
+                <li>
+                  <p class="rules__head">
+                    <a href={rule.url}>{rule.instrument}</a>
+                    <span class="mono">1e{rule.exponent}</span>
+                    <span class="tag">{rule.status}</span>
+                  </p>
+                  <p class="rules__applies">
+                    <strong>Applies to</strong> {rule.applies_to}
+                  </p>
+                  <p class="rules__applies">
+                    <strong>Consequence</strong> {rule.consequence}
+                  </p>
+                  <p class="rules__note">{rule.note}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </details>
+
       <p class="caveat">
-        Mixes Epoch's own evaluation runs with externally reported scores, which are not strictly
-        comparable. The line shows the best available capability at each point in time, not the
-        typical one, and a benchmark can saturate because it was easy rather than because models got
-        good. Scores on held-out sets are also vulnerable to contamination that nobody can rule out
-        from the outside.
-        <Provenance source={benchmarks.sources} retrieved={benchmarks.retrieved} />
+        Four thresholds exist, two of them are the same number, one is revoked and one was
+        vetoed. Whether a model sits above a line is arithmetic on Epoch's compute figures, most
+        of which are estimates rather than disclosures, and the EU threshold is a rebuttable
+        presumption rather than a hard boundary. Nothing here is a legal finding about any model
+        or developer.
+        <Provenance
+          source={[...legal.sources, ...models.sources]}
+          retrieved={legal.retrieved}
+          note="Thresholds are our own index of primary instruments. Model compute figures are Epoch's."
+        />
+      </p>
+
+      <p class="prose">
+        Benchmark scores, difficulty tiers and the rate at which tests are being solved have
+        moved to <a href="/progress/">Progress</a>.
       </p>
     </div>
   </section>
 </Base>
 
 <style>
+  .is-inactive th[scope="row"],
+  .is-inactive td {
+    opacity: 0.62;
+  }
+
+  .rules {
+    display: grid;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-inline-size: 88ch;
+  }
+
+  .rules li {
+    padding-block-start: 0.6rem;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .rules__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .rules__head .mono {
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+
+  .rules__applies,
+  .rules__note {
+    margin-block-start: 0.2rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .rules__applies strong {
+    color: var(--ink);
+    font-weight: 500;
+    margin-inline-end: 0.3rem;
+  }
+
   .bento {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -911,8 +1001,4 @@ const checked = freshness(models.retrieved);
     min-inline-size: 0;
   }
 
-  .spark-cell {
-    inline-size: 8rem;
-    padding-block: 0.2rem;
-  }
 </style>

@@ -1,7 +1,7 @@
 {
   "dataset": "governance-readiness",
-  "generated": "2026-09-13T05:53:25+00:00",
-  "retrieved": "2026-09-13T05:53:25+00:00",
+  "generated": "2026-09-13T08:05:53+00:00",
+  "retrieved": "2026-09-13T08:05:53+00:00",
   "sources": [
     "governance-readiness-index"
   ],
@@ -22,7 +22,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Austria's EU membership guarantees, not as a complete account of Austria's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Austria's EU membership guarantees, not as a complete account of Austria's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -56,7 +56,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Belgium's EU membership guarantees, not as a complete account of Belgium's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Belgium's EU membership guarantees, not as a complete account of Belgium's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -90,7 +90,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Bulgaria's EU membership guarantees, not as a complete account of Bulgaria's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Bulgaria's EU membership guarantees, not as a complete account of Bulgaria's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -124,7 +124,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Croatia's EU membership guarantees, not as a complete account of Croatia's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Croatia's EU membership guarantees, not as a complete account of Croatia's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -158,7 +158,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Cyprus's EU membership guarantees, not as a complete account of Cyprus's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Cyprus's EU membership guarantees, not as a complete account of Cyprus's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -192,7 +192,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Czechia's EU membership guarantees, not as a complete account of Czechia's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Czechia's EU membership guarantees, not as a complete account of Czechia's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -226,7 +226,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Denmark's EU membership guarantees, not as a complete account of Denmark's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Denmark's EU membership guarantees, not as a complete account of Denmark's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -260,7 +260,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Estonia's EU membership guarantees, not as a complete account of Estonia's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Estonia's EU membership guarantees, not as a complete account of Estonia's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -294,7 +294,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Finland's EU membership guarantees, not as a complete account of Finland's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Finland's EU membership guarantees, not as a complete account of Finland's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -328,7 +328,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor France's EU membership guarantees, not as a complete account of France's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor France's EU membership guarantees, not as a complete account of France's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -362,7 +362,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Germany's EU membership guarantees, not as a complete account of Germany's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Germany's EU membership guarantees, not as a complete account of Germany's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -396,7 +396,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Greece's EU membership guarantees, not as a complete account of Greece's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Greece's EU membership guarantees, not as a complete account of Greece's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -430,7 +430,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Hungary's EU membership guarantees, not as a complete account of Hungary's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Hungary's EU membership guarantees, not as a complete account of Hungary's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -464,7 +464,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Ireland's EU membership guarantees, not as a complete account of Ireland's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Ireland's EU membership guarantees, not as a complete account of Ireland's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -498,7 +498,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Italy's EU membership guarantees, not as a complete account of Italy's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Italy's EU membership guarantees, not as a complete account of Italy's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -532,7 +532,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Latvia's EU membership guarantees, not as a complete account of Latvia's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Latvia's EU membership guarantees, not as a complete account of Latvia's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -566,7 +566,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Lithuania's EU membership guarantees, not as a complete account of Lithuania's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Lithuania's EU membership guarantees, not as a complete account of Lithuania's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -600,7 +600,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Luxembourg's EU membership guarantees, not as a complete account of Luxembourg's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Luxembourg's EU membership guarantees, not as a complete account of Luxembourg's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -634,7 +634,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Malta's EU membership guarantees, not as a complete account of Malta's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Malta's EU membership guarantees, not as a complete account of Malta's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -668,7 +668,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Netherlands's EU membership guarantees, not as a complete account of Netherlands's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Netherlands's EU membership guarantees, not as a complete account of Netherlands's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -702,7 +702,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Poland's EU membership guarantees, not as a complete account of Poland's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Poland's EU membership guarantees, not as a complete account of Poland's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -736,7 +736,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Portugal's EU membership guarantees, not as a complete account of Portugal's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Portugal's EU membership guarantees, not as a complete account of Portugal's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -770,7 +770,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Romania's EU membership guarantees, not as a complete account of Romania's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Romania's EU membership guarantees, not as a complete account of Romania's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -804,7 +804,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Slovakia's EU membership guarantees, not as a complete account of Slovakia's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Slovakia's EU membership guarantees, not as a complete account of Slovakia's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -838,7 +838,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Slovenia's EU membership guarantees, not as a complete account of Slovenia's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Slovenia's EU membership guarantees, not as a complete account of Slovenia's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -906,7 +906,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Spain's EU membership guarantees, not as a complete account of Spain's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Spain's EU membership guarantees, not as a complete account of Spain's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",
@@ -940,7 +940,7 @@
       },
       "total": 10,
       "readiness": 100,
-      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, most high-risk obligations from August 2026. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. Article 50 imposes disclosure duties for chatbots, synthetic media and emotion recognition. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Sweden's EU membership guarantees, not as a complete account of Sweden's own measures.",
+      "note": "Scored at EU level. Regulation (EU) 2024/1689, the AI Act, entered into force in August 2024 and applies in stages: prohibitions from February 2025, general-purpose model obligations from August 2025, Article 50 transparency duties from August 2026. The Digital Omnibus on AI, in force from July 2026, deferred the high-risk obligations to December 2027 for stand-alone Annex III systems and to August 2028 for systems embedded in regulated products; it did not defer Article 50. The AI Office supervises general-purpose models directly; member states designate national market surveillance authorities. The readiness score counts machinery that exists, so deferring when an obligation bites does not lower it. National implementation differs, most visibly in which authority has been designated, and that difference is not scored here. Read this as the floor Sweden's EU membership guarantees, not as a complete account of Sweden's own measures.",
       "instruments": [
         {
           "title": "Regulation (EU) 2024/1689 (AI Act)",

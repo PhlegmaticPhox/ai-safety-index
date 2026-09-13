@@ -10,6 +10,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
+import BarTable from "../../components/BarTable.astro";
 import StatTile from "../../components/StatTile.astro";
 import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
 import { alpha3, alpha3FromAlpha2 } from "../../lib/geo";
@@ -122,7 +123,7 @@ const checked = freshness(byCountry.retrieved);
 ---
 
 <Base
-  title="Adoption | AI Safety Index"
+  title="Adoption"
   description="Who is using AI: enterprises by country, size and industry, set against the share of the population using it."
   cites={cites}
 >
@@ -341,8 +342,9 @@ const checked = freshness(byCountry.retrieved);
       <div class="section-head">
         <h2>Adoption scales with headcount</h2>
         <p>
-          The cleanest gradient in the enterprise data. A firm with 250 or more people employed is
-          more than three times as likely to use AI as one with fewer than 50.
+          Share of enterprises using at least one AI technology, by number of people employed.
+          A firm with 250 or more staff is more than three times as likely to use AI as one with
+          fewer than 50.
         </p>
       </div>
 
@@ -387,8 +389,8 @@ const checked = freshness(byCountry.retrieved);
       <div class="section-head">
         <h2>By what the firm does</h2>
         <p>
-          Information and computing at one end, hospitality and construction at the other. The
-          spread across activities is wider than the spread across countries.
+          Share of enterprises using at least one AI technology, by economic activity. The spread
+          across activities is wider than the spread across countries.
         </p>
       </div>
 
@@ -468,8 +470,8 @@ const checked = freshness(byCountry.retrieved);
       <div class="section-head">
         <h2>What they use it for</h2>
         <p>
-          The seven technologies the survey asks about individually. Language work leads; the
-          physical ones trail a long way behind.
+          The seven technologies the survey asks about individually, as a share of all
+          enterprises.
         </p>
       </div>
 
@@ -523,39 +525,18 @@ const checked = freshness(byCountry.retrieved);
       </div>
 
       <figure class="chart">
-        <div class="scroll-x">
-          <table class="bars">
-            <caption class="visually-hidden">
-              Share of enterprises using at least one AI technology, by country, {year}.
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Country</th>
-                <th scope="col" class="ta-end">Enterprises using AI</th>
-                <th scope="col" class="bar-col">
-                  <span class="visually-hidden">Relative magnitude</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                byCountry.records.map((row) => (
-                  <tr>
-                    <th scope="row">{row.name}</th>
-                    <td class="ta-end num">{row.share}%</td>
-                    <td class="bar-col">
-                      <span
-                        class="bar"
-                        style={`--w:${((row.share / countryMax) * 100).toFixed(1)}%`}
-                        aria-hidden="true"
-                      />
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
+        <BarTable
+          rows={byCountry.records.map((row) => ({
+            label: row.name,
+            value: row.share,
+            display: `${row.share}%`,
+          }))}
+          head="Country"
+          valueHead="Enterprises using AI"
+          top={10}
+          max={countryMax}
+          caption={`Share of enterprises using at least one AI technology, by country, ${year}.`}
+        />
 
         <p class="caveat">
           The EU aggregate and the euro area are excluded from this list, because they are made of

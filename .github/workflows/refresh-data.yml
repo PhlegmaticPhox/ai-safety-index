@@ -49,11 +49,17 @@ jobs:
       - name: Policy index self-check
         run: python etl/build_policy_index.py --self-check
 
+      - name: Frontier index self-check
+        run: python etl/build_frontier_index.py --self-check
+
       - name: Eurostat decoder self-check
         run: python etl/fetch_eurostat.py --self-check
 
       - name: Palette contrast check
         run: python etl/check_contrast.py
+
+      - name: OpenAlex query self-check
+        run: python etl/fetch_openalex.py --self-check
 
       - name: Fetch and process every source
         run: python etl/run_all.py
