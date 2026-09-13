@@ -199,6 +199,82 @@ const openShare = latestFullYear
   : 0;
 
 /* ---------------------------------------------------------------------------
+   3b. How far the open-weight frontier sits behind the overall one.
+
+   The one release decision that cannot be reversed is publishing weights, so
+   the question that matters for it is not how many open models there are but
+   how capable the most capable one is. Nobody plots this, and both series are
+   already here: a running maximum of training compute over all models, and the
+   same over models released with open weights.
+
+   The lag is read horizontally, not vertically. For the current open-weight
+   record, find the first date the overall frontier reached that level; the gap
+   between the two dates is how far behind open weights are in time, which is a
+   more useful number than a ratio because it is the quantity policy arguments
+   are actually about.
+   --------------------------------------------------------------------------- */
+const accessOf = new Map(releases.records.map((r) => [r.model, r.accessibility]));
+
+function frontierSteps(rows: typeof computePoints) {
+  const steps: typeof computePoints = [];
+  let best = -Infinity;
+  for (const point of [...rows].sort((a, b) => a.published.localeCompare(b.published))) {
+    if (point.y > best) {
+      best = point.y;
+      steps.push(point);
+    }
+  }
+  return steps;
+}
+
+const overallFrontier = frontierSteps(computePoints);
+const openFrontier = frontierSteps(
+  computePoints.filter((m) => accessOf.get(m.model) === "Open weights"),
+);
+const openRecord = openFrontier[openFrontier.length - 1];
+const overallRecord = overallFrontier[overallFrontier.length - 1];
+
+/* The first overall-frontier model to reach the current open-weight level. There
+   is always one, because the overall frontier includes the open models. */
+const matchedBy = overallFrontier.find((m) => m.y >= openRecord.y)!;
+const monthsBetween = (a: string, b: string) =>
+  Math.round(
+    (new Date(b).getTime() - new Date(a).getTime()) / (1000 * 60 * 60 * 24 * 30.44),
+  );
+const lagMonths = monthsBetween(matchedBy.published, openRecord.published);
+const staleMonths = monthsBetween(openRecord.published, new Date().toISOString().slice(0, 10));
+const gapMultiple = 10 ** (overallRecord.y - openRecord.y);
+
+/* This chart gets its own scale rather than borrowing the scatter's and shifting
+   the result. The first attempt translated a group by the height difference,
+   which put both step lines off the top of the frame while the axis labels
+   stayed put, and the chart still rendered without complaint. */
+const OW = { w: 900, h: 300, l: 56, r: 16, t: 22, b: 30 };
+const owFrom = Math.min(...openFrontier.map((p) => p.t), 2016);
+const owMinExp = Math.floor(Math.min(...openFrontier.map((p) => p.y)));
+const owMaxExp = Math.ceil(overallRecord.y);
+const ox = (t: number) => OW.l + ((t - owFrom) / (tMax - owFrom)) * (OW.w - OW.l - OW.r);
+const oy = (y: number) =>
+  OW.h - OW.b - ((y - owMinExp) / (owMaxExp - owMinExp)) * (OW.h - OW.t - OW.b);
+const owTicks = Array.from({ length: owMaxExp - owMinExp + 1 }, (_, i) => owMinExp + i).filter(
+  (exp) => exp % 2 === owMaxExp % 2,
+);
+
+const stepPath = (steps: typeof computePoints) => {
+  const shown = steps.filter((p) => p.t >= owFrom);
+  if (!shown.length) return "";
+  let d = `M${ox(shown[0].t).toFixed(1)} ${oy(shown[0].y).toFixed(1)}`;
+  for (let i = 1; i < shown.length; i += 1) {
+    d += ` L${ox(shown[i].t).toFixed(1)} ${oy(shown[i - 1].y).toFixed(1)}`;
+    d += ` L${ox(shown[i].t).toFixed(1)} ${oy(shown[i].y).toFixed(1)}`;
+  }
+  // Carry each line to the right edge. A frontier that has stopped moving is
+  // exactly the finding here, and a line that simply stops reads as missing data.
+  d += ` L${ox(tMax).toFixed(1)} ${oy(shown[shown.length - 1].y).toFixed(1)}`;
+  return d;
+};
+
+/* ---------------------------------------------------------------------------
    4. Who builds them.
    --------------------------------------------------------------------------- */
 const RECENT_FROM = new Date().getUTCFullYear() - 3;
@@ -305,7 +381,7 @@ const checked = freshness(models.retrieved);
           span={3}
           value={aboveThreshold.length.toString()}
           label="Models at or above the EU systemic-risk compute threshold"
-          detail="Article 51 of the AI Act sets it at 1e25 FLOP. It remains the only compute threshold written into binding law anywhere."
+          detail="Article 51 of the AI Act sets it at 1e25 FLOP. It is the lower of the two compute thresholds currently in force, and the only one that applies market-wide rather than to one US state."
           source={models.sources}
           retrieved={models.retrieved}
           note="Counted from models with a reported or estimated compute figure. Many values are estimates."
@@ -610,7 +686,156 @@ const checked = freshness(models.retrieved);
   </section>
 
   <!-- WHO -->
-  <section class="section" id="builders">
+  <!-- OPEN-WEIGHT LAG. The release decision nobody can reverse, measured. -->
+  <section class="section" id="open-weights">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How far behind the open-weight frontier is</h2>
+        <p>
+          Largest training run to date over all models, against the same over models released
+          with open weights. Both are running maxima, so neither line can fall.
+        </p>
+      </div>
+
+      <ul class="strip">
+        <li class="strip__item">
+          <span class="strip__value">{lagMonths} months</span>
+          <span class="strip__label">
+            between the overall frontier reaching {fmtCompute(openRecord.compute_flop)} FLOP and
+            an open-weight model doing so
+            <Provenance
+              source={[...models.sources, ...releases.sources]}
+              retrieved={models.retrieved}
+              label="figure"
+              note="Measured horizontally: the date the open-weight record was set, minus the date the first model of any kind reached that compute level. Computed by this site from Epoch's figures."
+            />
+          </span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{staleMonths} months</span>
+          <span class="strip__label">
+            since the open-weight record last moved, set by {openRecord.model}
+          </span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{gapMultiple.toFixed(0)}x</span>
+          <span class="strip__label">
+            more compute in {overallRecord.model} than in the largest open-weight model
+          </span>
+        </li>
+        <li class="strip__item">
+          <span class="strip__value">{openFrontier.length}</span>
+          <span class="strip__label">
+            times the open-weight record has been broken since {openFrontier[0].published.slice(0, 4)}
+          </span>
+        </li>
+      </ul>
+
+      <figure class="chart">
+        <figcaption class="chart__cap">
+          <span>
+            Largest training run to date, all models against open-weight models
+            <Provenance
+              source={[...models.sources, ...releases.sources]}
+              retrieved={models.retrieved}
+              note="Running maximum of training compute by publication date. Accessibility is Epoch's classification; models with no accessibility recorded are counted in the overall line and not in the open-weight one."
+            />
+          </span>
+          <span class="chart__meta mono">{FROM_YEAR} to {tMax}</span>
+        </figcaption>
+
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${OW.w} ${OW.h}`}
+            class="plot"
+            role="img"
+            aria-label={`Running maximum of training compute for all models against open-weight models. The open-weight record is ${fmtCompute(openRecord.compute_flop)} FLOP, set by ${openRecord.model} in ${openRecord.published}, and has not moved in ${staleMonths} months.`}
+          >
+            {
+              owTicks.map((exp) => (
+                <g>
+                  <line
+                    x1={OW.l}
+                    x2={OW.w - OW.r}
+                    y1={oy(exp)}
+                    y2={oy(exp)}
+                    stroke="var(--line-soft)"
+                    stroke-width="1"
+                  />
+                  <text x={OW.l - 8} y={oy(exp) + 3} text-anchor="end" class="ax">
+                    1e{exp}
+                  </text>
+                </g>
+              ))
+            }
+            {
+              Array.from({ length: tMax - Math.floor(owFrom) + 1 }, (_, i) => Math.floor(owFrom) + i)
+                .filter((y) => y % 2 === 0)
+                .map((y) => (
+                  <text x={ox(y)} y={OW.h - 10} text-anchor="middle" class="ax">
+                    {y}
+                  </text>
+                ))
+            }
+
+            <path
+              d={stepPath(overallFrontier)}
+              fill="none"
+              stroke="var(--ink)"
+              stroke-opacity="0.55"
+              stroke-width="2"
+            />
+            <path d={stepPath(openFrontier)} fill="none" stroke="var(--accent)" stroke-width="2" />
+
+            <line
+              x1={ox(matchedBy.t)}
+              x2={ox(openRecord.t)}
+              y1={oy(openRecord.y)}
+              y2={oy(openRecord.y)}
+              stroke="var(--accent)"
+              stroke-width="1"
+              stroke-dasharray="3 3"
+            />
+            <circle cx={ox(matchedBy.t)} cy={oy(matchedBy.y)} r="3.5" fill="var(--ink)" fill-opacity="0.55" />
+            <circle cx={ox(openRecord.t)} cy={oy(openRecord.y)} r="3.5" fill="var(--accent)" />
+            <text
+              x={(ox(matchedBy.t) + ox(openRecord.t)) / 2}
+              y={oy(openRecord.y) - 9}
+              text-anchor="middle"
+              class="ax ax--label"
+              fill="var(--accent-ink)"
+            >
+              {lagMonths} months behind
+            </text>
+          </svg>
+        </div>
+
+        <div class="key">
+          <span class="key__item">
+            <span class="key__swatch" style="--swatch:var(--ink)" />
+            all models
+          </span>
+          <span class="key__item">
+            <span class="key__swatch" />
+            open weights
+          </span>
+        </div>
+      </figure>
+
+      <p class="caveat">
+        Both lines are running maxima, so a flat stretch means no larger run has been reported,
+        not that anything got smaller. The open-weight line counts only models Epoch records as
+        released with open weights and with a compute figure attached; a model with unrecorded
+        accessibility falls into the overall line and not this one, so the true open-weight
+        frontier can only be at or above what is drawn. Compute figures are frequently
+        estimates. Training compute is also not capability: a smaller, better-trained model can
+        beat a larger one, which is the main reason this gap has narrowed in benchmark terms
+        faster than it has in FLOP.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk" id="builders">
     <div class="wrap">
       <div class="section-head">
         <h2>Who builds them</h2>

@@ -266,6 +266,11 @@ Four joins nobody else publishes. If a change would break one of them, it is the
    year with the literal query printed next to every series, so the definition is arguable.
 4. **What law applies where** (`/policy/`). Eleven jurisdictions, and the number the page leads on
    is how few binding instruments name AI at all.
+5. **How far behind the open-weight frontier is** (`/capability/#open-weights`). Two running
+   maxima of training compute, read horizontally rather than vertically: the gap in months
+   between the overall frontier reaching a level and an open-weight model doing so. Publishing
+   weights is the one release decision nobody can reverse, and this is the only measure of it
+   that is about capability rather than count.
 
 Phases and exit tests in `docs/02-plan.md`. Unbuilt ideas, scored, in `docs/01-ideas-backlog.md`.
 

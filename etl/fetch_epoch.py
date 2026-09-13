@@ -26,10 +26,10 @@ CLUSTERS = "epoch-gpu-clusters"
 HARDWARE = "epoch-ml-hardware"
 
 # EU AI Act Art. 51(2): a GPAI model is presumed to carry systemic risk when the
-# cumulative training compute exceeds 10^25 FLOP. This is the only compute
-# threshold currently written into binding law anywhere, which is why it is the
-# only one we plot. Others exist in guidance and rescinded executive orders; those
-# belong in the governance section as text, not as a line on a chart.
+# cumulative training compute exceeds 10^25 FLOP. It is the lower of the two
+# thresholds now in force and the only one that applies market-wide rather than
+# to a single US state, which is why this by-year count uses it. The full list,
+# including the revoked and vetoed ones, is build_frontier_index.THRESHOLDS.
 EU_SYSTEMIC_RISK_FLOP = 1e25
 
 
