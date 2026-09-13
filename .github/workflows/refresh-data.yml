@@ -32,6 +32,13 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Pinned from the same file Cloudflare's builder reads, so the build that
+      # verifies the site here is the build that deploys there. Without this the
+      # runner picks its own default and the two quietly drift apart.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
       - name: Install ETL dependencies
         run: pip install --disable-pip-version-check -r etl/requirements.txt
 
@@ -67,6 +74,10 @@ jobs:
       # A build here catches a schema change that produced valid JSON the site
       # cannot render, before that reaches the deployed site.
       - name: Verify the site still builds
+        env:
+          # Only a render check, so the value does not have to be the live origin,
+          # but it does have to be set: the build refuses to run in CI without it.
+          SITE_URL: ${{ vars.SITE_URL || 'https://ai-safety-index.invalid' }}
         run: |
           npm ci
           npm run check:lib
