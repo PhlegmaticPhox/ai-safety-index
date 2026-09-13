@@ -3,7 +3,7 @@
 An independent, cited index of AI capability, governance and safety.
 
 Capability data, governance data and incident data live on separate sites, in separate formats,
-aimed at separate audiences. This puts them on one screen — and shows the provenance, licence and
+aimed at separate audiences. This puts them on one screen - and shows the provenance, licence and
 limitations of every figure rather than asking you to take it on trust.
 
 **Status: Phase 0.** Foundation and citation layer working end to end. See [`docs/02-plan.md`](docs/02-plan.md).
@@ -30,7 +30,7 @@ This is the one architectural rule the whole project rests on, so it is worth un
 before changing anything.
 
 1. **[`data/sources.json`](data/sources.json)** is the registry. Every source is declared once,
-   with its licence, attribution string, canonical URL, update cadence and — importantly — its
+   with its licence, attribution string, canonical URL, update cadence and - importantly - its
    known limitations.
 
 2. **Every processed record carries a `source_id`.** Records stay small; licence and attribution
@@ -41,8 +41,8 @@ before changing anything.
    source forbids republication; `src/lib/sources.ts:assertRenderable()` refuses to *render* one.
    Two checks because data can also arrive hand-authored rather than through the ETL.
 
-   Sources that must not be republished — Artificial Analysis (free tier forbids redistribution)
-   and the Stanford AI Index (CC BY-NC-ND, no derivative charts) — are registered *precisely so
+   Sources that must not be republished - Artificial Analysis (free tier forbids redistribution)
+   and the Stanford AI Index (CC BY-NC-ND, no derivative charts) - are registered *precisely so
    that wiring them in fails the build* instead of silently shipping.
 
 4. **`<Provenance>`** turns a `source_id` into the click-through popover on any figure. It uses
@@ -51,7 +51,7 @@ before changing anything.
 Adding a source therefore means: register it in `sources.json`, write an ETL module that stamps
 `source_id` onto each record, and pass `source` to `<Provenance>`. Nothing else.
 
-> **If you edit `Provenance.astro`, keep its output phrasing-only** — spans, no `div`/`p`/`dl`.
+> **If you edit `Provenance.astro`, keep its output phrasing-only** - spans, no `div`/`p`/`dl`.
 > The marker sits inside `<p>`, and the HTML parser auto-closes a paragraph when it meets a
 > block-level tag, which silently hoists the panel out and leaves an empty paragraph behind.
 
@@ -60,7 +60,7 @@ Adding a source therefore means: register it in `sources.json`, write an ETL mod
 ## Layout
 
 ```
-data/sources.json      source registry — licences and attribution live here
+data/sources.json      source registry - licences and attribution live here
 data/processed/        generated JSON, committed so data changes are reviewable diffs
 data/raw/              fetched artefacts, gitignored
 etl/                   Python fetchers, one per source. Idempotent.
@@ -81,8 +81,8 @@ source's terms are recorded in `data/sources.json` and shown in the UI next to t
 produces. Current sources include Epoch AI and Our World in Data (CC BY 4.0), Microsoft's AI
 Diffusion Report (MIT), and the US Federal Register and GOV.UK (public domain / OGL v3.0).
 
-Original work in this repository — site code, written explainers, and the Governance Readiness
-Index — is CC BY 4.0.
+Original work in this repository - site code, written explainers, and the Governance Readiness
+Index - is CC BY 4.0.
 
 Found an error? Open an issue. Corrections are logged publicly rather than quietly patched.
 

@@ -1,0 +1,78 @@
+---
+/**
+ * Build-time SVG line of a benchmark's frontier score over time.
+ *
+ * Rendered from real data at build, so it ships as markup with no client JS and
+ * no chart library. The accompanying table in the parent carries the same numbers
+ * for screen readers, so this is marked decorative.
+ */
+interface Props {
+  points: Array<{ month: string; best: number }>;
+  /** Draw a reference line at this score, e.g. a saturation marker. */
+  marker?: number;
+  height?: number;
+  width?: number;
+}
+
+const { points, marker, height = 56, width = 240 } = Astro.props;
+
+const pad = 3;
+const xs = (i: number) => pad + (i / Math.max(points.length - 1, 1)) * (width - pad * 2);
+// Scores are 0 to 1 throughout this dataset, so the scale is fixed rather than
+// fitted. A fitted scale would make a flat 0.95 line look like dramatic growth.
+const ys = (v: number) => height - pad - v * (height - pad * 2);
+
+const line = points.map((p, i) => `${i === 0 ? "M" : "L"}${xs(i).toFixed(1)} ${ys(p.best).toFixed(1)}`).join(" ");
+const area = `${line} L${xs(points.length - 1).toFixed(1)} ${height - pad} L${pad} ${height - pad} Z`;
+const last = points[points.length - 1];
+const gradientId = `spark-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+  class="spark"
+  viewBox={`0 0 ${width} ${height}`}
+  preserveAspectRatio="none"
+  role="presentation"
+  aria-hidden="true"
+>
+  <defs>
+    <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.22"></stop>
+      <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+
+  {
+    marker !== undefined && (
+      <line
+        x1={pad}
+        x2={width - pad}
+        y1={ys(marker)}
+        y2={ys(marker)}
+        stroke="var(--line)"
+        stroke-width="1"
+        stroke-dasharray="3 3"
+      />
+    )
+  }
+
+  <path d={area} fill={`url(#${gradientId})`}></path>
+  <path
+    d={line}
+    fill="none"
+    stroke="var(--accent)"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  ></path>
+  <circle cx={xs(points.length - 1)} cy={ys(last.best)} r="2.5" fill="var(--accent)"></circle>
+</svg>
+
+<style>
+  .spark {
+    inline-size: 100%;
+    block-size: 56px;
+    display: block;
+    overflow: visible;
+  }
+</style>

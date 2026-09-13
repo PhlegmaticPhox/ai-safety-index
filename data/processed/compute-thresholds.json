@@ -1,0 +1,319 @@
+{
+  "dataset": "compute-thresholds",
+  "generated": "2026-09-13T02:51:36+00:00",
+  "retrieved": "2026-09-13T02:45:23+00:00",
+  "sources": [
+    "epoch-notable-models"
+  ],
+  "unit": "models per year",
+  "notes": "Models whose reported training compute reaches the EU AI Act Article 51 systemic-risk presumption of 1e+25 FLOP. 22 models in the dataset cross it. Compute figures are often estimates, so treat borderline cases as indicative, not as legal findings.",
+  "count": 51,
+  "records": [
+    {
+      "year": "1950",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1957",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1959",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1960",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1962",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1963",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1965",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1966",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1975",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1980",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1983",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1986",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1987",
+      "above_threshold": 0,
+      "below_threshold": 3,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1988",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1989",
+      "above_threshold": 0,
+      "below_threshold": 4,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1990",
+      "above_threshold": 0,
+      "below_threshold": 3,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1991",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1992",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1993",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1994",
+      "above_threshold": 0,
+      "below_threshold": 5,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1995",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1996",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1997",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1998",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "1999",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2000",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2001",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2003",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2004",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2005",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2006",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2007",
+      "above_threshold": 0,
+      "below_threshold": 2,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2008",
+      "above_threshold": 0,
+      "below_threshold": 1,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2009",
+      "above_threshold": 0,
+      "below_threshold": 5,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2010",
+      "above_threshold": 0,
+      "below_threshold": 5,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2011",
+      "above_threshold": 0,
+      "below_threshold": 5,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2012",
+      "above_threshold": 0,
+      "below_threshold": 8,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2013",
+      "above_threshold": 0,
+      "below_threshold": 10,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2014",
+      "above_threshold": 0,
+      "below_threshold": 14,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2015",
+      "above_threshold": 0,
+      "below_threshold": 11,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2016",
+      "above_threshold": 0,
+      "below_threshold": 16,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2017",
+      "above_threshold": 0,
+      "below_threshold": 20,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2018",
+      "above_threshold": 0,
+      "below_threshold": 24,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2019",
+      "above_threshold": 0,
+      "below_threshold": 38,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2020",
+      "above_threshold": 0,
+      "below_threshold": 33,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2021",
+      "above_threshold": 0,
+      "below_threshold": 62,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2022",
+      "above_threshold": 0,
+      "below_threshold": 60,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2023",
+      "above_threshold": 4,
+      "below_threshold": 61,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2024",
+      "above_threshold": 6,
+      "below_threshold": 40,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2025",
+      "above_threshold": 8,
+      "below_threshold": 32,
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "year": "2026",
+      "above_threshold": 4,
+      "below_threshold": 14,
+      "source_id": "epoch-notable-models"
+    }
+  ]
+}

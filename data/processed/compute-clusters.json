@@ -1,0 +1,265 @@
+{
+  "dataset": "compute-clusters",
+  "generated": "2026-09-13T02:51:36+00:00",
+  "retrieved": "2026-09-13T02:45:23+00:00",
+  "sources": [
+    "epoch-gpu-clusters"
+  ],
+  "unit": "clusters and megawatts",
+  "notes": "Publicly reported GPU clusters grouped by country. Power capacity is summed only over clusters where it is known, so totals understate real capacity. Reporting is uneven between countries: this measures documented capacity, which is not the same as capacity.",
+  "count": 36,
+  "records": [
+    {
+      "country": "China",
+      "clusters": 188,
+      "power_mw": 296.9,
+      "clusters_with_known_power": 140,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "United States of America",
+      "clusters": 119,
+      "power_mw": 1962.8,
+      "clusters_with_known_power": 117,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Japan",
+      "clusters": 25,
+      "power_mw": 43.1,
+      "clusters_with_known_power": 25,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "France",
+      "clusters": 14,
+      "power_mw": 33.2,
+      "clusters_with_known_power": 14,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "South Korea",
+      "clusters": 12,
+      "power_mw": 12.7,
+      "clusters_with_known_power": 10,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Germany",
+      "clusters": 11,
+      "power_mw": 25.2,
+      "clusters_with_known_power": 11,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Italy",
+      "clusters": 9,
+      "power_mw": 39.9,
+      "clusters_with_known_power": 9,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Brazil",
+      "clusters": 9,
+      "power_mw": 7.3,
+      "clusters_with_known_power": 9,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Russia",
+      "clusters": 8,
+      "power_mw": 5.7,
+      "clusters_with_known_power": 7,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "United Kingdom",
+      "clusters": 6,
+      "power_mw": 12.0,
+      "clusters_with_known_power": 6,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Canada",
+      "clusters": 5,
+      "power_mw": 5.5,
+      "clusters_with_known_power": 5,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Thailand",
+      "clusters": 5,
+      "power_mw": 3.5,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Switzerland",
+      "clusters": 4,
+      "power_mw": 26.8,
+      "clusters_with_known_power": 4,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Finland",
+      "clusters": 4,
+      "power_mw": 26.0,
+      "clusters_with_known_power": 4,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Sweden",
+      "clusters": 4,
+      "power_mw": 7.4,
+      "clusters_with_known_power": 4,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Poland",
+      "clusters": 4,
+      "power_mw": 1.8,
+      "clusters_with_known_power": 4,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Norway",
+      "clusters": 3,
+      "power_mw": 29.2,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Saudi Arabia",
+      "clusters": 3,
+      "power_mw": 14.2,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "India",
+      "clusters": 3,
+      "power_mw": 6.7,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "United Arab Emirates",
+      "clusters": 3,
+      "power_mw": 3.0,
+      "clusters_with_known_power": 2,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Taiwan",
+      "clusters": 3,
+      "power_mw": 4.2,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Singapore",
+      "clusters": 3,
+      "power_mw": 2.0,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Australia",
+      "clusters": 3,
+      "power_mw": 1.9,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Netherlands",
+      "clusters": 3,
+      "power_mw": 2.1,
+      "clusters_with_known_power": 3,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Iceland",
+      "clusters": 2,
+      "power_mw": 7.3,
+      "clusters_with_known_power": 2,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Israel",
+      "clusters": 2,
+      "power_mw": 4.4,
+      "clusters_with_known_power": 2,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Hong Kong",
+      "clusters": 2,
+      "power_mw": 0.6,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Spain",
+      "clusters": 1,
+      "power_mw": 6.0,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Denmark",
+      "clusters": 1,
+      "power_mw": 2.9,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Luxembourg",
+      "clusters": 1,
+      "power_mw": 0.7,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Czechia",
+      "clusters": 1,
+      "power_mw": 0.5,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Slovenia",
+      "clusters": 1,
+      "power_mw": 0.2,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Vietnam",
+      "clusters": 1,
+      "power_mw": 0.1,
+      "clusters_with_known_power": 1,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Mexico",
+      "clusters": 1,
+      "power_mw": 0.0,
+      "clusters_with_known_power": 0,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Philippines (the)",
+      "clusters": 1,
+      "power_mw": 0.0,
+      "clusters_with_known_power": 0,
+      "source_id": "epoch-gpu-clusters"
+    },
+    {
+      "country": "Malaysia",
+      "clusters": 1,
+      "power_mw": 0.0,
+      "clusters_with_known_power": 0,
+      "source_id": "epoch-gpu-clusters"
+    }
+  ]
+}

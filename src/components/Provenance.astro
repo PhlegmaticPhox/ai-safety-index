@@ -6,8 +6,8 @@
  * light-dismiss and Escape handling, and it lives in the top layer so it cannot
  * be clipped by an ancestor's overflow.
  *
- * Everything this emits is PHRASING content — spans only, no div/p/dl. That is
- * load-bearing, not fussiness: this marker sits inside <p>, and the HTML parser
+ * Everything this emits is PHRASING content: spans only, no div/p/dl. That is
+ * load-bearing, not fussiness. This marker sits inside <p>, and the HTML parser
  * auto-closes a paragraph when it meets a block-level tag, which silently hoists
  * the panel out of the paragraph and leaves an empty <p> behind. Layout comes
  * from CSS display instead. Keep it phrasing-only.
@@ -29,7 +29,6 @@ const ids = Array.isArray(source) ? source : [source];
 const entries = ids.map((id) => ({ id, ...getSource(id) }));
 const age = retrieved ? freshness(retrieved) : null;
 
-// Stable but unique — multiple markers can cite the same source on one page.
 const popoverId = `prov-${ids.join("-")}-${Math.random().toString(36).slice(2, 8)}`;
 const anchorName = `--${popoverId}`;
 ---
@@ -42,19 +41,14 @@ const anchorName = `--${popoverId}`;
     style={`anchor-name:${anchorName}`}
     aria-label={`Show source and licence for this ${label}`}
   >
-    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" width="12" height="12">
-      <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
-      <path d="M8 7v4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-      <circle cx="8" cy="4.6" r="0.9" fill="currentColor"></circle>
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" width="11" height="11">
+      <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.6"></circle>
+      <path d="M8 7v4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+      <circle cx="8" cy="4.6" r="0.95" fill="currentColor"></circle>
     </svg>
   </button>
 
-  <span
-    popover
-    id={popoverId}
-    class="prov__panel"
-    style={`position-anchor:${anchorName}`}
-  >
+  <span popover id={popoverId} class="prov__panel" style={`position-anchor:${anchorName}`}>
     {note && <span class="prov__note">{note}</span>}
 
     {
@@ -81,7 +75,7 @@ const anchorName = `--${popoverId}`;
                 <span class="prov__key">Retrieved</span>
                 <span class:list={["prov__val", age.stale && "is-stale"]}>
                   {age.label}
-                  {age.stale && " — may be out of date"}
+                  {age.stale && " (may be out of date)"}
                 </span>
               </>
             )}
@@ -103,25 +97,25 @@ const anchorName = `--${popoverId}`;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    /* 24px hit area on a 12px glyph, without disturbing the text baseline. */
+    /* 24px hit area on an 11px glyph, without disturbing the text baseline. */
     inline-size: 1.5rem;
     block-size: 1.5rem;
-    margin-inline-start: 0.1em;
+    margin-inline-start: 0.05em;
     margin-block: -0.5rem;
     padding: 0;
     border: 0;
-    border-radius: 50%;
+    border-radius: var(--r-pill);
     background: none;
-    color: var(--c-muted);
+    color: var(--muted);
     cursor: help;
     vertical-align: baseline;
-    transition: color 120ms ease, background-color 120ms ease;
+    transition: color 0.18s var(--ease), background-color 0.18s var(--ease);
   }
 
   .prov__trigger:hover,
   .prov__trigger:focus-visible {
-    color: var(--c-accent);
-    background: var(--c-accent-wash);
+    color: var(--accent);
+    background: var(--accent-wash);
   }
 
   .prov__panel:popover-open {
@@ -131,18 +125,19 @@ const anchorName = `--${popoverId}`;
   .prov__panel {
     inline-size: min(28rem, calc(100vw - 2rem));
     padding: 1rem 1.125rem;
-    border: 1px solid var(--c-line);
-    border-radius: var(--radius);
-    background: var(--c-surface);
-    color: var(--c-ink);
-    box-shadow: 0 8px 28px rgb(0 0 0 / 0.16);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--surface-2);
+    color: var(--ink);
+    box-shadow: 0 16px 44px rgb(0 0 0 / 0.55);
     font-family: var(--f-sans);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.55;
     text-align: start;
+    letter-spacing: 0;
     /* Attach to the trigger where supported; falls back to the UA's centred
-       position otherwise, which is still perfectly usable. */
+       position otherwise, which stays perfectly usable. */
     position-area: block-end span-inline-end;
     position-try-fallbacks: block-start span-inline-end, block-end span-inline-start,
       block-start span-inline-start;
@@ -151,9 +146,9 @@ const anchorName = `--${popoverId}`;
 
   .prov__note {
     display: block;
-    margin-block-end: 0.75rem;
-    padding-block-end: 0.75rem;
-    border-block-end: 1px solid var(--c-line);
+    margin-block-end: 0.7rem;
+    padding-block-end: 0.7rem;
+    border-block-end: 1px solid var(--line);
   }
 
   .prov__source {
@@ -161,9 +156,9 @@ const anchorName = `--${popoverId}`;
   }
 
   .prov__source + .prov__source {
-    margin-block-start: 1rem;
-    padding-block-start: 1rem;
-    border-block-start: 1px solid var(--c-line);
+    margin-block-start: 0.9rem;
+    padding-block-start: 0.9rem;
+    border-block-start: 1px solid var(--line);
   }
 
   .prov__name {
@@ -172,31 +167,29 @@ const anchorName = `--${popoverId}`;
 
   .prov__publisher {
     display: block;
-    margin-block: 0.1rem 0.6rem;
-    color: var(--c-muted);
+    margin-block: 0.1rem 0.55rem;
+    color: var(--muted);
   }
 
   .prov__meta {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.15rem 0.75rem;
-    margin-block-end: 0.6rem;
+    gap: 0.1rem 0.75rem;
+    margin-block-end: 0.55rem;
   }
 
   .prov__key {
-    color: var(--c-muted);
-    font-size: 0.8125rem;
+    color: var(--muted);
   }
 
   .is-stale {
-    color: var(--c-warn);
+    color: var(--warn);
   }
 
   .prov__caveat {
     display: block;
-    padding-block-start: 0.6rem;
-    border-block-start: 1px dashed var(--c-line);
-    color: var(--c-muted);
-    font-size: 0.8125rem;
+    padding-block-start: 0.55rem;
+    border-block-start: 1px dashed var(--line);
+    color: var(--muted);
   }
 </style>

@@ -5,7 +5,7 @@ Design rule for the whole pipeline: a processed record never travels without a
 attribution a join rather than a habit, and makes an accidental licence breach a
 build failure instead of a lawyer's letter.
 
-Stdlib only, deliberately — this runs in CI and should have nothing to break.
+Stdlib only, deliberately - this runs in CI and should have nothing to break.
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import ssl
 import time
 import urllib.error
 import urllib.request
@@ -31,6 +32,28 @@ USER_AGENT = "AISafetyIndexBot/0.1 (+https://github.com/; data pipeline; contact
 
 # Licence states that must never reach a rendered chart.
 BLOCKED_REDISTRIBUTION = {"prohibited", "no-derivatives"}
+
+
+def _ssl_context() -> ssl.SSLContext:
+    """Verify TLS against certifi's bundle when it is installed.
+
+    Python on Windows snapshots whatever roots the OS has cached, which can be
+    missing or stale: nist.gov fails verification here with "certificate has
+    expired" while curl fetches it fine, because curl ships its own bundle. Linux
+    CI would not hit that, so without this the pipeline behaves differently on the
+    two machines and a source silently drops out locally.
+
+    Verification is never disabled. If certifi is absent we fall back to the system
+    default, which still verifies; some hosts may simply be unreachable.
+    """
+    try:
+        import certifi
+    except ImportError:
+        return ssl.create_default_context()
+    return ssl.create_default_context(cafile=certifi.where())
+
+
+SSL_CONTEXT = _ssl_context()
 
 
 class LicenceError(RuntimeError):
@@ -115,7 +138,7 @@ def fetch(
     for attempt in range(retries):
         try:
             request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-            with urllib.request.urlopen(request, timeout=60) as response:
+            with urllib.request.urlopen(request, timeout=60, context=SSL_CONTEXT) as response:
                 body = response.read()
             path.write_bytes(body)
             retrieved = utcnow()
@@ -165,14 +188,14 @@ def write_dataset(
 ) -> Path:
     """Write a processed dataset with its provenance envelope attached.
 
-    Passes through guard() first — there is no code path that writes a dataset
+    Passes through guard() first - there is no code path that writes a dataset
     without a licence check.
     """
     guard(*source_ids)
 
     records = list(records)
     if not records:
-        raise ValueError(f"Refusing to write empty dataset {name!r} — upstream probably changed")
+        raise ValueError(f"Refusing to write empty dataset {name!r} - upstream probably changed")
 
     PROCESSED.mkdir(parents=True, exist_ok=True)
     path = PROCESSED / f"{name}.json"
@@ -225,7 +248,7 @@ def _self_check() -> None:
         except LicenceError:
             pass
         else:
-            raise AssertionError(f"guard() failed to block {blocked!r} — licence breach possible")
+            raise AssertionError(f"guard() failed to block {blocked!r} - licence breach possible")
 
     try:
         guard("no-such-source")

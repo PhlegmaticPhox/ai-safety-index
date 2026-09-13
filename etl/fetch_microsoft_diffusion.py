@@ -1,11 +1,11 @@
-"""Microsoft AI Diffusion — share of working-age population using AI tools, by economy.
+"""Microsoft AI Diffusion - share of working-age population using AI tools, by economy.
 
 147 economies, three time points, MIT licensed. This is the exposure layer of the
 flagship map: how much a population actually encounters AI systems, to be set
 against how prepared its jurisdiction is to govern them.
 
 Read the caveats in data/sources.json before drawing conclusions. In short, this
-measures Microsoft-visible AI use, scaled by a model — not observed total AI use.
+measures Microsoft-visible AI use, scaled by a model - not observed total AI use.
 """
 
 from __future__ import annotations
@@ -84,7 +84,7 @@ def run(offline: bool = False) -> None:
         notes=(
             "Share of each economy's working-age population actively using AI tools, "
             "estimated from anonymised Microsoft telemetry adjusted for device and "
-            "internet penetration. Measures Microsoft-visible use, scaled by a model — "
+            "internet penetration. Measures Microsoft-visible use, scaled by a model - "
             "not observed total AI use."
         ),
         retrieved=retrieved,

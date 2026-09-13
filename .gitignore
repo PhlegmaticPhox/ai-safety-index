@@ -3,7 +3,7 @@ dist/
 .astro/
 node_modules/
 
-# ETL raw artefacts — refetchable, often large. Processed JSON IS committed on purpose:
+# ETL raw artefacts - refetchable, often large. Processed JSON IS committed on purpose:
 # it makes every data change a reviewable diff and lets the site build offline.
 data/raw/
 

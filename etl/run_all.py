@@ -20,13 +20,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 MODULES = [
     "fetch_microsoft_diffusion",
+    "fetch_epoch",
+    "fetch_policy_feeds",
+    "fetch_media",
 ]
 
 
 def main() -> int:
     offline = "--offline" in sys.argv
     if offline:
-        print("running offline — using cached raw data only\n")
+        print("running offline - using cached raw data only\n")
 
     failed: list[tuple[str, Exception]] = []
 
@@ -35,7 +38,7 @@ def main() -> int:
         try:
             module = importlib.import_module(name)
             module.run(offline=offline)
-        except Exception as exc:  # noqa: BLE001 — one bad source must not stop the rest
+        except Exception as exc:  # noqa: BLE001 - one bad source must not stop the rest
             failed.append((name, exc))
             print(f"  FAILED: {exc}")
             traceback.print_exc(limit=3)

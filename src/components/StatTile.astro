@@ -1,0 +1,117 @@
+---
+/**
+ * A bento cell carrying one figure, its label, and its citation.
+ *
+ * Span is set by the caller so the grid can have real rhythm rather than a row
+ * of identical boxes. Cell count always matches content count; there is no
+ * blank-tile padding.
+ */
+import Provenance from "./Provenance.astro";
+
+interface Props {
+  value: string;
+  unit?: string;
+  label: string;
+  detail?: string;
+  source?: string | string[];
+  retrieved?: string;
+  note?: string;
+  /** Grid span in columns, out of 6. */
+  span?: number;
+  emphasis?: boolean;
+}
+
+const {
+  value,
+  unit,
+  label,
+  detail,
+  source,
+  retrieved,
+  note,
+  span = 2,
+  emphasis = false,
+} = Astro.props;
+---
+
+<article class:list={["tile", emphasis && "tile--emphasis"]} style={`--span:${span}`}>
+  <p class="tile__label">
+    {label}
+    {source && <Provenance source={source} retrieved={retrieved} note={note} label="figure" />}
+  </p>
+
+  <p class="tile__value num">
+    {value}
+    {unit && <span class="tile__unit">{unit}</span>}
+  </p>
+
+  {detail && <p class="tile__detail">{detail}</p>}
+
+  <slot />
+</article>
+
+<style>
+  .tile {
+    grid-column: span var(--span);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    transition: border-color 0.18s var(--ease), background-color 0.18s var(--ease);
+  }
+
+  .tile:hover {
+    border-color: var(--accent-line);
+  }
+
+  .tile--emphasis {
+    background: var(--surface-2);
+    border-color: var(--accent-line);
+  }
+
+  .tile__label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.15rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .tile__value {
+    font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .tile--emphasis .tile__value {
+    color: var(--accent);
+  }
+
+  .tile__unit {
+    margin-inline-start: 0.15rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+
+  .tile__detail {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    margin-block-start: auto;
+    padding-block-start: 0.5rem;
+  }
+
+  /* Asymmetric spans collapse to a single column on phones. */
+  @media (max-width: 767px) {
+    .tile {
+      grid-column: span 6;
+    }
+  }
+</style>

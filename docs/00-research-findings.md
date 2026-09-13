@@ -1,4 +1,4 @@
-# Research Findings — AI Safety Index Site
+# Research Findings - AI Safety Index Site
 
 Compiled 2026-09-13. Every endpoint below was probed live, not assumed.
 Re-verify before relying on any of it in six months.
@@ -38,15 +38,15 @@ Four specific, fillable gaps:
 4. **No per-datapoint provenance.** Almost every site shows a chart with a source note at the
    bottom. None let you click a point and see exactly where that number came from.
 
-Gap 4 is both the differentiator *and* the legal safety mechanism — see §3.
+Gap 4 is both the differentiator *and* the legal safety mechanism - see §3.
 
 ---
 
 ## 2. Verified data sources
 
-### Tier A — CC BY 4.0, direct download, no auth, no key. Use freely with attribution.
+### Tier A - CC BY 4.0, direct download, no auth, no key. Use freely with attribution.
 
-**Epoch AI** — `robots.txt` permits `/data/`. Licence: CC BY 4.0.
+**Epoch AI** - `robots.txt` permits `/data/`. Licence: CC BY 4.0.
 
 | Endpoint | Size | Contents |
 |---|---|---|
@@ -63,26 +63,26 @@ Germany 11, Italy 9, Brazil 9, Russia 8, UK 6, Canada 5. **This is the world-map
 Caveat: `data_centers.csv` / `machine_learning_hardware.csv` return an HTML redirect stub, not CSV.
 Do not use those names.
 
-**Our World in Data** — CC BY 4.0. `robots.txt` is sitemap-only (no restrictions).
+**Our World in Data** - CC BY 4.0. `robots.txt` is sitemap-only (no restrictions).
 Requires following redirects (`curl -L`), else you get an empty body.
 
 - `https://ourworldindata.org/grapher/{slug}.csv`
-- `https://ourworldindata.org/grapher/{slug}.metadata.json` — machine-readable provenance
+- `https://ourworldindata.org/grapher/{slug}.metadata.json` - machine-readable provenance
 - `https://ourworldindata.org/grapher/{slug}.config.json`
 
 Useful slugs: `artificial-intelligence-training-computation`, `artificial-intelligence-parameter-count`,
 `share-companies-using-artificial-intelligence`, `artificial-intelligence-patents-submitted`,
 `newly-funded-artificial-intelligence-companies`, `share-artificial-intelligence-job-postings`.
 
-**LMArena** — `huggingface.co/datasets/lmarena-ai/leaderboard-dataset`, CC BY 4.0, parquet,
+**LMArena** - `huggingface.co/datasets/lmarena-ai/leaderboard-dataset`, CC BY 4.0, parquet,
 historical leaderboard snapshots. Last updated 2026-09-12.
 
-**Anthropic Economic Index** — `huggingface.co/datasets/Anthropic/EconomicIndex`, CC BY 4.0.
+**Anthropic Economic Index** - `huggingface.co/datasets/Anthropic/EconomicIndex`, CC BY 4.0.
 Releases: 2025_02_10, 2025_03_27, 2025_09_15, 2026_01_15, 2026_03_24, and later.
 Country- and US-state-level usage breakdowns from the 2025-09 release onward.
 **This is the "AI model use by country" map layer.**
 
-### Tier B — public domain / open government licence. Best sources for the news feed.
+### Tier B - public domain / open government licence. Best sources for the news feed.
 
 | Source | Endpoint | Licence |
 |---|---|---|
@@ -94,42 +94,42 @@ Country- and US-state-level usage breakdowns from the 2025-09 release onward.
 Federal Register returned **1,565** matching documents with structured agency/date/URL fields.
 It is the strongest single policy source found: free, keyless, structured, legally unencumbered.
 
-### Tier C — usable with care
+### Tier C - usable with care
 
-- **arXiv** `https://export.arxiv.org/rss/cs.AI` — 273 items. Metadata reuse fine; abstracts are
+- **arXiv** `https://export.arxiv.org/rss/cs.AI` - 273 items. Metadata reuse fine; abstracts are
   author-copyright, so link rather than republish in full.
-- **AI Incident Database** — weekly snapshots at
+- **AI Incident Database** - weekly snapshots at
   `https://pub-72b2b2fc36ec423189843747af98f80e.r2.dev/backup-YYYYMMDDHHMMSS.tar.bz2`.
-  **ODbL** — share-alike applies to any derived database we publish. GraphQL API is
+  **ODbL** - share-alike applies to any derived database we publish. GraphQL API is
   origin-locked ("API access is restricted to authorized domains"), so snapshots only.
 - Lab blogs (OpenAI `openai.com/news/rss.xml` = 1192 items; FLI `futureoflife.org/feed/` = 20).
-  Anthropic / Epoch / AISI feed URLs not yet resolved — their obvious paths 404.
+  Anthropic / Epoch / AISI feed URLs not yet resolved - their obvious paths 404.
 
-### Tier D — ruled out
+### Tier D - ruled out
 
-- **Artificial Analysis** — free API tier is *internal use only, no redistribution*. Cannot power a
+- **Artificial Analysis** - free API tier is *internal use only, no redistribution*. Cannot power a
   public site without a commercial agreement. Link out instead.
-- **Stanford AI Index** — **CC BY-NC-ND**. No derivative charts, no commercial use. Cite and link,
+- **Stanford AI Index** - **CC BY-NC-ND**. No derivative charts, no commercial use. Cite and link,
   quote sparingly, never re-plot their figures.
 
 ---
 
-## 3. Legal constraints (secondary research — not legal advice)
+## 3. Legal constraints (secondary research - not legal advice)
 
 1. **Facts are not copyrightable; their arrangement can be.** Re-plotting numbers from a CC BY source
    with attribution is fine. Re-plotting a CC BY-NC-ND figure is not.
-2. **EU sui generis database right** — separate from copyright. Protects *substantial* extraction
+2. **EU sui generis database right** - separate from copyright. Protects *substantial* extraction
    from a database where the maker made substantial investment in obtaining/verifying/presenting it.
    15-year term. Applies even to public pages with no personal data. So: do not bulk-extract OECD.AI
    or IAPP. Link out, or build our own coded dataset from primary legal sources.
-3. **News aggregation** — headline + short snippet + link to source is the defensible pattern.
+3. **News aggregation** - headline + short snippet + link to source is the defensible pattern.
    Full-text republication is not. Several EU states have press-publisher rights; the safe posture
    is: title, <=200 char snippet, publisher name, canonical link, no hotlinked images.
-4. **ODbL share-alike** (AIID) — if we publish a derived database we must licence it alike.
+4. **ODbL share-alike** (AIID) - if we publish a derived database we must licence it alike.
    Cleanest: consume it for display, do not redistribute a derived dump, or accept ODbL on that slice.
-5. **GDPR** — avoidable entirely: no accounts, no tracking cookies, privacy-preserving analytics
+5. **GDPR** - avoidable entirely: no accounts, no tracking cookies, privacy-preserving analytics
    (Cloudflare Web Analytics / Plausible), no newsletter at launch.
-6. **Accessibility** — WCAG 2.1 AA is the right target (UK Equality Act; EU Accessibility Act 2025).
+6. **Accessibility** - WCAG 2.1 AA is the right target (UK Equality Act; EU Accessibility Act 2025).
    Charts need table fallbacks and non-colour-dependent encodings.
 
 **Design principle that follows:** a *citation-first architecture*. Every number carries a source id,
@@ -147,7 +147,7 @@ one-line data change rather than an audit.
 | Build/ETL | GitHub Actions (free on public repos) | £0 |
 | Analytics | Cloudflare Web Analytics (cookieless) | £0 |
 | Data | All Tier A/B sources are keyless and free | £0 |
-| Domain | optional, `.org` / `.ai` | £0–£60/yr |
+| Domain | optional, `.org` / `.ai` | £0 - £60/yr |
 
 **Total: £0/yr, plus an optional domain.** No paid API is required for anything in scope.
 

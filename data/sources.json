@@ -59,7 +59,7 @@
       "caveats": "Peak theoretical throughput, not achieved throughput. Real utilisation is typically a fraction of these figures."
     },
     "microsoft-ai-diffusion": {
-      "name": "AI Diffusion Report — AI User Share",
+      "name": "AI Diffusion Report: AI User Share",
       "publisher": "Microsoft AI for Good Lab",
       "publisher_url": "https://www.microsoft.com/en-us/research/",
       "landing_page": "https://github.com/microsoft/ai-diffusion-report",
@@ -70,7 +70,7 @@
       "attribution": "Microsoft AI for Good Lab, \"AI Diffusion Report\". MIT licence.",
       "redistribution": "permitted",
       "cadence": "quarterly",
-      "caveats": "Derived from anonymised Microsoft telemetry, then adjusted for OS/device market share, internet penetration and a modelled mobile-to-desktop ratio. It therefore measures Microsoft-visible AI use, scaled — not observed total AI use. Systematically less reliable where Microsoft platform share is low, and it cannot see AI embedded in products users do not recognise as AI."
+      "caveats": "Derived from anonymised Microsoft telemetry, then adjusted for OS/device market share, internet penetration and a modelled mobile-to-desktop ratio. It therefore measures Microsoft-visible AI use, scaled, not observed total AI use. Systematically less reliable where Microsoft platform share is low, and it cannot see AI embedded in products users do not recognise as AI."
     },
     "anthropic-economic-index": {
       "name": "Anthropic Economic Index",
@@ -87,7 +87,7 @@
       "caveats": "Claude usage only, and only consumer-tier accounts. Skews heavily toward English-speaking, developer-dense markets. Usable as one signal of AI use; misleading as a measure of it."
     },
     "owid": {
-      "name": "Our World in Data — AI charts",
+      "name": "Our World in Data AI charts",
       "publisher": "Our World in Data",
       "publisher_url": "https://ourworldindata.org",
       "landing_page": "https://ourworldindata.org/artificial-intelligence",
@@ -182,7 +182,7 @@
       "attribution": "AI Incident Database, Responsible AI Collaborative. Licensed ODbL 1.0.",
       "redistribution": "share-alike",
       "cadence": "weekly",
-      "caveats": "ODbL share-alike: we display incidents but must NOT publish a derived database dump without licensing it alike. Their GraphQL API is origin-locked, so weekly tarball snapshots are the only route. Incidents are reported, not sampled — coverage reflects media attention, not incidence."
+      "caveats": "ODbL share-alike: we display incidents but must NOT publish a derived database dump without licensing it alike. Their GraphQL API is origin-locked, so weekly tarball snapshots are the only route. Incidents are reported, not sampled - coverage reflects media attention, not incidence."
     },
     "governance-readiness-index": {
       "name": "AI Governance Readiness Index",
@@ -196,7 +196,7 @@
       "attribution": "AI Safety Index, \"AI Governance Readiness Index\". Licensed CC BY 4.0.",
       "redistribution": "permitted",
       "cadence": "quarterly",
-      "caveats": "Our own editorial coding from primary legal sources, not an objective measurement. Every score cites a specific instrument and article. \"Readiness\" means the machinery exists to govern AI — it is emphatically not a judgement that the resulting rules are good, proportionate, or well enforced."
+      "caveats": "Our own editorial coding from primary legal sources, not an objective measurement. Every score cites a specific instrument and article. \"Readiness\" means the machinery exists to govern AI. It is emphatically not a judgement that the resulting rules are good, proportionate, or well enforced."
     },
     "artificial-analysis": {
       "name": "Artificial Analysis",
@@ -225,6 +225,20 @@
       "redistribution": "no-derivatives",
       "cadence": "annual",
       "caveats": "RULED OUT for charting. No-derivatives means we may not re-plot their figures or restyle their data. Cite, link, and quote sparingly only."
+    },
+    "wikimedia-commons": {
+      "name": "Wikimedia Commons",
+      "publisher": "Wikimedia Foundation contributors",
+      "publisher_url": "https://commons.wikimedia.org",
+      "landing_page": "https://commons.wikimedia.org",
+      "url": "https://commons.wikimedia.org/w/api.php",
+      "format": "json",
+      "licence": "per-file",
+      "licence_url": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "attribution": "Individual images are credited to their author under their own licence, shown beside each image.",
+      "redistribution": "permitted-with-attribution",
+      "cadence": "as needed",
+      "caveats": "Each file carries its own licence, so attribution is per image rather than per source. Share-alike files are displayed with credit; we publish no derivative of them. Images here are illustrative and carry no data."
     }
   }
 }

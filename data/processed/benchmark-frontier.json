@@ -1,0 +1,1828 @@
+{
+  "dataset": "benchmark-frontier",
+  "generated": "2026-09-13T02:51:36+00:00",
+  "retrieved": "2026-09-13T02:45:23+00:00",
+  "sources": [
+    "epoch-benchmarks"
+  ],
+  "unit": "score (0 to 1)",
+  "notes": "Best score achieved on each benchmark by any evaluated model, as a running maximum by month. Mixes Epoch's own evaluation runs with externally reported scores, which are not strictly comparable. A rising line shows the best available capability, not the typical one.",
+  "count": 17,
+  "records": [
+    {
+      "benchmark": "OTIS Mock AIME 2024-2025",
+      "points": [
+        {
+          "month": "2023-03",
+          "best": 0.0056,
+          "model": "GPT-4 (Mar 2023)"
+        },
+        {
+          "month": "2023-06",
+          "best": 0.0111,
+          "model": "GPT-4 (Jun 2023)"
+        },
+        {
+          "month": "2023-07",
+          "best": 0.025,
+          "model": "claude-2.0"
+        },
+        {
+          "month": "2023-11",
+          "best": 0.025,
+          "model": "claude-2.1"
+        },
+        {
+          "month": "2023-12",
+          "best": 0.025,
+          "model": "gemini-1.0-pro-001"
+        },
+        {
+          "month": "2024-01",
+          "best": 0.025,
+          "model": "GPT-3.5 Turbo (Jan 2024)"
+        },
+        {
+          "month": "2024-02",
+          "best": 0.0472,
+          "model": "claude-3-opus-20240229"
+        },
+        {
+          "month": "2024-03",
+          "best": 0.0472,
+          "model": "claude-3-haiku-20240307"
+        },
+        {
+          "month": "2024-04",
+          "best": 0.0667,
+          "model": "gpt-4-turbo-2024-04-09"
+        },
+        {
+          "month": "2024-05",
+          "best": 0.0681,
+          "model": "gemini-1.5-pro-001"
+        },
+        {
+          "month": "2024-06",
+          "best": 0.0681,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.0972,
+          "model": "Llama-3.1-405B-Instruct"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.0972,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-09",
+          "best": 0.4694,
+          "model": "o1-mini (high)"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.4694,
+          "model": "Claude 3.5 Sonnet (Oct 2024)"
+        },
+        {
+          "month": "2024-11",
+          "best": 0.4694,
+          "model": "mistral-large-2411"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.7333,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.7694,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.7694,
+          "model": "Claude 3.7 Sonnet (64k thinking)"
+        },
+        {
+          "month": "2025-03",
+          "best": 0.7694,
+          "model": "QwQ-32B"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.8444,
+          "model": "o3 (medium)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.8444,
+          "model": "claude-sonnet-4-20250514_32K"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.8472,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.8667,
+          "model": "Qwen3-235B-A22B-Thinking-2507"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.9139,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.9139,
+          "model": "Claude Sonnet 4.5 (59k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.9139,
+          "model": "claude-haiku-4-5-20251001_32K"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.9139,
+          "model": "Gemini 3 Pro Preview"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.9611,
+          "model": "GPT-5.2 (high)"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.9611,
+          "model": "Kimi K2.5 (Fireworks)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.9611,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.9778,
+          "model": "GPT-5.4 (high)"
+        },
+        {
+          "month": "2026-04",
+          "best": 1.0,
+          "model": "GPT-5.5 Pro (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 1.0,
+          "model": "Claude Opus 4.8"
+        },
+        {
+          "month": "2026-06",
+          "best": 1.0,
+          "model": "Claude Fable 5 (high)"
+        },
+        {
+          "month": "2026-07",
+          "best": 1.0,
+          "model": "GPT-5.6 Sol (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 1.0,
+          "model": "Qwen3.8 Max (xhigh)"
+        },
+        {
+          "month": "2026-09",
+          "best": 1.0,
+          "model": "Qwen3.8 Max (0902) (xhigh)"
+        }
+      ],
+      "first_month": "2023-03",
+      "latest_month": "2026-09",
+      "latest_best": 1.0,
+      "runs": 38,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-Tier-4-2025-07-01-Public",
+      "points": [
+        {
+          "month": "2024-06",
+          "best": 0.0,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.0,
+          "model": "Claude 3.5 Sonnet (Oct 2024)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.0,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.0,
+          "model": "Claude 3.7 Sonnet (64k thinking)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.0,
+          "model": "o4-mini (medium)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.0,
+          "model": "claude-sonnet-4-20250514"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.0,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.0,
+          "model": "Qwen3-235B-A22B-Thinking-2507"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.0,
+          "model": "GPT-5 mini (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.0,
+          "model": "GLM-4.6 (Together)"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.0,
+          "model": "Kimi K2 Thinking (Together)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.0,
+          "model": "Gemini 3 Flash Preview"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.0,
+          "model": "Claude Sonnet 4.6 (16k thinking)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.5,
+          "model": "GPT-5.4 (high)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.5,
+          "model": "Qwen 3.6 Max (Preview)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.5,
+          "model": "Gemini 3.5 Flash"
+        },
+        {
+          "month": "2026-06",
+          "best": 1.0,
+          "model": "Claude Fable 5 (max)"
+        }
+      ],
+      "first_month": "2024-06",
+      "latest_month": "2026-06",
+      "latest_best": 1.0,
+      "runs": 17,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-2025-02-28-Public",
+      "points": [
+        {
+          "month": "2024-06",
+          "best": 0.0,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.0,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-09",
+          "best": 0.0,
+          "model": "gemini-1.5-flash-002"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.0,
+          "model": "Claude 3.5 Haiku (Oct 2024)"
+        },
+        {
+          "month": "2024-11",
+          "best": 0.0,
+          "model": "GPT-4o (Nov 2024)"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.0,
+          "model": "DeepSeek-V3"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.4,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.4,
+          "model": "Claude 3.7 Sonnet (64k thinking)"
+        },
+        {
+          "month": "2025-03",
+          "best": 0.4,
+          "model": "DeepSeek-V3 (Mar 2025)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.4,
+          "model": "o4-mini (low)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.4,
+          "model": "claude-sonnet-4-20250514"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.4,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.4,
+          "model": "Qwen3-235B-A22B-Thinking-2507"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.7,
+          "model": "GPT-5 (medium)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.7,
+          "model": "GLM-4.6 (Together)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.7,
+          "model": "GPT-5 Pro"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.8,
+          "model": "Gemini 3 Pro Preview"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.8,
+          "model": "Gemini 3 Flash Preview"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.9,
+          "model": "Claude Opus 4.6 (max)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.9,
+          "model": "GPT-5.4 (high)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.9,
+          "model": "Kimi K2.6"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.9,
+          "model": "Gemini 3.5 Flash"
+        },
+        {
+          "month": "2026-06",
+          "best": 1.0,
+          "model": "Claude Fable 5 (max)"
+        }
+      ],
+      "first_month": "2024-06",
+      "latest_month": "2026-06",
+      "latest_best": 1.0,
+      "runs": 23,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "MATH level 5",
+      "points": [
+        {
+          "month": "2023-06",
+          "best": 0.2297,
+          "model": "GPT-4 (Jun 2023)"
+        },
+        {
+          "month": "2023-07",
+          "best": 0.2297,
+          "model": "claude-2.0"
+        },
+        {
+          "month": "2023-09",
+          "best": 0.2297,
+          "model": "open-mistral-7b"
+        },
+        {
+          "month": "2023-11",
+          "best": 0.4002,
+          "model": "GPT-4 Turbo Preview (Nov 2023)"
+        },
+        {
+          "month": "2023-12",
+          "best": 0.4002,
+          "model": "gemini-1.0-pro-001"
+        },
+        {
+          "month": "2024-01",
+          "best": 0.4002,
+          "model": "GPT-4 Turbo Preview (January 2024)"
+        },
+        {
+          "month": "2024-02",
+          "best": 0.4002,
+          "model": "claude-3-opus-20240229"
+        },
+        {
+          "month": "2024-03",
+          "best": 0.4002,
+          "model": "claude-3-haiku-20240307"
+        },
+        {
+          "month": "2024-04",
+          "best": 0.4673,
+          "model": "gpt-4-turbo-2024-04-09"
+        },
+        {
+          "month": "2024-05",
+          "best": 0.5105,
+          "model": "GPT-4o (May 2024)"
+        },
+        {
+          "month": "2024-06",
+          "best": 0.5168,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.5263,
+          "model": "gpt-4o-mini-2024-07-18"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.5328,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-09",
+          "best": 0.8918,
+          "model": "o1-mini (high)"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.8918,
+          "model": "Claude 3.5 Sonnet (Oct 2024)"
+        },
+        {
+          "month": "2024-11",
+          "best": 0.8918,
+          "model": "qwen-turbo-2024-11-01"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.9471,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.9649,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.9649,
+          "model": "Claude 3.7 Sonnet (64k thinking)"
+        },
+        {
+          "month": "2025-03",
+          "best": 0.9649,
+          "model": "Gemini 2.5 Pro Preview (Mar 2025)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.9783,
+          "model": "o4-mini (high)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.9783,
+          "model": "DeepSeek-R1 (May 2025)"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.9813,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.9813,
+          "model": "Claude Sonnet 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.9813,
+          "model": "claude-haiku-4-5-20251001_32K"
+        }
+      ],
+      "first_month": "2023-06",
+      "latest_month": "2025-10",
+      "latest_best": 0.9813,
+      "runs": 25,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-Tier-4-v2-Private",
+      "points": [
+        {
+          "month": "2025-01",
+          "best": 0.0,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.0488,
+          "model": "o4-mini (high)"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.0488,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.2195,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.2195,
+          "model": "Claude Sonnet 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.2195,
+          "model": "GPT-5 Pro"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.2195,
+          "model": "Claude Opus 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.46,
+          "model": "GPT-5.2 Pro"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.46,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.5854,
+          "model": "GPT-5.4 Pro (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.7805,
+          "model": "GPT-5.5 Pro (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.7805,
+          "model": "AI co-mathematician"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.902,
+          "model": "Claude Fable 5 (max)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.902,
+          "model": "GPT-5.6 Sol (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.902,
+          "model": "Qwen3.8 Max (xhigh)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.976,
+          "model": "GPT-6 Astra (high)"
+        }
+      ],
+      "first_month": "2025-01",
+      "latest_month": "2026-09",
+      "latest_best": 0.976,
+      "runs": 16,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "GPQA diamond",
+      "points": [
+        {
+          "month": "2023-03",
+          "best": 0.3573,
+          "model": "GPT-4 (Mar 2023)"
+        },
+        {
+          "month": "2023-06",
+          "best": 0.3573,
+          "model": "GPT-4 (Jun 2023)"
+        },
+        {
+          "month": "2023-07",
+          "best": 0.3573,
+          "model": "claude-2.0"
+        },
+        {
+          "month": "2023-09",
+          "best": 0.3573,
+          "model": "open-mistral-7b"
+        },
+        {
+          "month": "2023-11",
+          "best": 0.4236,
+          "model": "GPT-4 Turbo Preview (Nov 2023)"
+        },
+        {
+          "month": "2023-12",
+          "best": 0.4236,
+          "model": "gemini-1.0-pro-001"
+        },
+        {
+          "month": "2024-01",
+          "best": 0.4236,
+          "model": "GPT-4 Turbo Preview (January 2024)"
+        },
+        {
+          "month": "2024-02",
+          "best": 0.4716,
+          "model": "claude-3-opus-20240229"
+        },
+        {
+          "month": "2024-03",
+          "best": 0.4716,
+          "model": "claude-3-haiku-20240307"
+        },
+        {
+          "month": "2024-04",
+          "best": 0.4716,
+          "model": "gpt-4-turbo-2024-04-09"
+        },
+        {
+          "month": "2024-05",
+          "best": 0.489,
+          "model": "GPT-4o (May 2024)"
+        },
+        {
+          "month": "2024-06",
+          "best": 0.5404,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.5404,
+          "model": "Llama-3.1-405B-Instruct"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.5404,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-09",
+          "best": 0.6237,
+          "model": "o1-mini (high)"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.6237,
+          "model": "Claude 3.5 Sonnet (Oct 2024)"
+        },
+        {
+          "month": "2024-11",
+          "best": 0.6237,
+          "model": "mistral-large-2411"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.7677,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.7702,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.7973,
+          "model": "Claude 3.7 Sonnet (64k thinking)"
+        },
+        {
+          "month": "2025-03",
+          "best": 0.8384,
+          "model": "Gemini 2.5 Pro Exp (Mar 2025)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.8384,
+          "model": "o3 (high)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.8384,
+          "model": "claude-sonnet-4-20250514_59K"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.8529,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.87,
+          "model": "grok-4-0709"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.87,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.87,
+          "model": "Claude Sonnet 4.5 (59k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.87,
+          "model": "claude-haiku-4-5-20251001_32K"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.9261,
+          "model": "Gemini 3 Pro Preview"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.9261,
+          "model": "GPT-5.2 (xhigh)"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.9261,
+          "model": "Kimi K2.5 (Fireworks)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.9444,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.946,
+          "model": "GPT-5.4 Pro (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.946,
+          "model": "GPT-5.5 (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.946,
+          "model": "Gemini 3.5 Flash"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.946,
+          "model": "GLM-5.2"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.946,
+          "model": "Gemini 3.6 Flash"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.9482,
+          "model": "Gemini 3.7 Flash (high)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.9577,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2023-03",
+      "latest_month": "2026-09",
+      "latest_best": 0.9577,
+      "runs": 39,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-Tiers-1-3-v2-Private",
+      "points": [
+        {
+          "month": "2024-01",
+          "best": 0.0,
+          "model": "GPT-3.5 Turbo (Jan 2024)"
+        },
+        {
+          "month": "2024-04",
+          "best": 0.007,
+          "model": "gpt-4-turbo-2024-04-09"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.007,
+          "model": "gpt-4o-mini-2024-07-18"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.007,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.1474,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.186,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.3614,
+          "model": "o4-mini (high)"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.3614,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.5544,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.5544,
+          "model": "Claude Sonnet 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.5579,
+          "model": "GPT-5 Pro"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.5579,
+          "model": "Claude Opus 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.74,
+          "model": "GPT-5.2 Pro"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.74,
+          "model": "Claude Opus 4.6 (max)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.8246,
+          "model": "GPT-5.4 Pro (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.8772,
+          "model": "GPT-5.5 Pro (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.8772,
+          "model": "Claude Opus 4.8"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.8772,
+          "model": "Claude Fable 5 (max)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.8912,
+          "model": "GPT-5.6 Sol (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.8912,
+          "model": "Qwen3.8 Max (xhigh)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.9368,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2024-01",
+      "latest_month": "2026-09",
+      "latest_best": 0.9368,
+      "runs": 21,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "Mystery Game Puzzles",
+      "points": [
+        {
+          "month": "2023-06",
+          "best": 0.12,
+          "model": "GPT-4 (Jun 2023)"
+        },
+        {
+          "month": "2024-01",
+          "best": 0.12,
+          "model": "GPT-3.5 Turbo (Jan 2024)"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.12,
+          "model": "gpt-4o-mini-2024-07-18"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.12,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.29,
+          "model": "o3 (high)"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.29,
+          "model": "Qwen3-235B-A22B-Thinking-2507"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.29,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.29,
+          "model": "Claude Sonnet 4.5 (48k thinking)"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.29,
+          "model": "Claude Opus 4.5 (48k thinking)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.29,
+          "model": "Gemini 3 Flash Preview"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.34,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.37,
+          "model": "GPT-5.4 (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.56,
+          "model": "GPT-5.5 (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.56,
+          "model": "Claude Opus 4.8"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.56,
+          "model": "Claude Fable 5 (max)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.59,
+          "model": "Claude Opus 5 (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.59,
+          "model": "DeepSeek V4 Pro 0813 (max)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.84,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2023-06",
+      "latest_month": "2026-09",
+      "latest_best": 0.84,
+      "runs": 18,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "SWE-Bench verified",
+      "points": [
+        {
+          "month": "2024-11",
+          "best": 0.3099,
+          "model": "GPT-4o (Nov 2024)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.6095,
+          "model": "claude-3-7-sonnet-20250219"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.6232,
+          "model": "o3 (medium)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.7066,
+          "model": "Claude Opus 4"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.7066,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.7355,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.7355,
+          "model": "Claude Sonnet 4.5 (no thinking)"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.7665,
+          "model": "Claude Opus 4.5 (no thinking)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.7665,
+          "model": "Gemini 3 Flash Preview"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.7665,
+          "model": "Kimi K2.5"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.7872,
+          "model": "Claude Opus 4.6 (no thinking)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.7872,
+          "model": "GPT-5.4 (high)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.8347,
+          "model": "Claude Opus 4.7 (max)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.8347,
+          "model": "Gemini 3.5 Flash"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.8347,
+          "model": "GLM-5.2"
+        }
+      ],
+      "first_month": "2024-11",
+      "latest_month": "2026-06",
+      "latest_best": 0.8347,
+      "runs": 15,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "EBR-bench",
+      "points": [
+        {
+          "month": "2025-08",
+          "best": 0.127,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.127,
+          "model": "Claude Sonnet 4.5 (no thinking)"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.1429,
+          "model": "Claude Opus 4.5 (128k thinking)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.2302,
+          "model": "GPT-5.2 (xhigh)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.2302,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.254,
+          "model": "GPT-5.4 (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.3429,
+          "model": "GPT-5.5 (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.3429,
+          "model": "Claude Opus 4.8"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.3952,
+          "model": "Claude Fable 5 (max)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.4571,
+          "model": "Claude Opus 5 (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.4571,
+          "model": "Grok 4.6 (xhigh)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.7619,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2025-08",
+      "latest_month": "2026-09",
+      "latest_best": 0.7619,
+      "runs": 12,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "SimpleQA Verified",
+      "points": [
+        {
+          "month": "2024-02",
+          "best": 0.126,
+          "model": "claude-3-opus-20240229"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.126,
+          "model": "gpt-4o-mini-2024-07-18"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.26,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.411,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.411,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.494,
+          "model": "o3 (high)"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.494,
+          "model": "Qwen3-235B-A22B-Thinking-2507"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.501,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.501,
+          "model": "Qwen3-Max-Instruct"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.501,
+          "model": "claude-haiku-4-5-20251001"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.501,
+          "model": "GPT-5.1 (high)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.668,
+          "model": "Gemini 3 Flash Preview"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.668,
+          "model": "Kimi K2.5"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.735,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.735,
+          "model": "GPT-5.4 Pro (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.735,
+          "model": "GPT-5.5 (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.735,
+          "model": "Gemini 3.5 Flash"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.735,
+          "model": "Claude Fable 5 (xhigh)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.735,
+          "model": "GPT-5.6 Sol (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.735,
+          "model": "Gemini 3.7 Flash (high)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.756,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2024-02",
+      "latest_month": "2026-09",
+      "latest_best": 0.756,
+      "runs": 21,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "MirrorCode",
+      "points": [
+        {
+          "month": "2026-02",
+          "best": 0.0889,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.1556,
+          "model": "GPT-5.4 (high)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.3111,
+          "model": "Claude Opus 4.7 (high)"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.6389,
+          "model": "Claude Fable 5 (high)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.6389,
+          "model": "GPT-5.6 Sol (high)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.733,
+          "model": "Claude Fable 5.1 (high)"
+        }
+      ],
+      "first_month": "2026-02",
+      "latest_month": "2026-09",
+      "latest_best": 0.733,
+      "runs": 6,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "Chess Puzzles",
+      "points": [
+        {
+          "month": "2023-06",
+          "best": 0.04,
+          "model": "GPT-4 (Jun 2023)"
+        },
+        {
+          "month": "2023-07",
+          "best": 0.04,
+          "model": "llama-2-7b-chat"
+        },
+        {
+          "month": "2023-11",
+          "best": 0.04,
+          "model": "deepseek-llm-67b-chat"
+        },
+        {
+          "month": "2024-01",
+          "best": 0.04,
+          "model": "GPT-3.5 Turbo (Jan 2024)"
+        },
+        {
+          "month": "2024-02",
+          "best": 0.05,
+          "model": "claude-3-opus-20240229"
+        },
+        {
+          "month": "2024-04",
+          "best": 0.06,
+          "model": "gpt-4-turbo-2024-04-09"
+        },
+        {
+          "month": "2024-05",
+          "best": 0.06,
+          "model": "Mistral-7B-Instruct-v0.3"
+        },
+        {
+          "month": "2024-07",
+          "best": 0.06,
+          "model": "Llama-3.1-8B-Instruct"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.13,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-09",
+          "best": 0.13,
+          "model": "qwen2.5-7b-instruct"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.15,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.17,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-03",
+          "best": 0.17,
+          "model": "QwQ-32B"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.38,
+          "model": "o3 (medium)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.38,
+          "model": "deepseek-r1-0528-qwen3-8b"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.38,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.38,
+          "model": "grok-4-0709"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.38,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.38,
+          "model": "Claude Sonnet 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.38,
+          "model": "claude-haiku-4-5-20251001_32K"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.38,
+          "model": "GPT-5.1 (high)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.49,
+          "model": "GPT-5.2 (xhigh)"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.49,
+          "model": "Kimi K2.5 (Fireworks)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.55,
+          "model": "Gemini 3.1 Pro Preview"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.586,
+          "model": "GPT-5.4 Pro (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.64,
+          "model": "GPT-5.5 Pro (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.64,
+          "model": "Gemini 3.5 Flash"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.64,
+          "model": "Claude Fable 5 (high)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.64,
+          "model": "GPT-5.6 Sol (pro, max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.64,
+          "model": "DeepSeek V4 Pro 0813 (max)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.72,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2023-06",
+      "latest_month": "2026-09",
+      "latest_best": 0.72,
+      "runs": 31,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-2025-02-28-Private",
+      "points": [
+        {
+          "month": "2024-06",
+          "best": 0.0103,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-08",
+          "best": 0.0103,
+          "model": "GPT-4o (Aug 2024)"
+        },
+        {
+          "month": "2024-09",
+          "best": 0.0172,
+          "model": "o1-mini (medium)"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.0207,
+          "model": "Claude 3.5 Sonnet (Oct 2024)"
+        },
+        {
+          "month": "2024-11",
+          "best": 0.0207,
+          "model": "mistral-large-2411"
+        },
+        {
+          "month": "2024-12",
+          "best": 0.0931,
+          "model": "o1 (high)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.1241,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-02",
+          "best": 0.1241,
+          "model": "Claude 3.7 Sonnet (16k thinking)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.2483,
+          "model": "o4-mini (high)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.2483,
+          "model": "Claude Opus 4"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.2483,
+          "model": "gemini-2.5-pro"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.2483,
+          "model": "grok-4-0709"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.3241,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.3241,
+          "model": "Claude Sonnet 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.3241,
+          "model": "claude-haiku-4-5-20251001_32K"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.376,
+          "model": "Gemini 3 Pro Preview"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.407,
+          "model": "GPT-5.2 (xhigh)"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.407,
+          "model": "Kimi K2.5 (Fireworks)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.407,
+          "model": "Claude Opus 4.6 (max)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.5,
+          "model": "GPT-5.4 Pro (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.524,
+          "model": "GPT-5.5 Pro (high)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.524,
+          "model": "Claude Opus 4.8"
+        }
+      ],
+      "first_month": "2024-06",
+      "latest_month": "2026-05",
+      "latest_best": 0.524,
+      "runs": 22,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-Tier-4-2025-07-01-Private",
+      "points": [
+        {
+          "month": "2024-06",
+          "best": 0.0,
+          "model": "Claude 3.5 Sonnet (Jun 2024)"
+        },
+        {
+          "month": "2024-10",
+          "best": 0.0,
+          "model": "Claude 3.5 Sonnet (Oct 2024)"
+        },
+        {
+          "month": "2025-01",
+          "best": 0.0417,
+          "model": "o3-mini (high)"
+        },
+        {
+          "month": "2025-04",
+          "best": 0.0625,
+          "model": "o4-mini (high)"
+        },
+        {
+          "month": "2025-05",
+          "best": 0.0625,
+          "model": "Claude Opus 4"
+        },
+        {
+          "month": "2025-06",
+          "best": 0.0625,
+          "model": "gemini-2.5-flash"
+        },
+        {
+          "month": "2025-07",
+          "best": 0.0625,
+          "model": "grok-4-0709"
+        },
+        {
+          "month": "2025-08",
+          "best": 0.125,
+          "model": "GPT-5 (high)"
+        },
+        {
+          "month": "2025-09",
+          "best": 0.125,
+          "model": "Claude Sonnet 4.5 (32k thinking)"
+        },
+        {
+          "month": "2025-10",
+          "best": 0.146,
+          "model": "GPT-5 Pro"
+        },
+        {
+          "month": "2025-11",
+          "best": 0.1875,
+          "model": "Gemini 3 Pro Preview"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.313,
+          "model": "GPT-5.2 Pro (web)"
+        },
+        {
+          "month": "2026-01",
+          "best": 0.313,
+          "model": "Kimi K2.5 (Fireworks)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.313,
+          "model": "Claude Opus 4.6 (max)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.375,
+          "model": "GPT-5.4 Pro (web)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.396,
+          "model": "GPT-5.5 Pro (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.479,
+          "model": "AI co-mathematician"
+        }
+      ],
+      "first_month": "2024-06",
+      "latest_month": "2026-05",
+      "latest_best": 0.479,
+      "runs": 17,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "OEIS Open Lite",
+      "points": [
+        {
+          "month": "2026-04",
+          "best": 0.36,
+          "model": "GPT-5.5 (medium)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.39,
+          "model": "Claude Opus 4.8"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.44,
+          "model": "Claude Fable 5 (high)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.44,
+          "model": "GPT-5.6 Sol (medium)"
+        }
+      ],
+      "first_month": "2026-04",
+      "latest_month": "2026-07",
+      "latest_best": 0.44,
+      "runs": 4,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "FrontierMath-Erdos",
+      "points": [
+        {
+          "month": "2026-04",
+          "best": 0.0,
+          "model": "GPT-5.5 (xhigh)"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.0,
+          "model": "Claude Fable 5 (max)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.0,
+          "model": "GPT-5.6 Sol (max)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.0294,
+          "model": "GPT-6 Astra (max)"
+        }
+      ],
+      "first_month": "2026-04",
+      "latest_month": "2026-09",
+      "latest_best": 0.0294,
+      "runs": 4,
+      "source_id": "epoch-benchmarks"
+    }
+  ]
+}

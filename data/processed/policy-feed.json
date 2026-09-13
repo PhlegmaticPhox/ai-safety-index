@@ -1,0 +1,276 @@
+{
+  "dataset": "policy-feed",
+  "generated": "2026-09-13T02:52:03+00:00",
+  "retrieved": "2026-09-13T02:52:03+00:00",
+  "sources": [
+    "ec-digital-strategy",
+    "gov-uk",
+    "nist",
+    "us-federal-register"
+  ],
+  "unit": null,
+  "notes": "Headline, a short extract of at most 200 characters, and a link back to the official source. We do not reproduce full text. Departmental communications are political statements about policy, not neutral descriptions of it.",
+  "count": 26,
+  "records": [
+    {
+      "title": "Apply AI Summit",
+      "snippet": "Apply AI Summit Anonymous (not verified) Mon, 09/07/2026 - 15:58 17 November 2026 The EGG (Brussels) The Apply AI Summit will gather high-level stakeholders - from industrial representatives,...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/apply-ai-summit",
+      "date": "2026-09-07",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "AI sleep data could provide one-week early warning of flu and COVID-19",
+      "snippet": "UKHSA study finds sleep app cough data can detect respiratory illness and signal outbreaks early.",
+      "url": "https://www.gov.uk/government/news/ai-sleep-data-could-provide-one-week-early-warning-of-flu-and-covid-19",
+      "date": "2026-09-03",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "kind": "",
+      "source_id": "gov-uk"
+    },
+    {
+      "title": "£100 million competition to back British AI companies to fix public services",
+      "snippet": "£100 million fund competition will help promising British AI start-ups start in the UK and tackle some of society's biggest challenges.",
+      "url": "https://www.gov.uk/government/news/100-million-competition-to-back-british-ai-companies-to-fix-public-services",
+      "date": "2026-08-31",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "kind": "",
+      "source_id": "gov-uk"
+    },
+    {
+      "title": "State of the Union 2026",
+      "snippet": "State of the Union 2026 Anonymous (not verified) Mon, 08/31/2026 - 16:11 16 September 2026 The State of the Union (SOTEU) address is an annual speech by the President of the European Commission to...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/state-union-2026",
+      "date": "2026-08-31",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "Commission designates ChatGPT, Reddit, Roblox under Digital Services Act",
+      "snippet": "Commission designates ChatGPT, Reddit, Roblox under Digital Services Act Anonymous (not verified) Mon, 08/31/2026 - 11:10 The Commission has designated ChatGPT as a Very Large Online Search Engine...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-designates-chatgpt-reddit-roblox-under-digital-services-act",
+      "date": "2026-08-31",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "Pitching day: Finalists of the Apply AI Startup Award",
+      "snippet": "Pitching day: Finalists of the Apply AI Startup Award Anonymous (not verified) Mon, 08/24/2026 - 10:19 20 October 2026 Watch the pitches of the top 10 finalists of the Apply AI Startup Award and...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/pitching-day-finalists-apply-ai-startup-award",
+      "date": "2026-08-24",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "Solicitation of Nominations for Membership on the NOAA Science Advisory Board (SAB)",
+      "snippet": "The NOAA Science Advisory Board (SAB) is the only Federal Advisory Committee with responsibility to advise the Under Secretary of Commerce for Oceans and Atmosphere on long- and short-range...",
+      "url": "https://www.federalregister.gov/documents/2026/08/19/2026-16884/solicitation-of-nominations-for-membership-on-the-noaa-science-advisory-board-sab",
+      "date": "2026-08-19",
+      "publisher": "Commerce Department",
+      "jurisdiction": "United States",
+      "kind": "Notice",
+      "source_id": "us-federal-register"
+    },
+    {
+      "title": "Notice of Public Meeting of the Maryland Advisory Committee to the U.S. Commission on Civil Rights",
+      "snippet": "Notice is hereby given, pursuant to the provisions of the rules and regulations of the U.S. Commission on Civil Rights (Commission) and the Federal Advisory Committee Act, that the Maryland...",
+      "url": "https://www.federalregister.gov/documents/2026/08/18/2026-16772/notice-of-public-meeting-of-the-maryland-advisory-committee-to-the-us-commission-on-civil-rights",
+      "date": "2026-08-18",
+      "publisher": "Civil Rights Commission",
+      "jurisdiction": "United States",
+      "kind": "Notice",
+      "source_id": "us-federal-register"
+    },
+    {
+      "title": "Request for Information (RFI) on Modernizing the National Vulnerability Database in the Age of Artificial Intelligence",
+      "snippet": "The National Institute of Standards and Technology (NIST) established and operates the National Vulnerability Database (NVD), which provides the U.S. government repository of standards-based...",
+      "url": "https://www.federalregister.gov/documents/2026/08/12/2026-16371/request-for-information-rfi-on-modernizing-the-national-vulnerability-database-in-the-age-of",
+      "date": "2026-08-12",
+      "publisher": "Commerce Department",
+      "jurisdiction": "United States",
+      "kind": "Notice",
+      "source_id": "us-federal-register"
+    },
+    {
+      "title": "Innovation Advisory Committee",
+      "snippet": "The Commodity Futures Trading Commission (CFTC) announces that on August 20, 2026, from 1:00 p.m. to 4:00 p.m. Eastern Daylight Time, the Innovation Advisory Committee (IAC or Committee) will hold...",
+      "url": "https://www.federalregister.gov/documents/2026/08/11/2026-16328/innovation-advisory-committee",
+      "date": "2026-08-11",
+      "publisher": "Commodity Futures Trading Commission",
+      "jurisdiction": "United States",
+      "kind": "Notice",
+      "source_id": "us-federal-register"
+    },
+    {
+      "title": "Join the Inaugural D-TECT Forum",
+      "snippet": "Join the Inaugural D-TECT Forum lobacni Mon, 08/10/2026 - 14:07 11 November 2026 The Drone Tech for Countering Threats (D-TECT) Forum is the EU industrial coordination mechanism for drone and...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/join-inaugural-d-tect-forum",
+      "date": "2026-08-10",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "NIST Joins National Genesis Mission to Accelerate AI Innovation",
+      "snippet": "NIST will execute two of its efforts through its Centers for AI in Manufacturing and Critical Infrastructure.",
+      "url": "https://www.nist.gov/news-events/news/2026/08/nist-joins-national-genesis-mission-accelerate-ai-innovation",
+      "date": "2026-08-04",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "Commission starts enforcing AI Act rules and new transparency requirements on 2 August",
+      "snippet": "Commission starts enforcing AI Act rules and new transparency requirements on 2 August Anonymous (not verified) Fri, 07/31/2026 - 09:00 From 2 August 2026, the European Commission’s AI Office,...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august",
+      "date": "2026-07-31",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "EU launches AI Gigafactories call to boost Europe's computing capacity and unlock more than €30 billion in investment",
+      "snippet": "EU launches AI Gigafactories call to boost Europe's computing capacity and unlock more than €30 billion in investment Anonymous (not verified) Thu, 07/30/2026 - 11:50 The EU has launched a call...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/eu-launches-ai-gigafactories-call-boost-europes-computing-capacity-and-unlock-more-eu30-billion",
+      "date": "2026-07-30",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "Notice of Final Issuance on the Adoption of Administration for Native Americans Program Policies and Procedures",
+      "snippet": "ANA is issuing final interpretive rules, general statements of policy, and rules of agency organization, procedure, or practice relating to the following Fiscal Year (FY) 2026 Notices of Funding...",
+      "url": "https://www.federalregister.gov/documents/2026/07/28/2026-15150/notice-of-final-issuance-on-the-adoption-of-administration-for-native-americans-program-policies-and",
+      "date": "2026-07-28",
+      "publisher": "Health and Human Services Department",
+      "jurisdiction": "United States",
+      "kind": "Notice",
+      "source_id": "us-federal-register"
+    },
+    {
+      "title": "AI-powered robotics in Europe: Live demonstrations and strategic debate",
+      "snippet": "AI-powered robotics in Europe: Live demonstrations and strategic debate Anonymous (not verified) Fri, 07/24/2026 - 14:32 02 September 2026 The European Parliament will host a gathering of...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/ai-powered-robotics-europe-live-demonstrations-and-strategic-debate",
+      "date": "2026-07-24",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "kind": "",
+      "source_id": "ec-digital-strategy"
+    },
+    {
+      "title": "Request for Nominations for Members To Serve on National Institute of Standards and Technology Federal Advisory Committees",
+      "snippet": "The National Institute of Standards and Technology (NIST or Institute) invites and requests nomination of individuals for appointment to seven existing Federal Advisory Committees (Committees):...",
+      "url": "https://www.federalregister.gov/documents/2026/07/20/2026-14585/request-for-nominations-for-members-to-serve-on-national-institute-of-standards-and-technology",
+      "date": "2026-07-20",
+      "publisher": "Commerce Department",
+      "jurisdiction": "United States",
+      "kind": "Notice",
+      "source_id": "us-federal-register"
+    },
+    {
+      "title": "NIST Mathematical Proof Supports Transition to a Continuous-Monitor-and-Update Security Model for AI Systems",
+      "snippet": "The proof extends to AI the logic used by famed mathematician Kurt Gödel, whose incompleteness theorems have had a profound effect on math for nearly a century.",
+      "url": "https://www.nist.gov/news-events/news/2026/06/nist-mathematical-proof-supports-transition-continuous-monitor-and-update",
+      "date": "2026-06-09",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "New AI Model Shows How to Evacuate for Fires One Safe Step at a Time",
+      "snippet": "A NIST-led team has created a new AI model that can identify safe evacuation routes in a single-story floor plan during a fire, with a multilevel version in the works.",
+      "url": "https://www.nist.gov/news-events/news/2026/06/new-ai-model-shows-how-evacuate-fires-one-safe-step-time",
+      "date": "2026-06-04",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "NIST Expands AI Consortium’s Scope, Calls for New Members",
+      "snippet": "The consortium will focus on AI innovation and adoption, with six task groups concentrating on different aspects of AI measurement science and evaluation.",
+      "url": "https://www.nist.gov/news-events/news/2026/05/nist-expands-ai-consortiums-scope-calls-new-members",
+      "date": "2026-05-29",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "Announcing the \"AI Agent Standards Initiative\" for Interoperable and Secure Innovation",
+      "snippet": "The Initiative will ensure that the next generation of AI is widely adopted with confidence, can function securely on behalf of its users, and can interoperate smoothly across the digital ecosystem.",
+      "url": "https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure",
+      "date": "2026-02-17",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "NIST Allocates Over $3 Million to Small Businesses Advancing AI, Biotechnology, Semiconductors, Quantum and More",
+      "snippet": "NIST is allocating funding to eight small businesses in seven states under the Small Business Innovation Research (SBIR) program.",
+      "url": "https://www.nist.gov/news-events/news/2026/02/nist-allocates-over-3-million-small-businesses-advancing-ai-biotechnology",
+      "date": "2026-02-10",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "CAISI Issues Request for Information About Securing AI Agent Systems",
+      "snippet": "The Center for AI Standards and Innovation (CAISI) at the U.S. Department of Commerce’s National Institute of Standards and Technology (NIST) has published a Request for Information (RFI) seeking...",
+      "url": "https://www.nist.gov/news-events/news/2026/01/caisi-issues-request-information-about-securing-ai-agent-systems",
+      "date": "2026-01-12",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "NIST Launches Centers for AI in Manufacturing and Critical Infrastructure",
+      "snippet": "NIST has expanded its collaboration with the nonprofit MITRE Corporation as part of its efforts to ensure U.S. leadership in artificial intelligence.",
+      "url": "https://www.nist.gov/news-events/news/2025/12/nist-launches-centers-ai-manufacturing-and-critical-infrastructure",
+      "date": "2025-12-22",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "Draft NIST Guidelines Rethink Cybersecurity for the AI Era",
+      "snippet": "New guidelines can help an organization determine ways to incorporate AI into its operations while mitigating cybersecurity risks.",
+      "url": "https://www.nist.gov/news-events/news/2025/12/draft-nist-guidelines-rethink-cybersecurity-ai-era",
+      "date": "2025-12-16",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    },
+    {
+      "title": "CAISI Evaluation of DeepSeek AI Models Finds Shortcomings and Risks",
+      "snippet": "The Center for AI Standards and Innovation at NIST evaluated several leading models from DeepSeek, an AI company based in the People’s Republic of China.",
+      "url": "https://www.nist.gov/news-events/news/2025/09/caisi-evaluation-deepseek-ai-models-finds-shortcomings-and-risks",
+      "date": "2025-09-30",
+      "publisher": "NIST",
+      "jurisdiction": "United States",
+      "kind": "",
+      "source_id": "nist"
+    }
+  ]
+}

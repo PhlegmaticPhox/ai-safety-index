@@ -1,4 +1,4 @@
-# Ideas Backlog — Widgets, Infographics, Content
+# Ideas Backlog - Widgets, Infographics, Content
 
 Running brainstorm. Nothing here is committed. Items are scored:
 
@@ -12,13 +12,13 @@ Running brainstorm. Nothing here is committed. Items are scored:
 
 ### A1. The Divergence Map ★ flagship
 World map, two encodings at once: **compute concentration** (choropleth or proportional symbols
-from Epoch `gpu_clusters.csv` — country, MW, H100-equivalents) versus **regulatory bindingness**
+from Epoch `gpu_clusters.csv` - country, MW, H100-equivalents) versus **regulatory bindingness**
 (our own coded index). The visual punchline: the countries building the compute are not the
 countries writing the binding rules.
 Toggle layers: compute · regulation · usage (Anthropic Economic Index per-capita) · incidents.
-*Value: very high — nobody has this. Cost: high. Data: verified, all Tier A.*
+*Value: very high - nobody has this. Cost: high. Data: verified, all Tier A.*
 
-### A2. Capability–Governance Timeline
+### A2. Capability - Governance Timeline
 One horizontal time axis, two tracks. Above: capability milestones (model releases scaled by
 training compute, benchmark saturation points). Below: governance events (EU AI Act stages, EOs,
 summits, standards). Shows the lag between capability arriving and rules responding.
@@ -33,8 +33,7 @@ Derived metric worth computing: **time-from-release-to-saturation**, trending do
 ### A4. "What does this number mean?" provenance popovers
 Click any datapoint anywhere on the site: source, licence, retrieval date, canonical link,
 and a plain-English note on what it does and does not measure.
-*Value: high (unique; also our legal shield). Cost: low if built into the data layer from day one —
-expensive to retrofit. Build first.*
+*Value: high (unique; also our legal shield). Cost: low if built into the data layer from day one - expensive to retrofit. Build first.*
 
 ---
 
@@ -42,9 +41,9 @@ expensive to retrofit. Build first.*
 
 ### B1. Dual-track prose
 Every explainer page renders at two depths from one source: a plain-language track and a
-technical track, toggled site-wide and remembered. Not two pages — one page, progressive
+technical track, toggled site-wide and remembered. Not two pages - one page, progressive
 disclosure, so links never break.
-*Value: high (the corroborated gap). Cost: medium — mostly an authoring convention.*
+*Value: high (the corroborated gap). Cost: medium - mostly an authoring convention.*
 
 ### B2. Scale intuition widget
 "GPT-4 used ~2e25 FLOP" means nothing to a lay reader. Slider comparing training compute to
@@ -68,8 +67,7 @@ Positions, who holds them, strongest argument each way, what would change their 
 ### C1. Regulation Explorer
 Per-jurisdiction cards: what is in force, what is pending, what it actually binds, penalties,
 and the primary-source link. Filterable by jurisdiction, status, risk tier, sector.
-*Value: high. Cost: medium-high (editorial). Must be our own coding from primary sources —
-not extracted from OECD/IAPP (database right, see findings §3.2).*
+*Value: high. Cost: medium-high (editorial). Must be our own coding from primary sources - not extracted from OECD/IAPP (database right, see findings §3.2).*
 
 ### C2. EU AI Act compliance clock
 Live countdown to each staged obligation, with the deferrals applied (Annex III moved to Dec 2027,
@@ -92,14 +90,14 @@ are being outrun.
 
 ## D. Smaller widgets
 
-- **D1. Frontier tracker strip** — sitewide header: newest frontier model, days since, compute.
-- **D2. Incident ticker** — recent AIID entries, with ODbL attribution.
-- **D3. Model family tree** — lineage/base-model graph from the `Base model` column in Epoch data.
-- **D4. Cost-to-train curve** — training cost over time; pairs with a falling inference-cost curve.
-- **D5. Safety-team headcount vs capability spend** — if a credible source exists. Needs research.
-- **D6. Where to start** — 5-question router that sends a visitor to the right entry point.
-- **D7. Glossary-driven search** — client-side, no server, over content + data + glossary.
-- **D8. Data changelog** — public log of every pipeline run and what changed. Trust feature.
+- **D1. Frontier tracker strip** - sitewide header: newest frontier model, days since, compute.
+- **D2. Incident ticker** - recent AIID entries, with ODbL attribution.
+- **D3. Model family tree** - lineage/base-model graph from the `Base model` column in Epoch data.
+- **D4. Cost-to-train curve** - training cost over time; pairs with a falling inference-cost curve.
+- **D5. Safety-team headcount vs capability spend** - if a credible source exists. Needs research.
+- **D6. Where to start** - 5-question router that sends a visitor to the right entry point.
+- **D7. Glossary-driven search** - client-side, no server, over content + data + glossary.
+- **D8. Data changelog** - public log of every pipeline run and what changed. Trust feature.
 
 ---
 
@@ -108,6 +106,6 @@ are being outrun.
 - **Predictions/forecasts of our own.** Publishing our own frontier projections invites being wrong
   in public. Instead: render *other people's* forecasts side by side with their track records and
   stated assumptions. More useful, more honest, more defensible.
-- **Anything requiring Artificial Analysis data** — free tier forbids redistribution.
-- **Re-plotting Stanford AI Index figures** — CC BY-NC-ND.
-- **Accounts, comments, newsletters at launch** — drags in GDPR, moderation, and spam for no v1 gain.
+- **Anything requiring Artificial Analysis data** - free tier forbids redistribution.
+- **Re-plotting Stanford AI Index figures** - CC BY-NC-ND.
+- **Accounts, comments, newsletters at launch** - drags in GDPR, moderation, and spam for no v1 gain.

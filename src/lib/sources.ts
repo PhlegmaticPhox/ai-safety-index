@@ -74,7 +74,7 @@ export function attributionsFor(...ids: string[]): Array<Source & { id: string }
   return [...new Set(ids)].map((id) => ({ id, ...getSource(id) }));
 }
 
-/** "3 days ago" — so a reader can see staleness without doing date arithmetic. */
+/** "3 days ago" - so a reader can see staleness without doing date arithmetic. */
 export function freshness(iso: string): { label: string; stale: boolean } {
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
   const stale = days > 45;
