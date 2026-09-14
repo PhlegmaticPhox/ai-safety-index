@@ -24,7 +24,7 @@ import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
 import frameworkFile from "../../../data/processed/safety-frameworks.json";
 import researchFile from "../../../data/processed/research-volume.json";
 import feedFile from "../../../data/processed/news-feed.json";
-import type { NewsRecord } from "../../lib/news";
+import { isSafeUrl, type NewsRecord } from "../../lib/news";
 
 interface BenchmarkRecord {
   benchmark: string;
@@ -594,9 +594,14 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
                 ))}
               </div>
               <div class="feed__body">
-                <a href={item.url} class="feed__title">
-                  {item.title}
-                </a>
+                {/* Feed URLs are somebody else's input. Same check as NewsList. */}
+                {isSafeUrl(item.url) ? (
+                  <a href={item.url} class="feed__title">
+                    {item.title}
+                  </a>
+                ) : (
+                  <span class="feed__title feed__title--unlinked">{item.title}</span>
+                )}
                 {item.snippet && <p class="feed__snippet">{item.snippet}</p>}
                 <p class="feed__pub">
                   {item.publisher}

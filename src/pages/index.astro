@@ -32,7 +32,7 @@ import policyFile from "../../data/processed/policy-index.json";
 import enterpriseFile from "../../data/processed/enterprise-ai-country.json";
 import feedFile from "../../data/processed/news-feed.json";
 import statusFile from "../../data/processed/_status.json";
-import type { NewsRecord } from "../lib/news";
+import { isSafeUrl, type NewsRecord } from "../lib/news";
 
 interface ExposureRecord {
   entity: string;
@@ -452,7 +452,12 @@ const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
                   <time class="mono" datetime={item.date}>
                     {item.date}
                   </time>
-                  <a href={item.url}>{item.title}</a>
+                  {/* Feed URLs are somebody else's input. Same check as NewsList. */}
+                  {isSafeUrl(item.url) ? (
+                    <a href={item.url}>{item.title}</a>
+                  ) : (
+                    <span class="feed__title--unlinked">{item.title}</span>
+                  )}
                 </li>
               ))
             }

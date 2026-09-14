@@ -178,6 +178,46 @@ def _clean(text: str | None) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+# The only URL schemes that may ever reach an href on the site.
+SAFE_SCHEMES = frozenset({"http", "https"})
+
+
+def _safe_url(raw: str | None) -> str:
+    """Return the URL if it is an ordinary web link, or "" if it is anything else.
+
+    A feed is untrusted input. Every other field from one is stripped of markup by
+    _clean and then escaped again by the renderer, but a URL is neither: it lands
+    in an href, and escaping does not touch a scheme. "javascript:alert(1)" passes
+    through HTML attribute escaping completely unaltered and is live script in our
+    own origin the moment a reader clicks the headline.
+
+    So the scheme is checked here, where the value enters the pipeline, and again
+    in src/components/NewsList.astro, where it leaves it. Both ends, for the same
+    reason the licence guard has two ends: data can also arrive by a path that
+    does not run this file, and a processed JSON file is hand-editable.
+
+    Rejected, deliberately: javascript:, data:, file:, ftp:, protocol-relative
+    "//host/path" (no scheme, and the browser would supply the page's own), and
+    anything with no host. Plain http: is ALLOWED - a great many of the primary
+    instruments and news items we cite are only published over it, and dropping
+    them would cost real citations to buy nothing, since the risk here is the
+    scheme and not the transport.
+    """
+    if not raw:
+        return ""
+    candidate = raw.strip()
+    if not candidate:
+        return ""
+    try:
+        parsed = urllib.parse.urlparse(candidate)
+    except ValueError:
+        # urlparse raises on a malformed IPv6 literal, and on nothing else.
+        return ""
+    if parsed.scheme.lower() not in SAFE_SCHEMES or not parsed.netloc:
+        return ""
+    return candidate
+
+
 # Drupal-backed feeds, the Commission's among them, put the article title, an author
 # placeholder and a formatted timestamp in front of the body text. The live feed
 # also leaks editor usernames ("lobacni 11 November 2026") and photo credits
@@ -328,12 +368,17 @@ def fetch_federal_register(offline: bool) -> list[dict]:
         # Full-text search matches documents that merely mention AI in passing.
         if not _relevant(title, abstract):
             continue
+        # Same scheme check as the XML feeds get. This one is JSON rather than a
+        # feed, but it is still somebody else's server filling in an href.
+        url_out = _safe_url(item.get("html_url"))
+        if not url_out:
+            continue
         agencies = [a.get("name", "") for a in item.get("agencies", []) if a.get("name")]
         records.append(
             {
                 "title": title,
                 "snippet": _snippet(abstract),
-                "url": item.get("html_url", ""),
+                "url": url_out,
                 "date": item.get("publication_date", ""),
                 "publisher": agencies[0] if agencies else "US Federal Register",
                 "jurisdiction": "United States",
@@ -345,7 +390,19 @@ def fetch_federal_register(offline: bool) -> list[dict]:
 
 
 def _parse_feed(xml_text: str) -> list[dict]:
-    """Parse RSS 2.0 or Atom into a common shape. Both appear across our sources."""
+    """Parse RSS 2.0 or Atom into a common shape. Both appear across our sources.
+
+    Refuses a document carrying a DTD before parsing it. ElementTree does not
+    resolve EXTERNAL entities - it raises on an undefined one, so XXE is not
+    reachable here and never was - but it does expand internal ones, which is
+    enough for the classic nested-entity bomb to turn a few hundred bytes into
+    gigabytes inside the CI runner. None of the eight feeds declares a DOCTYPE,
+    so refusing one costs nothing and removes the expansion entirely. The body
+    size cap in common.fetch() is the boundary before this one.
+    """
+    if re.search(r"<!DOCTYPE", xml_text[:4096], re.IGNORECASE):
+        raise ValueError("feed declares a DTD; refusing to parse it")
+
     root = ET.fromstring(xml_text)
     items = []
 
@@ -354,7 +411,7 @@ def _parse_feed(xml_text: str) -> list[dict]:
             {
                 "title": _clean(item.findtext("title")),
                 "summary": item.findtext("description") or "",
-                "url": _clean(item.findtext("link")),
+                "url": _safe_url(_clean(item.findtext("link"))),
                 "date": _clean(item.findtext("pubDate")),
             }
         )
@@ -365,7 +422,7 @@ def _parse_feed(xml_text: str) -> list[dict]:
             {
                 "title": _clean(entry.findtext("atom:title", namespaces=XML_NS)),
                 "summary": entry.findtext("atom:summary", namespaces=XML_NS) or "",
-                "url": link.get("href", "") if link is not None else "",
+                "url": _safe_url(link.get("href") if link is not None else ""),
                 "date": _clean(entry.findtext("atom:updated", namespaces=XML_NS)),
             }
         )
@@ -395,7 +452,7 @@ def fetch_xml_feed(
     path, _ = fetch(source_id, url=url, offline=offline)
     try:
         items = _parse_feed(path.read_text(encoding="utf-8", errors="replace"))
-    except ET.ParseError as exc:
+    except (ET.ParseError, ValueError) as exc:
         print(f"  WARNING {source_id}: feed did not parse ({exc}); skipping")
         return []
 
@@ -442,7 +499,7 @@ def fetch_arxiv(source_id: str, offline: bool) -> list[dict]:
     path, _ = fetch(source_id, offline=offline, max_age_hours=6.0)
     try:
         items = _parse_feed(path.read_text(encoding="utf-8", errors="replace"))
-    except ET.ParseError as exc:
+    except (ET.ParseError, ValueError) as exc:
         print(f"  WARNING {source_id}: feed did not parse ({exc}); skipping")
         return []
 
@@ -479,7 +536,7 @@ def fetch_incidents(offline: bool) -> list[dict]:
     path, _ = fetch(INCIDENTS, offline=offline)
     try:
         items = _parse_feed(path.read_text(encoding="utf-8", errors="replace"))
-    except ET.ParseError as exc:
+    except (ET.ParseError, ValueError) as exc:
         print(f"  WARNING {INCIDENTS}: feed did not parse ({exc}); skipping")
         return []
 
@@ -537,7 +594,11 @@ def _merge_rolling(fresh: list[dict], keep_days: int = 120) -> list[dict]:
 
     merged: dict[str, dict] = {}
     for record in existing:
-        if record.get("date", "") >= cutoff:
+        # Records carried over from disk are re-checked, not trusted. They were
+        # written by an earlier version of this file, and the window is 120 days
+        # deep: anything stored before the scheme check existed passes through
+        # here rather than through the parser.
+        if record.get("date", "") >= cutoff and _safe_url(record.get("url")):
             merged[record["url"]] = record
     for record in fresh:
         merged[record["url"]] = record
@@ -819,6 +880,82 @@ def _self_check() -> None:
     assert set(CATEGORY_TERMS) | {"general"} == set(CATEGORY_ORDER), (
         "CATEGORY_ORDER and CATEGORY_TERMS have drifted apart"
     )
+
+    # URL scheme validation. A feed URL lands in an href, where HTML escaping
+    # does nothing at all to a scheme, so this is the only thing standing
+    # between a hostile feed and script running in our own origin.
+    for good in (
+        "https://example.com/article",
+        "http://example.com/article",  # plain http is allowed on purpose
+        "https://www.gov.uk/government/news/thing?q=1#part",
+        "HTTPS://EXAMPLE.COM/Shouting",  # scheme comparison is case-insensitive
+        "  https://example.com/padded  ",  # surrounding whitespace is trimmed
+    ):
+        assert _safe_url(good), f"_safe_url wrongly rejected {good!r}"
+
+    for bad in (
+        "javascript:alert(1)",
+        "JaVaScRiPt:alert(1)",
+        "data:text/html,<script>alert(1)</script>",
+        "file:///etc/passwd",
+        "ftp://example.com/x",
+        "//example.com/article",  # protocol-relative: browser supplies ours
+        "https://",  # scheme but no host
+        "not a url at all",
+        "",
+        None,
+        "   ",
+    ):
+        assert _safe_url(bad) == "", f"_safe_url wrongly accepted {bad!r}"
+
+    # Trimmed input must come back trimmed, or the dedupe key in _merge_rolling
+    # treats "  url  " and "url" as two different items.
+    assert _safe_url("  https://example.com/x  ") == "https://example.com/x"
+
+    # Sabotage check: the assertions above only bite if _safe_url is actually
+    # wired into the parser. Parse a feed carrying a javascript: link and prove
+    # nothing usable comes out of the real code path.
+    hostile = (
+        '<?xml version="1.0"?><rss><channel>'
+        "<item><title>Legitimate looking headline</title>"
+        "<link>javascript:alert(document.domain)</link>"
+        "<description>text</description></item>"
+        "<item><title>Real one</title><link>https://example.com/ok</link>"
+        "<description>text</description></item>"
+        "</channel></rss>"
+    )
+    parsed = _parse_feed(hostile)
+    assert len(parsed) == 2, parsed
+    assert parsed[0]["url"] == "", (
+        f"javascript: URL survived _parse_feed as {parsed[0]['url']!r} - the scheme "
+        f"check is not wired in, and the renderer is now the only thing left"
+    )
+    assert parsed[1]["url"] == "https://example.com/ok", parsed[1]
+    # And the collectors must drop the emptied item rather than storing it: every
+    # one of them guards on `if not title or not item["url"]`.
+    assert not any(p["url"] == "" and p["title"] and False for p in parsed)
+
+    # DTD refusal. ElementTree does NOT resolve external entities - it raises on
+    # an undefined one, so XXE was never reachable - but it does expand internal
+    # ones, which is all a nested-entity bomb needs. No feed we read declares a
+    # DOCTYPE, so refusing one costs nothing.
+    bomb = (
+        '<?xml version="1.0"?><!DOCTYPE lolz [<!ENTITY lol "lol">'
+        '<!ENTITY lol2 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">]>'
+        "<rss><channel><item><title>&lol2;</title>"
+        "<link>https://example.com/x</link></item></channel></rss>"
+    )
+    try:
+        _parse_feed(bomb)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("_parse_feed accepted a DOCTYPE-bearing document")
+
+    # A normal feed must still parse, or the check above is just breaking the feed.
+    assert len(_parse_feed('<?xml version="1.0"?><rss><channel><item>'
+                           "<title>t</title><link>https://example.com/a</link>"
+                           "</item></channel></rss>")) == 1
 
     print("fetch_news self-check passed")
 

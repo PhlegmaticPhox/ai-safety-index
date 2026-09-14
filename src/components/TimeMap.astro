@@ -66,6 +66,46 @@ for (const datum of data) {
   }
 }
 
+/* Period labels are interpolated into a raw <style> block further down, via
+   set:html. That is unescaped HTML insertion, so a label containing "</style>"
+   would close the element and everything after it would be parsed as markup.
+   Stripping quotes is not enough; nothing about CSS string escaping helps once
+   the element itself has been terminated.
+
+   The labels that reach this component today happen to be safe, because
+   etl/fetch_microsoft_diffusion.py matches its column headers against a regex
+   and re-emits them as "2026-Q1". But that is a constraint in a different file
+   that this component knows nothing about, and the second caller - a second map,
+   or an upstream header format that loosens - would silently reopen it.
+
+   So the sink guards itself, and it fails the build rather than quietly
+   rewriting a label. A sanitiser that strips the dangerous characters would
+   render "2026-Q1</style>" as "2026-Q1style" and carry on, which hides the fact
+   that something upstream is wrong. A period label is a short machine-generated
+   token; if one ever contains anything else, that is a bug to see, not to mop up. */
+const PERIOD_LABEL = /^[A-Za-z0-9][A-Za-z0-9 _-]{0,31}$/;
+
+/* `id` is interpolated into the same raw block, as a selector rather than a
+   string, so it needs the same treatment. Narrower, because it also has to be a
+   valid HTML id and a valid CSS identifier. */
+if (!/^[A-Za-z][A-Za-z0-9_-]{0,31}$/.test(id)) {
+  throw new Error(
+    `TimeMap: id ${JSON.stringify(id)} is not a plain identifier. It becomes both ` +
+      `an HTML id and a CSS selector in a raw <style> block.`,
+  );
+}
+
+for (const period of periods) {
+  if (typeof period !== "string" || !PERIOD_LABEL.test(period)) {
+    throw new Error(
+      `TimeMap: period label ${JSON.stringify(period)} is not a plain label. ` +
+        `Labels go into a raw <style> block, so they are restricted to letters, ` +
+        `digits, spaces, hyphens and underscores (max 32 chars). Fix the data or ` +
+        `the caller rather than widening this pattern.`,
+    );
+  }
+}
+
 const world = projectWorld(width, places);
 const byCode = new Map(data.map((d) => [d.code, d]));
 const covered = world.shapes.filter((s) => s.code && byCode.has(s.code)).length;
@@ -84,7 +124,7 @@ const rules = periods
     (_, i) => `#${id}-${i}:checked ~ .tm__figure .tm__link .tm__shape { fill: var(--v${i}, var(--surface-2)); }
 #${id}-${i}:checked ~ .tm__scale .tm__step:nth-of-type(${i + 1}) { color: var(--ink); border-color: var(--accent); background: var(--accent-wash); }
 #${id}-${i}:focus-visible ~ .tm__scale .tm__step:nth-of-type(${i + 1}) { outline: 2px solid var(--accent); outline-offset: 2px; }
-#${id}-${i}:checked ~ .tm__figure .tm__now::after { content: "${periods[i].replace(/"/g, "")}"; }`,
+#${id}-${i}:checked ~ .tm__figure .tm__now::after { content: "${periods[i]}"; }`,
   )
   .join("\n");
 ---

@@ -103,6 +103,64 @@ assert.deepEqual(
     "normalise it in the ETL rather than in the page.",
 );
 
+/* Href scheme audit, against the BUILT pages.
+
+   Most hrefs on this site are ours. A few hundred are not: the news feed prints
+   a link supplied by somebody else's RSS, and "javascript:alert(1)" passes
+   through HTML attribute escaping completely unaltered, because there is no
+   character in it that escaping touches.
+
+   etl/fetch_news.py checks the scheme on the way in, and each component checks
+   again on the way out. This is the check that does not care how many components
+   there are. It exists because the per-component version was written first and
+   was wrong: NewsList.astro was guarded while the homepage and /alignment/ both
+   rendered the same records with their own markup and their own unguarded href.
+   A sabotage test found it; this is what would have found it at build time. A
+   fourth renderer added next year is covered without anyone remembering. */
+const SAFE_SCHEMES = /^(https?:\/\/|\/|#|mailto:)/;
+const unsafeHrefs = [];
+for (const page of pages) {
+  const html = readFileSync(page, "utf8");
+  for (const [, raw] of html.matchAll(HREF)) {
+    if (raw === "" || SAFE_SCHEMES.test(raw)) continue;
+    // A relative path with no scheme is fine; anything with a colon before the
+    // first slash is claiming to be a scheme, and only http(s) and mailto may.
+    const colon = raw.indexOf(":");
+    const slash = raw.indexOf("/");
+    if (colon === -1 || (slash !== -1 && slash < colon)) continue;
+    unsafeHrefs.push(`${relative(DIST, page)}: ${raw.slice(0, 80)}`);
+  }
+}
+assert.deepEqual(
+  unsafeHrefs,
+  [],
+  `${unsafeHrefs.length} href(s) in the built site use a scheme that is not http, ` +
+    `https or mailto:\n  ${unsafeHrefs.join("\n  ")}\n` +
+    `A javascript: or data: URL here is script running in this site's origin. ` +
+    `If it came from the news feed, the scheme check in the renderer is missing ` +
+    `on whichever page this is.`,
+);
+
+/* Zero client JavaScript, asserted rather than assumed.
+
+   It is a design rule, it is stated on /privacy/, and the Content-Security-Policy
+   in public/_headers is built on it: default-src 'none' is only safe to ship
+   because nothing here needs a script. If a dependency or an integration ever
+   starts emitting one, the page would silently break under that policy in
+   production and nowhere else. Cheaper to fail here. */
+const scripted = pages
+  .filter((page) => /<script[\s>]/i.test(readFileSync(page, "utf8")))
+  .map((page) => relative(DIST, page));
+
+assert.deepEqual(
+  scripted,
+  [],
+  `${scripted.length} page(s) contain a <script> tag:\n  ${scripted.join("\n  ")}\n` +
+    `The site ships no client JavaScript, /privacy/ says so, and the CSP in ` +
+    `public/_headers sends default-src 'none'. Either this is accidental, or all ` +
+    `three of those need to change together.`,
+);
+
 /* Canonical origin.
 
    Every canonical link, og:url and sitemap entry is built from one configured
@@ -189,5 +247,6 @@ assert.deepEqual(
 
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
-    `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex`,
+    `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex, ` +
+    `no unsafe href schemes, no client JavaScript`,
 );

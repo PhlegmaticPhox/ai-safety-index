@@ -84,6 +84,40 @@ export function labelFor(slug: string): string {
   return CATEGORY_BY_SLUG.get(slug)?.label ?? slug;
 }
 
+/** The only URL schemes that may reach an href. Mirrors SAFE_SCHEMES in etl/fetch_news.py. */
+const SAFE_SCHEMES: ReadonlySet<string> = new Set(["http:", "https:"]);
+
+/**
+ * Is this a URL we are willing to put in an href?
+ *
+ * The render-side half of the check in `etl/fetch_news.py:_safe_url`. Both ends,
+ * for the same reason the licence guard has both ends: `data/processed/news-feed.json`
+ * is a committed file, it can be hand-edited, and a future importer might not run
+ * the ETL at all.
+ *
+ * The thing this is actually stopping: Astro escapes an attribute's VALUE, which
+ * leaves "javascript:alert(1)" completely intact, because there is no character
+ * in it that escaping touches. A feed item carrying one would be live script in
+ * this site's own origin as soon as a reader clicked the headline.
+ *
+ * `new URL()` is the parser here rather than a regex, because it is the same
+ * parsing the browser will do, and a regex that disagrees with the browser is
+ * the whole bug class. Plain http: stays allowed: a good many primary sources
+ * are published over it, and the risk being managed is the scheme, not the
+ * transport.
+ */
+export function isSafeUrl(raw: string | null | undefined): boolean {
+  if (!raw) return false;
+  try {
+    // No base argument on purpose: a relative or protocol-relative URL must
+    // throw rather than silently resolving against some assumed origin.
+    const url = new URL(raw.trim());
+    return SAFE_SCHEMES.has(url.protocol) && url.host !== "";
+  } catch {
+    return false;
+  }
+}
+
 /** Newest first, with a stable tiebreak so the order does not churn between builds. */
 export function byDateDesc(a: NewsRecord, b: NewsRecord): number {
   return b.date.localeCompare(a.date) || a.title.localeCompare(b.title);

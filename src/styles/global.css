@@ -555,6 +555,16 @@ img {
   color: var(--accent);
 }
 
+/* An item whose source URL failed the scheme check in NewsList.astro. The
+   headline is still shown, because the item was genuinely published and the
+   reader should see it; there is simply nothing safe to link it to. Rendered as
+   a span, so it is not focusable and not mistaken for a broken link. */
+.feed__title--unlinked {
+  display: inline-block;
+  color: var(--muted);
+  cursor: default;
+}
+
 .feed__snippet {
   margin-block-start: 0.25rem;
   color: var(--muted);

@@ -8,7 +8,7 @@
  * reader an unexplained label.
  */
 import Provenance from "./Provenance.astro";
-import { labelFor, type NewsRecord } from "../lib/news";
+import { labelFor, isSafeUrl, type NewsRecord } from "../lib/news";
 
 interface Props {
   items: NewsRecord[];
@@ -44,9 +44,23 @@ const { items, retrieved, current, emptyReason } = Astro.props;
           </div>
 
           <div class="feed__body">
-            <a href={item.url} class="feed__title" rel="noopener">
-              {item.title}
-            </a>
+            {
+              /* The URL came from somebody else's feed. etl/fetch_news.py checks
+                 the scheme on the way in; this checks it again on the way out,
+                 because data/processed/news-feed.json is a committed file that
+                 can be hand-edited or arrive by a future path that does not run
+                 the ETL. Astro escapes the attribute value, which does nothing
+                 whatsoever to "javascript:". An item that fails the check keeps
+                 its headline as plain text rather than disappearing: the reader
+                 still sees what was published, just without a link to follow. */
+              isSafeUrl(item.url) ? (
+                <a href={item.url} class="feed__title" rel="noopener">
+                  {item.title}
+                </a>
+              ) : (
+                <span class="feed__title feed__title--unlinked">{item.title}</span>
+              )
+            }
             {item.snippet && <p class="feed__snippet">{item.snippet}</p>}
 
             <p class="feed__pub">

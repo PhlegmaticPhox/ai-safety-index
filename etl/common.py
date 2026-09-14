@@ -37,6 +37,32 @@ USER_AGENT = (
 # Licence states that must never reach a rendered chart.
 BLOCKED_REDISTRIBUTION = {"prohibited", "no-derivatives"}
 
+# Ceiling on a single fetched body. The largest source we actually pull is Epoch's
+# benchmarks CSV at about 3.7MB, so this is roughly seventeen times the real high
+# water mark: generous enough that a publisher growing their dataset does not trip
+# it, small enough that a compromised source cannot exhaust the CI runner by
+# streaming forever. Without a cap, response.read() has no upper bound at all.
+MAX_BYTES = 64 * 1024 * 1024
+
+# What each declared format is allowed to come back as. Observed values from the
+# live sources, not guesses: Epoch serves text/csv, raw.githubusercontent serves
+# application/octet-stream for the same kind of file, the Commission and NIST
+# serve application/rss+xml, the Incident Database and Canada serve a bare
+# application/xml, and gov.uk serves application/atom+xml.
+ALLOWED_CONTENT_TYPES = {
+    "csv": {"text/csv", "application/csv", "text/plain", "application/octet-stream"},
+    "json": {"application/json", "text/json", "application/octet-stream"},
+    "rss": {"application/rss+xml", "application/xml", "text/xml", "application/rdf+xml"},
+    "atom": {"application/atom+xml", "application/xml", "text/xml"},
+}
+
+# Types that are never a legitimate answer for a data endpoint. This is the check
+# that earns its place: docs/00-research-findings.md records two Epoch CSV URLs
+# that returned HTML stubs, which parse to zero rows and blank a chart rather than
+# failing. A publisher moving a dataset behind a login or an interstitial looks
+# exactly like this.
+REFUSED_CONTENT_TYPES = {"text/html", "application/xhtml+xml"}
+
 
 def _ssl_context() -> ssl.SSLContext:
     """Verify TLS against certifi's bundle when it is installed.
@@ -165,7 +191,17 @@ def fetch(
         try:
             request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
             with urllib.request.urlopen(request, timeout=60, context=SSL_CONTEXT) as response:
-                body = response.read()
+                # Read one byte past the cap so an oversized body is detectable
+                # without ever holding the whole of it. Nothing is written to
+                # disk until both checks below have passed.
+                body = response.read(MAX_BYTES + 1)
+                content_type = response.headers.get_content_type()
+            if len(body) > MAX_BYTES:
+                raise FetchError(
+                    f"{source_id!r} returned more than {MAX_BYTES:,} bytes; refusing it. "
+                    f"Either the source grew a great deal or it is not what it was."
+                )
+            _check_content_type(source_id, source.get("format"), content_type)
             path.write_bytes(body)
             retrieved = utcnow()
             meta_path.write_text(
@@ -174,6 +210,15 @@ def fetch(
             )
             print(f"  fetched {source_id}: {len(body):,} bytes")
             return path, retrieved
+        except FetchError as exc:
+            # A rejected size or content type is a decision, not a hiccup: asking
+            # the same server the same question again will get the same answer.
+            # Stop retrying and fall through to the cached copy below, which is
+            # the whole point - a stale dataset with a loud warning beats a
+            # chart that silently empties.
+            last_error = exc
+            print(f"  WARNING {source_id}: {exc}")
+            break
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             last_error = exc
             if attempt < retries - 1:
@@ -185,6 +230,37 @@ def fetch(
         return path, cached["retrieved"]
 
     raise FetchError(f"Could not fetch {source_id!r} from {url}: {last_error}")
+
+
+def _check_content_type(source_id: str, fmt: str | None, received: str) -> None:
+    """Refuse a response whose type cannot be what the source declares it is.
+
+    Deliberately not a strict allowlist that rejects everything unfamiliar. Real
+    publishers serve the same file under several types - the Microsoft CSV comes
+    back as application/octet-stream from raw.githubusercontent, and the Incident
+    Database serves RSS as a bare application/xml - and a check that breaks the
+    pipeline on a harmless header variation would be turned off within a month.
+
+    So: a known-good type passes silently, a type that is definitely wrong is
+    refused, and anything else passes with a note. The refusal list is short and
+    specific because it encodes a failure that has actually happened here - a
+    data endpoint answering with an HTML page, which then parses to zero rows and
+    blanks a chart instead of failing.
+    """
+    if not fmt or not received:
+        return
+    if received in REFUSED_CONTENT_TYPES:
+        raise FetchError(
+            f"{source_id!r} declares format={fmt!r} but the server returned "
+            f"{received!r}. A data URL answering with a web page usually means it "
+            f"moved, or is now behind a login or an interstitial."
+        )
+    allowed = ALLOWED_CONTENT_TYPES.get(fmt)
+    if allowed and received not in allowed:
+        print(
+            f"  note {source_id}: content type {received!r} is not one of the "
+            f"expected types for format={fmt!r}; accepting it anyway"
+        )
 
 
 def read_csv(path: Path, encoding: str | None = None) -> list[dict[str, str]]:
@@ -399,6 +475,48 @@ def _self_check() -> None:
     assert EN_DASH not in normalise_dashes(f"x{EM_DASH}y{EN_DASH}z")
     # A hyphen must survive untouched, or every hyphenated name loses its hyphen.
     assert normalise_dashes("fine-tuning") == "fine-tuning"
+
+    # The response cap has to sit above every real source with room to spare, or
+    # the first time a publisher adds a year of data the pipeline stops.
+    assert MAX_BYTES >= 64 * 1024 * 1024, "cap lowered below the documented value"
+    largest = max(
+        (p.stat().st_size for p in RAW.glob("*") if p.suffix != ".json"), default=0
+    )
+    if largest:
+        assert largest < MAX_BYTES / 4, (
+            f"largest cached raw file is {largest:,} bytes, within 4x of the "
+            f"{MAX_BYTES:,} byte cap. Raise the cap before a fetch starts failing."
+        )
+
+    # Content types. Every type below was observed coming back from the real
+    # endpoint; if one of these starts failing, the source changed, not the check.
+    for fmt, received in (
+        ("csv", "text/csv"),                      # epoch.ai
+        ("csv", "application/octet-stream"),      # raw.githubusercontent.com
+        ("json", "application/json"),             # openalex, federalregister
+        ("rss", "application/rss+xml"),           # nist, arxiv, ec
+        ("rss", "application/xml"),               # incidentdatabase
+        ("atom", "application/atom+xml"),         # gov.uk
+        ("atom", "application/xml"),              # canada
+    ):
+        _check_content_type("selfcheck", fmt, received)  # must not raise
+
+    # An unknown type is a note, not a failure: publishers vary and a brittle
+    # check gets disabled rather than fixed.
+    _check_content_type("selfcheck", "csv", "application/vnd.ms-excel")
+    # A missing header, or a format we do not declare, is not a reason to refuse.
+    _check_content_type("selfcheck", "csv", "")
+    _check_content_type("selfcheck", None, "text/html")
+
+    # But a data endpoint answering with a web page is refused. This is the case
+    # that has actually happened: two Epoch CSV URLs returned HTML stubs.
+    for fmt in ("csv", "json", "rss", "atom"):
+        try:
+            _check_content_type("selfcheck", fmt, "text/html")
+        except FetchError:
+            pass
+        else:
+            raise AssertionError(f"HTML accepted for format={fmt!r}; the stub bug can recur")
 
     # Idempotence: writing the same records twice must leave the file untouched,
     # or the daily refresh commits timestamp churn forever.
