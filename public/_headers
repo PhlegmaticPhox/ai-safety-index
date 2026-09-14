@@ -1,0 +1,85 @@
+# Response headers for the Cloudflare Workers static-assets deployment.
+#
+# Copied verbatim from public/ into dist/ at build time, which is the directory
+# wrangler.jsonc points `assets` at. Cloudflare reads it from there; it is never
+# served as a file itself.
+#
+# Every directive below was checked against the BUILT output rather than against
+# the source, per the house rule. The counts quoted are from `dist/` and are the
+# reason each directive is shaped the way it is.
+#
+# What this file CANNOT do: redirect http:// to https://. That happens at the
+# edge, before any header rule is consulted, and is a zone setting
+# (SSL/TLS -> Edge Certificates -> Always Use HTTPS). Strict-Transport-Security
+# is deliberately absent here for the same reason: Cloudflare's HSTS control
+# emits it, and setting it in two places is how the two drift apart.
+
+/*
+  Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+# Notes on the policy above, directive by directive:
+#
+#   default-src 'none'   The site ships zero JavaScript: 0 <script> tags across
+#                        32 pages, 0 .js/.mjs/.map files in dist. So the default
+#                        can be the strictest value that exists, and script-src
+#                        is deliberately NOT declared - default-src already
+#                        covers it, and a redundant directive is one more thing
+#                        that can be loosened by accident later. If a script
+#                        ever reaches a page through injected data, this is what
+#                        makes it inert.
+#
+#   style-src            'unsafe-inline' is required today and is not cosmetic:
+#                        dist carries 1283 inline style= attributes (every SVG
+#                        map shape carries its own fill) and 29 inline <style>
+#                        blocks (Astro's scoped styles, plus the per-period
+#                        rules TimeMap generates). Removing it would unstyle the
+#                        maps entirely. Astro 5.18 ships experimental.csp, which
+#                        would hash these and let 'unsafe-inline' go; that is a
+#                        separate change, not a security fix, and it is not made
+#                        here.
+#
+#   font-src 'self'      11 woff2 files, all served from /_astro/. No font
+#                        network is contacted, and this keeps it that way.
+#
+#   img-src 'self'       There are 0 <img> tags. This covers the favicon links
+#                        only (96 of them, /favicon.svg and /favicon.ico), and
+#                        blocks an injected tracking pixel.
+#
+#   base-uri 'none'      The site uses no <base>. An injected one would silently
+#                        repoint all 1102 internal links.
+#
+#   form-action 'none'   There are no forms anywhere. Nothing should be able to
+#                        post from this origin.
+#
+#   frame-ancestors      The site has no sensitive action to trick anyone into,
+#                        but it also has no reason to be framed, and being
+#                        framed inside a page that misattributes the data is a
+#                        real way to damage a citation index. X-Frame-Options is
+#                        deliberately not also sent: frame-ancestors supersedes
+#                        it in every browser that matters.
+#
+#   nosniff              Stops a browser deciding that .txt or .xml is really
+#                        something executable.
+#
+#   Referrer-Policy      The site links out 1013 times. Without this, the full
+#                        path of a jurisdiction or news-category page is handed
+#                        to every government publisher we cite. Origin-only is
+#                        enough for them and tells them less about the reader.
+#                        Not no-referrer, because some government hosts behave
+#                        oddly when it is absent entirely.
+#
+#   Permissions-Policy   Denies features nothing here uses. interest-cohort is
+#                        not listed: it was never standardised and now only
+#                        produces console noise.
+
+# Content-hashed build assets. The hash IS the version, so a changed file gets a
+# changed URL and these can be cached for a year. Applied only to /_astro/*, and
+# deliberately NOT to HTML, robots.txt or the sitemaps, which keep the
+# revalidate-every-time default so a data refresh is visible immediately.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

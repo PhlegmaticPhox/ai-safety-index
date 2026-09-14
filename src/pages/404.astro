@@ -1,0 +1,51 @@
+---
+/**
+ * Not found.
+ *
+ * wrangler.jsonc sets not_found_handling to "404-page", which makes Cloudflare
+ * serve /404.html for an unmatched path. There was no such file, so an unmatched
+ * path returned a 404 with an empty body and the reader got a blank page with no
+ * way back. Astro emits this route as dist/404.html in a static build, which is
+ * exactly the file that setting is looking for.
+ *
+ * No search box, because a search box needs JavaScript or a backend and the site
+ * has neither. The nav is the way back, and it is already in the layout.
+ */
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Not found"
+  description="That page does not exist on this site."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Not found</h1>
+        <p class="masthead__meta mono">404</p>
+      </div>
+
+      <div class="doc">
+        <p class="lede">
+          There is no page at that address. Either it never existed, or it moved and something
+          still points at where it used to be.
+        </p>
+
+        <p>
+          If a link on this site brought you here, that is our error and worth reporting: every
+          internal link is checked at build time, so a broken one means the check missed
+          something. <a href="/corrections/">Tell us</a> and it gets fixed in a dated commit.
+        </p>
+
+        <h2>Where to go instead</h2>
+        <ul>
+          <li><a href="/">The dashboard</a>, which has the headline figure from every section.</li>
+          <li><a href="/progress/">Progress</a> for what models can do, and <a href="/capability/">Capability</a> for what it took to build them.</li>
+          <li><a href="/policy/">Policy</a> for the law that applies, by jurisdiction.</li>
+          <li><a href="/sources/">Sources</a> for every dataset behind the numbers, with its licence.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
