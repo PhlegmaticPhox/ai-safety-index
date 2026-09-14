@@ -22,23 +22,41 @@ SOFTWARE.
 
 ---
 
-This licence covers the CODE in this repository only: the ETL pipeline, the
-Astro site, the components, the scripts and the checks.
+WHAT THIS COVERS
 
-It does not cover the data or the writing, which are licensed separately:
+"The Software" above means everything in this project that is ours: the ETL
+pipeline, the Astro site, the components, the scripts and the checks, AND the
+four datasets this project codes itself, AND the written explanations on the
+site.
 
-  The four datasets coded by this project - the Governance Readiness Index,
-  the AI Law and Policy Index, the Frontier Safety Framework Index and the
-  Compute Threshold Index - together with the written explanations on the
-  site, are licensed CC BY 4.0:
-  https://creativecommons.org/licenses/by/4.0/
+The four datasets are:
 
-  Everything else on the site is reproduced from other people's datasets
-  under their own licences and remains theirs. Those licences are not ours
-  to widen. Every source, with its licence, is listed at
-  https://aisafetytracker.org/sources/ and in data/sources.json.
+  - the AI Governance Readiness Index
+  - the AI Law and Policy Index
+  - the Frontier Safety Framework Index
+  - the Compute Threshold Index
 
-The split is deliberate. Creative Commons themselves advise against using CC
-licences for software, because they say nothing about source code, linking or
-patents; MIT is the right instrument for code, and CC BY 4.0 is the right one
-for data and prose.
+One licence for all of it, on purpose. These datasets are not collected, they
+are written: each one is a reading of primary legal instruments, coded against
+a published rubric, and the code and the coding rules are inseparable in
+practice. Splitting them across two licences would invite the question of where
+one ends and the other begins, and MIT's terms - use it, change it, sell it,
+keep the notice - are the same permission we would have granted anyway. There
+is precedent in our own source registry: Microsoft's AI Diffusion dataset, one
+of this project's inputs, is MIT-licensed data.
+
+Attribution strings for each dataset are in data/sources.json and are shown in
+the provenance marker attached to every figure on the site.
+
+WHAT THIS DOES NOT COVER
+
+Most figures on the site are reproduced from other people's datasets under
+their own licences and remain theirs. Those licences are not ours to widen.
+Every source, with its licence, its attribution string and its known
+limitations, is registered in data/sources.json and listed at
+https://aisafetytracker.org/sources/.
+
+Two that come up often: the AI Incident Database is ODbL, which puts
+share-alike conditions on derived databases; news headlines and extracts belong
+to their publishers, and this project stores a headline, at most 200 characters
+and a canonical link.

@@ -86,11 +86,14 @@ Three sources are registered specifically so that using them fails the build: Ar
 the Stanford AI Index, and METR's time-horizon data, none of which grant the reuse this site would
 need. They are linked instead.
 
-Original work in this repository is CC BY 4.0: the site code, the written explainers, and four
-hand-coded datasets - the Governance Readiness Index, the AI Law and Policy Index, the Frontier
-Safety Framework Index and the Compute Threshold Index.
+Original work in this repository is MIT licensed: the site code, the written explainers, and
+four hand-coded datasets - the Governance Readiness Index, the AI Law and Policy Index, the
+Frontier Safety Framework Index and the Compute Threshold Index. One licence across all three
+because the rubric, the code that applies it and the resulting dataset are the same piece of work.
+See LICENSE.
 
-Found an error? Open an issue. Corrections are logged publicly rather than quietly patched.
+Found an error? Email corrections@aisafetytracker.org. Material corrections are listed on
+https://aisafetytracker.org/corrections/.
 
 ---
 

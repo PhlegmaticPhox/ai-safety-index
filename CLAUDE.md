@@ -91,8 +91,8 @@ Current modules: `fetch_epoch` (5 datasets), `fetch_microsoft_diffusion`, `fetch
 `fetch_news` (8 feeds), `fetch_openalex`, `build_governance`, `build_policy_index`
 (+ `policy_jurisdictions.py`, the instrument lists), `build_frontier_index` (2).
 
-Four datasets are our own work, all CC BY 4.0: **Governance Readiness Index**, **AI Law and Policy
-Index**, **Frontier Safety Framework Index**, **Compute Threshold Index**. They exist because the
+Four datasets are our own work, all MIT licensed like the code: **Governance Readiness Index**,
+**AI Law and Policy Index**, **Frontier Safety Framework Index**, **Compute Threshold Index**. They exist because the
 established trackers are protected databases; coding primary instruments ourselves sidesteps that
 and makes the result ours to license.
 

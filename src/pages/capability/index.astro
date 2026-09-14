@@ -4,10 +4,12 @@
  *
  * Charts are rendered to SVG here rather than embedded from Epoch. Their
  * interactive versions are better than anything we would build and are linked
- * from every figure, but embedding them would put third-party scripts on a site
- * that promises no tracking and no client JavaScript, and would leave the page
- * looking like two websites stacked. The data is CC BY 4.0 and re-plotting it is
- * exactly what that licence is for.
+ * from every figure, but embedding them would put a third-party script and a
+ * third-party iframe on every page that carries a chart, and would leave the
+ * page looking like two websites stacked. The only script this site loads is
+ * Cloudflare's page counter, and the CSP permits that origin and no other;
+ * an embed would mean widening it per chart provider. Epoch's data is
+ * CC BY 4.0 and re-plotting it is exactly what that licence is for.
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
