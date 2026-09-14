@@ -15,7 +15,7 @@
 # emits it, and setting it in two places is how the two drift apart.
 
 /*
-  Content-Security-Policy: default-src 'none'; script-src https://static.cloudflareinsights.com; connect-src https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
@@ -49,9 +49,24 @@
 #                        The beacon carries its own integrity hash, so the file
 #                        is verified by the browser before it runs.
 #
-#   connect-src          Where the beacon sends its measurements. Without it the
-#                        script loads and then silently fails to report, which
-#                        looks like working analytics that collect nothing.
+#   connect-src          Where the beacon sends its measurements, and the first
+#                        version of this line was wrong in a way worth recording.
+#
+#                        It listed only https://cloudflareinsights.com, on the
+#                        reasonable assumption that a Cloudflare beacon reports
+#                        to Cloudflare. It does not. It POSTs to /cdn-cgi/rum on
+#                        THIS domain, which Cloudflare intercepts at the edge, so
+#                        the request is same-origin and 'self' is what permits it.
+#                        The external host stays listed because some
+#                        configurations do post there directly.
+#
+#                        The failure mode is the reason to be careful here: the
+#                        script loaded fine and the page looked perfect, and the
+#                        only sign anything was wrong was one line in the browser
+#                        console. Analytics that collect nothing while appearing
+#                        to work is worse than analytics that are plainly off.
+#                        Found by opening the deployed site in a real browser,
+#                        which is the only place it was visible.
 #
 #   style-src            'unsafe-inline' is required today and is not cosmetic:
 #                        dist carries 1283 inline style= attributes (every SVG
