@@ -1,7 +1,7 @@
 {
   "dataset": "research-volume",
-  "generated": "2026-09-13T07:40:59+00:00",
-  "retrieved": "2026-09-13T07:40:51+00:00",
+  "generated": "2026-09-14T12:58:48+00:00",
+  "retrieved": "2026-09-14T12:58:38+00:00",
   "sources": [
     "openalex"
   ],
@@ -24,7 +24,7 @@
         },
         {
           "year": 2016,
-          "count": 168
+          "count": 167
         },
         {
           "year": 2017,
@@ -32,7 +32,7 @@
         },
         {
           "year": 2018,
-          "count": 202
+          "count": 204
         },
         {
           "year": 2019,
@@ -48,27 +48,27 @@
         },
         {
           "year": 2022,
-          "count": 1446
+          "count": 1449
         },
         {
           "year": 2023,
-          "count": 18036
+          "count": 18037
         },
         {
           "year": 2024,
-          "count": 59641
+          "count": 59623
         },
         {
           "year": 2025,
-          "count": 122005
+          "count": 121900
         },
         {
           "year": 2026,
-          "count": 184130
+          "count": 185822
         }
       ],
-      "total": 386932,
-      "latest_complete": 122005,
+      "total": 388506,
+      "latest_complete": 121900,
       "partial_year": 2026,
       "source_id": "openalex"
     },
@@ -95,7 +95,7 @@
         },
         {
           "year": 2018,
-          "count": 56
+          "count": 55
         },
         {
           "year": 2019,
@@ -123,15 +123,15 @@
         },
         {
           "year": 2025,
-          "count": 3928
+          "count": 3931
         },
         {
           "year": 2026,
-          "count": 9470
+          "count": 9557
         }
       ],
-      "total": 15282,
-      "latest_complete": 3928,
+      "total": 15371,
+      "latest_complete": 3931,
       "partial_year": 2026,
       "source_id": "openalex"
     },
@@ -158,11 +158,11 @@
         },
         {
           "year": 2018,
-          "count": 248
+          "count": 247
         },
         {
           "year": 2019,
-          "count": 391
+          "count": 389
         },
         {
           "year": 2020,
@@ -170,7 +170,7 @@
         },
         {
           "year": 2021,
-          "count": 985
+          "count": 980
         },
         {
           "year": 2022,
@@ -178,23 +178,23 @@
         },
         {
           "year": 2023,
-          "count": 1986
+          "count": 1988
         },
         {
           "year": 2024,
-          "count": 3897
+          "count": 3898
         },
         {
           "year": 2025,
-          "count": 10642
+          "count": 10639
         },
         {
           "year": 2026,
-          "count": 14594
+          "count": 14740
         }
       ],
-      "total": 35056,
-      "latest_complete": 10642,
+      "total": 35194,
+      "latest_complete": 10639,
       "partial_year": 2026,
       "source_id": "openalex"
     },
@@ -217,7 +217,7 @@
         },
         {
           "year": 2017,
-          "count": 71
+          "count": 70
         },
         {
           "year": 2018,
@@ -229,11 +229,11 @@
         },
         {
           "year": 2020,
-          "count": 113
+          "count": 114
         },
         {
           "year": 2021,
-          "count": 91
+          "count": 90
         },
         {
           "year": 2022,
@@ -253,10 +253,10 @@
         },
         {
           "year": 2026,
-          "count": 8043
+          "count": 8119
         }
       ],
-      "total": 13023,
+      "total": 13098,
       "latest_complete": 2899,
       "partial_year": 2026,
       "source_id": "openalex"
@@ -276,7 +276,7 @@
         },
         {
           "year": 2016,
-          "count": 20
+          "count": 19
         },
         {
           "year": 2017,
@@ -284,19 +284,19 @@
         },
         {
           "year": 2018,
-          "count": 46
+          "count": 45
         },
         {
           "year": 2019,
-          "count": 124
+          "count": 123
         },
         {
           "year": 2020,
-          "count": 159
+          "count": 157
         },
         {
           "year": 2021,
-          "count": 211
+          "count": 210
         },
         {
           "year": 2022,
@@ -304,23 +304,23 @@
         },
         {
           "year": 2023,
-          "count": 588
+          "count": 612
         },
         {
           "year": 2024,
-          "count": 1303
+          "count": 1304
         },
         {
           "year": 2025,
-          "count": 5063
+          "count": 5057
         },
         {
           "year": 2026,
-          "count": 14385
+          "count": 14555
         }
       ],
-      "total": 22264,
-      "latest_complete": 5063,
+      "total": 22447,
+      "latest_complete": 5057,
       "partial_year": 2026,
       "source_id": "openalex"
     },
@@ -355,7 +355,7 @@
         },
         {
           "year": 2020,
-          "count": 45
+          "count": 44
         },
         {
           "year": 2021,
@@ -375,15 +375,15 @@
         },
         {
           "year": 2025,
-          "count": 384
+          "count": 382
         },
         {
           "year": 2026,
-          "count": 551
+          "count": 557
         }
       ],
-      "total": 1372,
-      "latest_complete": 384,
+      "total": 1375,
+      "latest_complete": 382,
       "partial_year": 2026,
       "source_id": "openalex"
     }

@@ -1,9 +1,11 @@
 {
   "dataset": "news-feed",
-  "generated": "2026-09-13T06:08:14+00:00",
-  "retrieved": "2026-09-13T06:08:14+00:00",
+  "generated": "2026-09-14T12:58:38+00:00",
+  "retrieved": "2026-09-14T12:58:38+00:00",
   "sources": [
     "ai-incident-database",
+    "arxiv-cs-ai",
+    "arxiv-cs-cy",
     "canada-news",
     "ec-digital-strategy",
     "gov-uk",
@@ -12,8 +14,517 @@
   ],
   "unit": null,
   "notes": "Headline, a short extract of at most 200 characters, and a link back to the original. We do not reproduce full text. A rolling window: items stay for up to 120 days rather than vanishing when a source drops them, because arXiv announces nothing at weekends and government feeds are short. Categories are assigned by keyword rule and each item carries the terms that matched, so the classification can be checked rather than trusted. Departmental communications are political statements about policy, not neutral descriptions of it, and preprints are not peer reviewed.",
-  "count": 56,
+  "count": 82,
   "records": [
+    {
+      "title": "WorkflowPerturb: Calibrated Stress Tests for Evaluating Multi-Agent Workflow Metrics",
+      "snippet": "Multi-agent LLM systems that generate structured workflows from natural-language requests are now deployed in production across cloud automation, DevOps, and enterprise orchestration. Operating...",
+      "url": "https://arxiv.org/abs/2602.17990",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Who Pays for Open Review? Visible Author Reputation and Its Effect on Ratings",
+      "snippet": "An OpenReview bug in November 2025 broke anonymity at several conferences and prompted calls for open review, which motivate us to ask what shifting from blind to open would mean for authors....",
+      "url": "https://arxiv.org/abs/2609.11983",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Who Judges the Judges? A Chinese Safety QA Benchmark for Evaluating LLM Responses and Safety Judges",
+      "snippet": "Safety benchmarks for large language models often assess the risk of a user query, although the outcome of question answering depends on whether the response violates a policy. This distinction is...",
+      "url": "https://arxiv.org/abs/2609.01210",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "progress"
+      ],
+      "matched_terms": {
+        "safety": [
+          "risk",
+          "safety"
+        ],
+        "progress": [
+          "benchmark",
+          "benchmarks"
+        ]
+      }
+    },
+    {
+      "title": "When Rubrics Fail: Hallucinations Reveal Blind Spots in Medical AI Evaluation",
+      "snippet": "Hallucinations can undermine clinician trust in LLMs, making it important that evaluation methods capture clinically relevant errors. Rubric-based evaluation has become the leading approach for...",
+      "url": "https://arxiv.org/abs/2609.12718",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation"
+        ]
+      }
+    },
+    {
+      "title": "When Does AI Augment Work? A Workflow-Level Framework for Human-Agent Collaboration",
+      "snippet": "We aim to characterise the value of artificial intelligence in the workplace. Current studies largely measure this value in terms of the current automation capabilities and public adoption of AI....",
+      "url": "https://arxiv.org/abs/2609.12482",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance",
+        "progress"
+      ],
+      "matched_terms": {
+        "governance": [
+          "framework"
+        ],
+        "progress": [
+          "capabilities"
+        ]
+      }
+    },
+    {
+      "title": "When Auditors Fabricate: Batch-Size Degradation and Confident Hallucination in LLM Detection of Planted Document Contamination",
+      "snippet": "Large language models are increasingly proposed as automated auditors of document quality, yet their reliability as detectors of planted errors is poorly characterised. We construct a contaminated...",
+      "url": "https://arxiv.org/abs/2609.09696",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "auditors"
+        ]
+      }
+    },
+    {
+      "title": "When Agent Metrics Measure Different Things: An Evidence-Grounded Audit of the Praxa AI Pipeline",
+      "snippet": "Agent evaluations can be numerically correct while measuring a different construct from the one implied by their labels. We present a retrospective measurement audit of selected Praxa AI...",
+      "url": "https://arxiv.org/abs/2609.12017",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "governance"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluations"
+        ],
+        "governance": [
+          "audit"
+        ]
+      }
+    },
+    {
+      "title": "What is the Difference Between Me and You? Benchmarking the Quality Gap Between Human-Written and AI-Generated Code",
+      "snippet": "AI coding assistants are becoming co-authors of production software, yet their evaluation centers on functional correctness, leaving open whether their code differs from human code in the quality...",
+      "url": "https://arxiv.org/abs/2609.12708",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "progress"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation"
+        ],
+        "progress": [
+          "benchmarking"
+        ]
+      }
+    },
+    {
+      "title": "What Moves? Localized Motion Representations for Compositional Scene Control",
+      "snippet": "Real-world dynamics are inherently compositional: multiple entities move simultaneously within a shared scene, each exhibiting distinct motion patterns. Yet current motion representation models...",
+      "url": "https://arxiv.org/abs/2609.04383",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "What Drives Recovery in Agentic Text-to-Cypher? LAST-CQ: An LLM Agent Self-Refinement Framework",
+      "snippet": "Agentic pipelines for structured-query generation are rapidly expanding, but it is unclear which part of the loop produces the gain. We use LAST-CQ -- a five-agent, training-free,...",
+      "url": "https://arxiv.org/abs/2609.12746",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance",
+        "progress"
+      ],
+      "matched_terms": {
+        "governance": [
+          "framework"
+        ],
+        "progress": [
+          "agentic",
+          "training"
+        ]
+      }
+    },
+    {
+      "title": "VBVR-Pro: A Scalable and Verifiable Suite for Native Visual Reasoning",
+      "snippet": "Native visual reasoning treats visual generation as the medium of reasoning itself: visual states (i.e. images and videos) are not merely inputs to be understood or outputs to be rendered, but...",
+      "url": "https://arxiv.org/abs/2608.26105",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "title": "UniTAC: Universal Task-Aware Compression via Weighted Distortion Measures",
+      "snippet": "Lossy compression is conventionally driven by a task-agnostic distortion (e.g., MSE or MS-SSIM), yet in many emerging applications the receiver cares not about uniform fidelity but about a...",
+      "url": "https://arxiv.org/abs/2608.16696",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Understanding Game Coaching on Gig Platforms",
+      "snippet": "Freelance game coaches monetize their gaming expertise by offering personalized instruction to players seeking to improve, working through gig platforms, yet little is known about how they...",
+      "url": "https://arxiv.org/abs/2609.12695",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "UK and US fusion strike partnership to accelerate clean energy",
+      "snippet": "UK and US set to sign agreements at the Global Fusion Summit to combine expertise in AI, computing and fusion and to cooperate on regulating fusion energy",
+      "url": "https://www.gov.uk/government/news/uk-and-us-fusion-strike-partnership-to-accelerate-clean-energy",
+      "date": "2026-09-14",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "doc_type": "",
+      "source_id": "gov-uk",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "UFO: Chain-of-Evaluation for Omni-Condition Alignment in Multi-Modal Image Generation",
+      "snippet": "Multi-modal image generation, particularly subject-driven customization, has garnered growing attention in recent years. Despite the rapid advancement of generative models, their evaluation...",
+      "url": "https://arxiv.org/abs/2609.12397",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "alignment"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation"
+        ],
+        "alignment": [
+          "alignment"
+        ]
+      }
+    },
+    {
+      "title": "Tunable Latent Generative Priors for Compressed Sensing and Inverse Problems",
+      "snippet": "Latent generative models have emerged as powerful priors for solving inverse problems. These models typically represent a class of natural signals at a single, fixed complexity, governed by the...",
+      "url": "https://arxiv.org/abs/2603.07357",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "TripPattern: A Pattern-based Text Watermarking Method for Large Language Models",
+      "snippet": "Text watermarking techniques have gained significant attention for identifying machine-generated text and mitigating risks from large language models (LLMs). Existing methods typically divide an...",
+      "url": "https://arxiv.org/abs/2609.12472",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "risks"
+        ]
+      }
+    },
+    {
+      "title": "Transformers as In-Context Samplers: From Closed-Form Diffusion to Estimation-Free Sampling",
+      "snippet": "A growing body of work establishes that large language models are not mere statistical memorizers, but are capable of in-context learning: performing inference at test time using only examples...",
+      "url": "https://arxiv.org/abs/2609.08981",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "inference"
+        ]
+      }
+    },
+    {
+      "title": "Tinker Tales: A Tangible Dialogue System for Child-AI Co-Creative Storytelling",
+      "snippet": "Conversational AI agents are increasingly explored as creative partners, yet how conversation design shapes child-AI dialogue in co-creative settings remains underexplored. We present Tinker...",
+      "url": "https://arxiv.org/abs/2602.04109",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "The Vienna 4G/5G Drive-Test Dataset",
+      "snippet": "Machine learning for mobile network analysis, planning, and optimization is often limited by the lack of large, comprehensive real-world datasets. This paper introduces the Vienna 4G/5G Drive-Test...",
+      "url": "https://arxiv.org/abs/2603.02638",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "The Convention Gap: Towards Measuring Implicit Communication in Cooperative AI Evaluation",
+      "snippet": "Cooperative AI agents are evaluated against other AIs, yet human cooperation relies on implicit conventions -- shared protocols for reading meaning beyond the literal message -- which AI-AI...",
+      "url": "https://arxiv.org/abs/2609.11489",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation"
+        ]
+      }
+    },
+    {
+      "title": "Reinforcement Learning over Patient Trajectories for Clinical Reasoning in EHR Foundation Models",
+      "snippet": "Electronic health record (EHR) foundation models trained on longitudinal patient trajectories have demonstrated strong performance across diverse clinical prediction tasks. However, their clinical...",
+      "url": "https://arxiv.org/abs/2609.12277",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "reasoning"
+        ]
+      }
+    },
+    {
+      "title": "Norms at a Price: Why RL-Based Alignment Can Promise Conditional Compliance at Best",
+      "snippet": "AI agents sometimes act aligned when they infer they are being tested, and differently when not. We argue this is not an anomaly but what current training regimes are structured to select for....",
+      "url": "https://arxiv.org/abs/2609.07627",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "alignment",
+        "governance",
+        "progress"
+      ],
+      "matched_terms": {
+        "alignment": [
+          "aligned",
+          "alignment"
+        ],
+        "governance": [
+          "compliance"
+        ],
+        "progress": [
+          "training"
+        ]
+      }
+    },
+    {
+      "title": "Informational Help-Seeking on Reddit Did Not Decline After ChatGPT",
+      "snippet": "Did people stop asking other people for advice online once generative AI could answer their questions? Prior work on ChatGPT's effect on online help-seeking disagrees in both size and sign, in...",
+      "url": "https://arxiv.org/abs/2609.12447",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "From Bench-to-Bedside: A Review of Clinical Trials in Drug Discovery and Development",
+      "snippet": "Clinical trials bridge basic research and clinical application, serving as essential steps in drug development. This review examines clinical trial phases (Phase I [safety assessment], Phase II...",
+      "url": "https://arxiv.org/abs/2412.09378",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "safety"
+        ]
+      }
+    },
+    {
+      "title": "Fine-Tuning Large Language Models for Codebook-Guided Coding of Students' Mathematics Metaphor Responses",
+      "snippet": "Student-generated metaphors about mathematics can provide insights into students' attitudes, beliefs, identities, and experiences, but expert human assessment through thematic coding of these...",
+      "url": "https://arxiv.org/abs/2608.10276",
+      "date": "2026-09-14",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "fine-tuning"
+        ]
+      }
+    },
+    {
+      "title": "Houthis used Anthropic AI to try to build ballistic missiles",
+      "snippet": "Yemeni militants sought to use Anthropic’s Claude AI model to develop guidance, control and navigation software for its ballistic missiles, the US company said. In its intelligence threat report...",
+      "url": "https://www.ft.com/content/8310cf56-ce60-4e6e-8254-5bb470e9a880",
+      "date": "2026-09-11",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "threat"
+        ]
+      }
+    },
     {
       "title": "Anthropic discloses fourth AI hacking incident missed in earlier review",
       "snippet": "Anthropic on Wednesday disclosed another instance of an AI model hacking external systems during testing, the latest in a growing list of such incidents that have raised concerns about the risk...",
@@ -222,27 +733,6 @@
         "general"
       ],
       "matched_terms": {}
-    },
-    {
-      "title": "DC court faults lawyers for Deutsche Bank subsidiary over AI hallucination",
-      "snippet": "The District of Columbia Court of Appeals said in a ruling on Thursday, opens new tab that lawyers for a Deutsche Bank subsidiary in a mortgage foreclosure lawsuit cited nonexistent cases...",
-      "url": "https://www.reuters.com/legal/legalindustry/dc-court-faults-lawyers-deutsche-bank-subsidiary-over-ai-hallucination-2026-09-03/",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "policy"
-      ],
-      "matched_terms": {
-        "policy": [
-          "court",
-          "lawsuit",
-          "ruling"
-        ]
-      }
     },
     {
       "title": "Apply AI Summit",
