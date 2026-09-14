@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Icon } from "astro-icon/components";
 import { attributionsFor } from "../lib/sources";
 
 /**
@@ -105,7 +106,34 @@ const nav = [
           <span class="brand__mark" aria-hidden="true"></span>
           AI Safety Tracker
         </a>
-        <nav aria-label="Main">
+        {/* Two renderings of one list. Exactly one is ever displayed: the row
+            above 640px, the menu below it, each `display: none` at the other
+            width and so absent from the accessibility tree rather than merely
+            invisible. Duplicating eight links costs a few hundred bytes and
+            avoids depending on overriding the UA's popover display rule, which
+            is the only way to make a single element be both. */}
+        <nav class="nav-row" aria-label="Main">
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={Astro.url.pathname.startsWith(item.href) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <button type="button" class="nav-button" popovertarget="site-menu" aria-label="Menu">
+          <Icon name="ph:list" width="20" height="20" aria-hidden="true" />
+        </button>
+
+        <nav popover id="site-menu" class="nav-menu" aria-label="Main">
           <ul>
             {
               nav.map((item) => (
@@ -171,20 +199,13 @@ const nav = [
     </footer>
 
     <style>
-      /* The header scrolls away with the page. It was sticky, which on a phone
-         is the worst trade on the site: the nav wraps to two rows there, so it
-         held 235px of a 844px screen permanently, better than a quarter of the
-         viewport spent on navigation nobody is using while they read a chart.
-
-         Dropping `position: sticky` takes `z-index` and the translucent
-         background with it. Both only existed to serve stickiness: the 0.86
-         alpha and the blur were there so content passing underneath stayed
-         legible, and nothing passes underneath a static header. It is opaque
-         --bg now, with the bottom border doing the separating, which is what
-         that border was always for. */
       .head {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 20;
         border-block-end: 1px solid var(--line);
-        background: var(--bg);
+        background: rgb(20 25 36 / 0.86);
+        backdrop-filter: blur(12px);
       }
 
       /* Nav stays on one line and within the height cap. */
@@ -221,7 +242,7 @@ const nav = [
           no-repeat;
       }
 
-      .head nav ul {
+      .nav-row ul {
         display: flex;
         gap: 1.05rem;
         margin: 0;
@@ -229,6 +250,9 @@ const nav = [
         list-style: none;
       }
 
+      /* Link styling is shared by both renderings. The popover sits in the top
+         layer when open, which changes where it PAINTS and not where it sits in
+         the tree, so a descendant selector still reaches it. */
       .head nav a {
         color: var(--muted);
         text-decoration: none;
@@ -242,18 +266,92 @@ const nav = [
         color: var(--ink);
       }
 
+      /* Above the breakpoint the menu does not exist: the button is display:none
+         and therefore unfocusable, so the popover cannot be opened by pointer or
+         by keyboard. The :popover-open rule is the one case left, a viewport
+         widened while the menu happened to be open. */
+      .nav-button,
+      .nav-menu:popover-open {
+        display: none;
+      }
+
       @media (max-width: 640px) {
-        .head__inner {
-          block-size: auto;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 0.5rem;
-          padding-block: 0.75rem;
+        /* One 52px row again, the same height as the desktop header: brand at
+           the start, one control at the end. The nav used to wrap to two rows
+           of links here and stack the bar to 120px, which is what made a sticky
+           header cost a fifth of a phone screen. */
+        .nav-row {
+          display: none;
         }
 
-        .head nav ul {
-          gap: 1.1rem;
-          flex-wrap: wrap;
+        .nav-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          /* 44px of touch target around a 20px glyph, per the WCAG minimum. */
+          inline-size: 44px;
+          block-size: 44px;
+          margin-inline-end: -0.6rem;
+          padding: 0;
+          border: 0;
+          border-radius: var(--r);
+          background: none;
+          color: var(--muted);
+          cursor: pointer;
+          transition: color 0.18s var(--ease), background-color 0.18s var(--ease);
+        }
+
+        .nav-button:hover,
+        .nav-button:focus-visible {
+          color: var(--ink);
+          background: var(--surface-2);
+        }
+
+        /* Anchored to the viewport rather than to the button. A menu pinned
+           under a sticky header has one correct place to be at every width, and
+           position: fixed puts it there in every browser that ships popover;
+           CSS anchor positioning does not yet have that reach. */
+        .nav-menu:popover-open {
+          display: block;
+        }
+
+        .nav-menu {
+          position: fixed;
+          inset: auto;
+          inset-block-start: 52px;
+          inset-inline-end: clamp(1rem, 3.5vw, 2.5rem);
+          min-inline-size: 11rem;
+          margin: 0.35rem 0 0;
+          padding: 0.35rem;
+          border: 1px solid var(--line);
+          border-radius: var(--r);
+          background: var(--surface-2);
+          box-shadow: 0 16px 44px rgb(0 0 0 / 0.55);
+        }
+
+        .nav-menu ul {
+          display: grid;
+          gap: 0.05rem;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        .nav-menu a {
+          display: block;
+          padding: 0.6rem 0.8rem;
+          border-radius: var(--r);
+          font-size: 0.875rem;
+        }
+
+        /* The row marks the current page; the colour is left to the shared
+           `.head nav a[aria-current]` rule above, which is the same --ink the
+           desktop nav uses. An --accent-ink rule here looked right and did
+           nothing: `.head nav a[aria-current]` carries two element selectors to
+           this one's one and wins on specificity regardless of order. */
+        .nav-menu a:hover,
+        .nav-menu a[aria-current="page"] {
+          background: var(--surface);
         }
       }
 
