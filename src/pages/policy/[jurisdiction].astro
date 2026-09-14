@@ -256,10 +256,15 @@ const summaries: Record<string, string> = {
     list-style: none;
   }
 
+  /* 5rem of scroll margin was the height of the sticky header, so a linked
+     instrument cleared it instead of landing underneath it. The header is not
+     sticky any more and nothing overlaps the top of the page, so that much
+     margin just drops the target 80px down the screen. 1rem is breathing room,
+     not clearance. */
   .instrument {
     padding-block: 1.15rem;
     border-block-start: 1px solid var(--line);
-    scroll-margin-block-start: 5rem;
+    scroll-margin-block-start: 1rem;
   }
 
   .instrument:last-child {

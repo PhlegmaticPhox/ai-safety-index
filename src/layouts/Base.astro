@@ -171,13 +171,20 @@ const nav = [
     </footer>
 
     <style>
+      /* The header scrolls away with the page. It was sticky, which on a phone
+         is the worst trade on the site: the nav wraps to two rows there, so it
+         held 235px of a 844px screen permanently, better than a quarter of the
+         viewport spent on navigation nobody is using while they read a chart.
+
+         Dropping `position: sticky` takes `z-index` and the translucent
+         background with it. Both only existed to serve stickiness: the 0.86
+         alpha and the blur were there so content passing underneath stayed
+         legible, and nothing passes underneath a static header. It is opaque
+         --bg now, with the bottom border doing the separating, which is what
+         that border was always for. */
       .head {
-        position: sticky;
-        inset-block-start: 0;
-        z-index: 20;
         border-block-end: 1px solid var(--line);
-        background: rgb(20 25 36 / 0.86);
-        backdrop-filter: blur(12px);
+        background: var(--bg);
       }
 
       /* Nav stays on one line and within the height cap. */
