@@ -14,6 +14,7 @@
  */
 import { Icon } from "astro-icon/components";
 import { getSource, freshness } from "../lib/sources";
+import { nextId } from "../lib/ids";
 
 interface Props {
   /** One or more source_ids, as carried on the records being displayed. */
@@ -30,7 +31,21 @@ const ids = Array.isArray(source) ? source : [source];
 const entries = ids.map((id) => ({ id, ...getSource(id) }));
 const age = retrieved ? freshness(retrieved) : null;
 
-const popoverId = `prov-${ids.join("-")}-${Math.random().toString(36).slice(2, 8)}`;
+/* The popover and its CSS anchor need an id that is unique within the page.
+ *
+ * This used to be Math.random(), which made every build produce different HTML
+ * from identical input. On a site whose whole argument is that you can check
+ * where a number came from, that removed the one mechanical check available:
+ * nobody, including us, could hash the deployed page and compare it to what the
+ * repository builds. Two clean builds must be byte-identical.
+ *
+ * A module-scoped counter is enough. Astro renders a page in a single pass on
+ * one thread, so the order components are reached is the order they appear in
+ * the output, and that order is fixed by the source. The source ids stay in the
+ * id because they make the markup readable when debugging; the counter is what
+ * guarantees uniqueness when the same source is cited twice on one page.
+ */
+const popoverId = `prov-${ids.join("-")}-${nextId()}`;
 const anchorName = `--${popoverId}`;
 ---
 

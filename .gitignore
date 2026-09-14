@@ -3,6 +3,12 @@ dist/
 .astro/
 node_modules/
 
+# wrangler's local miniflare state, written by `wrangler dev`. Machine-local
+# sqlite, never source. `wrangler dev` is the only local way to see
+# public/_headers actually applied, since astro dev and astro preview both
+# ignore it; see the "wrangler" entry in .claude/launch.json.
+.wrangler/
+
 # ETL raw artefacts - refetchable, often large. Processed JSON IS committed on purpose:
 # it makes every data change a reviewable diff and lets the site build offline.
 data/raw/

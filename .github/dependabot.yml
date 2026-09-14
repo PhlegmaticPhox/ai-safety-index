@@ -1,0 +1,60 @@
+# Dependency update PRs.
+#
+# The point of this file is not freshness for its own sake. It is that the
+# workflow in refresh-data.yml now pins its actions to commit SHAs, and a pinned
+# SHA never receives a security patch on its own. Pinning without something to
+# move the pins is how a supply chain gets frozen at a known-bad commit. These
+# two things belong together.
+#
+# Weekly, not daily. The fastest-moving thing here is the npm tree, a single
+# maintainer reviews every PR by hand, and a queue nobody reads is the same as no
+# queue at all.
+
+version: 2
+
+updates:
+  # Build-time npm tree. Nothing here reaches a visitor's browser - the site
+  # ships zero JavaScript - so these are build and CI dependencies only. Grouped
+  # into one PR per week because Astro moves several of its own packages at once
+  # and five separate PRs for one upgrade is noise, not signal.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+          - "astro-icon"
+      types:
+        patterns:
+          - "@types/*"
+    commit-message:
+      prefix: "deps"
+
+  # The reason this file exists. Keeps the SHA pins in refresh-data.yml current,
+  # as reviewable PRs that show which commit is being moved to, rather than a
+  # mutable tag silently changing under the job.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: Etc/UTC
+    commit-message:
+      prefix: "ci"
+
+# Python is deliberately absent.
+#
+# etl/requirements.txt holds exactly one line, `certifi>=2024.2.2`, and an
+# unpinned lower bound means CI already installs the newest certifi on every run.
+# A Dependabot PR raising that floor would change nothing about what gets
+# installed, so it would be pure noise. If the requirements file ever gains real
+# pins or a second dependency, add a `pip` entry here at the same time - the
+# exemption is a consequence of how the file is written, not a policy.

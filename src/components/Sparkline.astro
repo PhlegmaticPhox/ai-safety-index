@@ -6,6 +6,8 @@
  * no chart library. The accompanying table in the parent carries the same numbers
  * for screen readers, so this is marked decorative.
  */
+import { nextId } from "../lib/ids";
+
 interface Props {
   points: Array<{ month: string; best: number }>;
   /** Draw a reference line at this score, e.g. a saturation marker. */
@@ -25,7 +27,9 @@ const ys = (v: number) => height - pad - v * (height - pad * 2);
 const line = points.map((p, i) => `${i === 0 ? "M" : "L"}${xs(i).toFixed(1)} ${ys(p.best).toFixed(1)}`).join(" ");
 const area = `${line} L${xs(points.length - 1).toFixed(1)} ${height - pad} L${pad} ${height - pad} Z`;
 const last = points[points.length - 1];
-const gradientId = `spark-${Math.random().toString(36).slice(2, 8)}`;
+// Unique per instance so two sparklines do not share a gradient, and stable
+// between clean builds so the output can be verified by hash. See src/lib/ids.ts.
+const gradientId = `spark-${nextId()}`;
 ---
 
 <svg

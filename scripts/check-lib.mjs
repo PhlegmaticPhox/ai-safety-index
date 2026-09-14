@@ -115,4 +115,172 @@ assert.equal(geo.alpha3("Not A Country At All"), null, "unknown names must not g
   }
 }
 
+/* The render-side licence guard. etl/common.py sabotage-tests the write-side
+   guard; this is the half that had no test, which meant the control the site
+   relies on to never publish data it has no right to could have been weakened
+   without anything noticing. */
+{
+  const { assertRenderable, getSource, sources } = await import("../src/lib/sources.ts");
+  const ids = Object.keys(sources);
+
+  // 1. A permitted source renders. If this fails the guard has become a wall.
+  for (const allowed of ["epoch-notable-models", "microsoft-ai-diffusion", "openalex"]) {
+    assert.doesNotThrow(
+      () => assertRenderable(allowed),
+      `assertRenderable blocked ${allowed}, which is permitted. Charts will vanish.`,
+    );
+  }
+
+  // 2. A blocked source must throw. These three are registered PRECISELY so that
+  //    wiring them in fails the build; if this passes silently, the site can
+  //    publish data it has no licence to publish.
+  const mustBlock = ["artificial-analysis", "stanford-ai-index", "metr-time-horizons"];
+  for (const blocked of mustBlock) {
+    assert.throws(
+      () => assertRenderable(blocked),
+      `assertRenderable let ${blocked} (redistribution=${getSource(blocked).redistribution}) ` +
+        `through. That is a licence breach waiting to be rendered.`,
+    );
+  }
+
+  // 3. An unregistered id must throw rather than rendering an unattributed figure.
+  assert.throws(
+    () => assertRenderable("no-such-source"),
+    "assertRenderable accepted an unregistered source_id",
+  );
+
+  // 4. The guard must actually be reading the registry, not a hardcoded list of
+  //    three names. Every source whose declared state is blocking must throw,
+  //    and every other source must not.
+  const BLOCKING = new Set(["prohibited", "no-derivatives"]);
+  for (const id of ids) {
+    const state = getSource(id).redistribution;
+    if (BLOCKING.has(state)) {
+      assert.throws(() => assertRenderable(id), `${id} is ${state} but renders`);
+    } else {
+      assert.doesNotThrow(() => assertRenderable(id), `${id} is ${state} but is blocked`);
+    }
+  }
+
+  // 5. Drift. The blocked set is declared twice, once in Python and once in
+  //    TypeScript, because one guards the write and the other guards the render.
+  //    Two copies drift; this is the thing that notices. Read the Python source
+  //    rather than importing it, since this is a Node process.
+  const python = readFileSync("etl/common.py", "utf8");
+  const declared = python.match(/BLOCKED_REDISTRIBUTION\s*=\s*\{([^}]*)\}/);
+  assert.ok(declared, "could not find BLOCKED_REDISTRIBUTION in etl/common.py");
+  const pythonStates = [...declared[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]).sort();
+  assert.deepEqual(
+    pythonStates,
+    [...BLOCKING].sort(),
+    `etl/common.py blocks [${pythonStates}] but src/lib/sources.ts blocks [${[...BLOCKING]}]. ` +
+      `One end would write data the other end refuses to render, or worse, the reverse.`,
+  );
+
+  // 6. And the set this test asserts against must match the one the module
+  //    actually uses, or points 4 and 5 are checking a copy of a copy.
+  const tsSource = readFileSync("src/lib/sources.ts", "utf8");
+  const tsDeclared = tsSource.match(/const BLOCKED[^=]*=\s*new Set\(\[([^\]]*)\]\)/);
+  assert.ok(tsDeclared, "could not find the BLOCKED set in src/lib/sources.ts");
+  const tsStates = [...tsDeclared[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]).sort();
+  assert.deepEqual(
+    tsStates,
+    [...BLOCKING].sort(),
+    `src/lib/sources.ts blocks [${tsStates}] but this test asserts [${[...BLOCKING]}]`,
+  );
+
+  const blockedCount = ids.filter((id) => BLOCKING.has(getSource(id).redistribution)).length;
+  assert.equal(
+    blockedCount,
+    mustBlock.length,
+    `${blockedCount} sources are marked unrenderable but this test names ${mustBlock.length}. ` +
+      `A new blocked source should be added to the list above so it is checked by name.`,
+  );
+}
+
+/* The feed URLs the renderer will put in an href. etl/fetch_news.py checks the
+   scheme on the way in and NewsList.astro checks it again on the way out; this
+   checks the render-side half does what it claims, and that the committed data
+   currently passes it. */
+{
+  const { isSafeUrl } = await import("../src/lib/news.ts");
+
+  for (const good of [
+    "https://example.com/a",
+    "http://example.com/a", // plain http allowed on purpose: many primary sources use it
+    "https://www.gov.uk/x?y=1#z",
+    "  https://example.com/padded  ",
+  ]) {
+    assert.ok(isSafeUrl(good), `isSafeUrl rejected ${good}`);
+  }
+
+  for (const bad of [
+    "javascript:alert(1)",
+    "JaVaScRiPt:alert(1)",
+    "data:text/html,<script>alert(1)</script>",
+    "file:///etc/passwd",
+    "ftp://example.com/x",
+    "//example.com/a", // protocol-relative: the browser would supply ours
+    "https://",
+    "not a url",
+    "",
+    null,
+    undefined,
+  ]) {
+    assert.ok(!isSafeUrl(bad), `isSafeUrl accepted ${JSON.stringify(bad)}`);
+  }
+
+  // The committed feed must pass its own check, or rows silently lose their links.
+  const feed = JSON.parse(readFileSync("data/processed/news-feed.json", "utf8"));
+  const unsafe = feed.records.filter((r) => !isSafeUrl(r.url));
+  assert.deepEqual(
+    unsafe.map((r) => r.url),
+    [],
+    `news-feed.json contains URLs the renderer will refuse to link`,
+  );
+}
+
+/* TimeMap interpolates period labels into a raw <style> block via set:html, so a
+   label containing "</style>" would close the element and everything after it
+   would be parsed as markup. The component validates and fails the build rather
+   than sanitising. The pattern is read out of the component source rather than
+   reimplemented here, so weakening it there fails here. */
+{
+  const component = readFileSync("src/components/TimeMap.astro", "utf8");
+  const found = component.match(/const PERIOD_LABEL = (\/.+\/);/);
+  assert.ok(
+    found,
+    "could not find PERIOD_LABEL in src/components/TimeMap.astro. If it was renamed, " +
+      "update this check; if it was removed, the raw <style> sink is unguarded again.",
+  );
+  const [, body, flags] = found[1].match(/^\/(.*)\/([a-z]*)$/);
+  const pattern = new RegExp(body, flags);
+
+  // The labels the site actually renders must still pass.
+  for (const real of ["2025-H1", "2025-H2", "2026-Q1", "2026 Q1", "H1_2025"]) {
+    assert.ok(pattern.test(real), `PERIOD_LABEL rejects the real label ${real}`);
+  }
+
+  // The thing the guard exists for.
+  for (const hostile of [
+    "</style><script>alert(1)</script>",
+    "2026-Q1</style><script>alert(1)</script>",
+    '2026-Q1"; } body { display: none } .x { content: "',
+    "<img src=x onerror=alert(1)>",
+    "2026-Q1\\",
+    "a".repeat(64),
+    "",
+    " leading space",
+  ]) {
+    assert.ok(
+      !pattern.test(hostile),
+      `PERIOD_LABEL accepts ${JSON.stringify(hostile)}, which reaches a raw <style> block`,
+    );
+  }
+
+  // The pattern must be anchored at both ends, or it matches a safe substring of
+  // a hostile label and waves the whole thing through.
+  assert.ok(body.startsWith("^") && body.endsWith("$"), "PERIOD_LABEL is not fully anchored");
+}
+
 console.log("check-lib.mjs passed");

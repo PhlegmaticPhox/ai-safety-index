@@ -1,4 +1,7 @@
-import sourcesFile from "../../data/sources.json";
+// The import attribute is required by Node's own ESM loader, and is what lets
+// scripts/check-lib.mjs import this module directly to test the licence guard.
+// Vite honours it too, so the site build is unaffected.
+import sourcesFile from "../../data/sources.json" with { type: "json" };
 
 export type Redistribution =
   | "permitted"

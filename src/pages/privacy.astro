@@ -47,6 +47,15 @@ const updated = "13 September 2026";
           build profiles from it.
         </p>
         <p>
+          Cloudflare also adds a header to every response asking your browser to report
+          <em>failed</em> requests back to Cloudflare, which is how a host notices an outage it
+          cannot see from its own side. Successful page views are not reported. This is standard
+          hosting behaviour rather than anything this site measures: we do not receive those
+          reports, we cannot read them, and nothing about them reaches a chart on this site. We
+          mention it because it is the one thing a page here asks your browser to send anywhere,
+          and a privacy page that left it out would be overclaiming.
+        </p>
+        <p>
           What Cloudflare retains, and for how long, is governed by
           <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare's own privacy policy</a>
           rather than by this one.
@@ -64,7 +73,8 @@ const updated = "13 September 2026";
           Fonts are served from this site, not from a font network, so loading a page does not
           send a request to Google or anyone else. The site deliberately carries no images, no
           embedded video, no social widgets and no tag managers. Every byte a page loads comes
-          from this domain.
+          from this domain, with the single exception noted above: if a request to this site
+          fails, your browser may report that failure to Cloudflare.
         </p>
 
         <h2>Links out</h2>

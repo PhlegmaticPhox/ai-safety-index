@@ -6,6 +6,16 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--", "--port", "4321"],
       "port": 4321
+    },
+    {
+      // Serves dist/ the way Cloudflare will, which is the only local way to see
+      // public/_headers actually applied. `astro dev` and `astro preview` both
+      // ignore it, so a CSP can look correct in the file and do nothing in
+      // production. Build first; this serves the built output, not the source.
+      "name": "wrangler",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["wrangler", "dev", "--port", "8788"],
+      "port": 8788
     }
   ]
 }
