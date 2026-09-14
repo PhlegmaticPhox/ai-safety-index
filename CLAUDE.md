@@ -6,6 +6,13 @@ Live at **https://aisafetytracker.org**.
 The GitHub repository and the Cloudflare Worker are both still named `ai-safety-index`, from before
 the rename. Neither was renamed and neither should be; see Deployment.
 
+**`aisafetyindex.org` is not this site.** It is an unrelated third party's "Open LLM Safety Index",
+a 1-to-5 safety leaderboard for open-weight models, hosted on Vercel. It shares no code, no sources
+and no infrastructure with this project. The near-collision with our repository and Worker name has
+already caused one external reviewer to treat the two as one deployment and report a discrepancy
+that does not exist. This site is **only** `aisafetytracker.org`, and that domain is the only one
+in scope for anything, security testing very much included.
+
 ## What it is for
 
 The field's data is fragmented. Epoch AI has the best capability data and almost no policy. OECD
