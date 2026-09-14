@@ -1,5 +1,10 @@
 # Build Plan
 
+> **Historical, with one live section.** Phases 0 to 6 below were written before any of it existed.
+> Almost all of it is now built and the site is live, so **`CLAUDE.md` is the source of truth for
+> current state, not this file.** Each phase is marked with what actually happened. Sections 0 to 2
+> (locked decisions, why the flagship changed, architecture) are still live and still binding.
+
 Decisions locked 2026-09-13. Supersedes nothing; see `00-research-findings.md` for evidence
 and `01-ideas-backlog.md` for the unbuilt idea pool.
 
@@ -87,33 +92,39 @@ This is cheap now and expensive later. It goes in before the first chart.
 
 ## 3. Phases
 
-### Phase 0 - Foundation
+### Phase 0 - Foundation  `DONE`
 Repo, Astro scaffold, `sources.json` schema, `<Provenance>` component, one end-to-end vertical
 slice (one dataset → one chart → working popover), CI deploying to Pages.
 **Exit test:** a number on a deployed page, clickable, showing correct licence and retrieval date.
 
-### Phase 1 - Data spine
+### Phase 1 - Data spine  `DONE`
+OWID was registered and never used; Eurostat and OpenAlex were added instead.
 ETL for Epoch (models, benchmarks, GPU clusters, hardware), Microsoft Diffusion, OWID.
 Scheduled, idempotent, with a failure mode that serves stale data rather than breaking the build.
 **Exit test:** `make etl` from clean checkout reproduces every JSON in `data/processed/`.
 
-### Phase 2 - Flagship map + timeline
+### Phase 2 - Flagship map + timeline  `MAP DONE, TIMELINE NOT BUILT`
+The map shipped at `/map/`. The capability-governance timeline was never built.
 Exposure vs Governance Readiness map with layer toggle and gap view.
 Capability - Governance Timeline (capability milestones above axis, governance events below).
 **Exit test:** both work with keyboard only and have table fallbacks.
 
-### Phase 3 - Governance Readiness Index
+### Phase 3 - Governance Readiness Index  `DONE`
+58 jurisdictions, 31 coded nationally, rubric at `/methodology/governance-readiness/`.
 ~25 jurisdictions coded from primary sources (§4). Public methodology page. Versioned.
 
-### Phase 4 - Explainer layer
+### Phase 4 - Explainer layer  `NOT BUILT`
+**The largest unbuilt block, and it serves one of the site's two stated audiences.**
 Dual-track prose (lay/technical toggle from one source), glossary hover layer, scale-intuition
 widget, "who believes what" disagreement map.
 
-### Phase 5 - Live policy feed
+### Phase 5 - Live policy feed  `DONE, AND LARGER THAN PLANNED`
+Eight sources rather than four, with six category routes.
 Federal Register + GOV.UK + EC + NIST. Headline, ≤200 char snippet, publisher, canonical link.
 No full text, no hotlinked images. Deduped, tagged by jurisdiction and topic.
 
-### Phase 6 - Benchmarks, incidents, polish
+### Phase 6 - Benchmarks, incidents, polish  `DONE`
+Launched at https://aisafetytracker.org. The compute-threshold comparator went further than planned.
 Benchmark saturation dashboard, compute-threshold comparator, incident ticker,
 WCAG 2.1 AA pass, SEO, structured data, launch.
 

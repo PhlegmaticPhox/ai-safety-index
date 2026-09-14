@@ -254,6 +254,11 @@ ask;** batch anything that genuinely needs him into one block.
 **Hard limits, never worked around:** creating accounts, entering passwords and making purchases are
 his, always. Several gaps in the data exist because of this and that is the correct outcome.
 
+**His personal email never appears publicly.** Commits use the GitHub noreply address, which
+`git config` already enforces, so commits are safe without anyone remembering. The rule is wider
+than commits: no `mailto:`, no contact field, no bot user-agent carrying it. Corrections route
+through GitHub issues, which is why `/corrections/` is written the way it is.
+
 **He challenges analytically weak framing and is usually right to.** The flagship visualisation was
 originally compute concentration against regulation; he rejected it because compute is where models
 are built, which says nothing about where they are used or governed. Before proposing any
@@ -290,7 +295,13 @@ Five joins nobody else publishes. If a change would break one of them, it is the
   much to pull daily without streaming aggregation.
 - The site is newly indexable. Submitting the sitemap to Search Console needs a Google account.
 
-Phases and exit tests in `docs/02-plan.md`. Unbuilt ideas, scored, in `docs/01-ideas-backlog.md`.
+`docs/02-plan.md` and `docs/01-ideas-backlog.md` are the original plan and idea list, now marked
+item by item with what was built. Read them for the reasoning and the unbuilt ideas, not for current
+state: **this file is the source of truth for what exists.**
+
+**The largest unbuilt block is the explainer layer** (backlog B1 to B4, plan Phase 4): dual-track
+prose, a jargon layer, a scale-intuition widget, a disagreement map. It is the half of the
+two-audience promise that is currently thinner, and the obvious next objective.
 
 ## graphify
 
