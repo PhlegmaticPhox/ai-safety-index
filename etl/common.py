@@ -27,11 +27,19 @@ RAW = DATA / "raw"
 PROCESSED = DATA / "processed"
 SOURCES_FILE = DATA / "sources.json"
 
-# Identify ourselves honestly. A publisher who wants to block us should be able to.
+# Identify ourselves honestly. A publisher who wants to block us should be able to,
+# and should be able to reach a human without guessing.
+#
+# This used to point at the GitHub repository and say "contact via repo issues".
+# That repository is now private, so the URL would have 404'd and the contact
+# route named in it would not have existed - which is worse than no user agent at
+# all, because it looks like an honest identifier while being a dead end. It now
+# points at the site itself and carries the same address the corrections page
+# publishes, which is an alias on our own domain rather than anyone's mailbox.
 USER_AGENT = (
     "AISafetyTrackerBot/0.1 "
-    "(+https://github.com/PhlegmaticPhox/ai-safety-index; data pipeline; "
-    "contact via repo issues)"
+    "(+https://aisafetytracker.org/; data pipeline; "
+    "contact corrections@aisafetytracker.org)"
 )
 
 # Licence states that must never reach a rendered chart.

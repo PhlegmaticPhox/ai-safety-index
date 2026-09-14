@@ -5,7 +5,6 @@
 import Base from "../layouts/Base.astro";
 import { sources } from "../lib/sources";
 
-const REPO = "https://github.com/PhlegmaticPhox/ai-safety-index";
 const sourceCount = Object.keys(sources).length;
 ---
 
@@ -23,7 +22,7 @@ const sourceCount = Object.keys(sources).length;
           <span aria-hidden="true">/</span>
           zero client JavaScript
           <span aria-hidden="true">/</span>
-          public repository
+          every figure cited
         </p>
       </div>
 
@@ -102,9 +101,12 @@ const sourceCount = Object.keys(sources).length;
           means the data moved rather than that a timestamp did.
         </p>
         <p>
-          Everything is in a <a href={REPO}>public repository</a>: the pipeline, the source
-          registry, the processed data, the coding rules behind our own indexes, and the checks
-          that guard all of it.
+          What you can check is on the site rather than behind it. Every figure carries its source,
+          its licence and the date it was retrieved. The <a href="/sources/">sources page</a> lists
+          every dataset in use, what it is used for, and what it cannot tell you. The
+          <a href="/methodology/">methodology</a> sets out how the four indexes we code ourselves
+          are scored, instrument by instrument, so a judgement you disagree with is a judgement you
+          can locate and argue with.
         </p>
 
         <h2>Who made it</h2>

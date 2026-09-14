@@ -3,25 +3,33 @@
  * How to report an error.
  *
  * No form, because the site has no backend and no client JavaScript, and a
- * contact form is the one thing that would need both. GitHub issues are public,
- * which is the point: a correction log that only the author can see is not a
- * correction log.
+ * contact form is the one thing that would need both. Reports come by email to
+ * an address that exists only for this purpose: it is a Cloudflare Email Routing
+ * alias on our own domain, not a personal mailbox, which is the reason it can
+ * appear on a public page at all.
+ *
+ * This page used to route corrections through public GitHub issues. The
+ * repository is now private, so that route is gone, and with it the ability for
+ * a reader to watch a correction being handled. That is a real loss and the page
+ * says so rather than glossing it: the honest version of "public log" is now
+ * "published corrections list", below, which is a weaker promise honestly kept
+ * rather than a stronger one quietly broken.
  */
 import Base from "../layouts/Base.astro";
 
-const REPO = "https://github.com/PhlegmaticPhox/ai-safety-index";
+const CONTACT = "corrections@aisafetytracker.org";
 ---
 
 <Base
   title="Corrections"
-  description="How to report an error, and what happens to it when you do."
+  description="How to report an error on this site, and what happens to it when you do."
   cites={[]}
 >
   <section class="section section--open">
     <div class="wrap">
       <div class="masthead">
         <h1>Corrections</h1>
-        <p class="masthead__meta mono">Public log, public repository</p>
+        <p class="masthead__meta mono">Reported, fixed, and listed here</p>
       </div>
 
       <div class="doc">
@@ -33,49 +41,67 @@ const REPO = "https://github.com/PhlegmaticPhox/ai-safety-index";
 
         <h2>Report it</h2>
         <p>
-          <a href={`${REPO}/issues/new`}>Open an issue</a> on the repository. It is public, so the
-          report, the response and the fix are all visible without anyone having to take our word
-          for it.
+          Email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. That address exists only for this,
+          and a real person reads it.
         </p>
         <p>
           Useful things to include: the page, the figure, and what you think it should say. If the
           error is in an upstream dataset rather than in what we did with it, say so, because the
-          fix is different and usually involves telling them rather than us.
+          fix is different and usually involves telling them rather than us. You do not need to be
+          sure, and you do not need to be polite about it.
         </p>
 
         <h2>What happens then</h2>
         <ul>
           <li>
-            <strong>An error in our processing</strong> is fixed in the pipeline and the change
-            appears as a dated commit. The data files are committed to the repository, so what
-            changed and when is visible in the diff.
+            <strong>An error in our processing</strong> is fixed in the pipeline, and the corrected
+            figure appears on the site at the next daily refresh. Where the correction changes what
+            a reader would have concluded, it is listed below with the date.
           </li>
           <li>
             <strong>An error in an upstream source</strong> is not ours to fix. We will note it in
             that source's caveats on the <a href="/sources/">sources page</a>, which is where the
-            provenance popover on every affected figure already points.
+            provenance marker on every affected figure already points, and report it upstream where
+            there is somewhere to report it to.
           </li>
           <li>
             <strong>A judgement you disagree with</strong>, such as how a jurisdiction is coded in
             the Governance Readiness Index, is worth raising even though it is not strictly an
-            error. The coding rules and the instruments behind every score are published so that
-            disagreement has something to bite on.
+            error. The coding rules and the instruments behind every score are published in the
+            <a href="/methodology/governance-readiness/">methodology</a> so that disagreement has
+            something to bite on.
           </li>
         </ul>
 
         <h2>Rights holders</h2>
         <p>
-          If you hold rights in something published here and want it removed, open an issue or
-          contact us through the repository and we will remove it. This is deliberately easy: every
-          source is declared in one registry and every record carries its identifier, so removing a
-          source removes everything derived from it in a single change rather than a hunt.
+          If you hold rights in something published here and want it removed, email the address
+          above and we will remove it. This is deliberately easy: every source is declared in one
+          registry and every record carries its identifier, so removing a source removes everything
+          derived from it in a single change rather than a hunt.
         </p>
 
-        <h2>Why it is logged publicly</h2>
+        <h2>Corrections made</h2>
         <p>
-          A site whose entire argument is that you can check where a number came from cannot then
-          patch its mistakes quietly. The repository history is the log: every data change, every
-          correction and every judgement call is a dated commit with a message explaining it.
+          Nothing yet. Corrections that change what a figure says will be listed here, with the
+          date and what changed, once there are any. An empty list on a site this young is more
+          honest than a manufactured one.
+        </p>
+
+        <h2>What this page can and cannot promise</h2>
+        <p>
+          It can promise that errors get fixed and that material corrections get listed here. It
+          used to promise more: the code and data were in a public repository, so a reader could
+          watch a correction land as a dated commit without taking our word for any of it. That
+          repository is now private, and the weaker promise is the one this page now makes. Saying
+          so is the point. A site whose argument is that you can check where a number came from
+          does not get to quietly narrow what it lets you check.
+        </p>
+        <p>
+          What has not changed is the part that does the work: every figure still carries its
+          source, its licence and its retrieval date, and still links to the original one click
+          away. The check that matters most was always the one that goes to the publisher rather
+          than to us.
         </p>
       </div>
     </div>

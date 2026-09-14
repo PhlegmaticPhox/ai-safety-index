@@ -141,13 +141,18 @@ assert.deepEqual(
     `on whichever page this is.`,
 );
 
-/* Zero client JavaScript, asserted rather than assumed.
+/* Zero client JavaScript in OUR OWN output, asserted rather than assumed.
 
-   It is a design rule, it is stated on /privacy/, and the Content-Security-Policy
-   in public/_headers is built on it: default-src 'none' is only safe to ship
-   because nothing here needs a script. If a dependency or an integration ever
-   starts emitting one, the page would silently break under that policy in
-   production and nowhere else. Cheaper to fail here. */
+   It is a design rule, and the Content-Security-Policy in public/_headers is
+   built on it: script-src names exactly one external origin and nothing else, so
+   a script this build emitted would be refused in production and nowhere else.
+
+   The one script on a live page is Cloudflare's analytics beacon, which is
+   injected at the edge AFTER the build and therefore never appears in dist. That
+   is the reason this check reads dist rather than the live site, and also the
+   reason it could not have caught that beacon: it was missed for exactly as long
+   as it was, because nothing in this repository puts it there. If that ever
+   matters again, the check is `curl` with a browser User-Agent, not this file. */
 const scripted = pages
   .filter((page) => /<script[\s>]/i.test(readFileSync(page, "utf8")))
   .map((page) => relative(DIST, page));
@@ -156,9 +161,9 @@ assert.deepEqual(
   scripted,
   [],
   `${scripted.length} page(s) contain a <script> tag:\n  ${scripted.join("\n  ")}\n` +
-    `The site ships no client JavaScript, /privacy/ says so, and the CSP in ` +
-    `public/_headers sends default-src 'none'. Either this is accidental, or all ` +
-    `three of those need to change together.`,
+    `This build is supposed to emit no client JavaScript, /privacy/ describes the ` +
+    `site that way, and the CSP only permits Cloudflare's analytics origin. Either ` +
+    `this is accidental, or all three need to change together.`,
 );
 
 /* Canonical origin.

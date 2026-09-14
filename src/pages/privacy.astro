@@ -10,7 +10,7 @@
  */
 import Base from "../layouts/Base.astro";
 
-const updated = "13 September 2026";
+const updated = "14 September 2026";
 ---
 
 <Base
@@ -27,15 +27,35 @@ const updated = "13 September 2026";
 
       <div class="doc">
         <p class="lede">
-          This site sets no cookies, runs no analytics, embeds no third-party scripts and has no
-          accounts, forms or comments. It ships no JavaScript at all. There is nothing here that
-          tracks you.
+          This site sets no cookies and has no accounts, forms or comments. It runs one piece of
+          third-party code: Cloudflare's privacy-focused analytics, which counts page views without
+          identifying you. Everything else on the page is plain HTML with no scripts at all.
         </p>
 
         <h2>What we collect</h2>
         <p>
-          Nothing, directly. There is no mechanism on this site for you to give us information and
-          no code on it that gathers any.
+          Nothing you give us, because there is no way to give us anything: no form, no login, no
+          comment box, no upload.
+        </p>
+        <p>
+          We do count visits. The site uses
+          <a href="https://www.cloudflare.com/web-analytics/">Cloudflare Web Analytics</a>, which
+          adds a small script to each page recording that the page was viewed, roughly where in the
+          world the request came from, what kind of browser and device it was, and which site
+          linked you here if any. We look at that to see which pages are read and whether anything
+          is broken. It is the only measurement on the site.
+        </p>
+        <p>
+          What it does <em>not</em> do is the part worth stating plainly, because most analytics do
+          the opposite. It sets no cookie. It stores nothing in your browser. It does not fingerprint
+          your device, does not assign you an identifier, and cannot follow you between visits or
+          to any other website. There is no profile of you to build, and no advertising network
+          involved at any point. We see counts, not people.
+        </p>
+        <p>
+          The data is held by Cloudflare and governed by their privacy terms rather than ours. We
+          never sell it, share it, or combine it with anything else, because there is nothing else
+          to combine it with.
         </p>
 
         <h2>What the host logs</h2>
@@ -47,13 +67,11 @@ const updated = "13 September 2026";
           build profiles from it.
         </p>
         <p>
-          Cloudflare also adds a header to every response asking your browser to report
-          <em>failed</em> requests back to Cloudflare, which is how a host notices an outage it
-          cannot see from its own side. Successful page views are not reported. This is standard
-          hosting behaviour rather than anything this site measures: we do not receive those
-          reports, we cannot read them, and nothing about them reaches a chart on this site. We
-          mention it because it is the one thing a page here asks your browser to send anywhere,
-          and a privacy page that left it out would be overclaiming.
+          Cloudflare also asks your browser to report <em>failed</em> requests back to it, which is
+          how a host notices an outage it cannot see from its own side. Successful page views are
+          not reported this way, and we never see those reports. That is hosting behaviour rather
+          than anything this site measures, but it is a thing a page here asks your browser to
+          send, so it is named rather than left out.
         </p>
         <p>
           What Cloudflare retains, and for how long, is governed by
@@ -63,18 +81,19 @@ const updated = "13 September 2026";
 
         <h2>What your browser stores</h2>
         <p>
-          Nothing that we put there. No cookies, no local storage, no fingerprinting. Your browser
-          will cache the page and its fonts the way it caches any site, which is a browser feature
-          rather than something we set.
+          Nothing that we put there. No cookies, no local storage, no fingerprinting: the analytics
+          above are deliberately the kind that need none of those. Your browser will cache the page
+          and its fonts the way it caches any site, which is a browser feature rather than
+          something we set.
         </p>
 
         <h2>Fonts and other assets</h2>
         <p>
           Fonts are served from this site, not from a font network, so loading a page does not
           send a request to Google or anyone else. The site deliberately carries no images, no
-          embedded video, no social widgets and no tag managers. Every byte a page loads comes
-          from this domain, with the single exception noted above: if a request to this site
-          fails, your browser may report that failure to Cloudflare.
+          embedded video, no social widgets and no tag managers. Apart from the Cloudflare
+          analytics script named above, every byte a page loads comes from this domain, and the
+          site instructs your browser to refuse to run any script from anywhere else.
         </p>
 
         <h2>Links out</h2>
@@ -95,16 +114,22 @@ const updated = "13 September 2026";
         <h2>Your rights</h2>
         <p>
           Australian privacy law and the GDPR both give people rights over personal information
-          held about them. We hold none, so in practice there is nothing for us to give you access
-          to, correct or erase. If you believe that is wrong, or if something published here
-          concerns you personally, <a href="/corrections/">tell us</a> and we will deal with it.
+          held about them. The analytics described above do not identify anyone, so there is no
+          record here that is about you and nothing for us to give you access to, correct or
+          erase. If you believe that is wrong, or if something published here concerns you
+          personally, <a href="/corrections/">tell us</a> and we will deal with it.
+        </p>
+        <p>
+          If you would rather not be counted at all, any content blocker or the "do not track"
+          setting in your browser will stop the analytics script loading, and the site works
+          exactly the same without it. Nothing here is gated behind being measured.
         </p>
 
         <h2>Changes</h2>
         <p>
-          If this ever changes, it will change here first, and the date at the top will move. The
-          site's full history is public, so any change to this page is visible in the repository
-          as a dated commit rather than a silent edit.
+          If this ever changes, it will change here first, and the date at the top will move. A
+          change that affects what is collected about you, rather than merely how this page is
+          worded, is also listed on the <a href="/corrections/">corrections page</a> with its date.
         </p>
       </div>
     </div>

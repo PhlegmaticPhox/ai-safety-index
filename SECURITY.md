@@ -9,37 +9,33 @@ historical accident and has already caused one reviewer to test the wrong deploy
 
 ## Reporting a vulnerability
 
-**Use GitHub's private vulnerability reporting**, not a public issue:
+Email **security@aisafetytracker.org**.
 
-1. Open the [Security tab](https://github.com/PhlegmaticPhox/ai-safety-index/security) of this
-   repository.
-2. Choose **Report a vulnerability**.
-3. Describe what you found, how to reproduce it, and what you think the impact is.
+Include what you found, how to reproduce it, and what you think the impact is. A proof of concept
+helps; a working exploit is not required and is not expected.
 
-That channel is private between you and the maintainer until a fix is published. There is no
-security contact address here on purpose: this project publishes no email address anywhere, and
-GitHub's own reporting flow does the job without one.
+This repository is private, so GitHub's private vulnerability reporting is not available here and
+there is no public issue tracker to use instead. Email is the whole channel.
 
 Expect an acknowledgement within about a week. This is a personal project maintained by one
 person, not a staffed programme, and saying so is more useful than promising a response time that
-will not be met.
+will not be met. There is no bounty.
 
 ## What is a security report, and what is a correction
 
-These go to different places, and the distinction matters because one of them is public by design.
+They go to different addresses because they need different handling.
 
 **A security report** is something that could let a third party do what they should not: run
 script in the site's origin, alter what a reader is served, reach the build or deploy pipeline,
-or obtain something private. Report those privately, as above.
+or obtain something private. Send those to **security@aisafetytracker.org** and please give us a
+chance to fix it before writing about it publicly.
 
 **A correction** is a wrong number, a dead or wrong citation, a licence stated incorrectly, or a
-coding judgement you disagree with. Those go in a **[public
-issue](https://github.com/PhlegmaticPhox/ai-safety-index/issues/new)**, and they are public
-deliberately - see [/corrections/](https://aisafetytracker.org/corrections/). A site whose whole
-argument is that you can check where a number came from cannot then fix its mistakes quietly.
+coding judgement you disagree with. Those go to **corrections@aisafetytracker.org**, and material
+ones are listed on [/corrections/](https://aisafetytracker.org/corrections/).
 
-If you are not sure which one you have, report it privately. Moving a report into the open later
-is easy; the reverse is not.
+If you are not sure which one you have, send it to the security address. Moving a report into the
+open later is easy; the reverse is not.
 
 ## Scope
 
@@ -53,17 +49,20 @@ is easy; the reverse is not.
 
 - `aisafetyindex.org`, which is somebody else's site
 - Cloudflare's own infrastructure - report that to Cloudflare
+- Cloudflare Web Analytics, the one third-party script the site loads - also Cloudflare's
 - The third-party publishers this site cites and links to - report that to them
 - Findings that depend on already having write access to this repository
 - Denial of service, automated scanning, and anything requiring high request volume
 
 ## What the site is, which shapes what is plausible
 
-Worth knowing before you spend time on it. The site is fully static: 32 prerendered HTML pages
-served by Cloudflare Workers static assets. There is **no database, no accounts, no cookies, no
-forms, no API, no server-side code that runs on a visitor request, and no client-side JavaScript
-at all**. So SQL injection, authentication bypass, session attacks and CSRF have nothing to act
-on.
+Worth knowing before you spend time on it. The site is fully static: prerendered HTML served by
+Cloudflare Workers static assets. There is **no database, no accounts, no cookies, no forms, no
+API, and no server-side code that runs on a visitor request**. The site's own build ships no
+JavaScript; the only script on any page is Cloudflare's analytics beacon, injected at the edge,
+and the Content-Security-Policy permits that one origin and nothing else.
+
+So SQL injection, authentication bypass, session attacks and CSRF have nothing here to act on.
 
 The interesting surface is elsewhere, and it is genuinely interesting: the site ingests eight
 external feeds and several external datasets every day, unattended, and renders them. If you can

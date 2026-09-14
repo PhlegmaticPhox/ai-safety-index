@@ -15,7 +15,7 @@
 # emits it, and setting it in two places is how the two drift apart.
 
 /*
-  Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src https://static.cloudflareinsights.com; connect-src https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
@@ -24,14 +24,34 @@
 
 # Notes on the policy above, directive by directive:
 #
-#   default-src 'none'   The site ships zero JavaScript: 0 <script> tags across
-#                        32 pages, 0 .js/.mjs/.map files in dist. So the default
-#                        can be the strictest value that exists, and script-src
-#                        is deliberately NOT declared - default-src already
-#                        covers it, and a redundant directive is one more thing
-#                        that can be loosened by accident later. If a script
-#                        ever reaches a page through injected data, this is what
-#                        makes it inert.
+#   default-src 'none'   The site's own build ships zero JavaScript: 0 <script>
+#                        tags across every page, 0 .js/.mjs/.map files in dist,
+#                        and check:built asserts it. So the default is the
+#                        strictest value that exists, and anything not listed
+#                        below is refused outright.
+#
+#   script-src           Exactly one host, and it is not ours. Cloudflare Web
+#                        Analytics is enabled on the zone, and Cloudflare injects
+#                        its beacon into the HTML at the edge, AFTER the build.
+#                        Nothing in this repository puts it there, which is
+#                        precisely why it went unnoticed for so long: it is
+#                        injected only for browser-like requests, so fetching the
+#                        page with curl shows a clean document.
+#
+#                        Naming the host here is the point. A bare 'self' would
+#                        not have allowed it, and the first version of this file
+#                        did not name it at all, which blocked the analytics the
+#                        site owner actually wants. Listing it means the exception
+#                        is visible, deliberate, and the ONLY script origin that
+#                        will ever run. Anything else - an injected script from a
+#                        compromised feed included - is still inert.
+#
+#                        The beacon carries its own integrity hash, so the file
+#                        is verified by the browser before it runs.
+#
+#   connect-src          Where the beacon sends its measurements. Without it the
+#                        script loads and then silently fails to report, which
+#                        looks like working analytics that collect nothing.
 #
 #   style-src            'unsafe-inline' is required today and is not cosmetic:
 #                        dist carries 1283 inline style= attributes (every SVG
