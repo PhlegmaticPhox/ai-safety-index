@@ -246,8 +246,21 @@ img {
   white-space: nowrap;
 }
 
-/* Wide content scrolls inside its own box. The body never scrolls sideways. */
+/* Wide content scrolls inside its own box. The body never scrolls sideways.
+
+   `position: relative` is load-bearing, not tidiness. An absolutely positioned
+   descendant is laid out against its nearest POSITIONED ancestor, and a scroll
+   container that is not positioned is not one: the box escapes the scroll
+   container entirely and is placed against the page. Inside a 900px table in a
+   358px viewport that lands it 500px off the right edge of the document, and
+   because the escapee never belonged to the scroll box, overflow-x: auto never
+   clips it. The page then scrolls sideways into empty ground, which on a phone
+   is a whole document that zooms out and pans under two fingers.
+
+   Every wide table here carries `<span class="visually-hidden">` in the bar
+   column header, which is exactly such a box. This one line contains them. */
 .scroll-x {
+  position: relative;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: thin;
@@ -299,8 +312,19 @@ img {
   transform: translateY(1px);
 }
 
+/* An absolutely positioned box with no inset is laid out at its static position,
+   which for a table-header span is wherever that header falls: 800px along a
+   table too wide for the screen. Pinning the inline start to 0 means the box can
+   only ever sit at the start edge of whatever contains it, so it cannot extend
+   the scrollable width of anything. The block position stays static, so nothing
+   moves vertically and the page height is unchanged.
+
+   The second half of the same guard is `position: relative` on .scroll-x above.
+   Either alone fixes today's pages; both together mean a hidden label added to
+   any future table cannot silently make the document scroll sideways. */
 .visually-hidden {
   position: absolute;
+  inset-inline-start: 0;
   inline-size: 1px;
   block-size: 1px;
   padding: 0;
@@ -433,11 +457,33 @@ img {
   border-block-start: 1px solid var(--line-soft);
 }
 
-/* Wrapping cells, for tables carrying titles rather than labels. */
+/* Wrapping cells, for tables carrying titles rather than labels.
+
+   Both table variants, not just .grid-table. The selector was scoped to
+   .grid-table while /adoption/ used .wrap-cell on .bars, so those cells silently
+   kept `white-space: nowrap` from the rule above and a NACE activity label set
+   one 1060px-wide column in a 390px viewport. The class was in the markup and
+   doing nothing, which is the failure mode the shared-furniture rule exists to
+   stop: styling that works only for the page it was first written for. */
+.bars td.wrap-cell,
+.bars th.wrap-cell,
 .grid-table td.wrap-cell,
 .grid-table th.wrap-cell {
   white-space: normal;
   min-inline-size: 16rem;
+}
+
+/* 16rem is a sensible title column on a laptop and most of a phone. Below the
+   breakpoint the floor comes down so the cell wraps rather than setting the
+   table's width; the table still scrolls in its box if it needs to. The bar
+   column gives up width at the same breakpoint, further down this file. */
+@media (max-width: 640px) {
+  .bars td.wrap-cell,
+  .bars th.wrap-cell,
+  .grid-table td.wrap-cell,
+  .grid-table th.wrap-cell {
+    min-inline-size: 9rem;
+  }
 }
 
 /* `.bars td` and `.grid-table td` both set text-align, and two class selectors
@@ -479,6 +525,23 @@ img {
 /* Governance is the one thing plotted in the data hue. */
 .bar--gov {
   background: var(--accent-2);
+}
+
+/* The bar column gives up width on a phone. At 46% of a 358px viewport it took
+   165px and left a NACE activity label wrapping to six lines, which is the
+   density rule failing in the direction it warns about: the section grew three
+   screens taller and said nothing more. The bar only has to read as a
+   comparison, and at 28% it still does.
+
+   This block sits AFTER the rule it overrides rather than beside the wrap-cell
+   query above, because both selectors are one class: at equal specificity the
+   later rule wins, and written earlier it parsed, matched, and did nothing. */
+@media (max-width: 640px) {
+  .bar-col {
+    inline-size: 28%;
+    min-inline-size: 3.5rem;
+    padding-inline-start: 0.5rem;
+  }
 }
 
 /* Figure furniture. */

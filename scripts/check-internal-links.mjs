@@ -250,8 +250,50 @@ assert.deepEqual(
     `\nThe site is live and meant to be indexed.`,
 );
 
+/* Every table sits inside a .scroll-x box.
+
+   A table is the one thing on this site whose width is set by its content rather
+   than by its container, so a table outside a scroll box does not clip, wrap or
+   shrink: it widens the document. On a phone that is not a scrollbar, it is the
+   whole page zooming out and panning under two fingers, which is how it was
+   reported and why it went unnoticed for so long - every page looks correct on a
+   laptop, where there is room.
+
+   /adoption/ shipped four of them. Three carried `wrap-cell`, a class that was
+   only ever styled inside .grid-table, so the cells silently kept nowrap and one
+   NACE activity label set a 1060px column inside a 390px screen.
+
+   Structural, not visual: it cannot know how wide a table renders, only that the
+   box which would contain it is there. That is the part that was missing, and it
+   is the part a new page forgets. */
+const TAG = /<(\/?)(div|table)\b([^>]*)>/gi;
+const unboxed = [];
+for (const page of pages) {
+  const html = readFileSync(page, "utf8");
+  const stack = [];
+  for (const [, closing, tag, attrs] of html.matchAll(TAG)) {
+    const name = tag.toLowerCase();
+    if (name === "table") {
+      if (!stack.some(Boolean)) unboxed.push(relative(DIST, page));
+      continue;
+    }
+    if (closing) stack.pop();
+    // Self-closing divs are not a thing in HTML, so every <div> opens a level.
+    else stack.push(/\bclass="[^"]*\bscroll-x\b/.test(attrs));
+  }
+}
+
+assert.deepEqual(
+  [...new Set(unboxed)],
+  [],
+  `${new Set(unboxed).size} page(s) render a <table> outside a .scroll-x box:\n  ` +
+    [...new Set(unboxed)].join("\n  ") +
+    `\nWide content scrolls inside its own box; the body never scrolls sideways. ` +
+    `Wrap the table in <div class="scroll-x">.`,
+);
+
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
     `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex, ` +
-    `no unsafe href schemes, no client JavaScript`,
+    `no unsafe href schemes, no client JavaScript, every table in a scroll box`,
 );

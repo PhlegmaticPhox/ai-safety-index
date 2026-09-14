@@ -349,28 +349,30 @@ const checked = freshness(byCountry.retrieved);
       </div>
 
       <figure class="chart">
-        <table class="bars">
-          <caption class="visually-hidden">
-            EU27 enterprises using at least one AI technology, by number of people employed.
-          </caption>
-          <tbody>
-            {
-              sizes.map((row) => (
-                <tr>
-                  <th scope="row">{row.label}</th>
-                  <td class="ta-end num">{row.share}%</td>
-                  <td class="bar-col">
-                    <span
-                      class="bar"
-                      style={`--w:${((row.share / sizeMax) * 100).toFixed(1)}%`}
-                      aria-hidden="true"
-                    />
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <div class="scroll-x">
+          <table class="bars">
+            <caption class="visually-hidden">
+              EU27 enterprises using at least one AI technology, by number of people employed.
+            </caption>
+            <tbody>
+              {
+                sizes.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td class="ta-end num">{row.share}%</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar"
+                        style={`--w:${((row.share / sizeMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
 
         <p class="caveat">
           Eurostat also publishes overlapping roll-up classes, 0 to 9 and 10 to 249, which are
@@ -400,28 +402,30 @@ const checked = freshness(byCountry.retrieved);
             <span>Highest adoption</span>
             <span class="chart__meta mono">top {industryTop.length}</span>
           </figcaption>
-          <table class="bars">
-            <caption class="visually-hidden">
-              Highest adopting economic activities, EU27.
-            </caption>
-            <tbody>
-              {
-                industryTop.map((row) => (
-                  <tr>
-                    <th scope="row" class="wrap-cell">{row.label}</th>
-                    <td class="ta-end num">{row.share}%</td>
-                    <td class="bar-col">
-                      <span
-                        class="bar bar--thin"
-                        style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
-                        aria-hidden="true"
-                      />
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+          <div class="scroll-x">
+            <table class="bars">
+              <caption class="visually-hidden">
+                Highest adopting economic activities, EU27.
+              </caption>
+              <tbody>
+                {
+                  industryTop.map((row) => (
+                    <tr>
+                      <th scope="row" class="wrap-cell">{row.label}</th>
+                      <td class="ta-end num">{row.share}%</td>
+                      <td class="bar-col">
+                        <span
+                          class="bar bar--thin"
+                          style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
+                          aria-hidden="true"
+                        />
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
         </figure>
 
         <figure class="chart">
@@ -429,28 +433,30 @@ const checked = freshness(byCountry.retrieved);
             <span>Lowest adoption</span>
             <span class="chart__meta mono">bottom {industryBottom.length}</span>
           </figcaption>
-          <table class="bars">
-            <caption class="visually-hidden">
-              Lowest adopting economic activities, EU27.
-            </caption>
-            <tbody>
-              {
-                industryBottom.map((row) => (
-                  <tr>
-                    <th scope="row" class="wrap-cell">{row.label}</th>
-                    <td class="ta-end num">{row.share}%</td>
-                    <td class="bar-col">
-                      <span
-                        class="bar bar--thin"
-                        style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
-                        aria-hidden="true"
-                      />
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
+          <div class="scroll-x">
+            <table class="bars">
+              <caption class="visually-hidden">
+                Lowest adopting economic activities, EU27.
+              </caption>
+              <tbody>
+                {
+                  industryBottom.map((row) => (
+                    <tr>
+                      <th scope="row" class="wrap-cell">{row.label}</th>
+                      <td class="ta-end num">{row.share}%</td>
+                      <td class="bar-col">
+                        <span
+                          class="bar bar--thin"
+                          style={`--w:${((row.share / industryMax) * 100).toFixed(1)}%`}
+                          aria-hidden="true"
+                        />
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
         </figure>
       </div>
 
@@ -476,31 +482,33 @@ const checked = freshness(byCountry.retrieved);
       </div>
 
       <figure class="chart">
-        <table class="bars">
-          <caption class="visually-hidden">
-            EU27 enterprises by AI technology used.
-          </caption>
-          <tbody>
-            {
-              techs.map((row) => (
-                <tr>
-                  <th scope="row" class="wrap-cell">
-                    {row.label}
-                    <span class="full-label">{row.full_label}</span>
-                  </th>
-                  <td class="ta-end num">{row.share}%</td>
-                  <td class="bar-col">
-                    <span
-                      class="bar"
-                      style={`--w:${((row.share / techMax) * 100).toFixed(1)}%`}
-                      aria-hidden="true"
-                    />
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <div class="scroll-x">
+          <table class="bars">
+            <caption class="visually-hidden">
+              EU27 enterprises by AI technology used.
+            </caption>
+            <tbody>
+              {
+                techs.map((row) => (
+                  <tr>
+                    <th scope="row" class="wrap-cell">
+                      {row.label}
+                      <span class="full-label">{row.full_label}</span>
+                    </th>
+                    <td class="ta-end num">{row.share}%</td>
+                    <td class="bar-col">
+                      <span
+                        class="bar"
+                        style={`--w:${((row.share / techMax) * 100).toFixed(1)}%`}
+                        aria-hidden="true"
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
 
         <p class="caveat">
           Shares overlap and do not sum to the headline rate: a firm using three of these is

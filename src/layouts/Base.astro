@@ -2,6 +2,29 @@
 import "../styles/global.css";
 import { attributionsFor } from "../lib/sources";
 
+/**
+ * The two font files a reader of this site actually downloads.
+ *
+ * Geist ships eleven woff2 files and the build emits all eleven, but the
+ * @font-face rules are unicode-range gated, so a Latin page pulls exactly these
+ * two: 51KB of the 143KB on disk. The other nine (Cyrillic, Greek, Vietnamese,
+ * symbols) are never requested and must not be preloaded, which is why these are
+ * named one by one rather than globbed.
+ *
+ * Preloaded because the browser cannot otherwise know they exist until it has
+ * fetched and parsed the stylesheet, which makes the critical path
+ * HTML -> CSS -> font, three serial round trips on a phone. The preload starts
+ * the font in parallel with the CSS. font-display: swap means text was never
+ * blocked on this; what it removes is the flash of fallback text reflowing.
+ *
+ * Imported with ?url rather than written out, because the filenames are
+ * content-hashed and change whenever the font package is updated. A hardcoded
+ * path would 404 silently after the next upgrade: a preload that misses costs a
+ * wasted request and warns in the console, and nothing on the page looks wrong.
+ */
+import geistSans from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
+import geistMono from "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url";
+
 const SITE = "AI Safety Tracker";
 
 interface Props {
@@ -49,6 +72,9 @@ const nav = [
     <title>{documentTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    <link rel="preload" href={geistSans} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geistMono} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />

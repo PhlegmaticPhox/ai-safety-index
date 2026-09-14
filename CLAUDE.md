@@ -103,7 +103,8 @@ npm run etl:offline  # rebuild from cache, no network
 npm run dev          # http://localhost:4321
 npm run build
 npm run check:lib    # render-side logic: path rounding, ranks, country joins, category drift
-npm run check:built  # against dist/: links, anchors, dashes, canonical origin, stale name, noindex
+npm run check:built  # against dist/: links, anchors, dashes, canonical origin, stale name, noindex,
+                     # unsafe href schemes, zero client JS, every table inside a .scroll-x box
 
 python etl/common.py                                  # licence guard, idempotence, dash rule
 python etl/fetch_news.py --self-check                 # snippet cap, relevance, categories, language
@@ -167,10 +168,33 @@ Each of these cost real time. They are rules, not suggestions.
   invalid, not transparent, and the property falls back to its initial value.
 - **Check the production build before debugging CSS.** The dev server serves stale scoped styles
   after component edits.
+- **A scroll container only contains what it is the containing block for.** `overflow-x: auto` does
+  not clip an absolutely positioned descendant unless the box is also positioned, so
+  `.scroll-x` carries `position: relative` and `.visually-hidden` pins `inset-inline-start: 0`.
+  Without either, the hidden label in a bar-column header was laid out at its static position 800px
+  along a table, escaped the scroll box, and stretched the *document* instead: the page then panned
+  sideways into empty ground on a phone while looking perfect on a laptop.
+- **Every table goes inside `<div class="scroll-x">`.** A table is the one element whose width is
+  set by its content, so an unwrapped one widens the page rather than scrolling. `check:built`
+  enforces it.
+- **Equal specificity means source order decides.** A `@media` override written *above* the rule it
+  overrides parses, matches, and does nothing. `.bar-col`'s phone width had to move below the base
+  rule to take effect; it was silently inert for a build first.
 - **`getComputedStyle` during a transition returns the animated value.** Disable the transition
   before asserting on a state change.
-- **To test for horizontal overflow,** `window.scrollTo(500, 0)` and see whether `scrollX` moves.
-  `documentElement.scrollWidth` counts clipped descendant overflow and always looks broken.
+- **To test for horizontal overflow,** `window.scrollTo({left: 5000, behavior: "instant"})` and see
+  whether `scrollX` moves, having first set `document.documentElement.style.scrollBehavior = "auto"`.
+  Both halves are load-bearing and both were learned the hard way. `global.css` sets
+  `scroll-behavior: smooth` on `html`, which makes a plain `scrollTo` **asynchronous**: `scrollX`
+  read on the next line is still 0, so the test passes on every page whatever the layout does. It
+  reported all 33 pages clean while three of them scrolled sideways by up to 853px.
+  Then check the check: append a 900px `div` to `body` and confirm the probe now fails.
+- **Do not run that probe under Playwright's `isMobile: true`.** Mobile emulation honours the
+  viewport meta, so an over-wide page *zooms out* instead of scrolling and `scrollX` stays 0 even
+  with the fix above. That zoom-out is the bug as a reader meets it, not the absence of one. Probe
+  in a normal context at phone width; use `isMobile` for screenshots.
+  `documentElement.scrollWidth` counts clipped descendant overflow, so it can report a page broken
+  when a `.scroll-x` box is doing its job. Trust it only when it agrees with the scroll probe.
 
 ## Design lock
 
