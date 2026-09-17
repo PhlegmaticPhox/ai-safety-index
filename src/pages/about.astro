@@ -1,6 +1,6 @@
 ---
 /**
- * What this is, who it is for, and what it deliberately is not.
+ * What the site covers, how it is sourced, and its limits.
  */
 import Base from "../layouts/Base.astro";
 import { sources } from "../lib/sources";
@@ -10,7 +10,7 @@ const sourceCount = Object.keys(sources).length;
 
 <Base
   title="About"
-  description="An independent, cited index of AI capability, governance and safety. What it is, who it is for, and what it is not."
+  description="An index of AI capability, adoption, governance and safety. Scope, sourcing, limits and construction."
   cites={[]}
 >
   <section class="section section--open">
@@ -28,94 +28,62 @@ const sourceCount = Object.keys(sources).length;
 
       <div class="doc">
         <p class="lede">
-          The data on AI is fragmented. Epoch AI has the best capability figures and almost no
-          policy. The OECD and the IAPP have policy and no capability data. Eurostat has adoption
-          and neither. Nobody joins them, and practitioners say so plainly: the field is hard to
-          navigate and there is no single overview of how the pieces relate.
+          Data on AI is published by many organisations in different formats. This site collects
+          those figures into a single index and records the origin of each one. Sources include
+          Epoch AI, Eurostat, OpenAlex, Microsoft and government publishers.
         </p>
 
-        <h2>What this is</h2>
+        <h2>Scope</h2>
         <p>
-          An attempt at that overview, built for two readers at once. Someone who wants to
-          understand what is actually happening in AI, and someone who wants current sourced
-          numbers without visiting eight sites. The same page serves both by putting the figure
-          first and the detail one click away.
+          The site covers benchmark results, training compute and disclosed cost, adoption by
+          population and by enterprise, published frontier safety frameworks, research volume,
+          reported incidents, and the law and policy that applies to AI in eleven jurisdictions.
         </p>
-        <p>Four things it tries to do that the existing sites do not:</p>
+        <p>
+          Four datasets are compiled here from primary documents: the Governance Readiness Index,
+          the AI Law and Policy Index, the Frontier Safety Framework Index and the Compute
+          Threshold Index. The <a href="/methodology/">methodology</a> sets out how each is scored.
+        </p>
+
+        <h2>Sourcing</h2>
+        <p>
+          Each source is declared once with its licence, attribution, update cadence and stated
+          limitations. Each processed record carries a source identifier. Licence and attribution
+          are resolved from that registry when a page is built. The pipeline does not write data
+          whose licence forbids republication, and the site does not render it. Removing a source
+          from the registry removes everything derived from it.
+        </p>
+        <p>
+          Every figure carries its source, licence and retrieval date. The
+          <a href="/sources/">sources page</a> lists each dataset in use, its licence, its use here
+          and its stated limitations.
+        </p>
+
+        <h2>Limits</h2>
         <ul>
-          <li>Put capability, adoption, governance and incidents on one screen.</li>
           <li>
-            Set exposure against governance readiness, so the question "who is meeting this
-            technology without the machinery to answer for it" has a picture.
+            The site publishes no forecasts of its own. Straight-line extrapolations appear on the
+            progress page only, and each is labelled with its fit, its window and the direction of
+            its bias.
           </li>
           <li>
-            Index the law that actually applies to AI, including the large majority of it that
-            never mentions AI.
+            Governance readiness records the machinery a jurisdiction has. It is not an assessment
+            of quality or enforcement, and a jurisdiction may score low by choice.
           </li>
+          <li>Nothing here is legal advice. See the <a href="/terms/">terms</a>.</li>
           <li>
-            Attach provenance to every individual figure, rather than a bibliography at the
-            bottom.
+            There are no accounts, comments, newsletter, advertising or revenue model, and no
+            tracking beyond aggregate page counts.
           </li>
         </ul>
 
-        <h2>The one rule</h2>
+        <h2>Construction</h2>
         <p>
-          Every source is declared once with its licence, attribution and known limitations. Every
-          processed record carries its source identifier. Licence and attribution are resolved by
-          joining that registry when the page renders, which makes attribution structural rather
-          than a matter of discipline. The pipeline refuses to write data whose licence forbids
-          republication; the site refuses to render it. Two checks, because data can also arrive
-          hand-written.
+          A Python pipeline fetches and processes each source. A static site generator renders the
+          result. Charts and maps are drawn to SVG when the site is built, so pages carry no client
+          JavaScript. Data is refreshed daily. A dataset is rewritten only when its records change.
         </p>
-        <p>
-          The practical consequence is that a takedown is a one-line change. Remove a source from
-          the registry and everything derived from it stops being published.
-        </p>
-
-        <h2>What it is not</h2>
-        <ul>
-          <li>
-            <strong>Not a forecaster.</strong> Where a trend is fitted, it describes what already
-            happened and is not extended past the last observation.
-          </li>
-          <li>
-            <strong>Not a ranking of countries.</strong> Governance readiness counts machinery,
-            not quality. A jurisdiction can score low because it has deliberately chosen not to
-            legislate.
-          </li>
-          <li>
-            <strong>Not legal advice.</strong> See the <a href="/terms/">terms</a>.
-          </li>
-          <li>
-            <strong>Not a business.</strong> No accounts, no comments, no newsletter, no tracking,
-            no revenue model, nothing to sign up for.
-          </li>
-        </ul>
-
-        <h2>How it is built</h2>
-        <p>
-          A Python pipeline fetches and processes each source, then a static site generator renders
-          the result. Charts are drawn to SVG at build time, so the pages ship as markup with no
-          chart library, no map tiles and no client JavaScript at all. Data refreshes daily, and a
-          dataset is only rewritten when its records actually change, so a commit in the history
-          means the data moved rather than that a timestamp did.
-        </p>
-        <p>
-          What you can check is on the site rather than behind it. Every figure carries its source,
-          its licence and the date it was retrieved. The <a href="/sources/">sources page</a> lists
-          every dataset in use, what it is used for, and what it cannot tell you. The
-          <a href="/methodology/">methodology</a> sets out how the four indexes we code ourselves
-          are scored, instrument by instrument, so a judgement you disagree with is a judgement you
-          can locate and argue with.
-        </p>
-
-        <h2>Who made it</h2>
-        <p>
-          A personal project, built in the open, largely by an AI agent working under direction.
-          That is worth stating on a site about AI. It is also the reason the checks in the
-          repository are as paranoid as they are: several of them exist because something went
-          wrong quietly and was only caught by reading the output rather than the code.
-        </p>
+        <p>AI was used to help build this website.</p>
       </div>
     </div>
   </section>

@@ -1,7 +1,7 @@
 {
   "dataset": "policy-index",
-  "generated": "2026-09-13T08:07:46+00:00",
-  "retrieved": "2026-09-13T08:07:46+00:00",
+  "generated": "2026-09-17T11:46:24+00:00",
+  "retrieved": "2026-09-17T11:46:24+00:00",
   "sources": [
     "policy-index"
   ],
@@ -664,7 +664,7 @@
       "jurisdiction_code": "GBR",
       "title": "ICO guidance on AI and data protection",
       "force": "regulator-guidance",
-      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "force_meaning": "How a regulator states it will apply existing law. Creates no obligations of its own.",
       "year": 2023,
       "body": "Information Commissioner's Office",
       "topics": [
@@ -1109,7 +1109,7 @@
       "jurisdiction_code": "AUS",
       "title": "Guidance on privacy and the use of commercially available AI products",
       "force": "regulator-guidance",
-      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "force_meaning": "How a regulator states it will apply existing law. Creates no obligations of its own.",
       "year": 2024,
       "body": "Office of the Australian Information Commissioner",
       "topics": [
@@ -1126,7 +1126,7 @@
       "jurisdiction_code": "AUS",
       "title": "Guidance on privacy and developing and training generative AI models",
       "force": "regulator-guidance",
-      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "force_meaning": "How a regulator states it will apply existing law. Creates no obligations of its own.",
       "year": 2024,
       "body": "Office of the Australian Information Commissioner",
       "topics": [
@@ -1144,7 +1144,7 @@
       "jurisdiction_code": "AUS",
       "title": "REP 798 Beware the gap: governance arrangements in the face of AI innovation",
       "force": "regulator-guidance",
-      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "force_meaning": "How a regulator states it will apply existing law. Creates no obligations of its own.",
       "year": 2024,
       "body": "Australian Securities and Investments Commission",
       "topics": [
@@ -1376,7 +1376,7 @@
       "jurisdiction_code": "SGP",
       "title": "Advisory Guidelines on Use of Personal Data in AI Systems",
       "force": "regulator-guidance",
-      "force_meaning": "How a regulator says it will apply existing law. Not law itself, but it tells you what enforcement will look like.",
+      "force_meaning": "How a regulator states it will apply existing law. Creates no obligations of its own.",
       "year": 2024,
       "body": "Personal Data Protection Commission",
       "topics": [

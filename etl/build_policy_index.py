@@ -46,8 +46,8 @@ FORCE = {
     "delegated": "Rules, regulations or codes made under an Act. Binding.",
     "agency-binding": "Binds government agencies only, not the wider market.",
     "regulator-guidance": (
-        "How a regulator says it will apply existing law. Not law itself, but it "
-        "tells you what enforcement will look like."
+        "How a regulator states it will apply existing law. Creates no obligations "
+        "of its own."
     ),
     "voluntary": "Guidance with no legal force. Compliance is a choice.",
     "proposal": "Proposed, consulted on, or before Parliament. Creates no duties yet.",

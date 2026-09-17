@@ -135,9 +135,9 @@ const summaries: Record<string, string> = {
       {
         scored && (
           <p class="score">
-            Governance readiness <strong class="num">{scored.readiness}</strong> of 100 on
-            <a href="/map/#method">our index</a>, which measures how much machinery exists rather
-            than how strict it is.
+            Governance readiness <strong class="num">{scored.readiness}</strong> of 100 on the
+            <a href="/map/#method">governance readiness index</a>, which records how much machinery
+            exists, not how strict it is.
             <Provenance source={governance.sources} retrieved={governance.retrieved} label="score" />
           </p>
         )
@@ -198,19 +198,15 @@ const summaries: Record<string, string> = {
 
       <div class="doc">
         <p>
-          Written by reading the instruments, not by copying a tracker. OECD.AI and the IAPP both
-          publish policy trackers and both are protected by database rights on top of copyright,
-          so extracting either would be a licence we do not have. Doing the reading ourselves
-          avoids that and means the result is ours to license
+          Compiled here from primary instruments and licensed
           <a href="https://opensource.org/licenses/MIT">MIT</a>.
         </p>
         <p>
           {bindingCount} of the {rows.length} instruments here are binding law, and
           {bindingNamingAI.length === 1
             ? `exactly one of those names AI: the ${bindingNamingAI[0].title}`
-            : `${bindingNamingAI.length} of those name AI`}. That is why the index is built
-          this way. Searching a statute book for "artificial intelligence" returns almost
-          nothing, and would leave a reader believing almost nothing applies.
+            : `${bindingNamingAI.length} of those name AI`}. The remainder apply to AI without
+          naming it, so a keyword search of the statute book does not find them.
         </p>
         <p>
           Topics covered: {topics.join(", ")}. A build check probes every citation on this page,

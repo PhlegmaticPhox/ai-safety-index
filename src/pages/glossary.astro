@@ -1,0 +1,223 @@
+---
+/**
+ * Definitions of the terms used on this site.
+ *
+ * Every entry is a term a reader meets on a data page, defined as it is used
+ * here rather than in general. Where a term has a contested meaning, the entry
+ * says which reading the site applies and links to the page that applies it.
+ */
+import Base from "../layouts/Base.astro";
+
+interface Entry {
+  term: string;
+  definition: string;
+  /** Where the term is used, if it is used on a specific page. */
+  href?: string;
+  hrefLabel?: string;
+}
+
+const entries: Entry[] = [
+  {
+    term: "AGI",
+    definition:
+      "Artificial general intelligence. There is no agreed definition and no agreed test, so this site does not report a distance to it. The alignment page lists the measured quantities that bear on the question.",
+    href: "/alignment/",
+    hrefLabel: "Alignment",
+  },
+  {
+    term: "API access",
+    definition:
+      "A release in which a model can be queried over a network but its weights are not distributed. One of three release types recorded for notable models.",
+    href: "/capability/#release",
+    hrefLabel: "Capability",
+  },
+  {
+    term: "Benchmark saturation",
+    definition:
+      "The point at which the best recorded score on a test stops separating leading models. This site uses 90 per cent of the maximum score as the threshold and reports the month it was first passed.",
+    href: "/progress/",
+    hrefLabel: "Progress",
+  },
+  {
+    term: "Binding instrument",
+    definition:
+      "A law, regulation or other instrument that creates legal obligations. Distinguished on this site from guidance, standards and voluntary commitments, which are recorded separately.",
+    href: "/policy/",
+    hrefLabel: "Policy",
+  },
+  {
+    term: "Compute threshold",
+    definition:
+      "A quantity of training compute written into a statute, executive action or official policy document, above which additional obligations apply. Recorded here with the instrument that sets it and the number of models above it.",
+    href: "/capability/#thresholds",
+    hrefLabel: "Capability",
+  },
+  {
+    term: "FLOP",
+    definition:
+      "Floating-point operation. Training compute is reported as the total number of operations used in the final training run, on a logarithmic scale, so each axis step is ten times the one below it.",
+    href: "/capability/",
+    hrefLabel: "Capability",
+  },
+  {
+    term: "Frontier model",
+    definition:
+      "A model at or near the highest recorded training compute at its date of publication. The term has no standard definition; where this site plots a frontier it means the running maximum over all models published to that date.",
+    href: "/capability/",
+    hrefLabel: "Capability",
+  },
+  {
+    term: "Frontier safety framework",
+    definition:
+      "A document in which a developer states the capability levels at which it will take specified action. The frameworks are self-written and self-assessed, and share no common scale.",
+    href: "/alignment/#frameworks",
+    hrefLabel: "Alignment",
+  },
+  {
+    term: "Governance readiness",
+    definition:
+      "A score compiled here from primary instruments, recording the machinery a jurisdiction has for governing AI. It records presence, not quality or enforcement.",
+    href: "/methodology/governance-readiness/",
+    hrefLabel: "Methodology",
+  },
+  {
+    term: "Notable model",
+    definition:
+      "A model meeting Epoch AI's notability criteria, which is the population used for every model count on this site.",
+    href: "/progress/",
+    hrefLabel: "Progress",
+  },
+  {
+    term: "Open weights",
+    definition:
+      "A release in which the trained parameters are distributed and can be run by a third party. It does not imply an open-source licence, and the licence attached to a given release may restrict use.",
+    href: "/capability/#open-weights",
+    hrefLabel: "Capability",
+  },
+  {
+    term: "Provenance marker",
+    definition:
+      "The marker beside a figure on this site. It opens the source, publisher, licence, update cadence, retrieval date and stated limitations for that figure.",
+  },
+  {
+    term: "Reported incident",
+    definition:
+      "An entry in the AI Incident Database, which records publicly reported harms involving AI systems. Entries are reports, not adjudicated findings, and the database is not a complete record.",
+    href: "/alignment/",
+    hrefLabel: "Alignment",
+  },
+  {
+    term: "Soft law",
+    definition:
+      "Guidance, standards, codes of practice and voluntary commitments that create no legal obligation. Indexed here alongside binding instruments and tagged by force.",
+    href: "/policy/",
+    hrefLabel: "Policy",
+  },
+  {
+    term: "Sui generis database right",
+    definition:
+      "An EU right, separate from copyright, protecting substantial investment in obtaining or presenting a database. It is the reason several third-party policy trackers cannot be bulk-extracted for use here.",
+    href: "/sources/",
+    hrefLabel: "Sources",
+  },
+  {
+    term: "Systemic risk threshold",
+    definition:
+      "The training-compute level in Article 51(2) of the EU AI Act at which a general-purpose model is presumed to carry systemic risk. It is a rebuttable presumption rather than a fixed boundary.",
+    href: "/capability/#thresholds",
+    hrefLabel: "Capability",
+  },
+  {
+    term: "Working-age population",
+    definition:
+      "The denominator used for the population adoption figures, as defined by the publisher of that dataset. Adoption shares on this site are shares of that population, not of total population.",
+    href: "/adoption/",
+    hrefLabel: "Adoption",
+  },
+];
+
+const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term));
+---
+
+<Base
+  title="Glossary"
+  description="Definitions of the terms used on this site, as they are applied here."
+  cites={[]}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Glossary</h1>
+        <p class="masthead__meta mono">{sorted.length} terms</p>
+      </div>
+
+      <p class="masthead__lede">
+        Terms are defined as this site applies them. Where a term has no standard definition, the
+        entry states the reading used here.
+      </p>
+
+      <dl class="glossary">
+        {
+          sorted.map((entry) => (
+            <div class="glossary__row">
+              <dt class="glossary__term" id={entry.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")}>
+                {entry.term}
+              </dt>
+              <dd class="glossary__def">
+                {entry.definition}
+                {entry.href && (
+                  <>
+                    {" "}
+                    <a href={entry.href}>{entry.hrefLabel}</a>
+                  </>
+                )}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .glossary {
+    margin: 1.2rem 0 0;
+    padding: 0;
+  }
+
+  .glossary__row {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding-block: 0.7rem;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .glossary__row:last-child {
+    border-block-end: 1px solid var(--line-soft);
+  }
+
+  .glossary__term {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    /* Anchored, so a link to a definition lands with the term in view. */
+    scroll-margin-block-start: 5rem;
+  }
+
+  .glossary__def {
+    margin: 0;
+    max-inline-size: 78ch;
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .glossary__row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

@@ -1,0 +1,269 @@
+---
+/**
+ * The law and policy index, ordered by date rather than by jurisdiction.
+ *
+ * The index page answers "what applies where". This one answers "when did it
+ * arrive", which is the question the dataset can answer and the jurisdiction
+ * view cannot: the year field is already on every record and nothing on the site
+ * read it as a series.
+ *
+ * Newest first, because the site is an index of the current environment and the
+ * recent end is the part that changes. The distribution chart runs the other
+ * way, oldest at the left, because that is the direction a time axis reads.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+
+import indexFile from "../../../data/processed/policy-index.json";
+
+interface PolicyRecord {
+  jurisdiction: string;
+  jurisdiction_slug: string;
+  title: string;
+  force: string;
+  force_meaning: string;
+  year: number;
+  body: string;
+  url: string;
+  source_id: string;
+}
+
+const index = indexFile as Dataset<PolicyRecord>;
+assertRenderable(...index.sources);
+const checked = freshness(index.retrieved);
+
+const records = index.records.filter((r) => typeof r.year === "number");
+
+/* Binding force, collapsed to the one distinction the chart can carry. The
+   index page keeps all seven levels; here they only have to separate law that
+   creates obligations from everything else. */
+const BINDING = new Set(["statute", "delegated", "agency-binding"]);
+const isBinding = (r: PolicyRecord) => BINDING.has(r.force);
+
+const byYearDesc = [...records].sort((a, b) =>
+  b.year - a.year || a.jurisdiction.localeCompare(b.jurisdiction),
+);
+
+const years = [...new Set(records.map((r) => r.year))].sort((a, b) => b - a);
+const grouped = years.map((year) => ({
+  year,
+  rows: byYearDesc.filter((r) => r.year === year),
+}));
+
+/* The distribution. One column per year from the first instrument to the last,
+   including the years with nothing in them, because the gaps are the shape. */
+const first = Math.min(...records.map((r) => r.year));
+const last = Math.max(...records.map((r) => r.year));
+const span = Array.from({ length: last - first + 1 }, (_, i) => first + i);
+const counts = span.map((year) => ({
+  year,
+  binding: records.filter((r) => r.year === year && isBinding(r)).length,
+  other: records.filter((r) => r.year === year && !isBinding(r)).length,
+}));
+const tallest = Math.max(...counts.map((c) => c.binding + c.other));
+
+const W = 900;
+const H = 150;
+const PAD = 18;
+const colWidth = (W - PAD * 2) / counts.length;
+const barWidth = Math.max(colWidth - 1.5, 1);
+const scale = (n: number) => (n / tallest) * (H - PAD * 2);
+
+const preAi = records.filter((r) => r.year < 2015).length;
+const bindingCount = records.filter(isBinding).length;
+const decadeTicks = span.filter((y) => y % 10 === 0);
+---
+
+<Base
+  title="Timeline"
+  description="Every indexed AI law and policy instrument by year of adoption, newest first, with how binding each one is."
+  cites={index.sources}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Policy timeline</h1>
+        <p class="masthead__meta mono">
+          {records.length} instruments
+          <span aria-hidden="true">/</span>
+          {first} to {last}
+          <span aria-hidden="true">/</span>
+          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+        </p>
+      </div>
+
+      <p class="masthead__lede">
+        Indexed instruments by year of adoption. The same records as the
+        <a href="/policy/">jurisdiction index</a>, ordered by date.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunk" id="distribution">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Instruments by year</h2>
+        <p>
+          Year of adoption for each indexed instrument. {preAi} of {records.length} were adopted
+          before 2015 and do not mention AI.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            role="img"
+            aria-label={`Count of indexed instruments by year of adoption, ${first} to ${last}. The tallest year has ${tallest}.`}
+            class="dist"
+          >
+            {
+              counts.map((c, i) => {
+                const x = PAD + i * colWidth;
+                const bindingH = scale(c.binding);
+                const otherH = scale(c.other);
+                return (
+                  <>
+                    {c.other > 0 && (
+                      <rect
+                        x={x}
+                        y={H - PAD - bindingH - otherH}
+                        width={barWidth}
+                        height={Math.max(otherH, 1)}
+                        class="dist__other"
+                      >
+                        <title>{`${c.year}: ${c.other} not binding`}</title>
+                      </rect>
+                    )}
+                    {c.binding > 0 && (
+                      <rect
+                        x={x}
+                        y={H - PAD - bindingH}
+                        width={barWidth}
+                        height={Math.max(bindingH, 1)}
+                        class="dist__binding"
+                      >
+                        <title>{`${c.year}: ${c.binding} binding`}</title>
+                      </rect>
+                    )}
+                  </>
+                );
+              })
+            }
+            <line x1={PAD} y1={H - PAD} x2={W - PAD} y2={H - PAD} class="dist__axis" />
+            {
+              decadeTicks.map((year) => (
+                <text
+                  x={PAD + (year - first) * colWidth + barWidth / 2}
+                  y={H - 5}
+                  class="dist__tick"
+                  text-anchor="middle"
+                >
+                  {year}
+                </text>
+              ))
+            }
+          </svg>
+        </div>
+
+        <figcaption class="key">
+          <span class="key__item">
+            <span class="key__swatch" style="--swatch:var(--accent)"></span>
+            binding ({bindingCount})
+          </span>
+          <span class="key__item">
+            <span class="key__swatch" style="--swatch:var(--surface-2)"></span>
+            guidance, voluntary or proposed ({records.length - bindingCount})
+          </span>
+        </figcaption>
+      </figure>
+
+      <p class="caveat">
+        Binding here means a statute, a delegated instrument or a binding agency rule. Guidance,
+        standards, voluntary commitments, reviews and proposals are counted separately. Year is
+        the year of adoption of the instrument as indexed, not the year any AI-specific provision
+        commenced.
+        <Provenance source={index.sources} retrieved={index.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="instruments">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Every instrument, newest first</h2>
+      </div>
+
+      {
+        grouped.map((group) => (
+          <div class="year">
+            <h3 class="year__label mono">{group.year}</h3>
+            <ul class="feed">
+              {group.rows.map((row) => (
+                <li class="feed__row">
+                  <span class="feed__meta">
+                    <a href={`/policy/${row.jurisdiction_slug}/`}>{row.jurisdiction}</a>
+                    <span class:list={["tag", isBinding(row) && "tag--binding"]}>{row.force}</span>
+                  </span>
+                  <span>
+                    <a href={row.url} class="feed__title">
+                      {row.title}
+                    </a>
+                    <span class="feed__pub">{row.body}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dist {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 640px;
+    block-size: auto;
+  }
+
+  .dist__binding {
+    fill: var(--accent);
+  }
+
+  .dist__other {
+    fill: var(--surface-2);
+  }
+
+  .dist__axis {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .dist__tick {
+    fill: var(--muted);
+    font-family: var(--f-mono);
+    font-size: 10px;
+  }
+
+  .year {
+    margin-block-start: 1.1rem;
+  }
+
+  .year__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* Binding instruments carry the accent; everything else stays neutral, so the
+     column of tags reads as one distinction rather than seven. */
+  .tag--binding {
+    border-color: var(--accent-line);
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+  }
+</style>

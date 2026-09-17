@@ -53,16 +53,18 @@ figures, each figure carrying a `<Provenance>` marker and a caveat where it coul
 
 | Route | What is on it |
 |---|---|
-| `/` | Dashboard. One panel per section with that section's headline figures, heading as the way in. Full-width choropleth of AI use that steps through reporting periods with no JavaScript (`TimeMap`), plus the ranked table behind it. |
+| `/` | Banner stating the site's purpose, then `What is on this site` (one line per section), then `Explore metrics`: one panel per section with that section's headline figures, heading as the way in. Full-width choropleth of AI use with a scrubber that steps through reporting periods with no JavaScript (`TimeMap`), plus the ranked table behind it. |
 | `/progress/` | **Outputs.** Benchmark scores by category and by difficulty tier (both our own classification), how long each test stayed useful, straight-line extrapolations of open benchmarks, a rail of per-benchmark frontier lines, the most recent notable models, release cadence by quarter. |
 | `/capability/` | **Inputs.** Training compute over time with the fitted frontier, disclosed cost, how models ship (open weights / API / unreleased), how far behind the open-weight frontier is, who builds them, and the compute thresholds written into law against the models that cross them. |
 | `/alignment/` | How close is AGI, answered only from measured quantities. Published frontier safety frameworks side by side. Safety research against capability research from OpenAlex. Reported incidents. A section on what the page cannot show. |
 | `/adoption/` | Population use against enterprise use, by size, by industry, by technology, by country. |
 | `/map/` | Exposure against governance readiness: a divergence map, the two layers separately, a scatter, and the table behind all three. |
 | `/policy/` + 11 jurisdiction routes | The law that actually applies to AI, tagged by how binding each instrument is, with a link to every primary source. |
+| `/policy/timeline/` | The same instruments ordered by year of adoption, with a per-year distribution split binding against everything else. Most applicable law predates AI. |
 | `/news/` + 6 category routes | Official publications, preprints and reported incidents. Every item prints the keyword terms that filed it where it is. |
 | `/sources/` | Every registered source, its licence, what it is used for, and what it cannot tell you. Usage is derived from the processed data, not hand-written. |
-| `/about/`, `/methodology/`, `/methodology/governance-readiness/`, `/corrections/`, `/privacy/`, `/terms/` | Argument, method, rubric, and the legal pages. |
+| `/glossary/` | Every term the data pages use, defined as this site applies it, linked to the page that applies it. |
+| `/about/`, `/methodology/`, `/methodology/governance-readiness/`, `/corrections/`, `/privacy/`, `/terms/` | Scope, method, rubric, and the legal pages. |
 
 **The split between `/progress/` and `/capability/` is outputs against inputs.** Benchmarks live on
 progress. Do not move them back.
@@ -211,13 +213,28 @@ Set from the tasteskill brief at `DESIGN_VARIANCE 7 / MOTION_INTENSITY 4 / VISUA
   a diagonal hatch on `.section--hatch`. All CSS gradients.
 - **Copy on a data page describes the figure and stops.** What it shows, over what period, from
   whom, and a notable number if there is one. Do not draw the implication for the reader: the legend
-  and the key are the explanation. Argument belongs on `/about/` and `/methodology/`.
+  and the key are the explanation.
+- **Register: formal, declarative, and shorter than feels natural.** Set by the owner and applying
+  to every reader-facing string on the site, the legal pages included.
+  - State what the data is and what it measures. Do not argue for it, and do not persuade the
+    reader that the site is worth reading.
+  - Cut any sentence a reader can infer from the figure itself. "Step through the reporting
+    periods" describes the control they are looking at.
+  - No "not X, but Y" or "X rather than Y" as rhetoric, no second person, no imperatives to the
+    reader, no asides about how the site was built or why a decision was made. Those belong in
+    source comments, which is where the reasoning in this repository lives.
+  - `/about/`, `/terms/`, `/privacy/` and `/corrections/` are reference documents. They should be
+    dull, and a reader should be able to find one fact in them without reading a paragraph.
+  - On authorship the site says exactly one thing: AI was used to help build it.
 - **Long ranked lists show ten rows and put the tail in a disclosure.** Use `BarTable`.
 - **One radius system.** `--r` containers and controls, `--r-pill` tags, `--r-mark` data marks.
 - **Zero em-dashes and en-dashes anywhere,** including source data, normalised at ETL time by
   `normalise_dashes`. The permitted dash is the hyphen; `check:built` fails the build otherwise.
-- **No images, no marketing hero, no hand-rolled SVG icons,** no decorative dots, no eyebrows above
-  headings, no scroll cues, no version labels.
+- **No images and no hand-rolled SVG icons,** no decorative dots, no eyebrows above headings, no
+  scroll cues, no version labels. Icons come from the project's Phosphor set through `astro-icon`.
+- **The homepage banner is the one exception to "no hero",** added on the owner's instruction,
+  which the design lock defers to. It keeps the rest of the rule: the background is four CSS
+  gradients in the existing graph-paper language and there is still no image anywhere on the site.
 - **Zero client JavaScript.** Charts and maps render to SVG at build time; interactivity is CSS
   (`<details>`, `:checked`, the native Popover API). Keep it that way.
 - Run `python etl/check_contrast.py` after any colour change.

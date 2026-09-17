@@ -119,11 +119,20 @@ const covered = world.shapes.filter((s) => s.code && byCode.has(s.code)).length;
    initial value, which is black. Every unshaded country would have rendered
    solid black with nothing in the markup looking wrong. The selector is also
    narrowed to shapes inside a link, which are exactly the ones that have data. */
+
+/* Distance along the rail, as a percentage, of the i-th tick. Ticks sit at the
+   centre of equal-width steps, so the rail spans centre to centre and the fill
+   is a straight fraction of it. A single period has no span, so it gets 0 and
+   the rail is hidden below. */
+const span = periods.length > 1 ? periods.length - 1 : 1;
+
 const rules = periods
   .map(
     (_, i) => `#${id}-${i}:checked ~ .tm__figure .tm__link .tm__shape { fill: var(--v${i}, var(--surface-2)); }
-#${id}-${i}:checked ~ .tm__scale .tm__step:nth-of-type(${i + 1}) { color: var(--ink); border-color: var(--accent); background: var(--accent-wash); }
-#${id}-${i}:focus-visible ~ .tm__scale .tm__step:nth-of-type(${i + 1}) { outline: 2px solid var(--accent); outline-offset: 2px; }
+#${id}-${i}:checked ~ .tm__scrub .tm__step:nth-of-type(${i + 1}) .tm__label { color: var(--ink); }
+#${id}-${i}:checked ~ .tm__scrub .tm__step:nth-of-type(${i + 1}) .tm__dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+#${id}-${i}:checked ~ .tm__scrub .tm__fill { inline-size: ${((i / span) * 100).toFixed(4)}%; }
+#${id}-${i}:focus-visible ~ .tm__scrub .tm__step:nth-of-type(${i + 1}) .tm__dot { outline: 2px solid var(--accent); outline-offset: 3px; }
 #${id}-${i}:checked ~ .tm__figure .tm__now::after { content: "${periods[i]}"; }`,
   )
   .join("\n");
@@ -143,14 +152,22 @@ const rules = periods
     ))
   }
 
-  <div class="tm__scale" role="group" aria-label="Reporting period">
-    {
-      periods.map((period, i) => (
-        <label class="tm__step" for={`${id}-${i}`}>
-          {period}
-        </label>
-      ))
-    }
+  <div class="tm__scrub" role="group" aria-label="Reporting period">
+    <div class="tm__track" style={`--n:${periods.length}`}>
+      {periods.length > 1 && (
+        <span class="tm__rail" aria-hidden="true">
+          <span class="tm__fill" />
+        </span>
+      )}
+      {
+        periods.map((period, i) => (
+          <label class="tm__step" for={`${id}-${i}`}>
+            <span class="tm__dot" aria-hidden="true" />
+            <span class="tm__label mono">{period}</span>
+          </label>
+        ))
+      }
+    </div>
   </div>
 
   <figure class="tm__figure">
@@ -216,32 +233,98 @@ const rules = periods
     pointer-events: none;
   }
 
-  .tm__scale {
+  /* The period scrubber.
+
+     A track with one tick per reporting period rather than a row of pills. It
+     is still radio-driven, so it costs no JavaScript and keeps arrow-key
+     operation; what changed is that it reads as one axis with a position on it
+     instead of a set of separate buttons.
+
+     It scrolls rather than wraps. Each step holds a floor width, so once there
+     are more periods than fit, the track overflows and the scrollbar becomes
+     the control. Three periods fit on a phone today and it does not scroll. */
+  .tm__scrub {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+    margin-block-end: 0.9rem;
+    padding-block-end: 0.15rem;
+  }
+
+  .tm__track {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-block-end: 0.7rem;
+    min-inline-size: 100%;
+    padding-block-start: 0.45rem;
+  }
+
+  /* Spans tick centre to tick centre. Steps are equal width, so the first and
+     last centres sit half a step in from each end. */
+  .tm__rail {
+    position: absolute;
+    inset-block-start: 0.7rem;
+    inset-inline: calc(50% / var(--n));
+    block-size: 2px;
+    border-radius: var(--r-mark);
+    background: var(--line);
+  }
+
+  .tm__fill {
+    display: block;
+    block-size: 100%;
+    inline-size: 0;
+    border-radius: inherit;
+    background: var(--accent);
+    transition: inline-size 0.28s var(--ease);
   }
 
   .tm__step {
-    padding: 0.25rem 0.7rem;
-    border: 1px solid var(--line);
-    border-radius: var(--r-pill);
-    background: var(--surface);
-    color: var(--muted);
-    font-family: var(--f-mono);
-    font-size: 0.75rem;
+    position: relative;
+    z-index: 1;
+    flex: 1 0 5.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding-block-end: 0.15rem;
     cursor: pointer;
-    transition: color 0.18s var(--ease), border-color 0.18s var(--ease),
-      background-color 0.18s var(--ease);
   }
 
-  .tm__step:hover {
+  .tm__dot {
+    inline-size: 9px;
+    block-size: 9px;
+    border: 2px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease),
+      transform 0.18s var(--ease);
+  }
+
+  .tm__label {
+    color: var(--muted);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    transition: color 0.18s var(--ease);
+  }
+
+  .tm__step:hover .tm__dot {
+    border-color: var(--accent-line);
+  }
+
+  .tm__step:hover .tm__label {
     color: var(--ink);
   }
 
   /* Keyboard focus lands on the off-screen input, so the ring is drawn on the
-     matching label by the generated rules above. */
+     matching tick by the generated rules above. */
+
+  @media (prefers-reduced-motion: reduce) {
+    .tm__fill,
+    .tm__dot {
+      transition: none;
+    }
+  }
 
   .tm__figure {
     margin: 0;

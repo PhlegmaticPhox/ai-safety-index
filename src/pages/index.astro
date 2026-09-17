@@ -146,13 +146,20 @@ assertRenderable(...cites);
    every period, which is the entire point of stepping through them.
    --------------------------------------------------------------------------- */
 const BREAKS = [10, 20, 30, 40];
-const RAMP = [
-  "rgb(242 169 80 / 0.16)",
-  "rgb(242 169 80 / 0.34)",
-  "rgb(242 169 80 / 0.55)",
-  "rgb(242 169 80 / 0.78)",
-  "rgb(242 169 80 / 1)",
-];
+
+/* Sequential ramp, one hue, ending on the accent.
+   Solid steps rather than five alpha values of the accent. Alpha composites
+   against whatever is behind it, and behind a country is the --surface sphere
+   over the body's grid, so the low buckets picked up the pattern and the bottom
+   two were nearly indistinguishable from the "no data" grey. These are opaque,
+   so a bucket is the same colour wherever it falls.
+
+   Checked rather than chosen by eye, with the dataviz skill's ordinal validator
+   against the sphere colour #1b212e: lightness monotone, every adjacent step at
+   least 0.06 L apart, hue spread 12 degrees, and the lowest step at 2.22:1
+   against the surface, which clears the 2:1 floor that keeps the first bucket
+   legible as data rather than as background. */
+const RAMP = ["#63553d", "#886c41", "#ad8547", "#cf974c", "#f2a950"];
 const bucketOf = (value: number) => BREAKS.filter((b) => value >= b).length;
 
 const periods = [...new Set(exposure.records.flatMap((r) => Object.keys(r.values)))].sort();
@@ -266,6 +273,22 @@ const fmtCompute = (flop: number) => {
   return `${(flop / 10 ** exp).toFixed(1)}e${exp}`;
 };
 const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
+
+/* What each section holds. Same order as the nav, which runs outward from the
+   models to the law that applies to them. One line each, stating the contents
+   rather than recommending them. */
+const contents = [
+  { href: "/progress/", name: "Progress", desc: "Benchmark scores by category and difficulty, how long each test stayed useful, and release cadence." },
+  { href: "/capability/", name: "Capability", desc: "Training compute, disclosed cost, release type, and the compute thresholds written into law." },
+  { href: "/alignment/", name: "Alignment", desc: "Published frontier safety frameworks, safety against capability research volume, and reported incidents." },
+  { href: "/adoption/", name: "Adoption", desc: "Population and enterprise use, by firm size, industry, technology and country." },
+  { href: "/map/", name: "Map", desc: "AI use against governance readiness, by jurisdiction." },
+  { href: "/policy/", name: "Policy", desc: "Instruments that apply to AI in eleven jurisdictions, tagged by how binding each one is." },
+  { href: "/news/", name: "News", desc: "Official publications, preprints and reported incidents, filed by keyword." },
+  { href: "/sources/", name: "Sources", desc: "Every registered source, its licence, its use here, and its stated limitations." },
+  { href: "/methodology/", name: "Methodology", desc: "How each dataset is built, scored and updated." },
+  { href: "/glossary/", name: "Glossary", desc: "Definitions of the terms used on this site." },
+];
 ---
 
 <Base
@@ -274,18 +297,53 @@ const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
   description="A cited index of AI capability, governance and safety. Current figures on model progress, adoption, law and incidents, with the source, licence and retrieval date on every number."
   cites={cites}
 >
-  <section class="section section--open">
+  <!-- BANNER. States what the site is for, and what it holds. -->
+  <section class="banner">
     <div class="wrap">
-      <div class="masthead">
-        <h1>Current figures</h1>
-        <p class="masthead__meta mono">
-          {datasets.length} datasets
-          <span aria-hidden="true">/</span>
-          {cites.length} sources
-          <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
-          {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
-        </p>
+      <h1 class="banner__title">Understand the current AI policy environment</h1>
+      <p class="banner__lede">
+        Data on AI is fragmented across publishers. This site indexes it in one place, from
+        Epoch AI, Eurostat, OpenAlex, Microsoft and official government sources. Every figure
+        carries its source, licence and retrieval date.
+      </p>
+      <p class="banner__meta mono">
+        {datasets.length} datasets
+        <span aria-hidden="true">/</span>
+        {cites.length} sources
+        <span aria-hidden="true">/</span>
+        <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
+        {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTENTS. What each section holds, in one line each. -->
+  <section class="section section--open" id="contents">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What is on this site</h2>
+      </div>
+
+      <ul class="contents">
+        {
+          contents.map((entry) => (
+            <li class="contents__row">
+              <a href={entry.href} class="contents__name">
+                {entry.name}
+              </a>
+              <span class="contents__desc">{entry.desc}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--sunk" id="metrics">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Explore metrics</h2>
+        <p>Headline figures from each section. Each heading opens the full page.</p>
       </div>
 
       <!-- DASHBOARD. One panel per section; the heading is the way in. -->
@@ -474,8 +532,8 @@ const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
       <div class="section-head">
         <h2><a href="/adoption/" class="go">Who is using AI</a></h2>
         <p>
-          Share of each economy's working-age population actively using AI tools. Step through
-          the reporting periods; the colour means the same share in every one.
+          Share of each economy's working-age population actively using AI tools. Colour breaks
+          are fixed across periods.
         </p>
       </div>
 
@@ -541,40 +599,38 @@ const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
   <section class="section" id="about">
     <div class="wrap">
       <div class="section-head">
-        <h2>Every number here tells you where it came from</h2>
+        <h2>Provenance</h2>
         <p>
-          Each figure carries its source, licence and retrieval date, resolved from one registry
-          when the page is built rather than written by hand.
+          Each figure carries its source, licence and retrieval date, resolved from a single
+          registry when the page is built.
         </p>
       </div>
 
       <ul class="cards">
         <li class="card">
-          <span class="card__title">Click the marker on any figure</span>
+          <span class="card__title">Markers on figures</span>
           <p>
-            It opens that number's source, publisher, licence, update cadence, retrieval date
-            and known limitations.
+            The marker beside a figure opens its source, publisher, licence, update cadence,
+            retrieval date and stated limitations.
           </p>
         </li>
         <li class="card">
-          <span class="card__title">Two sources are registered to fail the build</span>
+          <span class="card__title">Licence enforcement</span>
           <p>
             Artificial Analysis forbids redistribution and the Stanford AI Index is
-            no-derivatives. Wiring either in stops the build rather than shipping.
+            no-derivatives. Both are registered so that using either fails the build.
           </p>
         </li>
         <li class="card">
-          <span class="card__title">No tracking, no accounts, no client JavaScript</span>
+          <span class="card__title">No accounts or client JavaScript</span>
           <p>
-            Charts and maps are rendered to SVG when the site is built. Nothing here measures
-            you.
+            Charts and maps are rendered to SVG when the site is built. Measurement is limited to
+            aggregate page counts.
           </p>
         </li>
         <li class="card">
           <a href="/sources/" class="card__title">All {cites.length} sources</a>
-          <p>
-            Every source, what it is used for, its licence and what it cannot tell you.
-          </p>
+          <p>Every source, its licence, its use here and its stated limitations.</p>
         </li>
       </ul>
     </div>
@@ -582,6 +638,112 @@ const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
 </Base>
 
 <style>
+  /* ---------------------------------------------------------------------------
+     Banner.
+
+     The design lock says no marketing hero; the site owner asked for a banner,
+     and the owner's instruction wins. What is kept from the lock is the
+     vocabulary: the background is four CSS gradients and no image, because there
+     are no images on this site and a banner is not a reason to start.
+
+     The layers, back to front: a warm amber wash off the top right, a cool wash
+     off the bottom left to stop the warm one reading as a colour cast, the same
+     56px graph paper the body carries but at twice the contrast, and a fade to
+     --bg at the bottom edge so the banner resolves into the page instead of
+     ending on a line. Every one of them is far below text contrast; the type
+     sits on --bg, not on the wash.
+     --------------------------------------------------------------------------- */
+  .banner {
+    position: relative;
+    padding-block: clamp(2.25rem, 6vw, 4rem) clamp(1.75rem, 4vw, 2.75rem);
+    border-block-end: 1px solid var(--line);
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(70ch 40ch at 88% -10%, rgb(242 169 80 / 0.16), transparent 70%),
+      radial-gradient(60ch 34ch at 4% 108%, rgb(90 169 230 / 0.09), transparent 70%),
+      linear-gradient(rgb(150 175 215 / 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(150 175 215 / 0.09) 1px, transparent 1px);
+    background-size: auto, auto, var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+    background-position: center, center, center -1px, center -1px;
+  }
+
+  /* The hairline that reads as a horizon. One gradient, not a border, so it can
+     be soft at both ends. */
+  .banner::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-line) 35%, transparent);
+  }
+
+  .banner__title {
+    max-inline-size: 22ch;
+    font-size: clamp(1.875rem, 1.2rem + 3.4vw, 3.25rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .banner__lede {
+    max-inline-size: 72ch;
+    margin-block-start: 1rem;
+    color: var(--muted);
+    font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
+    line-height: 1.6;
+  }
+
+  .banner__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+    margin-block-start: 1.1rem;
+    padding-block-start: 0.9rem;
+    border-block-start: 1px solid var(--line-soft);
+    max-inline-size: 72ch;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* Contents. A two-column list rather than cards: nine of anything as cards is
+     a wall, and this is an index, so it should read like one. */
+  .contents {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+    gap: 0 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contents__row {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: baseline;
+    padding-block: 0.5rem;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .contents__name {
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  .contents__desc {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 560px) {
+    .contents__row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+
   /* Dashboard. Twelve columns so panels can be 4, 6 or 12 wide without the
      half-empty tile that a three-column grid forces at the end of a row. */
   .dash {

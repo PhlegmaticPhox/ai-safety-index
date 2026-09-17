@@ -138,8 +138,7 @@ const REDISTRIBUTION_MEANING: Record<string, string> = {
           <div class="section-head">
             <h2>Registered, not yet used</h2>
             <p>
-              Checked, licensed and ready to wire in. They are declared ahead of use so that
-              adding one is a data change rather than a decision.
+              Checked and licensed, with no data on the site yet.
             </p>
           </div>
 
@@ -166,9 +165,8 @@ const REDISTRIBUTION_MEANING: Record<string, string> = {
       <div class="section-head">
         <h2>Registered so that using them fails the build</h2>
         <p>
-          Both of these have data we would like. Neither licence permits it, so both are
-          registered with a redistribution status that makes the pipeline refuse to write their
-          data and the site refuse to render it.
+          Neither licence permits republication. Both are registered with a redistribution
+          status that stops the pipeline writing their data and the site rendering it.
         </p>
       </div>
 
@@ -206,8 +204,8 @@ const REDISTRIBUTION_MEANING: Record<string, string> = {
       <div class="section-head">
         <h2>What is ours</h2>
         <p>
-          Two of the datasets here are our own work rather than anyone else's data, and are
-          licensed for reuse on the same terms we ask of everyone.
+          {ourOwn.length} datasets on this site are compiled here from primary documents rather
+          than obtained from a publisher. All are licensed MIT.
         </p>
       </div>
 
@@ -228,11 +226,9 @@ const REDISTRIBUTION_MEANING: Record<string, string> = {
       </ul>
 
       <p class="caveat">
-        They exist because the obvious alternative was not available. OECD.AI and the IAPP both
-        publish policy trackers, and both are protected by the EU sui generis database right on
-        top of copyright, so bulk-extracting either would be a licence we do not have. Reading
-        primary instruments and coding them ourselves avoids the question and means the result is
-        ours to give away.
+        OECD.AI and the IAPP publish policy trackers. Both are protected by the EU sui generis
+        database right in addition to copyright, which does not permit bulk extraction. These
+        datasets are coded from primary instruments instead.
       </p>
     </div>
   </section>
