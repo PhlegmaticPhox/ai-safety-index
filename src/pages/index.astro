@@ -272,21 +272,6 @@ const fmtCompute = (flop: number) => {
 };
 const pct = (v: number) => `${(v * 100).toFixed(0)}%`;
 
-/* What each section holds. Same order as the nav, which runs outward from the
-   models to the law that applies to them. One line each, stating the contents
-   rather than recommending them. */
-const contents = [
-  { href: "/progress/", name: "Progress", desc: "Benchmark scores by category and difficulty, how long each test stayed useful, and release cadence." },
-  { href: "/capability/", name: "Capability", desc: "Training compute, disclosed cost, release type, and the compute thresholds written into law." },
-  { href: "/alignment/", name: "Alignment", desc: "Published frontier safety frameworks, safety against capability research volume, and reported incidents." },
-  { href: "/adoption/", name: "Adoption", desc: "Population and enterprise use, by firm size, industry, technology and country." },
-  { href: "/map/", name: "Map", desc: "AI use against governance readiness, by jurisdiction." },
-  { href: "/policy/", name: "Policy", desc: "Instruments that apply to AI in eleven jurisdictions, tagged by how binding each one is." },
-  { href: "/news/", name: "News", desc: "Official publications, preprints and reported incidents, filed by keyword." },
-  { href: "/sources/", name: "Sources", desc: "Every registered source, its licence, its use here, and its stated limitations." },
-  { href: "/methodology/", name: "Methodology", desc: "How each dataset is built, scored and updated." },
-  { href: "/glossary/", name: "Glossary", desc: "Definitions of the terms used on this site." },
-];
 /* ---------------------------------------------------------------------------
    Proportion matrices.
 
@@ -342,7 +327,7 @@ const pins = PIN_SITES.map((site) => {
        right, each joined to its country by a leader line drawn in the map's own
        projection. Below about 980px the map cannot carry both, and the media
        query at the foot of this file takes the overlay apart. -->
-  <section class="hero" id="map" data-field="adoption">
+  <section class="hero" id="map" data-accent="adoption">
     <div class="hero__glow" aria-hidden="true"></div>
 
     <div class="hero__map">
@@ -391,10 +376,10 @@ const pins = PIN_SITES.map((site) => {
       <div class="wrap">
         <div class="hero__head">
           <span class="eyebrow">Adoption / {latestPeriod}</span>
-          <h1 class="hero__title">Understand the current AI policy environment</h1>
+          <h1 class="hero__title"><span>The numbers</span><span class="quiet">behind AI</span></h1>
           <p class="hero__lede">
-            Data on AI is fragmented across publishers. This site indexes it in one place, from
-            Epoch AI, Eurostat, OpenAlex, Microsoft and official government sources.
+            A current index of AI capability, governance and safety, drawn from {datasets.length}
+            {" "}datasets and kept up to date.
           </p>
           <p class="hero__meta mono">
             {datasets.length} datasets
@@ -443,38 +428,8 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </div>
 
-  <!-- ===================== CONTENTS =====================
-       Their site index, kept: the new hero replaces the banner's visual form,
-       not the list of what is actually on the site. -->
-  <section class="section section--sunk" id="contents" data-field="sources" aria-labelledby="contents-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <span class="eyebrow">Contents</span>
-          <h2 class="sec-title" id="contents-h">What is on this site</h2>
-        </div>
-        <p class="sec-lede">
-          Every section is built from a named dataset and refreshed daily.
-        </p>
-      </div>
-
-      <ul class="contents">
-        {
-          contents.map((entry) => (
-            <li class="contents__row">
-              <a href={entry.href} class="contents__name">
-                {entry.name}
-              </a>
-              <span class="contents__desc">{entry.desc}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
   <!-- ===================== 01 PROGRESS ===================== -->
-  <section class="section section--sunk" id="progress" data-field="progress" aria-labelledby="progress-h">
+  <section class="section section--sunk" id="progress" data-accent="progress" aria-labelledby="progress-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -530,7 +485,7 @@ const pins = PIN_SITES.map((site) => {
   </section>
 
   <!-- ===================== 02 CAPABILITY ===================== -->
-  <section class="section section--band" id="capability" data-field="capability" aria-labelledby="capability-h">
+  <section class="section section--band" id="capability" data-accent="capability" aria-labelledby="capability-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -583,7 +538,7 @@ const pins = PIN_SITES.map((site) => {
   </section>
 
   <!-- ===================== 03 ALIGNMENT ===================== -->
-  <section class="section section--sunk" id="alignment" data-field="alignment" aria-labelledby="alignment-h">
+  <section class="section section--sunk" id="alignment" data-accent="alignment" aria-labelledby="alignment-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -660,7 +615,7 @@ const pins = PIN_SITES.map((site) => {
   </section>
 
   <!-- ===================== 04 ADOPTION ===================== -->
-  <section class="section section--band" id="adoption" data-field="adoption" aria-labelledby="adoption-h">
+  <section class="section section--band" id="adoption" data-accent="adoption" aria-labelledby="adoption-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -700,7 +655,7 @@ const pins = PIN_SITES.map((site) => {
   </section>
 
   <!-- ===================== 05 POLICY ===================== -->
-  <section class="section section--sunk" id="policy" data-field="policy" aria-labelledby="policy-h">
+  <section class="section section--sunk" id="policy" data-accent="policy" aria-labelledby="policy-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -748,7 +703,7 @@ const pins = PIN_SITES.map((site) => {
   </section>
 
   <!-- ===================== 06 NEWS ===================== -->
-  <section class="section section--band" id="news" data-field="news" aria-labelledby="news-h">
+  <section class="section section--band" id="news" data-accent="news" aria-labelledby="news-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
@@ -792,51 +747,6 @@ const pins = PIN_SITES.map((site) => {
 </Base>
 
 <style>
-  /* Contents. A two-column list rather than cards: nine of anything as cards is
-     a wall, and this is an index, so it should read like one. */
-  .contents {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
-    gap: 0 2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .contents__row {
-    display: grid;
-    grid-template-columns: 7.5rem minmax(0, 1fr);
-    gap: 0.9rem;
-    align-items: baseline;
-    padding-block: 0.5rem;
-    border-block-start: 1px solid var(--line-soft);
-  }
-
-  .contents__name {
-    font-weight: 500;
-    font-size: 0.875rem;
-    text-decoration: none;
-  }
-
-  .contents__desc {
-    color: var(--muted);
-    font-size: 0.8125rem;
-    line-height: 1.5;
-  }
-
-  @media (max-width: 560px) {
-    .contents__row {
-      grid-template-columns: 1fr;
-      gap: 0.15rem;
-    }
-  }
-
-  /* Dashboard. Twelve columns so panels can be 4, 6 or 12 wide without the
-     half-empty tile that a three-column grid forces at the end of a row. */
-  .dash {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 0.6rem;
   /* =========================================================================
      HERO. The map runs the full width of the viewport and everything else in
      here is layered over it.
@@ -881,10 +791,18 @@ const pins = PIN_SITES.map((site) => {
     pointer-events: auto;
   }
 
+  .hero__title span {
+    display: block;
+  }
+
+  .hero__title .quiet {
+    color: var(--muted);
+    font-weight: 300;
+  }
+
   .hero__title {
     margin-block: 0.75rem 1rem;
-    font-size: clamp(2rem, 4.2vw, 3.5rem);
-    max-inline-size: 15ch;
+    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
     font-weight: 500;
     line-height: 1;
     letter-spacing: -0.035em;

@@ -13,6 +13,7 @@
 
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
+@import "./fields.css";
 
 :root {
   color-scheme: dark;
@@ -1282,62 +1283,3 @@ img {
   font-size: 11px;
 }
 
-/* ---------------------------------------------------------------------------
-   Field hues. Verified against every ground by etl/check_contrast.py.
-   --------------------------------------------------------------------------- */
-
-/* Outputs. The house hue, because benchmarks are what the site leads on. */
-[data-field="progress"] {
-  --field: #f2a950;
-  --field-line: rgb(242 169 80 / 0.34);
-  --field-dot: rgb(242 169 80 / 0.13);
-}
-
-/* Inputs. Violet for compute and silicon. */
-[data-field="capability"] {
-  --field: #a78bfa;
-  --field-line: rgb(167 139 250 / 0.34);
-  --field-dot: rgb(167 139 250 / 0.13);
-}
-
-/* Safety. */
-[data-field="alignment"] {
-  --field: #4fc3a1;
-  --field-line: rgb(79 195 161 / 0.34);
-  --field-dot: rgb(79 195 161 / 0.13);
-}
-
-/* People. Rose reads demographic; a saturated red would read as alarm. */
-[data-field="adoption"] {
-  --field: #e891a8;
-  --field-line: rgb(232 145 168 / 0.34);
-  --field-dot: rgb(232 145 168 / 0.13);
-}
-
-/* Governance. The one page where the field hue and the data hue are the same thing. */
-[data-field="map"] {
-  --field: #63b3ec;
-  --field-line: rgb(99 179 236 / 0.34);
-  --field-dot: rgb(99 179 236 / 0.13);
-}
-
-/* Law. */
-[data-field="policy"] {
-  --field: #b5c65a;
-  --field-line: rgb(181 198 90 / 0.34);
-  --field-dot: rgb(181 198 90 / 0.13);
-}
-
-/* The wire. */
-[data-field="news"] {
-  --field: #f0996b;
-  --field-line: rgb(240 153 107 / 0.34);
-  --field-dot: rgb(240 153 107 / 0.13);
-}
-
-/* The registry. Deliberately neutral: it is about the others. */
-[data-field="sources"] {
-  --field: #9fb0c9;
-  --field-line: rgb(159 176 201 / 0.34);
-  --field-dot: rgb(159 176 201 / 0.13);
-}

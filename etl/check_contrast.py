@@ -57,23 +57,48 @@ checks = [
     ('large heading on bg',      INK, BG,          3.0),
 ]
 
-# Field hues. One per section of the site, set with data-field and used for the
-# eyebrow, the rule above a section and the dot tint. The eyebrow is small
-# uppercase text, so each one has to clear AA as text on every ground it can
-# appear over, not merely be visible as a tint.
-FIELDS = {
-    'progress':   '#f2a950',
-    'capability': '#a78bfa',
-    'alignment':  '#4fc3a1',
-    'adoption':   '#e891a8',
-    'map':        '#63b3ec',
-    'policy':     '#b5c65a',
-    'news':       '#f0996b',
-    'sources':    '#9fb0c9',
-}
-for name, hue in FIELDS.items():
-    for ground, label in ((BG, 'bg'), (BAND, 'band'), (SURF, 'surface')):
-        checks.append((f'field {name} on {label}', hue, ground, 4.5))
+# Field schemes. Each section of the site gets its own ground palette, generated
+# into src/styles/fields.css by rotating the base hue and holding luminance
+# constant. They are READ FROM THAT FILE rather than copied here: a copy is the
+# one thing this checker must never contain, because a copy that drifts checks a
+# palette the site no longer uses, which is worse than not checking at all.
+import os
+import re
+
+_here = os.path.dirname(os.path.abspath(__file__))
+_fields_css = os.path.join(_here, '..', 'src', 'styles', 'fields.css')
+with open(_fields_css, encoding='utf-8') as _f:
+    _css = _f.read()
+
+# A scheme is spread over two rule blocks: the accent pair, which also carries
+# [data-accent], and the ground block. Merge every block that names the field.
+_merged = {}
+for _sel, _body in re.findall(r'((?:\[data-[a-z]+="\w+"\],?\s*)+)\{(.*?)\}', _css, re.S):
+    _names = set(re.findall(r'\[data-(?:field|accent)="(\w+)"\]', _sel))
+    for _n in _names:
+        _merged.setdefault(_n, {}).update(
+            dict(re.findall(r'(--[a-z0-9-]+):\s*(#[0-9a-fA-F]{6})', _body))
+        )
+_schemes = sorted(_merged.items())
+if not _schemes:
+    raise SystemExit('check_contrast: no [data-field] schemes found in src/styles/fields.css')
+
+# Body text sits on every ground; the field accent is an eyebrow, which is small
+# uppercase text and so has to clear AA as text on the grounds it appears over.
+_TEXT_ON = ('--bg', '--bg-deep', '--band', '--surface', '--surface-2')
+_ACCENT_ON = ('--bg', '--band', '--surface')
+
+for _name, _tok in _schemes:
+    _accent = _tok.get('--field')
+    missing = [t for t in _TEXT_ON if t not in _tok]
+    if missing or not _accent:
+        raise SystemExit(f'check_contrast: scheme {_name} is missing {missing or ["--field"]}')
+    for _ground in _TEXT_ON:
+        for _label, _ink in (('ink', INK), ('muted', MUTED), ('muted-2', MUTED2)):
+            checks.append((f'{_name}: {_label} on {_ground[2:]}', _ink, _tok[_ground], 4.5))
+    for _ground in _ACCENT_ON:
+        checks.append((f'{_name}: accent on {_ground[2:]}', _accent, _tok[_ground], 4.5))
+
 fails = 0
 for label, fg, bg, need in checks:
     r = ratio(fg, bg)
