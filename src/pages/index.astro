@@ -764,12 +764,36 @@ const pins = PIN_SITES.map((site) => {
     overflow: hidden;
   }
 
-  /* Arrival. The map resolves out of the ground; the headline beside it does
-     not move, so nothing a reader is trying to read shifts under them. */
-  @keyframes hero-in {
+  /* Arrival, in two beats. The map resolves out of the ground over a couple of
+     seconds and the headline arrives over the top of it part way through,
+     rather than waiting for it to finish.
+
+     The map fades opacity and moves nothing. It wraps 145 country paths, a
+     second SVG of leader lines and three positioned cards, and animating a
+     transform across that subtree makes a phone re-composite the whole of it
+     every frame: on a mid-range handset the entrance stutters or is dropped
+     outright, which is where this was weakest. Opacity alone is one layer and
+     no relayout. The headline is a small box and can afford the 16px it rises.
+
+     The curve carries as much of this as the duration does. --ease is an expo
+     curve that is 79 percent done in the first fifth of its run, so hanging a
+     long duration off it reads as a short fade with a long tail rather than as
+     a slow one. The map gets a near-linear curve, so the time is spent where it
+     can be seen. The headline keeps --ease, because a short move wants the
+     settle. */
+  @keyframes hero-map-in {
     from {
       opacity: 0;
-      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes hero-text-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
     }
     to {
       opacity: 1;
@@ -791,13 +815,7 @@ const pins = PIN_SITES.map((site) => {
   .hero__map {
     position: relative;
     z-index: 1;
-    animation: hero-in 900ms var(--ease) both;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero__map {
-      animation: none;
-    }
+    animation: hero-map-in 2600ms cubic-bezier(0.32, 0, 0.24, 1) both;
   }
 
   .hero__overlay {
@@ -816,6 +834,19 @@ const pins = PIN_SITES.map((site) => {
   .hero__head {
     inline-size: min(48%, 580px);
     pointer-events: auto;
+    /* Starts while the map is still at about a third of its fade and settles
+       well before it, so the headline lands on top of a map that is still
+       arriving rather than after one that has already stopped. */
+    animation: hero-text-in 1400ms var(--ease) 800ms both;
+  }
+
+  /* Below both, so it overrides both: equal specificity, and source order
+     decides. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__map,
+    .hero__head {
+      animation: none;
+    }
   }
 
   .hero__title span {
@@ -1251,6 +1282,10 @@ const pins = PIN_SITES.map((site) => {
       inline-size: auto;
       max-inline-size: 640px;
       margin-block-end: 1.5rem;
+      /* Here the headline is the top of the page rather than an overlay on the
+         map, so it cannot sit blank for most of a second while something below
+         it fades up. It comes in with the map instead of over it. */
+      animation-delay: 150ms;
     }
 
     .sec-head,
