@@ -43,6 +43,16 @@ interface Props {
   places?: number;
   /** Unique per page: two maps on one page would otherwise share radio names. */
   id?: string;
+  /**
+   * Whether to draw the period scrubber.
+   *
+   * Off, the map shows `initial` and nothing else: no radios are rendered at
+   * all, so there are no controls left in the accessibility tree with nothing
+   * visible to operate them, and the fill is pinned by a static rule instead of
+   * by :checked. Used where the map is the ground of a hero rather than the
+   * figure being read.
+   */
+  scrub?: boolean;
 }
 
 const {
@@ -54,6 +64,7 @@ const {
   width = 900,
   places = 1,
   id = "tm",
+  scrub = true,
 } = Astro.props;
 
 for (const datum of data) {
@@ -126,7 +137,11 @@ const covered = world.shapes.filter((s) => s.code && byCode.has(s.code)).length;
    the rail is hidden below. */
 const span = periods.length > 1 ? periods.length - 1 : 1;
 
-const rules = periods
+/* With no scrubber there is nothing to check, so the selected period is pinned
+   by one static rule keyed off the root instead of by :checked. */
+const rules = !scrub
+  ? `#${id} .tm__now::after { content: "${periods[initial]}"; }`
+  : periods
   .map(
     (_, i) => `#${id}-${i}:checked ~ .tm__figure .tm__link .tm__shape { fill: var(--v${i}, var(--surface-2)); }
 #${id}-${i}:checked ~ .tm__scrub .tm__step:nth-of-type(${i + 1}) .tm__label { color: var(--ink); }
@@ -138,20 +153,22 @@ const rules = periods
   .join("\n");
 ---
 
-<div class="tm">
+<div class="tm" id={id}>
   {
-    periods.map((period, i) => (
-      <input
-        class="tm__radio"
-        type="radio"
-        name={id}
-        id={`${id}-${i}`}
-        checked={i === initial}
-        aria-label={`Show ${period}`}
-      />
-    ))
+    scrub &&
+      periods.map((period, i) => (
+        <input
+          class="tm__radio"
+          type="radio"
+          name={id}
+          id={`${id}-${i}`}
+          checked={i === initial}
+          aria-label={`Show ${period}`}
+        />
+      ))
   }
 
+  {scrub && (
   <div class="tm__scrub" role="group" aria-label="Reporting period">
     <div class="tm__track" style={`--n:${periods.length}`}>
       {periods.length > 1 && (
@@ -169,6 +186,7 @@ const rules = periods
       }
     </div>
   </div>
+  )}
 
   <figure class="tm__figure">
     <!-- The plot box exists so an overlay can share the map's exact geometry.
@@ -179,7 +197,7 @@ const rules = periods
     <svg
       viewBox={`0 0 ${world.width} ${world.height}`}
       role="img"
-      aria-label={`${label}. ${covered} of ${world.shapes.length} countries have data; the rest are unshaded.`}
+      aria-label={`${label}${scrub ? "" : `, ${periods[initial]}`}. ${covered} of ${world.shapes.length} countries have data; the rest are unshaded.`}
       class="tm__svg"
     >
       <path d={world.sphere} class="tm__sphere"></path>
@@ -193,7 +211,9 @@ const rules = periods
               </path>
             );
           }
-          const vars = datum.fills.map((fill, i) => `--v${i}:${fill}`).join(";");
+          const vars = scrub
+            ? datum.fills.map((fill, i) => `--v${i}:${fill}`).join(";")
+            : `fill:${datum.fills[initial]}`;
           return (
             <a href={datum.href ?? undefined} class="tm__link">
               <path d={shape.d} class="tm__shape" style={vars}>
