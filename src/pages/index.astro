@@ -12,10 +12,8 @@
  * it. It steps through reporting periods with no JavaScript; see TimeMap.
  */
 import Base from "../layouts/Base.astro";
-import Provenance from "../components/Provenance.astro";
 import TimeMap from "../components/TimeMap.astro";
 import BarTable from "../components/BarTable.astro";
-import Sparkline from "../components/Sparkline.astro";
 import { alpha3 } from "../lib/geo";
 import { assertRenderable, freshness, type Dataset } from "../lib/sources";
 
@@ -289,39 +287,175 @@ const contents = [
   { href: "/methodology/", name: "Methodology", desc: "How each dataset is built, scored and updated." },
   { href: "/glossary/", name: "Glossary", desc: "Definitions of the terms used on this site." },
 ];
+/* ---------------------------------------------------------------------------
+   Proportion matrices.
+
+   A ratio drawn as cells rather than as a bar: 7 of 17, 15 per 100, 46 of 78.
+   The cells are generated from the figures themselves, so the picture can never
+   disagree with the number beside it.
+   --------------------------------------------------------------------------- */
+const cells = (total: number, on: number) =>
+  Array.from({ length: total }, (_, i) => i < on);
+
+/* ---------------------------------------------------------------------------
+   Hero pins.
+
+   Three fixed countries, each anchored to its own position in the map's 1000x500
+   projection, with the value read from the data rather than written here. The
+   anchor is the country; the number is whatever the latest refresh says it is,
+   and the rank label is computed, so a pin cannot claim a standing it no longer
+   holds.
+   --------------------------------------------------------------------------- */
+const PIN_SITES = [
+  { entity: "South Korea", x: 835, y: 170, cx: 720, cy: 32, left: "70%", top: "4%" },
+  { entity: "United Arab Emirates", x: 650, y: 206, cx: 720, cy: 187, left: "70%", top: "35%" },
+  { entity: "Australia", x: 860, y: 381, cx: 640, cy: 342, left: "62%", top: "66%" },
+];
+
+const pins = PIN_SITES.map((site) => {
+  const record = ranked.find((r) => r.entity === site.entity);
+  if (!record) return null;
+  const rank = ranked.indexOf(record) + 1;
+  const before = record.values[firstPeriod];
+  const change = before === undefined ? null : record.latest - before;
+  return {
+    ...site,
+    label: rank === 1 ? "Highest" : `Ranked ${rank}`,
+    value: `${record.latest.toFixed(1)}%`,
+    text:
+      change === null
+        ? `${record.entity}, ${record.latest_period}.`
+        : `${record.entity}, up ${change.toFixed(1)} points since ${firstPeriod}.`,
+  };
+}).filter((p): p is NonNullable<typeof p> => p !== null);
 ---
 
 <Base
   title="AI Safety Tracker"
   root
-  description="A cited index of AI capability, governance and safety. Current figures on model progress, adoption, law and incidents, with the source, licence and retrieval date on every number."
+  description="A cited index of AI capability, governance and safety. Current figures on model progress, adoption, law and incidents, with the source and retrieval date on every number."
   cites={cites}
 >
-  <!-- BANNER. States what the site is for, and what it holds. -->
-  <section class="banner">
-    <div class="wrap">
-      <h1 class="banner__title">Understand the current AI policy environment</h1>
-      <p class="banner__lede">
-        Data on AI is fragmented across publishers. This site indexes it in one place, from
-        Epoch AI, Eurostat, OpenAlex, Microsoft and official government sources. Every figure
-        carries its source, licence and retrieval date.
-      </p>
-      <p class="banner__meta mono">
-        {datasets.length} datasets
-        <span aria-hidden="true">/</span>
-        {cites.length} sources
-        <span aria-hidden="true">/</span>
-        <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
-        {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
-      </p>
+  <!-- ===================== HERO =====================
+       Edge to edge: the map is the ground of the page, not a figure inside it.
+       The headline sits over its quiet left side and three pins sit over its
+       right, each joined to its country by a leader line drawn in the map's own
+       projection. Below about 980px the map cannot carry both, and the media
+       query at the foot of this file takes the overlay apart. -->
+  <section class="hero" id="map">
+    <div class="hero__glow" aria-hidden="true"></div>
+
+    <div class="hero__map">
+      <TimeMap
+        periods={periods}
+        data={mapData}
+        legend={legend}
+        label="Share of working-age population using AI tools, by economy"
+        id="tm-home"
+      >
+        <div class="hero__over" slot="overlay">
+          <div class="scrim" aria-hidden="true"></div>
+          <svg
+            class="leads"
+            viewBox="0 0 1000 500"
+            preserveAspectRatio="xMidYMid meet"
+            aria-hidden="true"
+            focusable="false"
+          >
+            {
+              pins.map((pin) => (
+                <>
+                  <line x1={pin.x} y1={pin.y} x2={pin.cx} y2={pin.cy} />
+                  <circle cx={pin.x} cy={pin.y} r="2.5" />
+                </>
+              ))
+            }
+          </svg>
+
+          <div class="pins">
+            {
+              pins.map((pin) => (
+                <div class="pin" style={`left:${pin.left};top:${pin.top}`}>
+                  <span class="pin__lab">{pin.label}</span>
+                  <span class="pin__fig num">{pin.value}</span>
+                  <span class="pin__txt">{pin.text}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </TimeMap>
+    </div>
+
+    <div class="hero__overlay">
+      <div class="wrap">
+        <div class="hero__head">
+          <span class="eyebrow">Adoption / {latestPeriod}</span>
+          <h1 class="hero__title">Understand the current AI policy environment</h1>
+          <p class="hero__lede">
+            Data on AI is fragmented across publishers. This site indexes it in one place, from
+            Epoch AI, Eurostat, OpenAlex, Microsoft and official government sources.
+          </p>
+          <p class="hero__meta mono">
+            {datasets.length} datasets
+            <span aria-hidden="true">/</span>
+            {cites.length} sources
+            <span aria-hidden="true">/</span>
+            <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
+            {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#progress">Read the figures</a>
+            <a class="btn btn--ghost" href="/news/">Latest</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- CONTENTS. What each section holds, in one line each. -->
-  <section class="section section--open" id="contents">
+  <!-- ===================== STAT BAND ===================== -->
+  <div class="wrap band">
+    <div class="statband">
+      <div class="stat">
+        <b class="num">{solved.length}<small> / {benchmarks.count}</small></b>
+        <span>benchmarks solved past {pct(SOLVED_AT)}</span>
+      </div>
+      <div class="stat">
+        <b class="num">{aboveEU}</b>
+        <span>models at or above 1e25 FLOP</span>
+      </div>
+      <div class="stat">
+        <b class="num">{perHundred}<small> / 100</small></b>
+        <span>safety works per hundred on frontier models</span>
+      </div>
+      <div class="stat">
+        <b class="num">{risen}<small> / {withBoth}</small></b>
+        <span>economies where use rose since {firstPeriod}</span>
+      </div>
+      <div class="stat">
+        <b class="num">{binding.length}<small> / {policy.count}</small></b>
+        <span>policy instruments that are binding law</span>
+      </div>
+      <div class="stat">
+        <b class="num">{governance.count}</b>
+        <span>jurisdictions scored for readiness</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== CONTENTS =====================
+       Their site index, kept: the new hero replaces the banner's visual form,
+       not the list of what is actually on the site. -->
+  <section class="section section--sunk" id="contents" aria-labelledby="contents-h">
     <div class="wrap">
-      <div class="section-head">
-        <h2>What is on this site</h2>
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">Contents</span>
+          <h2 class="sec-title" id="contents-h">What is on this site</h2>
+        </div>
+        <p class="sec-lede">
+          Every section is built from a named dataset and refreshed daily.
+        </p>
       </div>
 
       <ul class="contents">
@@ -339,241 +473,211 @@ const contents = [
     </div>
   </section>
 
-  <section class="section section--sunk" id="metrics">
+  <!-- ===================== 01 PROGRESS ===================== -->
+  <section class="section section--sunk" id="progress" aria-labelledby="progress-h">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Explore metrics</h2>
-        <p>Headline figures from each section. Each heading opens the full page.</p>
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">01 / Progress</span>
+          <h2 class="sec-title" id="progress-h">
+            {solved.length} of {benchmarks.count} tests are finished
+          </h2>
+        </div>
+        <p class="sec-lede">
+          A benchmark counts as solved once the best score recorded by any evaluated model passes
+          {" "}{pct(SOLVED_AT)}. At that point it has stopped telling models apart.
+        </p>
       </div>
 
-      <!-- DASHBOARD. One panel per section; the heading is the way in. -->
-      <div class="dash">
-        <article class="panel-card dash__wide">
-          <h2 class="panel-card__head">
-            <a href="/progress/" class="go">Progress</a>
-            <span class="panel-card__meta mono">to {benchMonth}</span>
-          </h2>
-          <p class="panel-card__lead num">
-            {solved.length}<span class="panel-card__of">of {benchmarks.count}</span>
+      <div class="figure">
+        <div
+          class="matrix"
+          role="img"
+          aria-label={`${benchmarks.count} cells, ${solved.length} filled, showing ${solved.length} of ${benchmarks.count} tracked benchmarks solved past ${pct(SOLVED_AT)}.`}
+        >
+          {cells(benchmarks.count, solved.length).map((on) => <i class={on ? "on" : undefined} />)}
+        </div>
+        <div class="figure__read">
+          <b class="num">{solved.length} of {benchmarks.count}</b>
+          <p>
+            Scores run to {benchMonth}. {openTests.length} tests still separate the leading models.
           </p>
-          <p class="panel-card__label">
-            tracked benchmarks solved past {pct(SOLVED_AT)}
-            <Provenance
-              source={benchmarks.sources}
-              retrieved={benchmarks.retrieved}
-              label="figure"
-              note="Solved means the best recorded score by any evaluated model has passed 0.9."
-            />
-          </p>
-          <Sparkline points={leadBenchmark.points} marker={SOLVED_AT} />
-          <ul class="panel-card__facts">
-            <li>
-              <span class="num">{pct(hardest.latest_best)}</span> best score on {hardest.benchmark}
-            </li>
-            <li>
-              <span class="num">{openTests.length}</span> tests still separating leading models
-            </li>
-          </ul>
-        </article>
+        </div>
+      </div>
 
-        <article class="panel-card dash__wide">
-          <h2 class="panel-card__head">
-            <a href="/capability/" class="go">Capability</a>
-            <span class="panel-card__meta mono">{models.count} with compute</span>
-          </h2>
-          <p class="panel-card__lead num">{aboveEU}</p>
-          <p class="panel-card__label">
-            models at or above the EU systemic-risk threshold of 1e25 FLOP
-            <Provenance
-              source={models.sources}
-              retrieved={models.retrieved}
-              label="figure"
-              note="Counted from models with a reported or estimated training-compute figure. Many are estimates."
-            />
-          </p>
-          <ul class="panel-card__facts">
-            <li>
-              <span class="num">{aboveCA}</span> above 1e26, the Californian threshold
-            </li>
-            <li>
-              <span class="num">{fmtCompute(largest.compute_flop)}</span> largest run, {largest.model}
-            </li>
-            <li>
-              <span class="num">{Math.round(powerTotal).toLocaleString("en-GB")} MW</span>
-              documented cluster power
-            </li>
-          </ul>
-        </article>
+      <div class="meter">
+        <div class="meter__head">
+          <span class="meter__name">{hardest.benchmark}, the hardest test still open</span>
+          <span class="num meter__val">{pct(hardest.latest_best)}</span>
+        </div>
+        <div
+          class="meter__track"
+          role="img"
+          aria-label={`Best recorded score on ${hardest.benchmark} is ${pct(hardest.latest_best)}.`}
+        >
+          <div class="meter__fill" style={`width:${Math.max(hardest.latest_best * 100, 0.5)}%`}></div>
+        </div>
+        <p class="meter__note">The best score recorded by any evaluated model.</p>
+      </div>
 
-        <article class="panel-card dash__wide">
-          <h2 class="panel-card__head">
-            <a href="/alignment/" class="go">Alignment</a>
-            <span class="panel-card__meta mono">{completeYear} research</span>
-          </h2>
-          <p class="panel-card__lead num">{perHundred}</p>
-          <p class="panel-card__label">
-            safety works published per 100 on frontier models
-            <Provenance
-              source={research.sources}
-              retrieved={research.retrieved}
-              label="figure"
-              note="Keyword match on title and abstract in OpenAlex, not a field classification. The queries are printed on the alignment page."
-            />
-          </p>
-          <ul class="panel-card__facts">
-            <li>
-              <span class="num">{withFramework.length} of {frameworks.count}</span> developers
-              publish a safety framework
-            </li>
-            <li>
-              <span class="num">{halting.length}</span> of those commit to stopping rather than
-              deciding
-            </li>
-          </ul>
-        </article>
-
-        <article class="panel-card">
-          <h2 class="panel-card__head">
-            <a href="/adoption/" class="go">Adoption</a>
-          </h2>
-          <p class="panel-card__lead num">{peopleAhead}<span class="panel-card__of">of {paired.length}</span></p>
-          <p class="panel-card__label">
-            economies where more people use AI than the firms employing them
-            <Provenance
-              source={[...exposure.sources, ...enterprise.sources]}
-              retrieved={enterprise.retrieved}
-              label="figure"
-              note="Population use from Microsoft telemetry; enterprise use from Eurostat's survey. Two different instruments, compared as levels."
-            />
-          </p>
-          <ul class="panel-card__facts">
-            <li>
-              <span class="num">{enterpriseTop.share.toFixed(0)}%</span> of firms in
-              {" "}{enterpriseTop.name}, the highest, {enterpriseYear}
-            </li>
-          </ul>
-        </article>
-
-        <article class="panel-card">
-          <h2 class="panel-card__head">
-            <a href="/map/" class="go">Governance</a>
-          </h2>
-          <p class="panel-card__lead num">{governance.count}</p>
-          <p class="panel-card__label">
-            jurisdictions scored for governance readiness
-            <Provenance
-              source={governance.sources}
-              retrieved={governance.retrieved}
-              label="figure"
-              note="Our own coding from primary instruments. It counts machinery, not quality."
-            />
-          </p>
-          <ul class="panel-card__facts">
-            <li>
-              <span class="num">{nationalGovernance.length}</span> coded individually, the rest
-              inherit the EU score
-            </li>
-            <li>
-              <span class="num">{topGovernance.readiness}</span> highest score, {topGovernance.name}
-            </li>
-          </ul>
-        </article>
-
-        <article class="panel-card">
-          <h2 class="panel-card__head">
-            <a href="/policy/" class="go">Policy</a>
-          </h2>
-          <p class="panel-card__lead num">{policy.count}</p>
-          <p class="panel-card__label">
-            instruments indexed across {jurisdictions.length} jurisdictions
-            <Provenance source={policy.sources} retrieved={policy.retrieved} label="figure" />
-          </p>
-          <ul class="panel-card__facts">
-            <li>
-              <span class="num">{binding.length}</span> of them binding law
-            </li>
-            <li>
-              <span class="num">{inForce.length}</span> compute thresholds in force anywhere
-            </li>
-          </ul>
-        </article>
-
-        <article class="panel-card dash__tall">
-          <h2 class="panel-card__head">
-            <a href="/news/" class="go">News</a>
-            <span class="panel-card__meta mono">{jurisdictionsInFeed} jurisdictions</span>
-          </h2>
-          <ul class="mini-feed">
-            {
-              recentNews.map((item) => (
-                <li>
-                  <time class="mono" datetime={item.date}>
-                    {item.date}
-                  </time>
-                  {/* Feed URLs are somebody else's input. Same check as NewsList. */}
-                  {isSafeUrl(item.url) ? (
-                    <a href={item.url}>{item.title}</a>
-                  ) : (
-                    <span class="feed__title--unlinked">{item.title}</span>
-                  )}
-                </li>
-              ))
-            }
-          </ul>
-          <a href="/news/" class="more">The full feed, by category</a>
-        </article>
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/progress/">Explore progress</a>
+        <p class="srcline">
+          Data: <a href="https://epoch.ai/data/ai-benchmarking-dashboard">Epoch AI, AI Benchmarking Hub</a>
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- THE MAP -->
-  <section class="section section--sunk" id="map">
+  <!-- ===================== 02 CAPABILITY ===================== -->
+  <section class="section section--band" id="capability" aria-labelledby="capability-h">
     <div class="wrap">
-      <div class="section-head">
-        <h2><a href="/adoption/" class="go">Who is using AI</a></h2>
-        <p>
-          Share of each economy's working-age population actively using AI tools. Colour breaks
-          are fixed across periods.
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">02 / Capability</span>
+          <h2 class="sec-title" id="capability-h">The numbers written into law</h2>
+        </div>
+        <p class="sec-lede">
+          Training compute is the one part of AI regulation that is arithmetic rather than
+          judgement. These are the models that cross each threshold.
         </p>
       </div>
 
-      <TimeMap
-        periods={periods}
-        data={mapData}
-        legend={legend}
-        label="Share of working-age population using AI tools, by economy"
-        id="use"
-        width={1000}
-        places={1}
-      />
+      <div class="ladder">
+        <div class="rung">
+          <span class="rung__x num">{fmtCompute(largest.compute_flop)}</span>
+          <span class="rung__what">{largest.model}, the largest disclosed training run</span>
+          <span class="rung__n num">1</span>
+        </div>
+        <div class="rung rung--law">
+          <span class="rung__x num">1e26</span>
+          <span class="rung__what">Californian threshold</span>
+          <span class="rung__n num">{aboveCA}</span>
+        </div>
+        <div class="rung rung--law">
+          <span class="rung__x num">1e25</span>
+          <span class="rung__what">EU systemic-risk threshold</span>
+          <span class="rung__n num">{aboveEU}</span>
+        </div>
+        <div class="rung">
+          <span class="rung__x">Below</span>
+          <span class="rung__what">Every other model with a reported or estimated figure</span>
+          <span class="rung__n num">{models.count - aboveEU}</span>
+        </div>
+      </div>
 
-      <div class="map-side">
-        <ul class="strip">
-          <li class="strip__item">
-            <span class="strip__value">{medianExposure.toFixed(1)}%</span>
-            <span class="strip__label">
-              median economy, {latestPeriod}
-              <Provenance
-                source={exposure.sources}
-                retrieved={exposure.retrieved}
-                label="figure"
-                note="Median across all 147 economies in the dataset."
-              />
-            </span>
-          </li>
-          <li class="strip__item">
-            <span class="strip__value">{ranked[0].latest.toFixed(1)}%</span>
-            <span class="strip__label">{ranked[0].entity}, the highest</span>
-          </li>
-          <li class="strip__item">
-            <span class="strip__value">{risen} of {withBoth}</span>
-            <span class="strip__label">economies rose between {firstPeriod} and {latestPeriod}</span>
-          </li>
-          <li class="strip__item">
-            <span class="strip__value">{exposure.count}</span>
-            <span class="strip__label">economies in the dataset</span>
-          </li>
-        </ul>
+      <div class="tagrow">
+        <span class="tag">{models.count} models with a compute figure</span>
+        <span class="tag">{inForce.length} thresholds in force</span>
+        <span class="tag">{Math.round(powerTotal).toLocaleString("en-GB")} MW documented cluster power</span>
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/capability/">Explore capability</a>
+        <p class="srcline">
+          Data: <a href="https://epoch.ai/data/notable-ai-models">Epoch AI, Notable AI Models</a>.
+          Compute figures are frequently estimates.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 03 ALIGNMENT ===================== -->
+  <section class="section section--sunk" id="alignment" aria-labelledby="alignment-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">03 / Alignment</span>
+          <h2 class="sec-title" id="alignment-h">
+            {perHundred} safety papers per hundred
+          </h2>
+        </div>
+        <p class="sec-lede">
+          Published work on AI safety counted against published work on frontier models, for
+          {" "}{completeYear}, the last complete year. Counted by keyword match rather than by field,
+          so the definition is arguable.
+        </p>
+      </div>
+
+      <div class="figure figure--wide">
+        <div
+          class="matrix matrix--100"
+          role="img"
+          aria-label={`One hundred cells, ${perHundred} filled, showing ${perHundred} safety works published for every hundred on frontier models in ${completeYear}.`}
+        >
+          {cells(100, perHundred).map((on) => <i class={on ? "on" : undefined} />)}
+        </div>
+        <div class="figure__read">
+          <b class="num">{perHundred}</b>
+          <p>
+            For every hundred works published on frontier models in {completeYear}, {perHundred}
+            {" "}were published on safety.
+          </p>
+          <p class="figure__note">
+            Recent years undercount, because indexing lags publication.
+          </p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="mini">
+          <span class="mini__n mono">01</span>
+          <span class="mini__fig num">{withFramework.length} of {frameworks.count}</span>
+          <h3>Publish a framework</h3>
+          <p>
+            Developers running frontier-scale training that publish a frontier safety framework.
+            The rest publish nothing, and the absence is the finding.
+          </p>
+        </article>
+        <article class="mini">
+          <span class="mini__n mono">02</span>
+          <span class="mini__fig num">{halting.length}</span>
+          <h3>Commit to stopping</h3>
+          <p>
+            Of those that publish, the number committing to halting development at a stated
+            capability level rather than to deciding what to do when they reach one.
+          </p>
+        </article>
+        <article class="mini">
+          <span class="mini__n mono">03</span>
+          <span class="mini__fig num">{frameworks.count}</span>
+          <h3>Incomparable scales</h3>
+          <p>
+            No two frameworks use the same capability thresholds or the same names for them, so
+            the column that matters is what each one commits to doing.
+          </p>
+        </article>
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/alignment/">Explore alignment</a>
+        <p class="srcline">
+          Data: <a href="https://openalex.org/">OpenAlex</a>, and our own index of published safety
+          frameworks
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 ADOPTION ===================== -->
+  <section class="section section--band" id="adoption" aria-labelledby="adoption-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">04 / Adoption</span>
+          <h2 class="sec-title" id="adoption-h">Who is actually using it</h2>
+        </div>
+        <p class="sec-lede">
+          Share of each economy's working-age population actively using AI tools in
+          {" "}{latestPeriod}, ranked, with the change since {firstPeriod}.
+        </p>
+      </div>
+
+      <div class="tagrow">
+        <span class="tag">{medianExposure.toFixed(1)}% median economy</span>
+        <span class="tag">{ranked[0].latest.toFixed(1)}% {ranked[0].entity}, the highest</span>
+        <span class="tag">{peopleAhead} of {paired.length} economies where more people use AI than firms</span>
+        <span class="tag">{enterpriseTop.share.toFixed(0)}% of firms in {enterpriseTop.name}, {enterpriseYear}</span>
       </div>
 
       <BarTable
@@ -581,130 +685,113 @@ const contents = [
         head="Economy"
         valueHead={`Share, ${latestPeriod}`}
         metaHead={`Change since ${firstPeriod}`}
-        top={10}
         caption={`Share of working-age population using AI tools by economy in ${latestPeriod}, ranked highest to lowest, with the change since ${firstPeriod}.`}
       />
 
-      <p class="caveat">
-        Estimated from anonymised Microsoft telemetry adjusted for device and internet
-        penetration. It measures Microsoft-visible use scaled by a model, not observed total AI
-        use, and it cannot see AI embedded in products people do not recognise as AI. The
-        tooltip on each country shows its latest value, not the value for the selected period.
-        <Provenance source={exposure.sources} retrieved={exposure.retrieved} />
-      </p>
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/adoption/">Explore adoption</a>
+        <p class="srcline">
+          Data: <a href="https://github.com/microsoft/AIDiffusionReport">Microsoft AI for Good Lab</a>
+          {" "}and <a href="https://ec.europa.eu/eurostat/web/main/data/database">Eurostat</a>.
+          Microsoft-visible use, scaled, not observed total use.
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- WHAT THIS IS -->
-  <section class="section" id="about">
+  <!-- ===================== 05 POLICY ===================== -->
+  <section class="section section--sunk" id="policy" aria-labelledby="policy-h">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Provenance</h2>
-        <p>
-          Each figure carries its source, licence and retrieval date, resolved from a single
-          registry when the page is built.
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">05 / Policy and governance</span>
+          <h2 class="sec-title" id="policy-h">
+            {binding.length} of {policy.count} are binding
+          </h2>
+        </div>
+        <p class="sec-lede">
+          Instruments indexed across {jurisdictions.length} jurisdictions, read from the primary
+          source. Binding means a statute or delegated legislation; the rest is guidance, standards
+          and strategy.
         </p>
       </div>
 
-      <ul class="cards">
-        <li class="card">
-          <span class="card__title">Markers on figures</span>
+      <div class="figure">
+        <div
+          class="matrix"
+          role="img"
+          aria-label={`${policy.count} cells, ${binding.length} filled, showing ${binding.length} of ${policy.count} indexed instruments are binding law.`}
+        >
+          {cells(policy.count, binding.length).map((on) => <i class={on ? "gov" : undefined} />)}
+        </div>
+        <div class="figure__read">
+          <b class="num">{binding.length} of {policy.count}</b>
           <p>
-            The marker beside a figure opens its source, publisher, licence, update cadence,
-            retrieval date and stated limitations.
+            {governance.count} jurisdictions are separately scored for governance readiness,
+            {" "}{nationalGovernance.length} of them coded individually.
           </p>
-        </li>
-        <li class="card">
-          <span class="card__title">Licence enforcement</span>
-          <p>
-            Artificial Analysis forbids redistribution and the Stanford AI Index is
-            no-derivatives. Both are registered so that using either fails the build.
+          <p class="figure__note">
+            Australia is indexed far more deeply than the rest, because it was indexed first, so the
+            totals are not a comparison between jurisdictions.
           </p>
-        </li>
-        <li class="card">
-          <span class="card__title">No accounts or client JavaScript</span>
-          <p>
-            Charts and maps are rendered to SVG when the site is built. Measurement is limited to
-            aggregate page counts.
-          </p>
-        </li>
-        <li class="card">
-          <a href="/sources/" class="card__title">All {cites.length} sources</a>
-          <p>Every source, its licence, its use here and its stated limitations.</p>
-        </li>
+        </div>
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/policy/">Explore policy</a>
+        <p class="srcline">
+          Data: our own index of primary legal instruments, alongside the
+          {" "}<a href="/methodology/governance-readiness/">governance readiness rubric</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 06 NEWS ===================== -->
+  <section class="section section--band" id="news" aria-labelledby="news-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">06 / The wire</span>
+          <h2 class="sec-title" id="news-h">Official publications and preprints</h2>
+        </div>
+        <p class="sec-lede">
+          Government publications, preprints and reported incidents, filed by keyword and linking to
+          the publisher rather than to a copy. {jurisdictionsInFeed} jurisdictions in the current feed.
+        </p>
+      </div>
+
+      <ul class="feed">
+        {
+          recentNews.map((item) => (
+            <li>
+              <time class="mono" datetime={item.date}>
+                {item.date}
+              </time>
+              <span class="badge">{item.kind}</span>
+              {/* Feed URLs are somebody else's input. Same check as NewsList. */}
+              {isSafeUrl(item.url) ? (
+                <a href={item.url}>{item.title}</a>
+              ) : (
+                <span class="feed__unlinked">{item.title}</span>
+              )}
+            </li>
+          ))
+        }
       </ul>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/news/">Explore the news feed</a>
+        <p class="srcline">
+          Feeds: arXiv, the US Federal Register, NIST, GOV.UK, the European Commission and three
+          others
+        </p>
+      </div>
     </div>
   </section>
 </Base>
 
 <style>
-  /* ---------------------------------------------------------------------------
-     Banner.
-
-     The design lock says no marketing hero; the site owner asked for a banner,
-     and the owner's instruction wins. What is kept from the lock is the
-     vocabulary: the background is four CSS gradients and no image, because there
-     are no images on this site and a banner is not a reason to start.
-
-     The layers, back to front: a warm amber wash off the top right, a cool wash
-     off the bottom left to stop the warm one reading as a colour cast, the same
-     56px graph paper the body carries but at twice the contrast, and a fade to
-     --bg at the bottom edge so the banner resolves into the page instead of
-     ending on a line. Every one of them is far below text contrast; the type
-     sits on --bg, not on the wash.
-     --------------------------------------------------------------------------- */
-  .banner {
-    position: relative;
-    padding-block: clamp(2.25rem, 6vw, 4rem) clamp(1.75rem, 4vw, 2.75rem);
-    border-block-end: 1px solid var(--line);
-    background-color: var(--bg);
-    background-image:
-      radial-gradient(70ch 40ch at 88% -10%, rgb(242 169 80 / 0.16), transparent 70%),
-      radial-gradient(60ch 34ch at 4% 108%, rgb(90 169 230 / 0.09), transparent 70%),
-      linear-gradient(rgb(150 175 215 / 0.09) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(150 175 215 / 0.09) 1px, transparent 1px);
-    background-size: auto, auto, var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
-    background-position: center, center, center -1px, center -1px;
-  }
-
-  /* The hairline that reads as a horizon. One gradient, not a border, so it can
-     be soft at both ends. */
-  .banner::after {
-    content: "";
-    position: absolute;
-    inset-inline: 0;
-    inset-block-end: 0;
-    block-size: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-line) 35%, transparent);
-  }
-
-  .banner__title {
-    max-inline-size: 22ch;
-    font-size: clamp(1.875rem, 1.2rem + 3.4vw, 3.25rem);
-    line-height: 1.02;
-    letter-spacing: -0.03em;
-  }
-
-  .banner__lede {
-    max-inline-size: 72ch;
-    margin-block-start: 1rem;
-    color: var(--muted);
-    font-size: clamp(0.9375rem, 0.9rem + 0.25vw, 1.0625rem);
-    line-height: 1.6;
-  }
-
-  .banner__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 0.75rem;
-    margin-block-start: 1.1rem;
-    padding-block-start: 0.9rem;
-    border-block-start: 1px solid var(--line-soft);
-    max-inline-size: 72ch;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
   /* Contents. A two-column list rather than cards: nine of anything as cards is
      a wall, and this is an index, so it should read like one. */
   .contents {
@@ -750,144 +837,529 @@ const contents = [
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 0.6rem;
+  /* =========================================================================
+     HERO. The map runs the full width of the viewport and everything else in
+     here is layered over it.
+     ====================================================================== */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block-start: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  .panel-card {
-    grid-column: span 4;
+  .hero__glow {
+    position: absolute;
+    inset: -25% -5% auto -5%;
+    block-size: 160%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 55% at 68% 42%, rgb(56 104 170 / 0.55) 0%, rgb(30 58 104 / 0.26) 44%, transparent 72%),
+      radial-gradient(ellipse 70% 65% at 8% 20%, rgb(24 48 92 / 0.55) 0%, transparent 62%);
+  }
+
+  .hero__map {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
     display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding: 0.85rem 1rem 1rem;
-    background: var(--surface);
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .hero__overlay .wrap {
+    inline-size: 100%;
+  }
+
+  .hero__head {
+    inline-size: min(48%, 580px);
+    pointer-events: auto;
+  }
+
+  .hero__title {
+    margin-block: 0.75rem 1rem;
+    font-size: clamp(2rem, 4.2vw, 3.5rem);
+    max-inline-size: 15ch;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .hero__lede {
+    max-inline-size: 44ch;
+    color: var(--muted);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block-start: 0.9rem;
+    font-size: 0.75rem;
+    color: var(--muted-2);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block-start: 1.5rem;
+  }
+
+  /* =========================================================================
+     STAT BAND
+     ====================================================================== */
+  .band {
+    display: block;
+    padding-block: 2rem 0;
+  }
+
+  .statband {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     border: 1px solid var(--line);
-    border-radius: var(--r);
-    transition: border-color 0.18s var(--ease);
+    border-radius: var(--r-lg);
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.035), transparent 40%), var(--surface);
+    overflow: hidden;
   }
 
-  .panel-card:hover {
-    border-color: var(--accent-line);
+  .stat {
+    padding: 1.25rem;
+    border-inline-start: 1px solid var(--line-soft);
   }
 
-  .dash__wide {
-    grid-column: span 4;
+  .stat:first-child {
+    border-inline-start: 0;
   }
 
-  .dash__tall {
-    grid-column: span 12;
+  .stat b {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1;
   }
 
-  @media (min-width: 900px) {
-    .dash__tall {
-      grid-column: span 12;
-    }
+  .stat b small {
+    font-size: 0.875rem;
+    color: var(--muted-2);
+    letter-spacing: -0.01em;
   }
 
-  @media (max-width: 899px) {
-    .panel-card,
-    .dash__wide {
-      grid-column: span 6;
-    }
+  .stat span {
+    display: block;
+    margin-block-start: 0.5rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1.35;
   }
 
-  @media (max-width: 599px) {
-    .panel-card,
-    .dash__wide {
-      grid-column: span 12;
-    }
+  /* =========================================================================
+     SECTIONS
+     ====================================================================== */
+  .section {
+    padding-block: clamp(2.75rem, 5vw, 4.5rem);
   }
 
-  .panel-card__head {
+  .sec-head {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 2.5rem;
+    align-items: end;
+    margin-block-end: 2.5rem;
+  }
+
+  .sec-title {
+    margin-block-start: 0.85rem;
+    font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+
+  .sec-lede {
+    color: var(--muted);
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .figure {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  /* A definite track, so the square inside it has something to be 100% of. */
+  .figure--wide {
+    grid-template-columns: 296px minmax(0, 1fr);
+  }
+
+  .figure__read b {
+    display: block;
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+
+  .figure__read p {
+    max-inline-size: 44ch;
+    margin-block-start: 0.75rem;
+    color: var(--muted);
+  }
+
+  .figure__note {
+    color: var(--muted-2);
+    font-size: 0.8125rem;
+  }
+
+  /* --- Proportion matrices ------------------------------------------------ */
+  .matrix {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .matrix i {
+    display: block;
+    inline-size: 22px;
+    block-size: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-mark);
+  }
+
+  .matrix i.on {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .matrix i.gov {
+    background: var(--accent-2);
+    border-color: var(--accent-2);
+  }
+
+  /* One hundred cells resolve to a square rather than a ragged wrap. */
+  .matrix--100 {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    inline-size: 100%;
+  }
+
+  .matrix--100 i {
+    inline-size: auto;
+    block-size: auto;
+    aspect-ratio: 1;
+  }
+
+  /* --- The one measured bar ---------------------------------------------- */
+  .meter {
+    max-inline-size: 620px;
+    margin-block-start: 2rem;
+    padding-block-start: 1.5rem;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .meter__head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 1rem;
-    font-size: 0.9375rem;
-    margin-block-end: 0.15rem;
+    gap: 0.75rem;
+    margin-block-end: 0.75rem;
   }
 
-  .panel-card__meta {
-    font-size: 0.6875rem;
-    font-weight: 400;
-    color: var(--muted);
+  .meter__name {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
-  .panel-card__lead {
-    font-size: 2rem;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    color: var(--accent);
+  .meter__val {
+    font-size: 1.25rem;
   }
 
-  .panel-card__of {
-    margin-inline-start: 0.4rem;
+  .meter__track {
+    block-size: 12px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r-mark);
+    background: var(--bg-deep);
+    overflow: hidden;
+  }
+
+  .meter__fill {
+    block-size: 100%;
+    background: var(--accent);
+    border-radius: var(--r-mark);
+  }
+
+  .meter__note {
+    margin-block-start: 0.75rem;
+    color: var(--muted-2);
     font-size: 0.8125rem;
-    font-weight: 400;
+  }
+
+  /* --- Compute ladder ----------------------------------------------------- */
+  .ladder {
+    max-inline-size: 880px;
+  }
+
+  .rung {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 1.5rem;
+    align-items: baseline;
+    padding-block: 1rem;
+    border-block-start: 1px dashed var(--line);
+  }
+
+  .rung:first-child {
+    border-block-start: 0;
+  }
+
+  .rung--law {
+    border-block-start-style: solid;
+    border-block-start-color: var(--accent-line);
+  }
+
+  .rung__x {
+    color: var(--muted-2);
+    font-size: 0.875rem;
+  }
+
+  .rung--law .rung__x {
+    color: var(--accent-ink);
+  }
+
+  .rung__what {
     color: var(--muted);
-    letter-spacing: 0;
   }
 
-  .panel-card__label {
-    color: var(--muted);
-    font-size: 0.8125rem;
-    line-height: 1.4;
-  }
-
-  .panel-card__facts {
-    margin: auto 0 0;
-    padding: 0.55rem 0 0;
-    list-style: none;
-    border-block-start: 1px solid var(--line-soft);
-    font-size: 0.75rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .panel-card__facts li + li {
-    margin-block-start: 0.2rem;
-  }
-
-  .panel-card__facts .num {
+  .rung--law .rung__what {
     color: var(--ink);
   }
 
-  .mini-feed {
+  .rung__n {
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .tagrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block-start: 1.5rem;
+  }
+
+  /* --- Numbered cards ----------------------------------------------------- */
+  .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-    gap: 0.2rem 1.75rem;
-    margin: 0.2rem 0 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-block-start: 2.5rem;
+  }
+
+  .mini {
+    position: relative;
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--surface);
+    transition: border-color 0.18s var(--ease), transform 0.18s var(--ease);
+  }
+
+  .mini:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+  }
+
+  .mini__n {
+    position: absolute;
+    inset-block-start: 1rem;
+    inset-inline-end: 1.25rem;
+    color: var(--muted-2);
+    font-size: 0.625rem;
+  }
+
+  .mini__fig {
+    display: block;
+    margin-block-end: 0.5rem;
+    font-size: 1.625rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .mini h3 {
+    margin-block-end: 0.5rem;
+    padding-inline-end: 2rem;
+  }
+
+  .mini p {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* --- The wire ----------------------------------------------------------- */
+  .feed {
+    max-inline-size: 1020px;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .mini-feed li {
-    display: flex;
-    gap: 0.75rem;
+  .feed li {
+    display: grid;
+    grid-template-columns: 104px 148px 1fr;
+    gap: 1.5rem;
     align-items: baseline;
-    padding-block: 0.3rem;
+    padding-block: 1rem;
     border-block-start: 1px solid var(--line-soft);
-    font-size: 0.8125rem;
   }
 
-  .mini-feed time {
-    flex: none;
+  .feed time {
+    color: var(--muted-2);
     font-size: 0.6875rem;
+  }
+
+  .feed a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .feed a:hover {
+    color: var(--accent-ink);
+  }
+
+  .feed__unlinked {
     color: var(--muted);
   }
 
-  .mini-feed a {
-    color: var(--ink);
-    text-decoration: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .badge {
+    display: inline-block;
+    padding: 2px 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    color: var(--muted-2);
+    font-family: var(--f-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     white-space: nowrap;
   }
 
-  .mini-feed a:hover {
-    color: var(--accent);
+  .is-stale {
+    color: var(--warn);
   }
 
-  .map-side {
-    margin-block: 0.9rem;
+  /* =========================================================================
+     RESPONSIVE
+     ====================================================================== */
+  @media (max-width: 1180px) {
+    .statband {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat:nth-child(3n + 1) {
+      border-inline-start: 0;
+    }
+
+    .stat:nth-child(n + 4) {
+      border-block-start: 1px solid var(--line-soft);
+    }
+
+    .hero__head {
+      inline-size: min(52%, 500px);
+    }
+  }
+
+  @media (max-width: 980px) {
+    /* Below this the map cannot carry a headline and pinned cards at once. The
+       overlay comes apart: the headline goes above the map, the leader lines go
+       entirely, and the pins become a plain stack underneath. */
+    .hero {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__overlay {
+      position: static;
+      display: block;
+      order: -1;
+      pointer-events: auto;
+    }
+
+    .hero__head {
+      inline-size: auto;
+      max-inline-size: 640px;
+      margin-block-end: 1.5rem;
+    }
+
+    .sec-head,
+    .figure,
+    .figure--wide {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .feed li {
+      grid-template-columns: 96px 1fr;
+    }
+
+    .feed .badge {
+      grid-column: 2;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .statband {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .stat {
+      padding: 1rem;
+      border-inline-start: 0;
+      border-block-start: 1px solid var(--line-soft);
+    }
+
+    .stat:nth-child(-n + 2) {
+      border-block-start: 0;
+    }
+
+    .cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .rung {
+      grid-template-columns: 84px 1fr;
+    }
+
+    .rung__n {
+      grid-column: 2;
+    }
+
+    .feed li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.25rem;
+    }
+
+    .matrix i {
+      inline-size: 18px;
+      block-size: 18px;
+    }
   }
 </style>

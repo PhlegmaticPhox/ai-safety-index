@@ -16,12 +16,16 @@ def ratio(a, b):
     la, lb = lum(a), lum(b)
     return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
 
-BG, SURF, SURF2 = '#141924', '#1b212e', '#232a3a'
-INK, MUTED = '#eaeef6', '#a2acc0'
-ACCENT, ACCENT_INK = '#f2a950', '#f7c98a'
+BG, BG_DEEP, BAND = '#0e1829', '#091120', '#13203a'
+SURF, SURF2 = '#182946', '#1f3354'
+INK, MUTED, MUTED2 = '#eaf1fb', '#b3c2dc', '#93a6c6'
+ACCENT, ACCENT_INK = '#f2a950', '#f8cf96'
+# Ink used on the accent as a button face. Not a palette token: it exists only
+# as the one legible foreground for a solid amber fill.
+ACCENT_ON = '#1b1200'
 # Data hue. Carries governance wherever governance is plotted, so it has to be
 # legible as text and as a fill, not only as a swatch.
-GOV, GOV_INK = '#5aa9e6', '#93c8f0'
+GOV, GOV_INK = '#63b3ec', '#9bcdf3'
 
 checks = [
     ('body text on bg',          INK, BG,          4.5),
@@ -38,7 +42,17 @@ checks = [
     ('gov hue on surface',       GOV, SURF,        4.5),
     ('gov hue on surface-2',     GOV, SURF2,       4.5),
     ('gov-ink on surface-2',     GOV_INK, SURF2,   4.5),
-    ('BUTTON: bg-ink on accent', BG, ACCENT,       4.5),
+    ('muted-2 on bg',            MUTED2, BG,       4.5),
+    ('muted-2 on band',          MUTED2, BAND,     4.5),
+    ('muted-2 on surface',       MUTED2, SURF,     4.5),
+    ('muted-2 on surface-2',     MUTED2, SURF2,    4.5),
+    ('muted-2 on bg-deep',       MUTED2, BG_DEEP,  4.5),
+    ('body text on band',        INK, BAND,        4.5),
+    ('muted on band',            MUTED, BAND,      4.5),
+    ('accent link on band',      ACCENT, BAND,     4.5),
+    ('gov hue on band',          GOV, BAND,        4.5),
+    ('footer muted on bg-deep',  MUTED, BG_DEEP,   4.5),
+    ('BUTTON: ink on accent',    ACCENT_ON, ACCENT, 4.5),
     ('BUTTON: bg-ink on gov',    BG, GOV,          4.5),
     ('large heading on bg',      INK, BG,          3.0),
 ]

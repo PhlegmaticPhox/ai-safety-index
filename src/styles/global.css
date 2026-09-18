@@ -17,44 +17,49 @@
 :root {
   color-scheme: dark;
 
-  --bg: #141924;
-  --surface: #1b212e;
-  --surface-2: #232a3a;
-  --line: #313a4e;
-  --line-soft: #28303f;
+  /* Blue institutional ground, lifted well off black. Depth comes from real
+     luminance steps between the surfaces, not from borders alone. */
+  --bg: #0e1829;
+  --bg-deep: #091120;
+  --band: #13203a;
+  --surface: #182946;
+  --surface-2: #1f3354;
+  --line: #2c426a;
+  --line-soft: #223759;
 
-  --ink: #eaeef6;
-  --muted: #a2acc0;
+  --ink: #eaf1fb;
+  --muted: #b3c2dc;
+  /* The smallest text tier. Still clears AA on every ground above. */
+  --muted-2: #93a6c6;
 
   --accent: #f2a950;
-  --accent-ink: #f7c98a;
-  --accent-wash: rgb(242 169 80 / 0.1);
-  --accent-line: rgb(242 169 80 / 0.32);
+  --accent-ink: #f8cf96;
+  --accent-wash: rgb(242 169 80 / 0.12);
+  --accent-line: rgb(242 169 80 / 0.34);
 
   /* Data hue, not a second accent. Encodes governance against exposure, and is
      used nowhere that is not a governance encoding. */
-  --accent-2: #5aa9e6;
-  --accent-2-ink: #93c8f0;
-  --accent-2-wash: rgb(90 169 230 / 0.1);
-  --accent-2-line: rgb(90 169 230 / 0.32);
+  --accent-2: #63b3ec;
+  --accent-2-ink: #9bcdf3;
+  --accent-2-wash: rgb(99 179 236 / 0.12);
+  --accent-2-line: rgb(99 179 236 / 0.34);
 
   /* Semantic state only. Never decorative. */
-  --ok: #56c08d;
+  --ok: #57c08d;
   --warn: #e2894a;
 
   --f-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "Geist Mono Variable", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
-  /* Background pattern inks. Derived from the palette rather than invented, and
+  /* Background pattern ink. Derived from the palette rather than invented, and
      kept far below text contrast: the pattern is texture, never information.
-     Verified by etl/check_contrast.py, which reads text pairs, and by eye at
-     100% zoom on an OLED panel where faint grids are most visible. */
-  --grid-ink: rgb(150 175 215 / 0.05);
-  --dot-ink: rgb(150 175 215 / 0.07);
-  --hatch-ink: rgb(150 175 215 / 0.04);
-  --grid-size: 56px;
+     One pattern only: the dot grid. The graph-paper grid and the diagonal hatch
+     were removed with the blue theme, which separates sections with a real
+     border and a luminance step instead. */
+  --dot-ink: rgb(150 180 230 / 0.11);
 
   --r: 12px;
+  --r-lg: 18px;
   --r-pill: 999px;
   --r-mark: 2px;
 
@@ -88,37 +93,28 @@ body {
 /* ---------------------------------------------------------------------------
    Ground.
 
-   The page ground is graph paper rather than flat colour: a 56px grid at 5%
-   opacity, which is the texture of the thing this site is (plotted data) rather
-   than decoration borrowed from somewhere else. Sunk sections switch to a dot
-   grid and framed panels to a diagonal hatch, so the three section types are
-   distinguishable without inverting the theme or adding a border.
+   Flat blue, with the texture carried by the sections rather than the page. A
+   sunk section takes a dot grid on a raised band; a banded section takes a
+   plain vertical gradient. Both are CSS gradients, both carry a real border,
+   and the two together give the page a defined rhythm as it scrolls.
 
-   All three are CSS gradients. There are no images on this site, and a pattern
-   is not a reason to start.
+   There are no images on this site, and a pattern is not a reason to start.
    --------------------------------------------------------------------------- */
 body {
   background-color: var(--bg);
-  background-image:
-    linear-gradient(var(--grid-ink) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-ink) 1px, transparent 1px);
-  background-size: var(--grid-size) var(--grid-size);
-  background-position: center -1px;
-  background-attachment: fixed;
 }
 
 .section--sunk {
+  background-color: var(--band);
   background-image: radial-gradient(var(--dot-ink) 1px, transparent 1px);
   background-size: 18px 18px;
   background-position: center;
+  border-block: 1px solid var(--line);
 }
 
-.section--hatch {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--hatch-ink) 0 1px,
-    transparent 1px 9px
-  );
+.section--band {
+  background-image: linear-gradient(180deg, var(--band) 0%, var(--bg) 100%);
+  border-block-start: 1px solid var(--line);
 }
 
 h1,
@@ -288,12 +284,12 @@ img {
 
 .btn--primary {
   background: var(--accent);
-  color: #141924; /* verified 8.85:1 against --accent */
+  color: #1b1200; /* verified 9.33:1 against --accent */
 }
 
 .btn--primary:hover {
   background: var(--accent-ink);
-  color: #141924;
+  color: #1b1200;
 }
 
 .btn--ghost {
@@ -1028,5 +1024,220 @@ img {
 @media (max-width: 767px) {
   .leaders li {
     grid-template-columns: 6.5rem 1fr auto;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Section furniture, shared.
+
+   The eyebrow, the source credit and the "way in" button are used on every
+   section of every page, so they live here rather than scoped inside one page.
+   A class scoped inside one page loses all styling the moment a second page
+   uses it and the first stops.
+   --------------------------------------------------------------------------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eyebrow::before {
+  content: "";
+  inline-size: 18px;
+  block-size: 1px;
+  background: var(--accent-line);
+}
+
+/* A dataset, a description, a link. The whole provenance model on a page body:
+   the full registry still lives on /sources/ and in the footer attribution. */
+.srcline {
+  margin-block-start: 1.5rem;
+  font-family: var(--f-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-2);
+}
+
+.srcline a {
+  color: var(--accent-ink);
+  text-decoration: none;
+  border-block-end: 1px solid var(--accent-line);
+  padding-block-end: 1px;
+}
+
+.srcline a:hover {
+  color: var(--ink);
+  border-block-end-color: var(--ink);
+}
+
+/* Section terminus: the way into the page, paired with the source credit. */
+.sec-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-block-start: 2rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--line-soft);
+}
+
+.sec-foot .srcline {
+  margin-block-start: 0;
+}
+
+.btn--go {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--accent-ink);
+  font-size: 0.8125rem;
+  padding: 0.6rem 1.15rem;
+  border-radius: var(--r-pill);
+}
+
+.btn--go:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1b1200;
+}
+
+/* The arrow is CSS, not an icon, for the same reason the disclosure caret is. */
+.btn--go::after {
+  content: "";
+  inline-size: 0.4rem;
+  block-size: 0.4rem;
+  margin-inline-start: 0.15rem;
+  border-inline-end: 1.5px solid currentColor;
+  border-block-start: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.18s var(--ease);
+}
+
+.btn--go:hover::after {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+/* ---------------------------------------------------------------------------
+   Hero map overlay.
+
+   These live here rather than scoped inside the homepage because the markup is
+   passed through TimeMap's overlay slot. Astro cannot see the classes used in
+   the page's own template, so it prunes the scoped rules and the overlay lands
+   in normal flow with no styling at all. Unscoped is the fix, and the house
+   rule about shared furniture already says so.
+   --------------------------------------------------------------------------- */
+.hero__over {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+/* Closes the map into the ground instead of cutting it off, and darkens the
+   left side enough for the headline to sit on it. */
+.hero__over .scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--bg) 2%, rgb(14 24 41 / 0.88) 28%, rgb(14 24 41 / 0.12) 52%, transparent 66%),
+    radial-gradient(ellipse 80% 86% at 52% 48%, transparent 44%, rgb(9 17 32 / 0.78) 100%);
+}
+
+.hero__over .leads {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+}
+
+.hero__over .leads line {
+  stroke: var(--accent-line);
+  stroke-width: 0.8;
+  fill: none;
+}
+
+.hero__over .leads circle {
+  fill: var(--accent);
+}
+
+.hero__over .pins {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__over .pin {
+  position: absolute;
+  inline-size: 228px;
+  padding: 0.75rem 1rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: rgb(22 38 66 / 0.94);
+  box-shadow: 0 12px 28px rgb(5 10 20 / 0.5);
+}
+
+.pin__lab {
+  display: inline-block;
+  margin-block-end: 0.5rem;
+  padding: 2px 8px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-pill);
+  background: var(--accent-wash);
+  color: var(--accent-ink);
+  font-family: var(--f-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pin__fig {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.pin__txt {
+  display: block;
+  margin-block-start: 0.25rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 1180px) {
+  .hero__over .pin {
+    inline-size: 200px;
+  }
+}
+
+/* Below this the map cannot carry a headline and pinned cards at once: the
+   leader lines go and the pins become a plain stack under the map. */
+@media (max-width: 980px) {
+  .hero__over {
+    position: static;
+  }
+
+  .hero__over .scrim,
+  .hero__over .leads {
+    display: none;
+  }
+
+  .hero__over .pins {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.75rem;
+    margin-block-start: 1.5rem;
+  }
+
+  .hero__over .pin {
+    position: static;
+    inline-size: auto;
   }
 }

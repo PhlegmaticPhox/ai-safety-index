@@ -666,6 +666,22 @@ const checked = freshness(byCountry.retrieved);
     gap: 1.5rem 2.5rem;
   }
 
+  /* A grid item defaults to min-inline-size:auto, so a table whose min-content
+     width exceeds its track pushes the whole page sideways rather than being
+     constrained by it. The ranked table here is wide enough to do exactly that,
+     so the items are allowed to be narrower than their contents and the table
+     scrolls inside its own box. Pre-existing; found while restyling. */
+  .pair > * {
+    min-inline-size: 0;
+  }
+
+  .pair > .chart {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+
   .full-label {
     display: block;
     max-inline-size: 46ch;

@@ -171,6 +171,11 @@ const rules = periods
   </div>
 
   <figure class="tm__figure">
+    <!-- The plot box exists so an overlay can share the map's exact geometry.
+         Anything in the "overlay" slot is positioned against this box, which is
+         the SVG and nothing else, so a viewBox coordinate and a percentage
+         offset refer to the same point at every width. -->
+    <div class="tm__plot">
     <svg
       viewBox={`0 0 ${world.width} ${world.height}`}
       role="img"
@@ -199,6 +204,8 @@ const rules = periods
         })
       }
     </svg>
+      <slot name="overlay" />
+    </div>
 
     <figcaption class="key">
       <span class="tm__now mono" aria-hidden="true"></span>
@@ -328,6 +335,11 @@ const rules = periods
 
   .tm__figure {
     margin: 0;
+  }
+
+  /* Establishes the containing block for the overlay slot. */
+  .tm__plot {
+    position: relative;
   }
 
   .tm__svg {

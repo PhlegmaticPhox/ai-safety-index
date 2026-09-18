@@ -104,10 +104,10 @@ const joined: Joined[] = matchedCodes.map((code, i) => {
    other. Five buckets rather than nine: a reader can hold five categories in
    their head while looking at a map, and cannot hold nine. */
 const GAP_BUCKETS = [
-  { max: -40, fill: "#5aa9e6", label: "Governance well ahead" },
-  { max: -15, fill: "#3d6d92", label: "Governance ahead" },
-  { max: 15, fill: "#3a4356", label: "Roughly level" },
-  { max: 40, fill: "#97703c", label: "Use ahead" },
+  { max: -40, fill: "#63b3ec", label: "Governance well ahead" },
+  { max: -15, fill: "#42759c", label: "Governance ahead" },
+  { max: 15, fill: "#2e4368", label: "Roughly level" },
+  { max: 40, fill: "#9c7741", label: "Use ahead" },
   { max: Infinity, fill: "#f2a950", label: "Use well ahead" },
 ];
 
@@ -135,8 +135,8 @@ function quantileBuckets(values: number[], count: number): number[] {
   );
 }
 
-const AMBER_RAMP = ["#3a4356", "#6b5740", "#a87c3f", "#d29746", "#f2a950"];
-const BLUE_RAMP = ["#3a4356", "#3c5871", "#43738f", "#4d8fbc", "#5aa9e6"];
+const AMBER_RAMP = ["#2e4368", "#6a5c47", "#a67f45", "#d0994b", "#f2a950"];
+const BLUE_RAMP = ["#2e4368", "#3a5c85", "#46779f", "#5495c5", "#63b3ec"];
 
 const expCuts = quantileBuckets(joined.map((r) => r.exposure), 5);
 const govCuts = quantileBuckets(joined.map((r) => r.readiness), 5);
