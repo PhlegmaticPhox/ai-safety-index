@@ -326,6 +326,7 @@ const checked = freshness(models.retrieved);
 ---
 
 <Base
+  field="capability"
   title="Capability"
   description="Training compute, disclosed cost, benchmark saturation, release decisions and who builds frontier models. Every figure carries its source."
   cites={cites}
@@ -641,7 +642,7 @@ const checked = freshness(models.retrieved);
         <div class="keyrow">
           {
             ACCESS_ORDER.map((k) => (
-              <span class="key key--swatch">
+              <span class="key">
                 <span class="key__swatch" style={`background:${ACCESS_FILL[k]}`} aria-hidden="true" />
                 {k}
               </span>

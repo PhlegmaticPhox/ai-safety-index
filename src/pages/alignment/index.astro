@@ -201,6 +201,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 ---
 
 <Base
+  field="alignment"
   title="Alignment"
   description="The measurable state of AI alignment: which capability tests are solved, what developers have promised about stopping, how much safety research exists, and what has gone wrong."
   cites={cites}
@@ -794,16 +795,6 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
     min-inline-size: 640px;
     block-size: auto;
     display: block;
-  }
-
-  .ax {
-    font-family: var(--f-mono);
-    font-size: 10px;
-    fill: var(--muted);
-  }
-
-  .ax--label {
-    font-size: 11px;
   }
 
   .queries {

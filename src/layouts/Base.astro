@@ -43,9 +43,16 @@ interface Props {
   cites?: string[];
   /** Set on the homepage, where "AI Safety Tracker | AI Safety Tracker" is absurd. */
   root?: boolean;
+  /**
+   * Which section of the site this page belongs to, which sets its field hue.
+   * Chrome only: the eyebrow, the rule above a section and the dot tint. See
+   * the field hue block in global.css. Omit on a page that spans every section,
+   * such as the homepage, which sets it per section instead.
+   */
+  field?: string;
 }
 
-const { title, description, cites = [], root = false } = Astro.props;
+const { title, description, cites = [], root = false, field } = Astro.props;
 
 /* Which nav item is the current page.
    "/" is a prefix of every path on the site, so the startsWith test that works
@@ -105,7 +112,7 @@ const nav = [
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
-  <body>
+  <body data-field={field}>
     <a href="#main" class="skip-link">Skip to content</a>
 
     <header class="head">

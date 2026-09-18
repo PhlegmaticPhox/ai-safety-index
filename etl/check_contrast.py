@@ -56,6 +56,24 @@ checks = [
     ('BUTTON: bg-ink on gov',    BG, GOV,          4.5),
     ('large heading on bg',      INK, BG,          3.0),
 ]
+
+# Field hues. One per section of the site, set with data-field and used for the
+# eyebrow, the rule above a section and the dot tint. The eyebrow is small
+# uppercase text, so each one has to clear AA as text on every ground it can
+# appear over, not merely be visible as a tint.
+FIELDS = {
+    'progress':   '#f2a950',
+    'capability': '#a78bfa',
+    'alignment':  '#4fc3a1',
+    'adoption':   '#e891a8',
+    'map':        '#63b3ec',
+    'policy':     '#b5c65a',
+    'news':       '#f0996b',
+    'sources':    '#9fb0c9',
+}
+for name, hue in FIELDS.items():
+    for ground, label in ((BG, 'bg'), (BAND, 'band'), (SURF, 'surface')):
+        checks.append((f'field {name} on {label}', hue, ground, 4.5))
 fails = 0
 for label, fg, bg, need in checks:
     r = ratio(fg, bg)

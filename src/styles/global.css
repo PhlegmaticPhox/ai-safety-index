@@ -37,6 +37,24 @@
   --accent-wash: rgb(242 169 80 / 0.12);
   --accent-line: rgb(242 169 80 / 0.34);
 
+  /* ---------------------------------------------------------------------------
+     Field hue.
+
+     One hue per section of the site, so a page reads as belonging somewhere
+     before a word of it is read. It is CHROME ONLY: the eyebrow, the rule above
+     a section, and the tint of the dot grid. It never touches a data mark,
+     because a colour that means "capability" on one page and "alignment" on the
+     next cannot also mean a value on both. Links and buttons stay amber
+     everywhere for the same reason: an affordance that changes colour per page
+     is not an affordance.
+
+     Set with data-field on any ancestor. Custom properties inherit, so a page
+     sets it on <body> and the homepage sets it per section.
+     --------------------------------------------------------------------------- */
+  --field: var(--accent);
+  --field-line: var(--accent-line);
+  --field-dot: rgb(150 180 230 / 0.11);
+
   /* Data hue, not a second accent. Encodes governance against exposure, and is
      used nowhere that is not a governance encoding. */
   --accent-2: #63b3ec;
@@ -106,15 +124,18 @@ body {
 
 .section--sunk {
   background-color: var(--band);
-  background-image: radial-gradient(var(--dot-ink) 1px, transparent 1px);
+  background-image: radial-gradient(var(--field-dot) 1px, transparent 1px);
   background-size: 18px 18px;
   background-position: center;
   border-block: 1px solid var(--line);
+  /* The rule above a sunk section carries the field hue. One hairline, far
+     below text contrast, and the only place the tint is load-bearing. */
+  border-block-start-color: var(--field-line);
 }
 
 .section--band {
   background-image: linear-gradient(180deg, var(--band) 0%, var(--bg) 100%);
-  border-block-start: 1px solid var(--line);
+  border-block-start: 1px solid var(--field-line);
 }
 
 h1,
@@ -199,7 +220,7 @@ img {
   gap: 0.25rem 1.5rem;
   margin-block-end: 1rem;
   padding-block-end: 0.6rem;
-  border-block-end: 1px solid var(--line-soft);
+  border-block-end: 1px solid var(--field-line);
 }
 
 /* The standfirst under a section heading states what the figure shows. It is a
@@ -380,7 +401,7 @@ img {
   gap: 0.3rem 2rem;
   margin-block-end: 0.9rem;
   padding-block-end: 0.7rem;
-  border-block-end: 1px solid var(--line);
+  border-block-end: 2px solid var(--field-line);
 }
 
 .masthead h1 {
@@ -957,8 +978,8 @@ img {
   content: "";
   inline-size: 0.4rem;
   block-size: 0.4rem;
-  border-inline-end: 1.5px solid var(--accent);
-  border-block-start: 1.5px solid var(--accent);
+  border-inline-end: 1.5px solid var(--field);
+  border-block-start: 1.5px solid var(--field);
   transform: rotate(45deg);
   transition: transform 0.18s var(--ease);
 }
@@ -1043,14 +1064,14 @@ img {
   font-size: 0.6875rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--field);
 }
 
 .eyebrow::before {
   content: "";
   inline-size: 18px;
   block-size: 1px;
-  background: var(--accent-line);
+  background: var(--field-line);
 }
 
 /* A dataset, a description, a link. The whole provenance model on a page body:
@@ -1240,4 +1261,83 @@ img {
     position: static;
     inline-size: auto;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Chart axis labels.
+
+   Shared, because two pages draw axes with it. It lived scoped inside
+   /alignment/ while /capability/ also used it, which left every axis label on
+   the capability page with no fill at all. An SVG <text> with no fill defaults
+   to black, so those labels were black on a dark blue ground: invisible, and
+   invisible in a way nothing in the markup looked wrong about.
+   --------------------------------------------------------------------------- */
+.ax {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  fill: var(--muted);
+}
+
+.ax--label {
+  font-size: 11px;
+}
+
+/* ---------------------------------------------------------------------------
+   Field hues. Verified against every ground by etl/check_contrast.py.
+   --------------------------------------------------------------------------- */
+
+/* Outputs. The house hue, because benchmarks are what the site leads on. */
+[data-field="progress"] {
+  --field: #f2a950;
+  --field-line: rgb(242 169 80 / 0.34);
+  --field-dot: rgb(242 169 80 / 0.13);
+}
+
+/* Inputs. Violet for compute and silicon. */
+[data-field="capability"] {
+  --field: #a78bfa;
+  --field-line: rgb(167 139 250 / 0.34);
+  --field-dot: rgb(167 139 250 / 0.13);
+}
+
+/* Safety. */
+[data-field="alignment"] {
+  --field: #4fc3a1;
+  --field-line: rgb(79 195 161 / 0.34);
+  --field-dot: rgb(79 195 161 / 0.13);
+}
+
+/* People. Rose reads demographic; a saturated red would read as alarm. */
+[data-field="adoption"] {
+  --field: #e891a8;
+  --field-line: rgb(232 145 168 / 0.34);
+  --field-dot: rgb(232 145 168 / 0.13);
+}
+
+/* Governance. The one page where the field hue and the data hue are the same thing. */
+[data-field="map"] {
+  --field: #63b3ec;
+  --field-line: rgb(99 179 236 / 0.34);
+  --field-dot: rgb(99 179 236 / 0.13);
+}
+
+/* Law. */
+[data-field="policy"] {
+  --field: #b5c65a;
+  --field-line: rgb(181 198 90 / 0.34);
+  --field-dot: rgb(181 198 90 / 0.13);
+}
+
+/* The wire. */
+[data-field="news"] {
+  --field: #f0996b;
+  --field-line: rgb(240 153 107 / 0.34);
+  --field-dot: rgb(240 153 107 / 0.13);
+}
+
+/* The registry. Deliberately neutral: it is about the others. */
+[data-field="sources"] {
+  --field: #9fb0c9;
+  --field-line: rgb(159 176 201 / 0.34);
+  --field-dot: rgb(159 176 201 / 0.13);
 }
