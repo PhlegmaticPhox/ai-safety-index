@@ -1159,11 +1159,33 @@ img {
   z-index: 2;
 }
 
+/* The hero map runs edge to edge, so its legend has no gutter to sit in and
+   nothing to align to: flush left put it hard against the viewport edge with
+   half the width of the page empty beside it. Centred under the map instead.
+   Scoped to the hero, because everywhere else a key sits under a figure that is
+   already inside the page gutter, where flush left is correct. Here and in
+   TimeMap, not in .key itself. */
+.hero .key {
+  justify-content: center;
+  padding-inline: clamp(1rem, 3.5vw, 2.5rem);
+  /* Above the scrim, which now runs past the bottom of the map and would
+     otherwise wash the legend out along with the globe's overhang. The hero
+     stacks: 2 the scrim and pins, 3 the legend, 4 the headline. */
+  position: relative;
+  z-index: 3;
+}
+
 /* Closes the map into the ground instead of cutting it off, and darkens the
    left side enough for the headline to sit on it. */
 .hero__over .scrim {
   position: absolute;
-  inset: 0;
+  /* Past the bottom, because the sphere is. fitSize fits the countries, and
+     Antarctica is dropped, so the globe's outline runs about a tenth of the
+     map's height below the box the countries were fitted into. Left uncovered
+     it came out as a pale trapezoid behind the legend with a hard edge where
+     the hero clipped it, which is the opposite of closing the map into the
+     ground. */
+  inset: 0 0 -11% 0;
   pointer-events: none;
   background:
     linear-gradient(90deg, var(--bg) 2%, rgb(14 24 41 / 0.88) 28%, rgb(14 24 41 / 0.12) 52%, transparent 66%),

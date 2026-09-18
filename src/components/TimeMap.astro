@@ -362,6 +362,17 @@ const rules = !scrub
     position: relative;
   }
 
+  /* The sphere's outline runs about a tenth of its height past the bottom of the
+     viewBox, and .tm__svg below does not clip it. .tm__plot is positioned, so
+     everything painted inside it lands above later in-flow content whatever the
+     source order says: the legend was drawn first and the map's own bottom edge
+     over the top of it, hiding every swatch the sphere still covered at that
+     height. Positioning the caption puts it back in the same layer, where tree
+     order decides and it comes last. */
+  .tm__figure .key {
+    position: relative;
+  }
+
   .tm__svg {
     display: block;
     inline-size: 100%;

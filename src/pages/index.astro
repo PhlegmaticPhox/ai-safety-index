@@ -752,10 +752,29 @@ const pins = PIN_SITES.map((site) => {
      HERO. The map runs the full width of the viewport and everything else in
      here is layered over it.
      ====================================================================== */
+  /* No padding above the map. The scrim that closes the map into the ground
+     stops at the plot box, so any gap between the header and the map top showed
+     as a lighter strip with a hard edge under it: a band that read as a separate
+     element rather than as the top of the map. The header is translucent and
+     sticky, so the map running under it is the intended join. The stacked
+     layout below 980px puts the headline here instead and takes the padding
+     back, in the media query at the foot of this file. */
   .hero {
     position: relative;
     overflow: hidden;
-    padding-block-start: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  /* Arrival. The map resolves out of the ground; the headline beside it does
+     not move, so nothing a reader is trying to read shifts under them. */
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .hero__glow {
@@ -772,6 +791,13 @@ const pins = PIN_SITES.map((site) => {
   .hero__map {
     position: relative;
     z-index: 1;
+    animation: hero-in 900ms var(--ease) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__map {
+      animation: none;
+    }
   }
 
   .hero__overlay {
@@ -1209,6 +1235,9 @@ const pins = PIN_SITES.map((site) => {
     .hero {
       display: flex;
       flex-direction: column;
+      /* The headline is the first thing in the hero here, not the map, so it
+         needs the gap back that the map did not want. */
+      padding-block-start: clamp(1.5rem, 3vw, 2.5rem);
     }
 
     .hero__overlay {
