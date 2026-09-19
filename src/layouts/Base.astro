@@ -170,7 +170,6 @@ const nav = [
     <header class="head">
       <div class="wrap head__inner">
         <a href="/" class="brand">
-          <span class="brand__mark" aria-hidden="true"></span>
           <span>AI Safety <span class="brand__accent">Tracker</span></span>
         </a>
         {/* Two renderings of one list. Exactly one is ever displayed: the row
@@ -302,20 +301,6 @@ const nav = [
 
       .brand__accent {
         color: var(--accent);
-      }
-
-      /* The header mark is the favicon reduced to its one load-bearing element:
-         a filled cell sitting above the grid line. Same idea, no detail that
-         would be lost at this size. */
-      .brand__mark {
-        position: relative;
-        inline-size: 18px;
-        block-size: 18px;
-        flex: none;
-        border-radius: var(--r-mark);
-        border: 1px solid var(--line);
-        background: linear-gradient(var(--accent) 0 55%, transparent 55%) right / 45% 100%
-          no-repeat;
       }
 
       .nav-row ul {

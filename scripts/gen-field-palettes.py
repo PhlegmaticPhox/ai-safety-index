@@ -36,7 +36,7 @@ FIELDS = {
     'adoption':   ('#8eb59c', 165, 0.38, 'People. A quiet green-teal, distinct from the site\'s technical pages.'),
     'map':        ('#63b3ec', 206, 0.90, 'Governance, and the one page where ground and data hue agree.'),
     'policy':     ('#b5c65a', 183, 0.80, 'Law. The ground goes to a deep teal.'),
-    'news':       ('#c4a071', 30, 0.32, 'The wire. A low-chroma warm graphite that reads like newsprint.'),
+    'news':       ('#8fbac4', 195, 0.34, 'The wire. Cool blue-grey grounds with a soft cyan field accent.'),
     'sources':    ('#9fb0c9', 217, 0.50, 'The registry. The base hue at half saturation: deliberately the flattest ground on the site, because this page is about the others.'),
 }
 

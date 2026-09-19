@@ -125,22 +125,22 @@
   --line-soft: #1c3c3d;
 }
 
-/* The wire. A low-chroma warm graphite that reads like newsprint. */
+/* The wire. Cool blue-grey grounds with a soft cyan field accent. */
 [data-field="news"],
 [data-accent="news"] {
-  --field: #c4a071;
-  --field-line: rgb(196 160 113 / 0.34);
-  --field-dot: rgb(196 160 113 / 0.13);
+  --field: #8fbac4;
+  --field-line: rgb(143 186 196 / 0.34);
+  --field-dot: rgb(143 186 196 / 0.13);
 }
 
 [data-field="news"] {
-  --bg: #1b1713;
-  --bg-deep: #14100e;
-  --band: #251f1a;
-  --surface: #2e2822;
-  --surface-2: #39322a;
-  --line: #4a4138;
-  --line-soft: #3e352e;
+  --bg: #13191b;
+  --bg-deep: #0d1214;
+  --band: #192224;
+  --surface: #202b2e;
+  --surface-2: #293539;
+  --line: #36444a;
+  --line-soft: #2c393d;
 }
 
 /* The registry. The base hue at half saturation: deliberately the flattest ground on the site, because this page is about the others. */
