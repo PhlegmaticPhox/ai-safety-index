@@ -910,7 +910,10 @@ const pins = PIN_SITES.map((site) => {
      ====================================================================== */
   .band {
     display: block;
-    padding-block: 2rem 0;
+    /* Give the summary its own breathing room on both sides. With no bottom
+       padding the rounded strip touched the field-tinted rule at the start of
+       01 / Progress and read like it had been clipped into the next section. */
+    padding-block: 2rem;
   }
 
   .statband {
