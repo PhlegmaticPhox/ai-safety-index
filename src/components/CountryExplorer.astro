@@ -1,0 +1,116 @@
+---
+import { projectWorld, alpha3 } from "../lib/geo";
+import policy from "../../data/processed/policy-index.json";
+import exposure from "../../data/processed/ai-exposure.json";
+
+interface Props {
+  returnTo: string;
+}
+const { returnTo } = Astro.props;
+const world = projectWorld(1400, 1);
+const eu = new Set("AUT BEL BGR HRV CYP CZE DNK EST FIN FRA DEU GRC HUN IRL ITA LVA LTU LUX MLT NLD POL PRT ROU SVK SVN ESP SWE".split(" "));
+const usage = new Map(exposure.records.map(r => [alpha3(r.entity), r]));
+const policies = new Map<string, typeof policy.records>();
+for (const record of policy.records) {
+  const records = policies.get(record.jurisdiction_code) ?? [];
+  records.push(record);
+  policies.set(record.jurisdiction_code, records);
+}
+const countryName = (code: string, fallback: string) =>
+  eu.has(code) ? fallback : policies.get(code)?.[0]?.jurisdiction ?? fallback;
+const countries = world.shapes
+  .filter(s => s.code)
+  .sort((a, b) => countryName(a.code!, a.name).localeCompare(countryName(b.code!, b.name)));
+---
+
+<div class="country-explorer">
+  <details class="country-picker">
+    <summary>Find a country</summary>
+    <nav aria-label="Countries" class="country-picker__list">
+      {countries.map(s => <a href={`#country-${s.code}`}>{countryName(s.code!, s.name)}</a>)}
+    </nav>
+  </details>
+  {countries.map(shape => {
+    const code = shape.code!;
+    const records = policies.get(eu.has(code) ? "EUR" : code) ?? [];
+    const record = records[0];
+    const name = countryName(code, shape.name);
+    const use = usage.get(code);
+    const [[x0, y0], [x1, y1]] = shape.detailBounds;
+    const pad = Math.max(x1 - x0, y1 - y0) * 0.12 + 2;
+    return (
+      <section class="country-view" id={`country-${code}`} role="dialog" aria-modal="true" aria-labelledby={`country-title-${code}`} tabindex="-1">
+        <a class="country-view__backdrop" href={returnTo} aria-label={`Close ${name} country view`}></a>
+        <div class="country-view__card">
+          <header class="country-view__head">
+            <h2 id={`country-title-${code}`}>{name}</h2>
+            <a class="btn btn--ghost" href={returnTo} aria-label={`Close ${name} country view`}>Close</a>
+          </header>
+          <div class="country-view__body">
+            <svg class="country-view__map" viewBox={`${x0-pad} ${y0-pad} ${x1-x0+pad*2} ${y1-y0+pad*2}`} role="img" aria-label={`Enlarged map of ${name}`}>
+              <path d={shape.detailD} fill="var(--accent)" stroke="var(--ink)" stroke-width="1" vector-effect="non-scaling-stroke" />
+            </svg>
+            <div class="country-view__facts">
+              {use && <p class="country-view__metric"><strong>{use.latest.toFixed(1)}%</strong> of the working-age population using AI tools, {use.latest_period}.</p>}
+              <div class="country-view__policy">
+                <h3>Policy instruments</h3>
+                {record ? <>
+                  <p>{records.length} instruments indexed. {eu.has(code) ? "EU-level coverage; national measures are not separately indexed." : "Coverage includes law, guidance and strategy; inclusion does not mean every measure is binding or in force."}</p>
+                  <a class="btn btn--go" href={`/policy/${record.jurisdiction_slug}/`}>{eu.has(code) ? "See EU policy instruments" : `See ${name} policy instruments`}</a>
+                  <p class="country-view__note">Index reviewed {record.reviewed}. Instrument status and sources appear on the policy page.</p>
+                </> : <>
+                  <p>Policy instruments for {name} are not yet indexed. This does not mean the country has no AI policy.</p>
+                  <a href="/policy/">Browse policy coverage</a>
+                </>}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  })}
+</div>
+
+<style>
+  .country-explorer { padding: 1rem clamp(1rem, 3.5vw, 2.5rem); }
+  .country-picker { max-inline-size: 1320px; margin-inline: auto; color: var(--muted); }
+  .country-picker summary { cursor: pointer; }
+  .country-picker__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .65rem 1rem; padding-block: 1rem; max-block-size: 20rem; overflow: auto; }
+  .country-view { display: none; }
+  .country-view:target { display: grid; position: fixed; inset: 0; z-index: 100; padding: clamp(.75rem, 2.5vw, 1.5rem); overflow: hidden; }
+  .country-view__backdrop { position: absolute; inset: 0; background: rgb(5 12 20 / .58); backdrop-filter: blur(9px) saturate(.75); -webkit-backdrop-filter: blur(9px) saturate(.75); cursor: default; }
+  .country-view__card { position: relative; z-index: 1; max-block-size: 100%; overflow: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: rgb(13 27 44 / .98); box-shadow: 0 24px 70px rgb(2 8 16 / .55); }
+  .country-view__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .country-view__head h2 { font-size: clamp(1.35rem, 3vw, 1.8rem); }
+  .country-view__body { display: grid; }
+  .country-view__map { display: block; inline-size: 100%; border-radius: var(--r); background: var(--surface); }
+  .country-view__facts { min-inline-size: 0; }
+  .country-view__metric { color: var(--muted); }
+  .country-view__metric strong { color: var(--ink); font-size: 1.5rem; }
+  .country-view__policy { display: grid; gap: .75rem; margin-block-start: 1rem; padding-block-start: .9rem; border-block-start: 1px solid var(--line); }
+  .country-view__policy .btn { justify-self: start; white-space: normal; }
+  .country-view__policy p { color: var(--muted); }
+  .country-view__note { font-size: .875rem; }
+
+  .country-view:target { place-items: center; }
+  .country-view__card { inline-size: min(760px, 100%); padding: clamp(1rem, 2.5vw, 1.5rem); }
+  .country-view__body { grid-template-columns: minmax(230px, .9fr) minmax(280px, 1.1fr); gap: clamp(1rem, 2.5vw, 1.5rem); margin-block-start: 1rem; align-items: stretch; }
+  .country-view__map { block-size: 100%; min-block-size: 250px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .country-view:target .country-view__card { animation: country-dialog-in 180ms ease-out both; }
+  }
+  @keyframes country-dialog-in { from { opacity: 0; transform: translateY(8px) scale(.985); } }
+
+  @media (max-width: 700px) {
+    .country-view:target { padding: .65rem; }
+    .country-view__body { grid-template-columns: 1fr; }
+    .country-view__map { block-size: 190px; min-block-size: 0; }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .country-view__backdrop { background: rgb(5 12 20 / .9); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+
+  :global(body:has(.country-view:target)) { overflow: hidden; }
+</style>

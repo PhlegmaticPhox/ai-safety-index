@@ -16,7 +16,7 @@ import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json" with { type: "json" };
 import world from "world-atlas/countries-110m.json" with { type: "json" };
 import type { Topology, GeometryCollection } from "topojson-specification";
-import type { FeatureCollection, Geometry } from "geojson";
+import type { Feature, FeatureCollection, Geometry, Polygon } from "geojson";
 
 countries.registerLocale(en as Parameters<typeof countries.registerLocale>[0]);
 
@@ -81,6 +81,9 @@ export interface CountryShape {
   name: string;
   /** SVG path data, already projected. */
   d: string;
+  /** Detail geometry avoids framing a mainland as a speck beside a remote territory. */
+  detailD: string;
+  detailBounds: [[number, number], [number, number]];
 }
 
 export interface ProjectedWorld {
@@ -141,11 +144,29 @@ export function projectWorld(width = 1000, places = 1): ProjectedWorld {
   for (const f of kept) {
     const d = path(f);
     if (!d) continue;
+    const bounds = path.bounds(f);
+    let detail = f as Feature<Geometry, { name: string }>;
+    if (f.geometry.type === "MultiPolygon") {
+      const polygons = f.geometry.coordinates.map((coordinates) => ({
+        type: "Feature" as const,
+        properties: f.properties,
+        geometry: { type: "Polygon" as const, coordinates },
+      } satisfies Feature<Polygon, { name: string }>));
+      const largest = polygons.reduce((a, b) => path.area(a) >= path.area(b) ? a : b);
+      const [[x0, y0], [x1, y1]] = bounds;
+      const boxArea = (x1 - x0) * (y1 - y0);
+      const shapeArea = path.area(f);
+      if (shapeArea > 0 && boxArea / shapeArea > 12) detail = largest;
+    }
+    const detailD = path(detail);
+    if (!detailD) continue;
     const numeric = typeof f.id === "string" ? f.id : String(f.id ?? "");
     shapes.push({
       code: countries.numericToAlpha3(numeric) ?? null,
       name: f.properties.name,
       d: roundPath(d, places),
+      detailD: roundPath(detailD, places),
+      detailBounds: path.bounds(detail),
     });
   }
 

@@ -1179,6 +1179,7 @@ img {
   position: absolute;
   inset: 0;
   z-index: 2;
+  pointer-events: none;
 }
 
 /* The hero map runs edge to edge, so its legend has no gutter to sit in and
@@ -1326,4 +1327,3 @@ img {
 .ax--label {
   font-size: 11px;
 }
-

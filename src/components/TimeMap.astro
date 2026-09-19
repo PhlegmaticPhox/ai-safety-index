@@ -14,7 +14,7 @@
  *
  * The trade-off, stated because it is a real one: the native <title> tooltip
  * cannot change with the period, so it names the country and the latest value
- * only. The per-period numbers are in the table the map links to.
+ * only. The per-period numbers are in the table below it.
  */
 import { projectWorld } from "../lib/geo";
 
@@ -25,8 +25,6 @@ export interface TimeMapDatum {
   fills: string[];
   /** Native tooltip text. */
   title: string;
-  /** Where clicking the shape goes. */
-  href?: string;
 }
 
 interface Props {
@@ -211,20 +209,20 @@ const rules = !scrub
       {
         world.shapes.map((shape) => {
           const datum = shape.code ? byCode.get(shape.code) : undefined;
-          if (!datum) {
+          if (!datum && !shape.code) {
             return (
               <path d={shape.d} class="tm__shape tm__shape--empty">
                 <title>{`${shape.name}: not in this dataset`}</title>
               </path>
             );
           }
-          const vars = scrub
+          const vars = !datum ? "fill:var(--surface-2)" : scrub
             ? datum.fills.map((fill, i) => `--v${i}:${fill}`).join(";")
             : `fill:${datum.fills[initial]}`;
           return (
-            <a href={datum.href ?? undefined} class="tm__link">
+            <a href={`#country-${shape.code}`} class="tm__link" aria-label={`Explore ${shape.name}`} tabindex="-1">
               <path d={shape.d} class="tm__shape" style={vars}>
-                <title>{datum.title}</title>
+                <title>{datum?.title ?? `${shape.name}: no usage data`}</title>
               </path>
             </a>
           );

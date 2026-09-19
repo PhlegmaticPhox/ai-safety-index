@@ -17,6 +17,7 @@
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import WorldMap, { type MapDatum } from "../../components/WorldMap.astro";
+import CountryExplorer from "../../components/CountryExplorer.astro";
 import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 import { alpha3, percentileRanks } from "../../lib/geo";
 
@@ -116,7 +117,6 @@ const bucketFor = (gap: number) => GAP_BUCKETS.findIndex((b) => gap < b.max);
 const gapData: MapDatum[] = joined.map((row) => ({
   code: row.code,
   bucket: bucketFor(row.gap),
-  href: `#j-${row.code}`,
   title:
     `${row.name}: ${row.exposure.toFixed(1)}% using AI tools (rank ${Math.round(row.exposureRank)}), ` +
     `readiness ${row.readiness} of 100 (rank ${Math.round(row.governanceRank)}). ` +
@@ -145,14 +145,12 @@ const bandOf = (value: number, cuts: number[]) => cuts.filter((c) => value >= c)
 const exposureData: MapDatum[] = joined.map((row) => ({
   code: row.code,
   bucket: bandOf(row.exposure, expCuts),
-  href: `#j-${row.code}`,
   title: `${row.name}: ${row.exposure.toFixed(1)}% of working-age population using AI tools, ${period}`,
 }));
 
 const governanceData: MapDatum[] = joined.map((row) => ({
   code: row.code,
   bucket: bandOf(row.readiness, govCuts),
-  href: `#j-${row.code}`,
   title: `${row.name}: governance readiness ${row.readiness} of 100`,
 }));
 
@@ -195,7 +193,7 @@ const unmatched = governance.records
   description="Where AI use has run ahead of the machinery to govern it, and where it has not. Two maps, one scatter, and the table behind both."
   cites={cites}
 >
-  <section class="section section--open">
+  <section class="section section--open" id="world-map">
     <div class="wrap">
       <div class="masthead">
         <h1>Exposure against governance readiness</h1>
@@ -273,6 +271,7 @@ const unmatched = governance.records
   </section>
 
   <!-- 2. THE TWO LAYERS ON THEIR OWN. -->
+  <CountryExplorer returnTo="#world-map" />
   <section class="section">
     <div class="wrap">
       <div class="section-head">
@@ -419,8 +418,7 @@ const unmatched = governance.records
       <div class="section-head">
         <h2>Every jurisdiction</h2>
         <p>
-          Ordered by gap, widest use-ahead first. Click any country on a map above to jump to its
-          row.
+          Ordered by gap, widest use-ahead first. Country maps open an enlarged view with policy coverage.
         </p>
       </div>
 

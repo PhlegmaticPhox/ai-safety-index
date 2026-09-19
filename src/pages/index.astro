@@ -13,6 +13,7 @@
  */
 import Base from "../layouts/Base.astro";
 import TimeMap from "../components/TimeMap.astro";
+import CountryExplorer from "../components/CountryExplorer.astro";
 import BarTable from "../components/BarTable.astro";
 import { alpha3 } from "../lib/geo";
 import { assertRenderable, freshness, type Dataset } from "../lib/sources";
@@ -172,14 +173,6 @@ const mapData = exposure.records
         return value === undefined ? "var(--surface-2)" : RAMP[bucketOf(value)];
       }),
       title: `${record.entity}: ${record.latest.toFixed(1)}% in ${record.latest_period}`,
-      /* No href. TimeMap renders <a href={datum.href ?? undefined}>, so omitting
-         it yields an anchor that is neither a link nor a tab stop, while
-         .tm__link:hover .tm__shape is unaffected. With one it emitted 145
-         identical links to /adoption/ from the entry page, all tabbable, out of
-         231 focusable elements: a keyboard reader met every country before
-         reaching anything else, and a crawler met 145 anchor-text-free links to
-         one URL. Section 04 already carries the button. The /map/ links stay;
-         those resolve to distinct table rows. */
     };
   })
   .filter((d): d is NonNullable<typeof d> => d !== null);
@@ -362,6 +355,7 @@ const pins = PIN_SITES.map((site) => {
             <a class="btn btn--primary" href="#progress">Read the figures</a>
             <a class="btn btn--ghost" href="/news/">Latest</a>
           </div>
+          <a class="btn btn--ghost hero__interact" href="/map/">Interact</a>
         </div>
       </div>
     </div>
@@ -415,6 +409,7 @@ const pins = PIN_SITES.map((site) => {
   </section>
 
   <!-- ===================== STAT BAND ===================== -->
+  <CountryExplorer returnTo="#map" />
   <div class="wrap band">
     <div class="statband">
       <div class="stat">
@@ -904,6 +899,8 @@ const pins = PIN_SITES.map((site) => {
     gap: 0.5rem;
     margin-block-start: 1.5rem;
   }
+
+  .hero__interact { margin-block-start: .65rem; }
 
   /* =========================================================================
      STAT BAND

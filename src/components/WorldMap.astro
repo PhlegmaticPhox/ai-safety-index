@@ -5,8 +5,7 @@
  *
  * Interaction is native. Each country carries a <title>, which browsers and
  * screen readers surface without help from us, and is wrapped in an anchor to
- * its row in the table below, so clicking a shape takes you to the numbers
- * rather than opening a popup that a keyboard cannot reach.
+ * the matching CSS-targeted country and policy view.
  */
 import { projectWorld, type CountryShape } from "../lib/geo";
 
@@ -17,8 +16,6 @@ export interface MapDatum {
   bucket: number;
   /** Full text for the native tooltip. */
   title: string;
-  /** Optional in-page anchor to scroll to on click. */
-  href?: string;
 }
 
 interface Props {
@@ -74,10 +71,10 @@ const painted: Painted[] = world.shapes.map((shape) => ({
 
     {
       painted.map((shape) =>
-        shape.datum ? (
-          <a href={shape.datum.href ?? undefined} class="map__link">
-            <path d={shape.d} class="map__shape" style={`fill:${buckets[shape.datum.bucket]}`}>
-              <title>{shape.datum.title}</title>
+        shape.code ? (
+          <a href={`#country-${shape.code}`} class="map__link" aria-label={`Explore ${shape.name}`} tabindex="-1">
+            <path d={shape.d} class="map__shape" style={`fill:${shape.datum ? buckets[shape.datum.bucket] : "var(--surface-2)"}`}>
+              <title>{shape.datum?.title ?? `${shape.name}: not in this dataset`}</title>
             </path>
           </a>
         ) : (
