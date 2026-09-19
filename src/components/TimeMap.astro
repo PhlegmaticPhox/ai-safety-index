@@ -53,6 +53,11 @@ interface Props {
    * figure being read.
    */
   scrub?: boolean;
+  /** Multiplies the stroke widths, so a wider viewBox keeps the same rendered
+      hairline. The var(--hair, 1) fallback in the rules is mandatory: an
+      unresolvable var() makes the whole declaration invalid, which would
+      render every hairline at the initial stroke-width of 1 at full scale. */
+  stroke?: number;
 }
 
 const {
@@ -63,6 +68,7 @@ const {
   initial = periods.length - 1,
   width = 900,
   places = 1,
+  stroke = 1,
   id = "tm",
   scrub = true,
 } = Astro.props;
@@ -199,6 +205,7 @@ const rules = !scrub
       role="img"
       aria-label={`${label}${scrub ? "" : `, ${periods[initial]}`}. ${covered} of ${world.shapes.length} countries have data; the rest are unshaded.`}
       class="tm__svg"
+      style={`--hair:${stroke}`}
     >
       <path d={world.sphere} class="tm__sphere"></path>
       {
@@ -383,13 +390,13 @@ const rules = !scrub
   .tm__sphere {
     fill: var(--surface);
     stroke: var(--line);
-    stroke-width: 1;
+    stroke-width: calc(1 * var(--hair, 1));
   }
 
   .tm__shape {
     fill: var(--surface-2);
     stroke: var(--bg);
-    stroke-width: 0.4;
+    stroke-width: calc(0.4 * var(--hair, 1));
     transition: fill 0.35s var(--ease);
   }
 
@@ -400,7 +407,7 @@ const rules = !scrub
   .tm__link:hover .tm__shape,
   .tm__link:focus-visible .tm__shape {
     stroke: var(--ink);
-    stroke-width: 0.9;
+    stroke-width: calc(0.9 * var(--hair, 1));
   }
 
   .tm__link:focus-visible {

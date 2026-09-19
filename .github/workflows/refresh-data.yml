@@ -72,7 +72,11 @@ jobs:
         run: python etl/run_all.py
 
       # A build here catches a schema change that produced valid JSON the site
-      # cannot render, before that reaches the deployed site.
+      # cannot render, before that reaches the deployed site. check:built also
+      # runs scripts/check-seo.mjs, so a refresh that duplicated a title, broke a
+      # canonical or emitted JSON-LD that does not parse fails here rather than
+      # being deployed and noticed in Search Console weeks later. No new action
+      # and no extra permission: it is the repository's own script.
       - name: Verify the site still builds
         run: |
           npm ci

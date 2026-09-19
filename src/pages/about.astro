@@ -18,9 +18,9 @@ const sourceCount = Object.keys(sources).length;
       <div class="masthead">
         <h1>About</h1>
         <p class="masthead__meta mono">
-          {sourceCount} sources
+          {sourceCount} sources registered
           <span aria-hidden="true">/</span>
-          zero client JavaScript
+          zero first-party JavaScript
           <span aria-hidden="true">/</span>
           every figure cited
         </p>
@@ -38,6 +38,10 @@ const sourceCount = Object.keys(sources).length;
           The site covers benchmark results, training compute and disclosed cost, adoption by
           population and by enterprise, published frontier safety frameworks, research volume,
           reported incidents, and the law and policy that applies to AI in eleven jurisdictions.
+        </p>
+        <p>
+          Each term used on a data page is defined in the <a href="/glossary/">glossary</a> as
+          this site applies it.
         </p>
         <p>
           Four datasets are compiled here from primary documents: the Governance Readiness Index,
@@ -80,8 +84,10 @@ const sourceCount = Object.keys(sources).length;
         <h2>Construction</h2>
         <p>
           A Python pipeline fetches and processes each source. A static site generator renders the
-          result. Charts and maps are drawn to SVG when the site is built, so pages carry no client
-          JavaScript. Data is refreshed daily. A dataset is rewritten only when its records change.
+          result. Charts and maps are drawn to SVG when the site is built, so the build ships no
+          JavaScript. The host injects one analytics script, described in the
+          <a href="/privacy/">privacy policy</a>. Data is refreshed daily. A dataset is rewritten
+          only when its records change.
         </p>
         <p>AI was used to help build this website.</p>
       </div>

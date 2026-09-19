@@ -38,10 +38,13 @@ const served = new Set();
 for (const file of files) {
   const url = "/" + relative(DIST, file).split("\\").join("/");
   served.add(url);
-  // Astro emits directory-style routes as <route>/index.html.
+  /* Astro emits directory-style routes as <route>/index.html, and the slashed
+     form is the only one registered here. Cloudflare does serve the unslashed
+     form, but by 307 to this one, so registering it too made every internal
+     link to a redirect look served: that tolerance is what let 31 hrefs to
+     /methodology/governance-readiness ship without tripping CI. */
   if (url.endsWith("/index.html")) {
     served.add(url.replace(/index\.html$/, ""));
-    served.add(url.replace(/\/index\.html$/, ""));
   }
 }
 
@@ -82,8 +85,8 @@ assert.deepEqual(
 /* Dash audit. Written as escapes rather than literal characters, for the same
    reason the Python side does: a text-level sweep must not be able to reach the
    thing that detects the problem. */
-const EM = "—";
-const EN = "–";
+const EM = "\u2014";
+const EN = "\u2013";
 const dashed = [];
 for (const page of pages) {
   const html = readFileSync(page, "utf8");
@@ -153,15 +156,40 @@ assert.deepEqual(
    reason it could not have caught that beacon: it was missed for exactly as long
    as it was, because nothing in this repository puts it there. If that ever
    matters again, the check is `curl` with a browser User-Agent, not this file. */
+/* One exception, and it is not JavaScript. A type="application/ld+json" block is
+   data: the parser never prepares it as script, nothing in it executes, and CSP's
+   script-src does not reach it, so the policy in public/_headers is unchanged.
+   Matched by its type attribute rather than by the whole opening tag, so an
+   attribute reordering in a future Astro release cannot silently fail the build.
+   Base.astro escapes < to \u003c inside the JSON, so no <script can hide in the
+   payload, and scripts/check-seo.mjs asserts every such block parses. */
+const LD_JSON = /<script\b[^>]*\btype="application\/ld\+json"[^>]*>/gi;
 const scripted = pages
-  .filter((page) => /<script[\s>]/i.test(readFileSync(page, "utf8")))
+  .filter((page) => /<script[\s>]/i.test(readFileSync(page, "utf8").replace(LD_JSON, "")))
   .map((page) => relative(DIST, page));
+
+/* The other half of the same rule, and until now it was only ever asserted by
+   the comment in public/_headers that claims this file asserts it. A script tag
+   is how JavaScript gets onto a page; a .js file in dist is how it gets into the
+   deployment, and a build tool can emit one without any page referencing it yet. */
+const emittedJs = files
+  .filter((file) => /\.(js|mjs|map)$/.test(file))
+  .map((file) => relative(DIST, file));
+
+assert.deepEqual(
+  emittedJs,
+  [],
+  `${emittedJs.length} JavaScript file(s) in dist:\n  ${emittedJs.join("\n  ")}\n` +
+    `The build is supposed to emit none, and public/_headers cites that fact as the ` +
+    `reason default-src is 'none'.`,
+);
 
 assert.deepEqual(
   scripted,
   [],
   `${scripted.length} page(s) contain a <script> tag:\n  ${scripted.join("\n  ")}\n` +
-    `This build is supposed to emit no client JavaScript, /privacy/ describes the ` +
+    `This build is supposed to emit no executable client JavaScript (ld+json data ` +
+    `blocks excepted), /privacy/ describes the ` +
     `site that way, and the CSP only permits Cloudflare's analytics origin. Either ` +
     `this is accidental, or all three need to change together.`,
 );
@@ -292,8 +320,36 @@ assert.deepEqual(
     `Wrap the table in <div class="scroll-x">.`,
 );
 
+/* Every SVG is either decorative or named.
+
+   Charts here render to SVG at build time, so a figure's meaning is path
+   geometry that nothing can read. The site's rule is that a chart carries
+   role="img" with an aria-label and anything decorative carries
+   aria-hidden="true". All 328 of them already follow it and nothing enforced
+   it, so a new chart could ship nameless and look perfect. */
+const SVG_TAG = /<svg\b[^>]*>/gi;
+const namelessSvg = [];
+for (const page of pages) {
+  const html = readFileSync(page, "utf8");
+  for (const [tag] of html.matchAll(SVG_TAG)) {
+    if (/aria-hidden="true"/.test(tag)) continue;
+    if (/role="(img|presentation)"/.test(tag) && !/role="img"/.test(tag)) continue;
+    if (/role="img"/.test(tag) && /aria-label="[^"]+"/.test(tag)) continue;
+    namelessSvg.push(`${relative(DIST, page)}: ${tag.slice(0, 120)}`);
+  }
+}
+
+assert.deepEqual(
+  namelessSvg,
+  [],
+  `${namelessSvg.length} <svg> element(s) are neither hidden from assistive technology ` +
+    `nor role="img" with an aria-label:\n  ${namelessSvg.join("\n  ")}\n` +
+    `A chart with no accessible name is a picture of numbers that nothing can read.`,
+);
+
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
     `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex, ` +
-    `no unsafe href schemes, no client JavaScript, every table in a scroll box`,
+    `no unsafe href schemes, no executable client JavaScript, every table in a scroll box, ` +
+    `every SVG either hidden or named`,
 );

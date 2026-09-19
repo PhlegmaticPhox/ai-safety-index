@@ -11,8 +11,7 @@
    plotted against exposure or capability, and it appears nowhere else. Semantic
    state colours (--ok, --warn) are for genuine state, never decoration. */
 
-@import "@fontsource-variable/geist";
-@import "@fontsource-variable/geist-mono";
+@import "./fonts.css";
 @import "./fields.css";
 
 :root {
@@ -392,6 +391,29 @@ img {
    list, so the primitives belong in one place rather than copied per page.
    Anything genuinely specific to one page stays scoped in that page.
    --------------------------------------------------------------------------- */
+
+/* Breadcrumb. One line above the masthead on any route two or more segments
+   deep, which is the only place on this site where a page has a parent that is
+   not already in the header nav. Same mono face and same "/" separator idiom as
+   .masthead__meta, so the two read as one block rather than two devices. */
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-block-end: 0.45rem;
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  color: var(--muted-2);
+}
+
+.crumbs a {
+  color: var(--muted);
+}
+
+.crumbs a:hover {
+  color: var(--ink);
+}
 
 /* Page masthead. Functional title at section scale, never a marketing hero. */
 .masthead {

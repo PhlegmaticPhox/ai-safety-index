@@ -12,7 +12,7 @@ import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import BarTable from "../../components/BarTable.astro";
 import StatTile from "../../components/StatTile.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 import { alpha3, alpha3FromAlpha2 } from "../../lib/geo";
 
 import countryFile from "../../../data/processed/enterprise-ai-country.json";
@@ -119,12 +119,13 @@ const techs = byTech.records;
 const techMax = Math.max(...techs.map((t) => t.share));
 
 const countryMax = Math.max(...byCountry.records.map((r) => r.share));
-const checked = freshness(byCountry.retrieved);
+const retrievedAt = oldestRetrieved(byCountry, bySize, byTech, byIndustry, exposure);
+const checked = freshness(retrievedAt);
 ---
 
 <Base
   field="adoption"
-  title="Adoption"
+  title="Adoption: enterprise and population use"
   description="Who is using AI: enterprises by country, size and industry, set against the share of the population using it."
   cites={cites}
 >
@@ -139,7 +140,7 @@ const checked = freshness(byCountry.retrieved);
           <span aria-hidden="true">/</span>
           {year} survey
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</time>
         </p>
       </div>
 

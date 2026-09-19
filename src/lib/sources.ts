@@ -88,4 +88,20 @@ export function freshness(iso: string): { label: string; stale: boolean } {
   return { label: months === 1 ? "a month ago" : `${months} months ago`, stale };
 }
 
+/**
+ * The oldest retrieval date among the datasets a page renders.
+ *
+ * A masthead date is a floor, not an average: nothing on the page is older than
+ * this. Taking the newest would let one freshly refreshed dataset hide a stale
+ * one behind it, including past the 45-day stale threshold, which is how
+ * /policy/ came to read "reviewed today" above governance scores four days
+ * older. Per-dataset dates stay on each figure's own Provenance marker.
+ *
+ * Lexical sort is safe because every envelope stamp is ISO 8601 written by
+ * etl/common.py:utcnow() with a literal +00:00 offset.
+ */
+export function oldestRetrieved(...datasets: Array<{ retrieved: string }>): string {
+  return datasets.map((d) => d.retrieved).sort()[0];
+}
+
 export { sources };

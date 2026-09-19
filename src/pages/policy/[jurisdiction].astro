@@ -9,7 +9,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 
 import indexFile from "../../../data/processed/policy-index.json";
 import governanceFile from "../../../data/processed/governance-readiness.json";
@@ -98,7 +98,8 @@ const anchor = (title: string) =>
     .replace(/^-|-$/g, "")
     .slice(0, 60);
 
-const checked = freshness(policy.retrieved);
+const retrievedAt = oldestRetrieved(policy, governance);
+const checked = freshness(retrievedAt);
 
 const summaries: Record<string, string> = {
   australia:
@@ -108,6 +109,20 @@ const summaries: Record<string, string> = {
     "agencies rather than to the market. Mandatory guardrails for high-risk AI were proposed " +
     "in 2024 and have not been legislated.",
 };
+
+/* Two items, no Home, mirroring the visible .crumbs trail exactly: the
+   wordmark links / from 40px above, and Google permits omitting the
+   homepage. A three-item graph over a two-item trail is the kind of small
+   divergence that gets a rich result dropped. The last item carries no
+   `item`, which is the documented pattern for the current page. */
+const SITE_URL = "https://aisafetytracker.org";
+const crumbs = {
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Policy", item: `${SITE_URL}/policy/` },
+    { "@type": "ListItem", position: 2, name: name },
+  ],
+};
 ---
 
 <Base
@@ -115,9 +130,15 @@ const summaries: Record<string, string> = {
   title={`${name}: AI law and policy`}
   description={`Every instrument relevant to AI in ${name}, tagged by how binding it is, with a link to each primary source.`}
   cites={cites}
+  schema={crumbs}
 >
   <section class="section section--open">
     <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/policy/">Policy</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{name}</span>
+      </nav>
       <div class="masthead">
         <h1>{name}</h1>
         <p class="masthead__meta mono">
@@ -127,7 +148,7 @@ const summaries: Record<string, string> = {
           <span aria-hidden="true">/</span>
           {bindingNamingAI.length} of those name AI
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</time>
         </p>
       </div>
 
@@ -137,7 +158,7 @@ const summaries: Record<string, string> = {
         scored && (
           <p class="score">
             Governance readiness <strong class="num">{scored.readiness}</strong> of 100 on the
-            <a href="/map/#method">governance readiness index</a>, which records how much machinery
+            <a href="/methodology/governance-readiness/">governance readiness index</a>, which records how much machinery
             exists, not how strict it is.
             <Provenance source={governance.sources} retrieved={governance.retrieved} label="score" />
           </p>

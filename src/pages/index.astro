@@ -172,7 +172,14 @@ const mapData = exposure.records
         return value === undefined ? "var(--surface-2)" : RAMP[bucketOf(value)];
       }),
       title: `${record.entity}: ${record.latest.toFixed(1)}% in ${record.latest_period}`,
-      href: "/adoption/",
+      /* No href. TimeMap renders <a href={datum.href ?? undefined}>, so omitting
+         it yields an anchor that is neither a link nor a tab stop, while
+         .tm__link:hover .tm__shape is unaffected. With one it emitted 145
+         identical links to /adoption/ from the entry page, all tabbable, out of
+         231 focusable elements: a keyboard reader met every country before
+         reaching anything else, and a crawler met 145 anchor-text-free links to
+         one URL. Section 04 already carries the button. The /map/ links stay;
+         those resolve to distinct table rows. */
     };
   })
   .filter((d): d is NonNullable<typeof d> => d !== null);
@@ -330,6 +337,35 @@ const pins = PIN_SITES.map((site) => {
   <section class="hero" id="map" data-accent="adoption">
     <div class="hero__glow" aria-hidden="true"></div>
 
+    <div class="hero__overlay">
+      <div class="wrap">
+        <div class="hero__head">
+          <span class="eyebrow">Adoption / {latestPeriod}</span>
+          {/* The space between the two spans is load-bearing. They are display: block,
+              so it renders as nothing and the layout is unchanged, but without it the
+              h1's text content is "The numbersbehind AI" to anything reading the
+              markup rather than the rendered box. */}
+          <h1 class="hero__title"><span>The numbers</span> <span class="quiet">behind AI</span></h1>
+          <p class="hero__lede">
+            A current index of AI capability, governance and safety, drawn from {datasets.length}
+            {" "}datasets and kept up to date.
+          </p>
+          <p class="hero__meta mono">
+            {datasets.length} datasets
+            <span aria-hidden="true">/</span>
+            {cites.length} sources
+            <span aria-hidden="true">/</span>
+            <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
+            {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#progress">Read the figures</a>
+            <a class="btn btn--ghost" href="/news/">Latest</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="hero__map">
       <TimeMap
         periods={periods}
@@ -338,6 +374,9 @@ const pins = PIN_SITES.map((site) => {
         label="Share of working-age population using AI tools, by economy"
         id="tm-home"
         scrub={false}
+        width={2700}
+        places={0}
+        stroke={3}
       >
         <div class="hero__over" slot="overlay">
           <div class="scrim" aria-hidden="true"></div>
@@ -373,30 +412,6 @@ const pins = PIN_SITES.map((site) => {
       </TimeMap>
     </div>
 
-    <div class="hero__overlay">
-      <div class="wrap">
-        <div class="hero__head">
-          <span class="eyebrow">Adoption / {latestPeriod}</span>
-          <h1 class="hero__title"><span>The numbers</span><span class="quiet">behind AI</span></h1>
-          <p class="hero__lede">
-            A current index of AI capability, governance and safety, drawn from {datasets.length}
-            {" "}datasets and kept up to date.
-          </p>
-          <p class="hero__meta mono">
-            {datasets.length} datasets
-            <span aria-hidden="true">/</span>
-            {cites.length} sources
-            <span aria-hidden="true">/</span>
-            <span class={checked.stale ? "is-stale" : undefined}>checked {checked.label}</span>
-            {failing.length > 0 && <span class="is-stale">/ {failing.length} source(s) failing</span>}
-          </p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#progress">Read the figures</a>
-            <a class="btn btn--ghost" href="/news/">Latest</a>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ===================== STAT BAND ===================== -->
@@ -1135,6 +1150,14 @@ const pins = PIN_SITES.map((site) => {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-block-start: 1.5rem;
+  }
+
+  /* .tag is nowrap globally, which is right for a one or two word chip and
+     wrong here: these carry a whole clause, and the longest of them rendered a
+     331px pill that pushed the document 27px past a 320px viewport. Scoped to
+     .tagrow because that class is only used on this page. */
+  .tagrow .tag {
+    white-space: normal;
   }
 
   /* --- Numbered cards ----------------------------------------------------- */

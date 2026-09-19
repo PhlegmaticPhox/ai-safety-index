@@ -11,7 +11,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, getSource, type Dataset } from "../../lib/sources";
 
 import indexFile from "../../../data/processed/policy-index.json";
 import governanceFile from "../../../data/processed/governance-readiness.json";
@@ -96,14 +96,64 @@ const scoredOnly = governance.records
   .filter((g) => !coveredCodes.has(g.code) && g.basis === "national")
   .sort((a, b) => b.readiness - a.readiness);
 
-const checked = freshness(policy.retrieved);
+const retrievedAt = oldestRetrieved(policy, governance);
+const checked = freshness(retrievedAt);
+
+/* Dataset markup for the index this page is. Values come from the envelope and
+   the source registry. dateModified uses `generated`, which only moves when the
+   records change; temporalCoverage is the span of adoption years actually present
+   in the records, which reaches back well before AI because most applicable law
+   does. The eleven jurisdiction routes are views of this one dataset and carry no
+   Dataset node of their own, or one dataset becomes twelve in any index that
+   reads it. */
+const src = getSource("policy-index");
+const SITE_URL = "https://aisafetytracker.org";
+const years = policy.records.map((r) => r.year);
+const schema = {
+  "@type": "Dataset",
+  "@id": `${SITE_URL}/policy/#dataset`,
+  name: src.name,
+  description: policy.notes,
+  url: `${SITE_URL}/policy/`,
+  license: src.licence_url,
+  isAccessibleForFree: true,
+  creator: { "@id": `${SITE_URL}/#publisher` },
+  publisher: { "@id": `${SITE_URL}/#publisher` },
+  dateModified: policy.generated,
+  temporalCoverage: `${Math.min(...years)}/${Math.max(...years)}`,
+  keywords: ["AI law", "AI regulation", "AI policy", "legal instruments", "jurisdictions"],
+  measurementTechnique:
+    "Each instrument read in its primary source and tagged by how binding it is, with a link to that source on every record.",
+  variableMeasured: [
+    {
+      "@type": "PropertyValue",
+      name: "force",
+      description:
+        "How binding the instrument is: statute, delegated, agency-binding, regulator-guidance, voluntary, proposal or review.",
+    },
+    { "@type": "PropertyValue", name: "year", description: "Year the instrument was adopted." },
+    {
+      "@type": "PropertyValue",
+      name: "topics",
+      description: "What the instrument regulates, as tagged here.",
+    },
+  ],
+  spatialCoverage: jurisdictions.map((j) => ({ "@type": "Place", name: j.name })),
+  distribution: {
+    "@type": "DataDownload",
+    encodingFormat: "application/json",
+    contentUrl:
+      "https://raw.githubusercontent.com/PhlegmaticPhox/ai-safety-index/main/data/processed/policy-index.json",
+  },
+};
 ---
 
 <Base
   field="policy"
-  title="Policy"
+  title="AI law and policy"
   description="An index of the law that actually applies to AI across eleven jurisdictions, tagged by how binding each instrument is, with a link to every primary source."
   cites={cites}
+  schema={schema}
 >
   <section class="section section--open">
     <div class="wrap">
@@ -114,7 +164,7 @@ const checked = freshness(policy.retrieved);
           <span aria-hidden="true">/</span>
           {policy.count} instruments
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</time>
         </p>
       </div>
 

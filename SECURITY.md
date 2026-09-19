@@ -14,8 +14,8 @@ Email **security@aisafetytracker.org**.
 Include what you found, how to reproduce it, and what you think the impact is. A proof of concept
 helps; a working exploit is not required and is not expected.
 
-This repository is private, so GitHub's private vulnerability reporting is not available here and
-there is no public issue tracker to use instead. Email is the whole channel.
+GitHub's private vulnerability reporting is not enabled on this repository, and a public issue is
+the wrong place for a security report. Email is the whole channel.
 
 Expect an acknowledgement within about a week. This is a personal project maintained by one
 person, not a staffed programme, and saying so is more useful than promising a response time that

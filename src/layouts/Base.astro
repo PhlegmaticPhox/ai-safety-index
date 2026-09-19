@@ -15,8 +15,8 @@ import { attributionsFor } from "../lib/sources";
  * Preloaded because the browser cannot otherwise know they exist until it has
  * fetched and parsed the stylesheet, which makes the critical path
  * HTML -> CSS -> font, three serial round trips on a phone. The preload starts
- * the font in parallel with the CSS. font-display: swap means text was never
- * blocked on this; what it removes is the flash of fallback text reflowing.
+ * the font in parallel with the CSS. font-display: optional keeps text visible
+ * and prevents a late swap from reflowing the page on a throttled connection.
  *
  * Imported with ?url rather than written out, because the filenames are
  * content-hashed and change whenever the font package is updated. A hardcoded
@@ -30,12 +30,13 @@ const SITE = "AI Safety Tracker";
 
 interface Props {
   /**
-   * The page's own name, and nothing else.
+   * The page's own name, as it should read in a browser tab and a search result.
    *
-   * For a page in the nav this is exactly its nav label, so the browser tab, the
-   * bookmark, the search result and the menu all say the same word. The site
-   * name is appended here rather than written out per page, which is what stopped
-   * three pages drifting into three different title formats.
+   * Not the nav label: the nav array below holds its own short strings, because a
+   * header row capped at 64px needs one word where a search result needs the
+   * subject named. Where a page's H1 names the subject, this should be that H1.
+   * The site name is appended here rather than written out per page, which is
+   * what stopped three pages drifting into three different title formats.
    */
   title: string;
   description: string;
@@ -50,9 +51,15 @@ interface Props {
    * such as the homepage, which sets it per section instead.
    */
   field?: string;
+  /**
+   * Schema.org nodes for this page, emitted as one JSON-LD graph together with
+   * the site-wide publisher node. Objects, never strings: the block is produced
+   * by JSON.stringify, so a malformed block is not a thing that can happen.
+   */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, cites = [], root = false, field } = Astro.props;
+const { title, description, cites = [], root = false, field, schema } = Astro.props;
 
 /* Which nav item is the current page.
    "/" is a prefix of every path on the site, so the startsWith test that works
@@ -63,6 +70,39 @@ const isCurrent = (href: string) =>
 const documentTitle = root ? `${SITE}: cited data on AI capability, governance and safety` : `${title} | ${SITE}`;
 const attributions = attributionsFor(...cites);
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+/* One card for the whole site, not one per page. A per-page card needs a
+   rasteriser in the build; a single brand card needs a committed file and this
+   line. It carries no figure on purpose: a number inside a PNG cannot be dated. */
+const ogImage = new URL("/og.png", Astro.site);
+
+/* JSON-LD. One graph per page: the publisher, the site node on the homepage, and
+   whatever the page declares. Built from objects and stringified, so it cannot be
+   invalid JSON. `<` is escaped because a "</script>" inside any string value would
+   otherwise close this element early, which is the one way a data block can turn
+   into markup. */
+const origin = new URL("/", Astro.site).href;
+const publisher = {
+  "@type": "Organization",
+  "@id": `${origin}#publisher`,
+  name: SITE,
+  url: origin,
+  description: "An independent, cited index of AI capability, governance and safety.",
+};
+const website = {
+  "@type": "WebSite",
+  "@id": `${origin}#website`,
+  name: SITE,
+  url: origin,
+  description,
+  inLanguage: "en-GB",
+  publisher: { "@id": `${origin}#publisher` },
+};
+const graph = [publisher, ...(root ? [website] : []), ...(schema ? [schema].flat() : [])];
+const jsonld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(
+  /</g,
+  "\\u003c",
+);
 const year = new Date().getFullYear();
 
 /* Nav order runs outward from the models themselves: what they can do, what they
@@ -81,13 +121,14 @@ const nav = [
 ];
 ---
 
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{documentTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <script type="application/ld+json" is:inline set:html={jsonld} />
 
     <link rel="preload" href={geistSans} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={geistMono} as="font" type="font/woff2" crossorigin />
@@ -95,6 +136,10 @@ const nav = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
     <link rel="mask-icon" href="/favicon.svg" color="#f2a950" />
+    <!-- iOS ignores an SVG favicon and screenshots the page instead. Rasterised
+         once from favicon.svg, which is geometry only, so the two cannot drift
+         in shape; regenerate with sharp if the mark changes. -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:title" content={documentTitle} />
     <meta property="og:description" content={description} />
@@ -102,9 +147,16 @@ const nav = [
     <meta property="og:site_name" content={SITE} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en_GB" />
-    <!-- Summary card, not summary_large_image: this site has no images by design,
-         and claiming a large image card produces an empty grey box. -->
-    <meta name="twitter:card" content="summary" />
+    <!-- One card, brand only. The design lock's no-images rule governs what a
+         page renders; this file renders on somebody else's platform and never
+         here, so dist still carries zero img tags. Source and regeneration steps
+         are in scripts/og-card.html. -->
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AI Safety Tracker" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:title" content={documentTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="theme-color" content="#0e1829" />
@@ -122,7 +174,7 @@ const nav = [
           <span>AI Safety <span class="brand__accent">Tracker</span></span>
         </a>
         {/* Two renderings of one list. Exactly one is ever displayed: the row
-            above 640px, the menu below it, each `display: none` at the other
+            above 860px, the menu below it, each `display: none` at the other
             width and so absent from the accessibility tree rather than merely
             invisible. Duplicating eight links costs a few hundred bytes and
             avoids depending on overriding the UA's popover display rule, which
@@ -299,7 +351,16 @@ const nav = [
         display: none;
       }
 
-      @media (max-width: 640px) {
+      /* 860px, not the 640px this used to be, and the number is measured rather
+         than chosen. Nine non-wrapping links plus the wordmark plus the wrap
+         padding need 804px of header at an 805px viewport, and the wordmark is
+         clamp()ed on vw so the requirement grows with the viewport: the fixed
+         point where the row first fits is 805px exactly. Below it the row
+         overflowed the DOCUMENT rather than wrapping, because every link carries
+         white-space: nowrap, which put all 35 pages 5px wider than an iPad in
+         portrait and panned the whole site sideways there. 860 leaves headroom
+         for a platform whose Geist rasterises a little wider than this one's. */
+      @media (max-width: 860px) {
         /* One row again, the same height as the desktop header: brand at the
            start, one control at the end. The nav used to wrap to two rows of
            links here and stack the bar to 120px, which is what made a sticky

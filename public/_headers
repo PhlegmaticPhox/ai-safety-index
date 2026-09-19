@@ -24,11 +24,13 @@
 
 # Notes on the policy above, directive by directive:
 #
-#   default-src 'none'   The site's own build ships zero JavaScript: 0 <script>
-#                        tags across every page, 0 .js/.mjs/.map files in dist,
-#                        and check:built asserts it. So the default is the
-#                        strictest value that exists, and anything not listed
-#                        below is refused outright.
+#   default-src 'none'   The site's own build ships zero JavaScript: the only
+#                        <script> tag it emits is a type="application/ld+json"
+#                        data block, which the parser never prepares as script
+#                        and script-src therefore never reaches, plus 0
+#                        .js/.mjs/.map files in dist. check:built asserts both.
+#                        So the default is the strictest value that exists, and
+#                        anything not listed below is refused outright.
 #
 #   script-src           Exactly one host, and it is not ours. Cloudflare Web
 #                        Analytics is enabled on the zone, and Cloudflare injects
@@ -69,8 +71,8 @@
 #                        which is the only place it was visible.
 #
 #   style-src            'unsafe-inline' is required today and is not cosmetic:
-#                        dist carries 1283 inline style= attributes (every SVG
-#                        map shape carries its own fill) and 29 inline <style>
+#                        dist carries 1451 inline style= attributes (every SVG
+#                        map shape carries its own fill) and 30 inline <style>
 #                        blocks (Astro's scoped styles, plus the per-period
 #                        rules TimeMap generates). Removing it would unstyle the
 #                        maps entirely. Astro 5.18 ships experimental.csp, which
@@ -81,12 +83,17 @@
 #   font-src 'self'      11 woff2 files, all served from /_astro/. No font
 #                        network is contacted, and this keeps it that way.
 #
-#   img-src 'self'       There are 0 <img> tags. This covers the favicon links
-#                        only (96 of them, /favicon.svg and /favicon.ico), and
-#                        blocks an injected tracking pixel.
+#   img-src 'self'       There are 0 <img> tags. This covers the icon links
+#                        (140 link elements, four per page, resolving to three
+#                        URLs: /favicon.svg is named twice, by rel=icon and by
+#                        rel=mask-icon, plus /favicon.ico and
+#                        /apple-touch-icon.png) and the one og:image, which is
+#                        fetched by other platforms rather than by a reader's
+#                        browser. It blocks an injected tracking pixel.
 #
 #   base-uri 'none'      The site uses no <base>. An injected one would silently
-#                        repoint all 1102 internal links.
+#                        repoint all 1777 internal links, which is the number
+#                        check-internal-links.mjs prints when it passes.
 #
 #   form-action 'none'   There are no forms anywhere. Nothing should be able to
 #                        post from this origin.
@@ -101,7 +108,7 @@
 #   nosniff              Stops a browser deciding that .txt or .xml is really
 #                        something executable.
 #
-#   Referrer-Policy      The site links out 1013 times. Without this, the full
+#   Referrer-Policy      The site links out 1311 times. Without this, the full
 #                        path of a jurisdiction or news-category page is handed
 #                        to every government publisher we cite. Origin-only is
 #                        enough for them and tells them less about the reader.
@@ -111,6 +118,12 @@
 #   Permissions-Policy   Denies features nothing here uses. interest-cohort is
 #                        not listed: it was never standardised and now only
 #                        produces console noise.
+#
+# Every count above was taken from the current dist by the same definition it
+# states, and two of them are asserted rather than trusted: check:built fails if
+# any page carries an executable script tag or if dist holds a .js, .mjs or .map
+# file. The rest move with the site, so treat a mismatch as a signal to recount
+# rather than as a reason to widen a directive.
 
 # Content-hashed build assets. The hash IS the version, so a changed file gets a
 # changed URL and these can be cached for a year. Applied only to /_astro/*, and
@@ -118,3 +131,16 @@
 # revalidate-every-time default so a data refresh is visible immediately.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# /404.html is served at the literal path /404 with a 200, because Cloudflare
+# treats it as an ordinary asset when that exact path is requested; only an
+# UNMATCHED path gets it with a 404 status, via assets.not_found_handling.
+# So the URL itself is indexable and says "there is no page at that address",
+# which is a soft 404. The wildcard covers /404, /404.html and /404/, all three
+# of which serve that file, and matches no other route on the site; a genuine
+# 404 at some other path is untouched and keeps the status code it already
+# returns. Deliberately a header and not a <meta name="robots">: check:built
+# asserts that NO page carries a noindex meta, and that assertion guards 34
+# pages.
+/404*
+  X-Robots-Tag: noindex

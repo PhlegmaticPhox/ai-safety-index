@@ -57,13 +57,13 @@ const emptyReason = researchLed
   <section class="section section--open">
     <div class="wrap">
       <div class="masthead">
-        <h1>{category.label}</h1>
+        <h1>{category.label} news</h1>
         <p class="masthead__meta mono">
           {items.length} of {all.length} items
           <span aria-hidden="true">/</span>
           {sources.length} sources
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>fetched {checked.label}</span>
+          <time datetime={feed.retrieved} class={checked.stale ? "is-stale" : undefined}>fetched {checked.label}</time>
         </p>
       </div>
 

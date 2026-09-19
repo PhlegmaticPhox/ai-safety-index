@@ -12,7 +12,8 @@
     "etl": "python etl/run_all.py",
     "etl:offline": "python etl/run_all.py --offline",
     "check:lib": "node --experimental-strip-types scripts/check-lib.mjs",
-    "check:built": "node scripts/check-internal-links.mjs && node scripts/check-orphan-classes.mjs",
+    "check:built": "node scripts/check-internal-links.mjs && node scripts/check-orphan-classes.mjs && node scripts/check-seo.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
     "check:classes": "node scripts/check-orphan-classes.mjs"
   },
   "dependencies": {

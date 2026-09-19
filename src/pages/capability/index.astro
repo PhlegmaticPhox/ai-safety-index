@@ -15,7 +15,7 @@ import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import StatTile from "../../components/StatTile.astro";
 import BarTable from "../../components/BarTable.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 
 import modelsFile from "../../../data/processed/frontier-models.json";
 import releasesFile from "../../../data/processed/model-releases.json";
@@ -322,12 +322,13 @@ const inForceRules = legal.records.filter((r) => r.status === "in force");
 
 const thresholdByYear = thresholds.records.filter((r) => Number(r.year) >= 2019);
 
-const checked = freshness(models.retrieved);
+const retrievedAt = oldestRetrieved(models, releases, thresholds, legal);
+const checked = freshness(retrievedAt);
 ---
 
 <Base
   field="capability"
-  title="Capability"
+  title="Capability: training compute and cost"
   description="Training compute, disclosed cost, benchmark saturation, release decisions and who builds frontier models. Every figure carries its source."
   cites={cites}
 >
@@ -342,7 +343,7 @@ const checked = freshness(models.retrieved);
           <span aria-hidden="true">/</span>
           {legal.count} legal thresholds
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</time>
         </p>
       </div>
 

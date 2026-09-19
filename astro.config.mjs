@@ -25,8 +25,21 @@ const site = "https://aisafetytracker.org";
 
 export default defineConfig({
   site,
-  // Phosphor only, one family for the whole project, inlined as SVG at build time
-  // so icons cost no client JS and no network request.
+  /* sitemap() runs with no options, and the absent one is `serialize`, which is
+     how a <lastmod> would be emitted. There is no honest value to put in it.
+     Build time is false: the daily refresh rebuilds all 34 pages whether or not
+     one record moved, so every URL would claim to have changed most days, which
+     is the pattern Google cites for ignoring lastmod entirely. A git commit date
+     for the route's source file is wrong for a data page and unreliable in the
+     shallow clone Workers Builds checks out. A dataset's `generated` stamp is
+     right about the data, but a data page renders two to five datasets and the
+     map from route to dataset would have to be hand-maintained here, out of
+     reach of the page's own imports and of any check. The honest version of this
+     fact already ships: each data page's masthead carries a <time datetime> built
+     from oldestRetrieved() over the datasets that page actually imports.
+
+     Phosphor only, one family for the whole project, inlined as SVG at build time
+     so icons cost no client JS and no network request. */
   integrations: [mdx(), sitemap(), icon({ include: { ph: ["*"] } })],
   build: {
     // Charts render to SVG at build time, so most pages ship zero client JS.

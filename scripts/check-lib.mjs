@@ -283,4 +283,60 @@ assert.equal(geo.alpha3("Not A Country At All"), null, "unknown names must not g
   assert.ok(body.startsWith("^") && body.endsWith("$"), "PERIOD_LABEL is not fully anchored");
 }
 
+/* src/styles/fonts.css is the two Fontsource packages' own @font-face rules with
+   font-display changed from swap to optional, because a descriptor cannot be
+   overridden from outside its rule and swap was costing five routes their CLS
+   budget. Copying the rules buys that control and takes on one risk: an upgrade
+   that adds, drops or repoints a subset would leave our copy quietly stale, and
+   the failure is a script rendering in the system font with nothing to catch it.
+
+   So this compares the two by the only thing that matters for coverage: the set
+   of (family, unicode-range, file) triples. Formatting, ordering and whitespace
+   are ignored; a genuine change to what the packages ship is not. */
+{
+  const faces = (css) =>
+    new Set(
+      [...css.matchAll(/@font-face\s*\{([^}]*)\}/g)].map((m) => {
+        const family = /font-family:\s*['"]?([^'";]+)/.exec(m[1])[1].trim();
+        const range = /unicode-range:\s*([^;]+)/.exec(m[1])[1].replace(/\s+/g, "");
+        const file = /([\w-]+\.woff2)/.exec(m[1])[1];
+        return `${family} | ${range} | ${file}`;
+      }),
+    );
+
+  const ours = faces(readFileSync("src/styles/fonts.css", "utf8"));
+  const theirs = new Set();
+  for (const pkg of ["@fontsource-variable/geist", "@fontsource-variable/geist-mono"])
+    for (const face of faces(readFileSync(`node_modules/${pkg}/index.css`, "utf8"))) theirs.add(face);
+
+  // A destructuring regex that never matches throws above; an empty set here
+  // would instead make both comparisons pass while reading nothing at all.
+  assert.ok(ours.size === 11 && theirs.size === 11, `parsed ${ours.size} and ${theirs.size} faces, expected 11 each`);
+
+  assert.deepEqual(
+    [...theirs].filter((f) => !ours.has(f)).sort(),
+    [],
+    "the Fontsource packages ship a face that src/styles/fonts.css does not declare, so that " +
+      "script now renders in the system font. Recopy both index.css files and change " +
+      "font-display: swap to optional.",
+  );
+  assert.deepEqual(
+    [...ours].filter((f) => !theirs.has(f)).sort(),
+    [],
+    "src/styles/fonts.css declares a face the packages no longer ship, so its url() is dead. " +
+      "Recopy both index.css files and change font-display: swap to optional.",
+  );
+  const displays = new Set(
+    [...readFileSync("src/styles/fonts.css", "utf8").matchAll(/font-display:\s*([a-z]+)/g)].map(
+      (m) => m[1],
+    ),
+  );
+  assert.deepEqual(
+    [...displays],
+    ["optional"],
+    `src/styles/fonts.css declares font-display ${[...displays].join(", ")}; the whole reason ` +
+      `the file exists is that every face is optional.`,
+  );
+}
+
 console.log("check-lib.mjs passed");

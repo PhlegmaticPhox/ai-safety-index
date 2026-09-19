@@ -32,7 +32,7 @@ const oldest = items[items.length - 1]?.date ?? "";
 
 <Base
   field="news"
-  title="News"
+  title="News: AI policy, research and incidents"
   description="Government publications, research preprints and reported incidents on AI, sorted into categories by a rule you can read."
   cites={feed.sources}
 >
@@ -47,7 +47,7 @@ const oldest = items[items.length - 1]?.date ?? "";
           <span aria-hidden="true">/</span>
           {oldest} onward
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>fetched {checked.label}</span>
+          <time datetime={feed.retrieved} class={checked.stale ? "is-stale" : undefined}>fetched {checked.label}</time>
         </p>
       </div>
 

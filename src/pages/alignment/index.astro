@@ -18,7 +18,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
-import { assertRenderable, freshness, getSource, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, getSource, type Dataset } from "../../lib/sources";
 
 import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
 import frameworkFile from "../../../data/processed/safety-frameworks.json";
@@ -196,13 +196,14 @@ const incidents = feed.records
   .filter((r) => r.kind === "Reported incident")
   .sort((a, b) => b.date.localeCompare(a.date));
 
-const checked = freshness(benchmarks.retrieved);
+const retrievedAt = oldestRetrieved(benchmarks, frameworks, research, feed);
+const checked = freshness(retrievedAt);
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 ---
 
 <Base
   field="alignment"
-  title="Alignment"
+  title="Alignment: frontier safety frameworks"
   description="The measurable state of AI alignment: which capability tests are solved, what developers have promised about stopping, how much safety research exists, and what has gone wrong."
   cites={cites}
 >
@@ -215,7 +216,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
           <span aria-hidden="true">/</span>
           {research.count} research areas counted
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</time>
         </p>
       </div>
     </div>
@@ -464,7 +465,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 
         <div class="scroll-x">
           <svg viewBox={`0 0 ${RS.w} ${RS.h}`} class="plot" role="img"
-            aria-label={`Research volume by area, ${years[0]} to ${years[years.length - 1]}, logarithmic scale.`}>
+            aria-label={`Research volume by area, ${years[0]} to ${years[years.length - 1]}, logarithmic scale. In ${completeYear} there were ${perHundred.toFixed(0)} works on safety, interpretability, evaluation or catastrophic risk for every 100 on frontier models.`}>
             {
               Array.from({ length: rMax - rMin + 1 }, (_, i) => rMin + i).map((exp) => (
                 <g>
@@ -566,6 +567,45 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
               ))
             }
           </ul>
+        </div>
+      </details>
+
+      {/* The 72 plotted values exist only as path geometry. The series names and
+          the axis decades are SVG text and so readable; no count is. Closed by
+          default, so the page does not get taller, and a closed details is
+          indexed normally. Same disclosure pattern as the queries above. */}
+      <details class="reveal">
+        <summary>
+          The counts behind each line <span class="reveal__count">{years.length} years</span>
+        </summary>
+        <div class="reveal__body">
+          <div class="scroll-x">
+            <table class="grid-table">
+              <caption class="visually-hidden">
+                Indexed works per year for each research area, {years[0]} to {years[years.length - 1]}.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Year</th>
+                  {research.records.map((row) => <th scope="col" class="ta-end">{row.label}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  years.map((year) => (
+                    <tr>
+                      <th scope="row" class="num">{year}</th>
+                      {research.records.map((row) => (
+                        <td class="ta-end num">
+                          {row.points.find((p) => p.year === year)?.count.toLocaleString("en-GB") ?? "-"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
       </details>
     </div>

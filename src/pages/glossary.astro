@@ -29,7 +29,7 @@ const entries: Entry[] = [
     definition:
       "A release in which a model can be queried over a network but its weights are not distributed. One of three release types recorded for notable models.",
     href: "/capability/#release",
-    hrefLabel: "Capability",
+    hrefLabel: "Capability: how models ship",
   },
   {
     term: "Benchmark saturation",
@@ -50,7 +50,7 @@ const entries: Entry[] = [
     definition:
       "A quantity of training compute written into a statute, executive action or official policy document, above which additional obligations apply. Recorded here with the instrument that sets it and the number of models above it.",
     href: "/capability/#thresholds",
-    hrefLabel: "Capability",
+    hrefLabel: "Capability: compute thresholds in law",
   },
   {
     term: "FLOP",
@@ -71,7 +71,7 @@ const entries: Entry[] = [
     definition:
       "A document in which a developer states the capability levels at which it will take specified action. The frameworks are self-written and self-assessed, and share no common scale.",
     href: "/alignment/#frameworks",
-    hrefLabel: "Alignment",
+    hrefLabel: "Alignment: what developers have promised",
   },
   {
     term: "Governance readiness",
@@ -92,7 +92,7 @@ const entries: Entry[] = [
     definition:
       "A release in which the trained parameters are distributed and can be run by a third party. It does not imply an open-source licence, and the licence attached to a given release may restrict use.",
     href: "/capability/#open-weights",
-    hrefLabel: "Capability",
+    hrefLabel: "Capability: the open-weight gap",
   },
   {
     term: "Provenance marker",
@@ -125,7 +125,7 @@ const entries: Entry[] = [
     definition:
       "The training-compute level in Article 51(2) of the EU AI Act at which a general-purpose model is presumed to carry systemic risk. It is a rebuttable presumption rather than a fixed boundary.",
     href: "/capability/#thresholds",
-    hrefLabel: "Capability",
+    hrefLabel: "Capability: compute thresholds in law",
   },
   {
     term: "Working-age population",
@@ -141,8 +141,8 @@ const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term));
 
 <Base
   field="sources"
-  title="Glossary"
-  description="Definitions of the terms used on this site, as they are applied here."
+  title="AI glossary"
+  description="Definitions of the AI capability, governance and safety terms used on this site, each linked to the page that applies it."
   cites={[]}
 >
   <section class="section section--open">

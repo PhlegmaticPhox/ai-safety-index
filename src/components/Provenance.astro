@@ -30,6 +30,10 @@ const { source, retrieved, note, label = "source" } = Astro.props;
 const ids = Array.isArray(source) ? source : [source];
 const entries = ids.map((id) => ({ id, ...getSource(id) }));
 const age = retrieved ? freshness(retrieved) : null;
+/* The calendar day beside the relative age. "5 days ago" is relative to a
+   build date the panel never states, so on its own it cannot be recorded,
+   quoted or compared with the publisher's own release date. */
+const retrievedDay = retrieved ? retrieved.slice(0, 10) : null;
 
 /* The popover and its CSS anchor need an id that is unique within the page.
  *
@@ -86,7 +90,7 @@ const anchorName = `--${popoverId}`;
               <>
                 <span class="prov__key">Retrieved</span>
                 <span class:list={["prov__val", age.stale && "is-stale"]}>
-                  {age.label}
+                  <time datetime={retrieved}>{retrievedDay}</time>, {age.label}
                   {age.stale && " (may be out of date)"}
                 </span>
               </>

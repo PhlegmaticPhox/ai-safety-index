@@ -15,7 +15,7 @@
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import Sparkline from "../../components/Sparkline.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 
 import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
 import releasesFile from "../../../data/processed/model-releases.json";
@@ -201,13 +201,14 @@ const cadenceMax = Math.max(...cadence.map(([, n]) => n));
 // The quarter in progress is incomplete by definition and would read as a drop.
 const partialQuarter = cadence[cadence.length - 1][0];
 
-const checked = freshness(benchmarks.retrieved);
+const retrievedAt = oldestRetrieved(benchmarks, releases);
+const checked = freshness(retrievedAt);
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 ---
 
 <Base
   field="progress"
-  title="Progress"
+  title="Progress: AI benchmark scores"
   description="What AI models can do, grouped by skill and by difficulty: benchmark scores, how long each test stayed useful, and where the current ones are headed."
   cites={cites}
 >
@@ -222,7 +223,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
           <span aria-hidden="true">/</span>
           to {latestMonth}
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>retrieved {checked.label}</time>
         </p>
       </div>
 
@@ -545,7 +546,13 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
       </div>
 
       <figure class="chart">
-        <div class="cadence" role="img" aria-label={`Notable model releases per quarter since ${FROM_YEAR}, peaking at ${cadenceMax}.`}>
+        {/* No role="img" on the container: it would make every descendant
+            presentational, so a screen reader got the one summary label and none
+            of the 31 counts, which lived only in title attributes. Each column
+            now carries its own text, matching the /capability/#release pattern.
+            Costs no height: .cadence__col is position: relative, so it is the
+            containing block for the absolutely positioned hidden span. */}
+        <div class="cadence">
           {
             cadence.map(([key, n]) => (
               <span
@@ -553,7 +560,8 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
                 style={`--h:${(n / cadenceMax) * 100}%`}
                 title={`${key}: ${n} models`}
               >
-                <span class="cadence__label mono">{key.endsWith("Q1") ? key.slice(2, 4) : ""}</span>
+                <span class="visually-hidden">{`${key}: ${n} models`}</span>
+                <span class="cadence__label mono" aria-hidden="true">{key.endsWith("Q1") ? key.slice(2, 4) : ""}</span>
               </span>
             ))
           }

@@ -3,8 +3,10 @@
  * Build-time SVG line of a benchmark's frontier score over time.
  *
  * Rendered from real data at build, so it ships as markup with no client JS and
- * no chart library. The accompanying table in the parent carries the same numbers
- * for screen readers, so this is marked decorative.
+ * no chart library. Marked decorative on the condition that the caller prints the
+ * series' name, latest value and date range as text beside it, which is what the
+ * benchmark cards on /progress/ do. A caller that does not is a caller that hides
+ * its data.
  */
 import { nextId } from "../lib/ids";
 

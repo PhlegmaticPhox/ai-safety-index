@@ -17,7 +17,7 @@
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import WorldMap, { type MapDatum } from "../../components/WorldMap.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 import { alpha3, percentileRanks } from "../../lib/geo";
 
 import exposureFile from "../../../data/processed/ai-exposure.json";
@@ -178,7 +178,8 @@ const widestGovAhead = ranked[ranked.length - 1];
 const useAheadCount = joined.filter((r) => r.gap >= 15).length;
 const govAheadCount = joined.filter((r) => r.gap <= -15).length;
 
-const checked = freshness(governance.retrieved);
+const retrievedAt = oldestRetrieved(exposure, governance);
+const checked = freshness(retrievedAt);
 const euCount = joined.filter((r) => r.basis === "eu-harmonised").length;
 
 // Coded but absent from the exposure data, so absent from every view here. Named
@@ -190,7 +191,7 @@ const unmatched = governance.records
 
 <Base
   field="map"
-  title="Map"
+  title="Exposure against governance readiness"
   description="Where AI use has run ahead of the machinery to govern it, and where it has not. Two maps, one scatter, and the table behind both."
   cites={cites}
 >
@@ -203,7 +204,7 @@ const unmatched = governance.records
           <span aria-hidden="true">/</span>
           {governance.count} coded
           <span aria-hidden="true">/</span>
-          <span class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</time>
         </p>
       </div>
 
@@ -231,7 +232,9 @@ const unmatched = governance.records
         data={gapData}
         buckets={GAP_BUCKETS.map((b) => b.fill)}
         label="World map of the gap between rank in AI use and rank in governance readiness"
-        width={1040}
+        width={2080}
+        places={0}
+        stroke={2}
       />
 
       <div class="legend">
@@ -484,7 +487,7 @@ const unmatched = governance.records
         <h2>How readiness is scored</h2>
         <p>
           Coded here from primary instruments. The rubric and the instruments behind each score
-          are published in the methodology.
+          are published in the <a href="/methodology/governance-readiness/">methodology</a>.
         </p>
       </div>
 

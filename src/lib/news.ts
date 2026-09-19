@@ -73,8 +73,7 @@ export const CATEGORIES: Category[] = [
     label: "AI",
     blurb:
       "About AI and nothing narrower. Items land here when no category rule matched, " +
-      "which is common for funding announcements and ministerial visits. It is a real " +
-      "answer, not a failure to classify.",
+      "which is common for funding announcements and ministerial visits.",
   },
 ];
 

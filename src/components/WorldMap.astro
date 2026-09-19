@@ -30,9 +30,14 @@ interface Props {
   width?: number;
   /** Coordinate decimal places. 0 is fine below about 700px wide. */
   places?: number;
+  /** Multiplies the stroke widths, so a wider viewBox keeps the same rendered
+      hairline. The var(--hair, 1) fallback in the rules is mandatory: an
+      unresolvable var() makes the whole declaration invalid, which would
+      render every hairline at the initial stroke-width of 1 at full scale. */
+  stroke?: number;
 }
 
-const { data, buckets, label, width = 1000, places = 1 } = Astro.props;
+const { data, buckets, label, width = 1000, places = 1, stroke = 1 } = Astro.props;
 const world = projectWorld(width, places);
 const byCode = new Map(data.map((d) => [d.code, d]));
 
@@ -63,6 +68,7 @@ const painted: Painted[] = world.shapes.map((shape) => ({
     role="img"
     aria-label={`${label}. ${covered} of ${world.shapes.length} countries have data; the rest are unshaded.`}
     class="map__svg"
+    style={`--hair:${stroke}`}
   >
     <path d={world.sphere} class="map__sphere"></path>
 
@@ -100,12 +106,12 @@ const painted: Painted[] = world.shapes.map((shape) => ({
   .map__sphere {
     fill: var(--surface);
     stroke: var(--line);
-    stroke-width: 1;
+    stroke-width: calc(1 * var(--hair, 1));
   }
 
   .map__shape {
     stroke: var(--bg);
-    stroke-width: 0.4;
+    stroke-width: calc(0.4 * var(--hair, 1));
     transition: opacity 0.15s var(--ease);
   }
 
@@ -119,7 +125,7 @@ const painted: Painted[] = world.shapes.map((shape) => ({
   .map__link:focus-visible .map__shape {
     opacity: 0.72;
     stroke: var(--ink);
-    stroke-width: 0.9;
+    stroke-width: calc(0.9 * var(--hair, 1));
   }
 
   .map__link:focus-visible {
