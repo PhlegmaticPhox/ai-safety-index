@@ -34,6 +34,6 @@
   "devDependencies": {
     "@types/d3-geo": "^3.1.0",
     "@types/topojson-client": "^3.1.5",
-    "wrangler": "^4.131.1"
+    "wrangler": "^4.134.0"
   }
 }
