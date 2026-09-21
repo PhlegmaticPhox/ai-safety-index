@@ -219,6 +219,7 @@ BENCHMARK_CATEGORIES = {
     "MirrorCode": ("Software engineering", "professional"),
     "Chess Puzzles": ("Games and planning", "expert"),
     "Mystery Game Puzzles": ("Games and planning", "general"),
+    "Furniture Assembly": ("Games and planning", "general"),
     "EBR-bench": ("Learning from experience", "general"),
 }
 
