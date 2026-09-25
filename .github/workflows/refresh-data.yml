@@ -68,7 +68,13 @@ jobs:
       - name: OpenAlex query self-check
         run: python etl/fetch_openalex.py --self-check
 
+      # run_all.py exits non-zero if any source failed, but only after every other
+      # source has run and written. Letting that stop the job threw the healthy
+      # sources away too: one unmapped Epoch benchmark froze all eight datasets
+      # for ten days. The job still fails, in the last step, after committing.
       - name: Fetch and process every source
+        id: etl
+        continue-on-error: true
         run: python etl/run_all.py
 
       # A build here catches a schema change that produced valid JSON the site
@@ -102,3 +108,9 @@ jobs:
             git commit -m "Pipeline heartbeat $(date -u +%Y-%m-%d)"
           fi
           git push
+
+      - name: Fail if any source failed
+        if: steps.etl.outcome == 'failure'
+        run: |
+          echo "::error::At least one source failed. See 'Fetch and process every source'. Every source that succeeded has been committed."
+          exit 1
