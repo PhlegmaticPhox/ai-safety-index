@@ -1,13 +1,13 @@
 {
   "dataset": "frontier-models",
-  "generated": "2026-09-13T06:28:10+00:00",
-  "retrieved": "2026-09-13T02:56:05+00:00",
+  "generated": "2026-09-25T05:00:45+00:00",
+  "retrieved": "2026-09-25T05:00:45+00:00",
   "sources": [
     "epoch-notable-models"
   ],
   "unit": "FLOP",
   "notes": "Notable AI models with a published or estimated training-compute figure. Inclusion is editorial rather than exhaustive, and many compute values are estimates. Check the confidence field on each record before citing it.",
-  "count": 537,
+  "count": 540,
   "records": [
     {
       "model": "Theseus",
@@ -2621,7 +2621,7 @@
     },
     {
       "model": "StyleGAN",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2018-12-12",
       "compute_flop": 3.93e+16,
@@ -2906,7 +2906,7 @@
     },
     {
       "model": "Megatron-LM (8.3B)",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2019-09-17",
       "compute_flop": 9.1e+21,
@@ -2921,7 +2921,7 @@
     },
     {
       "model": "Megatron-LM (1.2B)",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2019-09-17",
       "compute_flop": 1.1304e+21,
@@ -2936,7 +2936,7 @@
     },
     {
       "model": "Megatron-BERT",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2019-09-17",
       "compute_flop": 2.2e+22,
@@ -3866,7 +3866,7 @@
     },
     {
       "model": "ProtT5-XL-U50",
-      "organisation": "Technical University of Munich,Med AI Technology,NVIDIA,Oak Ridge National Laboratory,Google,Seoul National University",
+      "organisation": "Technical University of Munich,Med AI Technology,Nvidia,Oak Ridge National Laboratory,Google,Seoul National University",
       "country": "Germany,China,United States of America,United States of America,United States of America,South Korea",
       "published": "2021-05-04",
       "compute_flop": 1.8704498688e+22,
@@ -3881,7 +3881,7 @@
     },
     {
       "model": "ProtBERT-BFD",
-      "organisation": "Technical University of Munich,NVIDIA,Seoul National University,Google,Oak Ridge National Laboratory,Med AI Technology",
+      "organisation": "Technical University of Munich,Nvidia,Seoul National University,Google,Oak Ridge National Laboratory,Med AI Technology",
       "country": "Germany,United States of America,South Korea,United States of America,United States of America,China",
       "published": "2021-05-04",
       "compute_flop": 3.9e+22,
@@ -4061,7 +4061,7 @@
     },
     {
       "model": "StyleGAN3-T",
-      "organisation": "NVIDIA,Aalto University",
+      "organisation": "Nvidia,Aalto University",
       "country": "United States of America,Finland",
       "published": "2021-06-21",
       "compute_flop": 1.70208e+21,
@@ -4076,7 +4076,7 @@
     },
     {
       "model": "StyleGAN3-R",
-      "organisation": "NVIDIA,Aalto University",
+      "organisation": "Nvidia,Aalto University",
       "country": "United States of America,Finland",
       "published": "2021-06-21",
       "compute_flop": 2.42784e+21,
@@ -4376,7 +4376,7 @@
     },
     {
       "model": "Megatron-Turing NLG 530B",
-      "organisation": "Microsoft,NVIDIA",
+      "organisation": "Microsoft,Nvidia",
       "country": "United States of America,United States of America",
       "published": "2021-10-11",
       "compute_flop": 8.586e+23,
@@ -4751,7 +4751,7 @@
     },
     {
       "model": "FourCastNet",
-      "organisation": "NVIDIA,NERSC, Lawrence Berkeley National Laboratory,University of Michigan,Rice University,California Institute of Technology,Purdue University",
+      "organisation": "Nvidia,NERSC, Lawrence Berkeley National Laboratory,University of Michigan,Rice University,California Institute of Technology,Purdue University",
       "country": "United States of America,United States of America,United States of America,United States of America,United States of America,United States of America",
       "published": "2022-02-22",
       "compute_flop": 3.4504704e+20,
@@ -5321,7 +5321,7 @@
     },
     {
       "model": "GenSLM",
-      "organisation": "University of Chicago,NVIDIA,Harvard University,Cerebras Systems,Technical University of Munich,California Institute of Technology",
+      "organisation": "University of Chicago,Nvidia,Harvard University,Cerebras Systems,Technical University of Munich,California Institute of Technology",
       "country": "United States of America,United States of America,United States of America,United States of America,Germany,United States of America",
       "published": "2022-10-11",
       "compute_flop": 1.42e+21,
@@ -5366,7 +5366,7 @@
     },
     {
       "model": "eDiff-I",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2022-11-02",
       "compute_flop": 5.46e+19,
@@ -5561,7 +5561,7 @@
     },
     {
       "model": "Nucleotide Transformer",
-      "organisation": "NVIDIA,Technical University of Munich,InstaDeep",
+      "organisation": "Nvidia,Technical University of Munich,InstaDeep",
       "country": "United States of America,Germany,United Kingdom",
       "published": "2023-01-15",
       "compute_flop": 8.08e+21,
@@ -6341,7 +6341,7 @@
     },
     {
       "model": "Nemotron-3-8B",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2023-11-15",
       "compute_flop": 1.8e+23,
@@ -6431,7 +6431,7 @@
     },
     {
       "model": "VILA-13B",
-      "organisation": "NVIDIA,Massachusetts Institute of Technology (MIT)",
+      "organisation": "Nvidia,Massachusetts Institute of Technology (MIT)",
       "country": "United States of America,United States of America",
       "published": "2023-12-12",
       "compute_flop": 2.3003136e+21,
@@ -6656,7 +6656,7 @@
     },
     {
       "model": "VILA1.5-13B",
-      "organisation": "NVIDIA,Massachusetts Institute of Technology (MIT)",
+      "organisation": "Nvidia,Massachusetts Institute of Technology (MIT)",
       "country": "United States of America,United States of America",
       "published": "2024-05-03",
       "compute_flop": 2.3003136e+21,
@@ -6761,7 +6761,7 @@
     },
     {
       "model": "Nemotron-4 340B",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2024-06-14",
       "compute_flop": 1.8e+25,
@@ -7016,7 +7016,7 @@
     },
     {
       "model": "Llama-3.1-Nemotron-70B-Instruct",
-      "organisation": "NVIDIA,Meta AI",
+      "organisation": "Nvidia,Meta AI",
       "country": "United States of America,United States of America",
       "published": "2024-10-12",
       "compute_flop": 7.929e+24,
@@ -7061,7 +7061,7 @@
     },
     {
       "model": "NVLM-X 72B",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2024-10-22",
       "compute_flop": 3.0398181e+24,
@@ -7076,7 +7076,7 @@
     },
     {
       "model": "NVLM-H 72B",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2024-10-22",
       "compute_flop": 3.02e+24,
@@ -7091,7 +7091,7 @@
     },
     {
       "model": "NVLM-D 72B",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2024-10-22",
       "compute_flop": 3.02e+24,
@@ -7211,7 +7211,7 @@
     },
     {
       "model": "Eagle 2",
-      "organisation": "NVIDIA,Nanjing University,Tsinghua University,Hong Kong Polytechnic University,Johns Hopkins University,New York University (NYU)",
+      "organisation": "Nvidia,Nanjing University,Tsinghua University,Hong Kong Polytechnic University,Johns Hopkins University,New York University (NYU)",
       "country": "United States of America,China,China,Hong Kong,United States of America,United States of America",
       "published": "2025-01-20",
       "compute_flop": 4.7156e+22,
@@ -7736,7 +7736,7 @@
     },
     {
       "model": "Nemotron 3-Nano-30B-A3B",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2025-12-15",
       "compute_flop": 4.8e+23,
@@ -7931,7 +7931,7 @@
     },
     {
       "model": "Nemotron 3 Ultra",
-      "organisation": "NVIDIA",
+      "organisation": "Nvidia",
       "country": "United States of America",
       "published": "2026-06-04",
       "compute_flop": 6.6e+24,
@@ -8062,6 +8062,51 @@
       "accessibility": "Open weights",
       "hardware": "",
       "reference": "https://z.ai/blog/glm-5.3-flash",
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "model": "WeatherNext 3",
+      "organisation": "Google DeepMind,Google Research",
+      "country": "United States of America,United States of America",
+      "published": "2026-09-03",
+      "compute_flop": 2.0725198384e+23,
+      "parameters": null,
+      "confidence": "Speculative",
+      "domain": "Earth science",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "",
+      "reference": "https://arxiv.org/abs/2609.03582 \n\nhttps://blog.google/innovation-and-ai/models-and-research/google-deepmind/introducing-weathernext-3/",
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "model": "GPT-6 Astra",
+      "organisation": "OpenAI",
+      "country": "United States of America",
+      "published": "2026-09-03",
+      "compute_flop": 1.0001e+27,
+      "parameters": null,
+      "confidence": "Likely",
+      "domain": "Multimodal,Language,Vision",
+      "cost_usd": null,
+      "accessibility": "API only",
+      "hardware": "NVIDIA GB200",
+      "reference": "",
+      "source_id": "epoch-notable-models"
+    },
+    {
+      "model": "DeepSeek V4.1 Flash",
+      "organisation": "DeepSeek",
+      "country": "China",
+      "published": "2026-09-09",
+      "compute_flop": 4.32e+24,
+      "parameters": 748000000000.0,
+      "confidence": "Likely",
+      "domain": "Language,Vision,Multimodal",
+      "cost_usd": null,
+      "accessibility": "Open weights",
+      "hardware": "",
+      "reference": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf \n\nhttps://www.deepseek.com/en/news/deepseek-v4-1-flash/",
       "source_id": "epoch-notable-models"
     }
   ]

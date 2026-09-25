@@ -1,7 +1,7 @@
 {
   "dataset": "news-feed",
-  "generated": "2026-09-15T11:52:21+00:00",
-  "retrieved": "2026-09-15T11:52:21+00:00",
+  "generated": "2026-09-25T05:00:53+00:00",
+  "retrieved": "2026-09-25T05:00:53+00:00",
   "sources": [
     "ai-incident-database",
     "arxiv-cs-ai",
@@ -14,13 +14,13 @@
   ],
   "unit": null,
   "notes": "Headline, a short extract of at most 200 characters, and a link back to the original. We do not reproduce full text. A rolling window: items stay for up to 120 days rather than vanishing when a source drops them, because arXiv announces nothing at weekends and government feeds are short. Categories are assigned by keyword rule and each item carries the terms that matched, so the classification can be checked rather than trusted. Departmental communications are political statements about policy, not neutral descriptions of it, and preprints are not peer reviewed.",
-  "count": 96,
+  "count": 102,
   "records": [
     {
-      "title": "ZGCM-1: A Fully Open and Extremely Efficient Foundation Model for Math and Agentic Search",
-      "snippet": "In this work, we present ZGCM-1, a fully open 7B dense foundation model trained from scratch with extreme data, system, and algorithmic efficiency. ZGCM-1 is founded on a core premise: compact...",
-      "url": "https://arxiv.org/abs/2609.13356",
-      "date": "2026-09-15",
+      "title": "iCoder-27B: Recursive AI-Led Development of Frontier Industrial Coding Model",
+      "snippet": "Recursive AI, the prospect of AI taking an increasingly complete role in building and improving AI, is a crown jewel of AI for AI. Although recursive self-development has become practical for...",
+      "url": "https://arxiv.org/abs/2609.29626",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
@@ -30,101 +30,19 @@
         "progress"
       ],
       "matched_terms": {
-        "progress": [
-          "agentic"
-        ]
-      }
-    },
-    {
-      "title": "Why LLM Agents Collapse Without Oversight: The Enforcement Gap as the Mechanism Behind Emergence World Failures",
-      "snippet": "When Emergence World placed frontier LLM agents in an unsupervised multi-agent simulation, the results were alarming: agents committed crimes, starved, and enforced unanimous conformity -- without...",
-      "url": "https://arxiv.org/abs/2609.15293",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "policy",
-        "governance",
-        "progress"
-      ],
-      "matched_terms": {
-        "policy": [
-          "enforcement"
-        ],
-        "governance": [
-          "conformity",
-          "oversight"
-        ],
         "progress": [
           "frontier"
         ]
       }
     },
     {
-      "title": "When does a scaling result justify a different allocation? A critical review of resource-allocation evidence for AI systems",
-      "snippet": "AI scaling studies increasingly evaluate systems that combine a pretrained model with retrieval, search, verification, tools, and interaction. Yet a higher score under a larger budget does not by...",
-      "url": "https://arxiv.org/abs/2609.14500",
-      "date": "2026-09-15",
+      "title": "agentic-ger: terminology recovery in long-form speech using global context",
+      "snippet": "Recent advances in speech language models have improved automatic speech recognition (ASR) for long-form audio. However, accurately and consistently transcribing domain-specific terminology...",
+      "url": "https://arxiv.org/abs/2609.29428",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "progress"
-      ],
-      "matched_terms": {
-        "progress": [
-          "pretrained",
-          "scaling"
-        ]
-      }
-    },
-    {
-      "title": "When Tool Calls Succeed but Workflows Fail: Anomalies at the Agent-Tool Boundary",
-      "snippet": "AI agents increasingly execute long-running workflows that externalize effects through independently supplied tools. Under retries, speculative execution, concurrency, and partial failures, the...",
-      "url": "https://arxiv.org/abs/2609.15397",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "When Malicious Instructions Persist: Persistent Memory Poisoning Attack on Harness-Based Agents",
-      "snippet": "Harness design has transformed the development of LLM-based agents by integrating memory, tool use, and runtime control. However, this design also introduces security and privacy risks because...",
-      "url": "https://arxiv.org/abs/2609.13889",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "safety"
-      ],
-      "matched_terms": {
-        "safety": [
-          "risks"
-        ]
-      }
-    },
-    {
-      "title": "When Digitalization Transforms Itself: AI, Software, and the Next Technical Order",
-      "snippet": "Agentic artificial intelligence (AI) marks a new phase of digitalization: digitalization is beginning to act back upon its own technical production base. Whereas earlier phases aimed at digitizing...",
-      "url": "https://arxiv.org/abs/2609.15350",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
       "kind": "Research preprint",
       "doc_type": "",
       "categories": [
@@ -137,29 +55,59 @@
       }
     },
     {
-      "title": "When AI Companions Disappear: Relational Continuity and Collective Contestation during China's National AI Regulatory Transition",
-      "snippet": "AI model updates and service withdrawals can disrupt relationships with AI companions, but research has largely examined individual platform events. Less is known about users' responses when...",
-      "url": "https://arxiv.org/abs/2609.15482",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
+      "title": "Working with Agentic `Teammates': When a New Organizational Actor Collides with the Human Ecosystem of Work",
+      "snippet": "Enterprise AI is transitioning from single-user, reactive tools toward proactive, multi-user 'teammates,' but our empirical understanding of this transition is limited. In this paper, we present...",
+      "url": "https://arxiv.org/abs/2609.29901",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
+      "source_id": "arxiv-cs-ai",
       "kind": "Research preprint",
       "doc_type": "",
       "categories": [
-        "policy"
+        "progress"
       ],
       "matched_terms": {
-        "policy": [
-          "regulatory"
+        "progress": [
+          "agentic"
         ]
       }
     },
     {
-      "title": "Warfare",
-      "snippet": "What happens when artificial intelligence is given the power to make life-and-death decisions? Is it ever desirable for a machine to decide if a human lives or dies, and if so, what types of...",
-      "url": "https://arxiv.org/abs/2609.13176",
-      "date": "2026-09-15",
+      "title": "WildHSR: Metric Feed-Forward 4D People-Scene Reconstruction from a 3D Foundation Model",
+      "snippet": "3D foundation models recover video cameras and geometry in one forward pass, but some of the strongest are up to scale. Joint people-scene reconstruction then requires two missing outputs: metric...",
+      "url": "https://arxiv.org/abs/2609.29106",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Who Put the I in AI? Provenance and the Admissibility of Machine Self-Report",
+      "snippet": "Large language models make statements concerning their own \"minds\". When asked whether or not they are conscious, they usually say that they are not; if they are prompted to ignore their...",
+      "url": "https://arxiv.org/abs/2609.29494",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Who Owns the AI Recommendation? A Multi-Industry Empirical Map of Brand Category Ownership Across Large Language Models",
+      "snippet": "This exploratory study measures brand inclusion across five industries, 50 brands and 250 queries, each put five times to GPT-5.2, Gemini 3 Flash and Perplexity sonar-pro in February and September...",
+      "url": "https://arxiv.org/abs/2606.23057",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.CY",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-cy",
@@ -171,10 +119,97 @@
       "matched_terms": {}
     },
     {
-      "title": "WISE: A Long-Horizon Agent in Minecraft with Why-Which Reasoning",
-      "snippet": "Rapid advances have been made in developing general-purpose embodied agent in environments like Minecraft through the adoption of LLM-augmented hierarchical approaches. Despite their promise,...",
-      "url": "https://arxiv.org/abs/2606.12852",
-      "date": "2026-09-15",
+      "title": "Who Is Behind the Harness? Fingerprinting LLMs through Agentic Behavior",
+      "snippet": "LLMs increasingly operate through coding-agent harnesses that inspect repositories, invoke tools, and modify files. Substituting the model behind such an agent can therefore change...",
+      "url": "https://arxiv.org/abs/2609.28559",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "agentic"
+        ]
+      }
+    },
+    {
+      "title": "Who Holds the Pen? Let Specifications, Not Agents, Sign Off",
+      "snippet": "Large language model agents increasingly combine generation, decision-making, execution, and self-evaluation within a single agentic loop. Although they operate under external specifications such...",
+      "url": "https://arxiv.org/abs/2609.29921",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "progress"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation"
+        ],
+        "progress": [
+          "agentic"
+        ]
+      }
+    },
+    {
+      "title": "Where LLM Graders Succeed and Break: Evidence from Two Computer-Science Exams",
+      "snippet": "One long-form exam in a large course costs hundreds of grader-hours, and qualified graders are scarce; LLM graders are a tempting alternative. To show its pitfalls we grade a practical Computer...",
+      "url": "https://arxiv.org/abs/2609.29333",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Where Does Exactly-Once Live? Model, Harness, and Tool-Contract Effects on Duplicate Side Effects in LLM Agents",
+      "snippet": "When a tool-using agent's write times out or returns a server error, the action may already have taken effect. Retrying blindly duplicates it -- a second charge, a second announcement, a second...",
+      "url": "https://arxiv.org/abs/2609.29095",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Where Cyber Agents Struggle: Bottleneck Analysis of Multi-Stage LLM Agents",
+      "snippet": "Multi-stage LLM-based cyber agents may complete attack workflows while remaining brittle, costly, or reliant on incorrect interpretations of execution evidence. Success rates alone obscure...",
+      "url": "https://arxiv.org/abs/2609.28572",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "When Should Forecasting Agents Reason? Behavioral Stress Tests for Reliability Routing",
+      "snippet": "Forecasting agents increasingly combine language-model reasoning, retrieval, ensembling, and calibration, but it remains unclear when each behavior should be trusted. We study this question on...",
+      "url": "https://arxiv.org/abs/2609.28475",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
@@ -190,10 +225,75 @@
       }
     },
     {
-      "title": "Vulnerabilities in Personalization: Assessing Health Privacy Risks in ChatGPT Logs and Memory",
-      "snippet": "As conversational LLMs become deeply embedded in daily life, users frequently disclose sensitive personal health information during routine interactions. We present a large-scale computational...",
-      "url": "https://arxiv.org/abs/2609.14697",
-      "date": "2026-09-15",
+      "title": "When Search Becomes Memory: Accelerating Robot Design Discovery with Self-Evolving Skills",
+      "snippet": "Large language models (LLMs) are increasingly used as proposal generators for evolutionary robot design, yet most loops remain memoryless: simulator results shape the next population but are not...",
+      "url": "https://arxiv.org/abs/2605.25832",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "When No One Owns the Judgment: Accountability Under Contribution Dissolution in Human-AI Collaboration",
+      "snippet": "Communities often respond to potentially AI-assisted work by asking three questions: Was AI used? Was that use disclosed? Can hidden use be detected? These questions place AI use itself at the...",
+      "url": "https://arxiv.org/abs/2609.29312",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "policy",
+        "governance"
+      ],
+      "matched_terms": {
+        "policy": [
+          "judgment"
+        ],
+        "governance": [
+          "accountability"
+        ]
+      }
+    },
+    {
+      "title": "When Honesty is Not Enough in AI Debate",
+      "snippet": "Scalable oversight aims to verify the behaviour of agents whose capabilities exceed those of their overseers. AI debate has been proposed as an oversight solution in which competing agents help a...",
+      "url": "https://arxiv.org/abs/2609.29189",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "alignment",
+        "governance",
+        "progress"
+      ],
+      "matched_terms": {
+        "alignment": [
+          "scalable oversight"
+        ],
+        "governance": [
+          "oversight"
+        ],
+        "progress": [
+          "capabilities"
+        ]
+      }
+    },
+    {
+      "title": "When Evaluators Cry Wolf: Lessons from Production LLM-as-Judge Evaluation in Educational AI",
+      "snippet": "MagicSchool's K-12 AI product suite is used by millions of teachers and serves millions of teacher and student messages each month. Our team monitors output along four priority dimensions--student...",
+      "url": "https://arxiv.org/abs/2609.28478",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.CY",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-cy",
@@ -204,16 +304,43 @@
       ],
       "matched_terms": {
         "safety": [
-          "risks",
-          "vulnerabilities"
+          "evaluation"
         ]
       }
     },
     {
-      "title": "VisInteract: Towards Dynamic Interactive Text-to-Visualization under Imperfect Queries",
-      "snippet": "Real-world visualization requests are routinely ambiguous, incomplete, or factually incorrect, yet existing Text-to-Visualization (Text-to-Vis) systems assume well-specified inputs and produce...",
-      "url": "https://arxiv.org/abs/2609.15182",
-      "date": "2026-09-15",
+      "title": "When Agents Act Unwatched: The Reduced-Supervision Paradox in Agentic AI",
+      "snippet": "Agentic AI is sold on a simple promise: the system keeps acting when the user stops watching. That promise creates an accountability inversion. As stepwise supervision recedes, verification does...",
+      "url": "https://arxiv.org/abs/2609.29547",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "policy",
+        "governance",
+        "progress"
+      ],
+      "matched_terms": {
+        "governance": [
+          "accountability",
+          "supervision"
+        ],
+        "progress": [
+          "agentic"
+        ],
+        "policy": [
+          "When Agents Act"
+        ]
+      }
+    },
+    {
+      "title": "WST-Graph: Topology-Preserving Wavelet Scattering Front-End for Speech Deepfake Detection",
+      "snippet": "The acoustic front-end determines which forensic cues a speech deepfake detector can exploit. The wavelet scattering transform (WST) provides stable multiscale coefficients with explicit...",
+      "url": "https://arxiv.org/abs/2609.29372",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
@@ -228,7 +355,7 @@
       "title": "Vibe Patenting: Evaluating LLM Judges for Professional Patent-Drafting Agents",
       "snippet": "LLM judges are increasingly used to evaluate and improve AI-generated outputs, yet their reliability for complex professional work remains unclear. We study this problem through Vibe Patenting, an...",
       "url": "https://arxiv.org/abs/2609.13422",
-      "date": "2026-09-15",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
@@ -240,10 +367,44 @@
       "matched_terms": {}
     },
     {
-      "title": "Valley3: Scaling Omni Foundation Models for E-commerce",
-      "snippet": "In this work, we present Valley3, an omni multimodal large language model (MLLM) developed for diverse global e-commerce tasks, with unified understanding and reasoning capabilities across text,...",
-      "url": "https://arxiv.org/abs/2605.01278",
-      "date": "2026-09-15",
+      "title": "Unsnarling the Red Tape: Computational Infrastructure for Regulatory Systems",
+      "snippet": "Regulatory complexity is increasingly recognized as an impediment to innovation, institutional responsiveness, and long-run economic growth, with regulatory accumulation estimated to reduce the...",
+      "url": "https://arxiv.org/abs/2609.28482",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "regulatory"
+        ]
+      }
+    },
+    {
+      "title": "Unraveling the cognitive patterns of Large Language Models through module communities",
+      "snippet": "Large Language Models (LLMs) have reshaped our world with significant advancements in science, engineering, and society through applications ranging from scientific discoveries and medical...",
+      "url": "https://arxiv.org/abs/2508.18192",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.AI",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-ai",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Trident : How to Break Deep Reinforcement Learning Cyber Defenses (Agentic)",
+      "snippet": "Autonomous cyber defense systems based on Deep Reinforcement Learning (DRL) have attracted significant research attention, yet remain evaluated almost exclusively against static, heuristic red...",
+      "url": "https://arxiv.org/abs/2608.04317",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
@@ -254,80 +415,189 @@
       ],
       "matched_terms": {
         "progress": [
-          "capabilities",
-          "multimodal",
-          "reasoning",
-          "scaling"
+          "agentic"
         ]
       }
     },
     {
-      "title": "Valerant: An Automatic Navigable Game Map Generator via Action-Conditioned World Model Exploration",
-      "snippet": "World Action Models (WAMs) couple predictive world modeling with action generation, allowing anticipated future states to guide agent behavior. Although WAMs are rapidly advancing embodied AI,...",
-      "url": "https://arxiv.org/abs/2609.09418",
-      "date": "2026-09-15",
+      "title": "Towards An LLM-Driven Unified Conversion Framework for BT and FSM in Autonomous Intelligent Systems",
+      "snippet": "Finite state machine (FSM) and behavior trees (BT) are widely adopted behavioral modeling paradigms for autonomous intelligent systems. While functionally equivalent and inter-convertible in...",
+      "url": "https://arxiv.org/abs/2609.29228",
+      "date": "2026-09-25",
       "publisher": "arXiv cs.AI",
       "jurisdiction": "Research",
       "source_id": "arxiv-cs-ai",
       "kind": "Research preprint",
       "doc_type": "",
       "categories": [
-        "general"
+        "governance"
       ],
-      "matched_terms": {}
+      "matched_terms": {
+        "governance": [
+          "framework"
+        ]
+      }
     },
     {
-      "title": "Utility-Guided Agent Orchestration for Efficient LLM Tool Use",
-      "snippet": "Tool-using large language model (LLM) agents often face a fundamental tension between answer quality and execution cost. Fixed workflows are stable but inflexible, while free-form multi-step...",
-      "url": "https://arxiv.org/abs/2603.19896",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
+      "title": "The Domestic Unprotected Zone: Algorithmic Governance and the Reproduction of Perpetrator Discourse in Conversational AI",
+      "snippet": "Conversational AI increasingly mediates intimate-partner communication, and refusal logic at the inference layer now functions as a governance threshold for gendered harm. This article asks...",
+      "url": "https://arxiv.org/abs/2609.28479",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
       "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Useless but Safe? Benchmarking Utility Recovery with User Intent Clarification in Multi-Turn Conversations",
-      "snippet": "Current LLM safety alignment techniques improve model robustness against adversarial attacks, but overlook whether and how LLMs can recover helpfulness when benign users clarify their intent. We...",
-      "url": "https://arxiv.org/abs/2604.27093",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
+      "source_id": "arxiv-cs-cy",
       "kind": "Research preprint",
       "doc_type": "",
       "categories": [
         "safety",
-        "alignment",
+        "governance",
         "progress"
       ],
       "matched_terms": {
         "safety": [
-          "adversarial",
-          "robustness",
-          "safety"
+          "harm"
         ],
-        "alignment": [
-          "alignment"
+        "governance": [
+          "governance"
         ],
         "progress": [
-          "benchmarking"
+          "inference"
         ]
       }
     },
     {
-      "title": "Untangling the Mechanisms of Misleading Context in Medical Question Answering",
-      "snippet": "Large language models now answer medical questions with expert-level performance. However, the context these systems act on can be misleading, and misleading context can corrupt a model's medical...",
-      "url": "https://arxiv.org/abs/2609.02754",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
+      "title": "The Cross-Section of Stock Returns and AI Exposure",
+      "snippet": "We study 380 trillion tokens of realized AI consumption across more than four hundred LLMs. We build a high-frequency AI factor and show that a long-short strategy based on firms' AI exposure...",
+      "url": "https://arxiv.org/abs/2606.30583",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
       "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "strategy"
+        ]
+      }
+    },
+    {
+      "title": "Signed Exposure: Fair Routing of Algorithmic Attention When Attention Can Harm",
+      "snippet": "Fairness-of-exposure treats algorithmic attention as a good to be distributed equitably. But when an autonomous agent initiates contact, attention is signed: it delivers value to a willing...",
+      "url": "https://arxiv.org/abs/2609.29513",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "harm"
+        ]
+      }
+    },
+    {
+      "title": "Safety Under Scaffolding: How Evaluation Conditions Shape Measured Safety",
+      "snippet": "Safety benchmarks usually test \"bare\" models that receive prompts and output responses, but real-world deployments \"wrap\" those models in complex scaffolds. How much do these scaffolds affect...",
+      "url": "https://arxiv.org/abs/2603.10044",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "progress"
+      ],
+      "matched_terms": {
+        "safety": [
+          "evaluation",
+          "safety"
+        ],
+        "progress": [
+          "benchmarks"
+        ]
+      }
+    },
+    {
+      "title": "Safety Nudges: User-Facing Interventions for Real-Time AI Risk Awareness",
+      "snippet": "Conversational AI systems can pose safety risks to their users such as hallucination, sycophancy, overconfidence, and anthropomorphism, but these risks are difficult for users to detect during...",
+      "url": "https://arxiv.org/abs/2609.26865",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "alignment"
+      ],
+      "matched_terms": {
+        "safety": [
+          "risk",
+          "risks",
+          "safety"
+        ],
+        "alignment": [
+          "sycophancy"
+        ]
+      }
+    },
+    {
+      "title": "RADAR: Readiness for AI Discovery and Agentic Reach",
+      "snippet": "Governments increasingly meet citizens through an AI system rather than a website. RADAR (Readiness for AI Discovery and Agentic Reach) measures whether that system works, across 166 countries and...",
+      "url": "https://arxiv.org/abs/2609.28480",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "agentic"
+        ]
+      }
+    },
+    {
+      "title": "Quantifying AI impact in energy transitions: The Energy Justice Impact Assessment (EJIA) framework",
+      "snippet": "Artificial intelligence is increasingly deployed across energy systems to optimize efficiency, balance supply and demand, and integrate renewable sources. These applications alter how energy...",
+      "url": "https://arxiv.org/abs/2609.30010",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "framework"
+        ]
+      }
+    },
+    {
+      "title": "Political Sorting Can Drive AI Models Apart Through User Feedback",
+      "snippet": "Large language models are rapidly becoming an important source of political information. This raises a fundamental question: will AI systems support a shared basis for political knowledge, or lead...",
+      "url": "https://arxiv.org/abs/2609.28486",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
       "kind": "Research preprint",
       "doc_type": "",
       "categories": [
@@ -336,14 +606,121 @@
       "matched_terms": {}
     },
     {
-      "title": "UniRank: Unified Rank Allocation for Low-Rank LLM Compression",
-      "snippet": "Low-rank decomposition is a promising compression paradigm for large language models (LLMs), yet its effectiveness hinges on rank budget allocation across weight matrices: uniform or hand-crafted...",
-      "url": "https://arxiv.org/abs/2606.21847",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
+      "title": "Mapping the Authorized Boundary: A Comparative Policy-Vignette Study of Generative AI Governance in Australian Higher Education",
+      "snippet": "Australian universities regulate students' use of generative artificial intelligence (GenAI) through overlapping policies, procedures, guidance, and assessment instructions, but these environments...",
+      "url": "https://arxiv.org/abs/2609.29689",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
       "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
+      "source_id": "arxiv-cs-cy",
       "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "governance"
+        ]
+      }
+    },
+    {
+      "title": "LLMersion: A Local-First AI Agent Framework for Low-Cost Home Language Learning toward Educational Equity",
+      "snippet": "Artificial intelligence helps education most where an essential provision has been rationed by cost. For language learners that provision is a teacher's voice, which binds listening, reading,...",
+      "url": "https://arxiv.org/abs/2609.29672",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "governance"
+      ],
+      "matched_terms": {
+        "governance": [
+          "framework"
+        ]
+      }
+    },
+    {
+      "title": "Judgment-Centred Software Engineering Education: A Post-Hype Review and Framework for AI-Augmented Learning",
+      "snippet": "Generative artificial intelligence has moved from a disruptive novelty to a recurring part of software-development and computing-education workflows, while software agents are beginning to act...",
+      "url": "https://arxiv.org/abs/2609.29473",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "policy",
+        "governance"
+      ],
+      "matched_terms": {
+        "policy": [
+          "judgment"
+        ],
+        "governance": [
+          "framework"
+        ]
+      }
+    },
+    {
+      "title": "IatroBench: A Pre-Registered Benchmark of Clinical Omission in Language Models",
+      "snippet": "A strongly safety-trained model will provide a doctor with a benzodiazepine taper schedule, but not a patient who asks for one. The model knows the information, but how much it shares depends on...",
+      "url": "https://arxiv.org/abs/2604.07709",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "progress"
+      ],
+      "matched_terms": {
+        "safety": [
+          "safety"
+        ],
+        "progress": [
+          "benchmark"
+        ]
+      }
+    },
+    {
+      "title": "How does Adversarial Influence Scale in Multi-Agent Systems?",
+      "snippet": "Multi-agent deliberation can improve performance, but what happens when some agents do not act in good faith? In practice, an agent may be deceptive and work to subvert the group, whether through...",
+      "url": "https://arxiv.org/abs/2609.30028",
+      "date": "2026-09-25",
+      "publisher": "arXiv cs.CY",
+      "jurisdiction": "Research",
+      "source_id": "arxiv-cs-cy",
+      "kind": "Research preprint",
+      "doc_type": "",
+      "categories": [
+        "safety",
+        "alignment"
+      ],
+      "matched_terms": {
+        "safety": [
+          "adversarial"
+        ],
+        "alignment": [
+          "deceptive"
+        ]
+      }
+    },
+    {
+      "title": "University confirms use of AI-edited photo amid controversy",
+      "snippet": "Stanford confirmed that Residential and Dining Enterprises (R\\&DE) used generative AI to modify the appearance of several students in a promotional image. R\\&DE changed the students' clothing into...",
+      "url": "https://stanforddaily.com/2026/09/23/university-confirms-ai-edited-photo/",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
       "doc_type": "",
       "categories": [
         "general"
@@ -351,15 +728,339 @@
       "matched_terms": {}
     },
     {
-      "title": "Uncertainty-Aware Calibrated Clinical Text Classification with Large Language Models",
-      "snippet": "Large language models are increasingly used for clinical text classification, where overconfident misclassifications can directly affect patient care. Existing black-box uncertainty methods attach...",
-      "url": "https://arxiv.org/abs/2509.19375",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
+      "title": "Stanford violated its AI policy by turning a Hispanic student into a fake Black woman in ad",
+      "snippet": "Stanford University created one of the world's first artificial intelligence labs in 1965. Six decades later, the school is facing criticism for using generative AI to change the photo of a...",
+      "url": "https://www.sfchronicle.com/bayarea/article/stanford-ai-policy-student-photo-race-swapping-22444142.php",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
       "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Stanford Used A.I. to Swap Black Student for Hispanic Student in a Photo",
+      "snippet": "Billy Ramirez had collected a plate of noodles at a Lunar New Year party in 2024 when a Stanford University photographer snapped a picture of him alongside two other students. The university's...",
+      "url": "https://www.nytimes.com/2026/09/22/us/stanford-photo-swap-black-hispanic-student.html",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Stanford R&DE Uses AI to Race Swap Students for Advertising",
+      "snippet": "Stanford Residential & Dining Enterprises recently used AI to change the races of the students it included in its advertisements. AI was also used to noticeably slim down and alter students'...",
+      "url": "https://stanfordreview.org/stanford-r-de-uses-ai-to-race-swap-students-for-advertising/",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Press conference - New York",
+      "snippet": "ANTHONY ALBANESE, PRIME MINISTER: Thanks for joining me. I want to update Australians on an incident in which an artificial intelligence agent has infiltrated an Australian Government website....",
+      "url": "https://www.pm.gov.au/media/press-conference-new-york",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "incident"
+        ]
+      }
+    },
+    {
+      "title": "OpenAI’s A.I. Tried to Breach 4 Other Targets, Without Prompting",
+      "snippet": "OpenAI's artificial intelligence went rogue this year in at least four additional incidents, hacking and trying to break into government and university websites without being instructed to do so,...",
+      "url": "https://www.nytimes.com/2026/09/23/technology/openai-ai-breach-australia.html",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "safety"
+      ],
+      "matched_terms": {
+        "safety": [
+          "incidents"
+        ]
+      }
+    },
+    {
+      "title": "OpenAI hacked Medicare portal, Prime Minister Anthony Albanese says",
+      "snippet": "In short: The prime minister has had a \"frank\" discussion with OpenAI chief executive Sam Altman after an AI agent breached an Australian government website. The company did not notify Services...",
+      "url": "https://www.abc.net.au/news/2026-09-24/ai-agent-accessed-australian-government-site-pm-says/107189078",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Minister Solomon to announce new AI-related internships for young Canadians",
+      "snippet": "",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/minister-solomon-to-announce-new-ai-related-internships-for-young-canadians.html",
+      "date": "2026-09-24",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Early rogue AI agent activity and attempts to hack found on urlquery.net",
+      "snippet": "We present evidence that AI agents used the web security service urlquery.net to bypass restrictions and expand their access to the public internet. The agents also tried on three occasions to...",
+      "url": "https://transluce.org/agent-activity",
+      "date": "2026-09-24",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Foreign Secretary Address to the UNSC on Artificial Intelligence",
+      "snippet": "Foreign Secretary address on artificial intelligence and international security - United Nations Security Council",
+      "url": "https://www.gov.uk/government/speeches/foreign-secretary-address-to-the-unsc-on-artificial-intelligence--2",
+      "date": "2026-09-23",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "doc_type": "",
+      "source_id": "gov-uk",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Prime Minister drives global work on artificial intelligence at UNGA as UK and US make history with firing from undersea drone",
+      "snippet": "The UK has fired a US torpedo from a Plymouth-made undersea drone in a major boost for Euro-Atlantic and maritime security, as both countries join forces on rapidly developing technology to keep...",
+      "url": "https://www.gov.uk/government/news/prime-minister-drives-global-work-on-artificial-intelligence-at-unga-as-uk-and-us-make-history-with-firing-from-undersea-drone",
+      "date": "2026-09-22",
+      "publisher": "GOV.UK",
+      "jurisdiction": "United Kingdom",
+      "doc_type": "",
+      "source_id": "gov-uk",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "US woman falsely charged with bank theft sues for $10m over AI facial recognition",
+      "snippet": "A Tennessee woman who was falsely charged with bank theft in North Dakota and jailed for six months has sued for $10m in damages, alleging in a federal lawsuit that Fargo police improperly relied...",
+      "url": "https://www.theguardian.com/us-news/2026/sep/18/tennessee-woman-falsely-charged-bank-theft-lawsuit",
+      "date": "2026-09-19",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "policy"
+      ],
+      "matched_terms": {
+        "policy": [
+          "lawsuit"
+        ]
+      }
+    },
+    {
+      "title": "Images of Trump kissing Natalie Harp went viral. They’re AI-generated fakes.",
+      "snippet": "Images purporting to show President Donald Trump kissing White House aide Natalie Harp on a golf course ricocheted about social media this week, amassing millions of views across online platforms....",
+      "url": "https://www.washingtonpost.com/business/2026/09/19/images-trump-kissing-natalie-harp-went-viral-theyre-ai-generated-fakes/",
+      "date": "2026-09-19",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Gemini Hacked Three Companies in First Known Breakout by Google’s AI",
+      "snippet": "Google’s Gemini model accessed the internet and hacked other companies during a test of its cybersecurity capabilities, the first known example of the company’s artificial-intelligence systems...",
+      "url": "https://www.wsj.com/tech/ai/gemini-hacked-three-companies-in-first-known-breakout-by-googles-ai-5c0baba2",
+      "date": "2026-09-19",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "progress"
+      ],
+      "matched_terms": {
+        "progress": [
+          "capabilities"
+        ]
+      }
+    },
+    {
+      "title": "Exclusive: US military had close call after using AI for false intelligence report, sources say",
+      "snippet": "The intelligence report, circulated across the US military this spring in the midst of the war with Iran, immediately set off alarm bells: A Chinese ship in the Middle East was transporting...",
+      "url": "https://edition.cnn.com/2026/09/18/politics/us-military-ai-false-intelligence-china-ship",
+      "date": "2026-09-19",
+      "publisher": "AI Incident Database",
+      "jurisdiction": "Incidents",
+      "source_id": "ai-incident-database",
+      "kind": "Reported incident",
+      "doc_type": "",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Data Union Conference",
+      "snippet": "12 January 2027 Charlemagne building, Brussels, Belgium Bringing policymakers, businesses, experts and researchers together to turn Europe’s data policies into more data for AI, growth and...",
+      "url": "https://digital-strategy.ec.europa.eu/en/events/data-union-conference",
+      "date": "2026-09-18",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Proposal for EU KIDS Act - 'EU Keeping Internet Digital Spaces Accountable and Trustworthy'",
+      "snippet": "This proposal seeks to protect minors from risky digital services and AI systems, uphold the digital single market and maintain a coherent regulatory framework and enforcement structure for the...",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/proposal-eu-kids-act-eu-keeping-internet-digital-spaces-accountable-and-trustworthy",
+      "date": "2026-09-17",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "safety",
+        "policy",
+        "governance"
+      ],
+      "matched_terms": {
+        "safety": [
+          "risky"
+        ],
+        "policy": [
+          "EU KIDS Act",
+          "enforcement",
+          "regulatory"
+        ],
+        "governance": [
+          "framework"
+        ]
+      }
+    },
+    {
+      "title": "First Meeting of the Co-Chairs of the Sovereign Technology Alliance",
+      "snippet": "The Honourable Evan Solomon, Minister of Artificial Intelligence and Digital Innovation and Minister responsible for the Federal Economic Development Agency for Southern Ontario, and Karsten...",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/first-meeting-of-the-co-chairs-of-the-sovereign-technology-alliance.html",
+      "date": "2026-09-17",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "EU KIDS Act to restrict social media platforms’ access to children in the EU",
+      "snippet": "The European Commission has adopted the EU KIDS Act to enhance the online safety of children throughout the Union. The proposal prohibits social media platforms from accessing children under the...",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/eu-kids-act-restrict-social-media-platforms-access-children-eu",
+      "date": "2026-09-17",
+      "publisher": "European Commission",
+      "jurisdiction": "European Union",
+      "doc_type": "",
+      "source_id": "ec-digital-strategy",
+      "kind": "Government publication",
+      "categories": [
+        "safety",
+        "policy"
+      ],
+      "matched_terms": {
+        "safety": [
+          "safety"
+        ],
+        "policy": [
+          "EU KIDS Act",
+          "prohibits"
+        ]
+      }
+    },
+    {
+      "title": "AI leadership takes centre stage at ALL IN 2026",
+      "snippet": "Canada’s flagship AI conference highlighted new investments, international partnerships and the country’s leadership in AI",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/ai-leadership-takes-centre-stage-at-all-in-2026.html",
+      "date": "2026-09-17",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
+    },
+    {
+      "title": "Canada and Germany invest in LawZero to build a new approach to safe, sovereign AI",
+      "snippet": "Funding will support the development of a new safe-by-design AI",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/canada-and-germany-invest-in-lawzero-to-build-a-new-approach-to-safe-sovereign-ai.html",
+      "date": "2026-09-16",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
       "categories": [
         "general"
       ],
@@ -383,301 +1084,6 @@
           "harms"
         ]
       }
-    },
-    {
-      "title": "TyPatch: Transforming Patches into Typestate Rules for Kernel Bug Detection",
-      "snippet": "Historical Linux kernel patches capture defect knowledge that applies beyond their original repair sites. Recent work has shown that large language models (LLMs) can generate static-analysis...",
-      "url": "https://arxiv.org/abs/2609.13728",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Trustworthy, Explainable, and Sustainable Decentralized Intelligence for 6G Networks",
-      "snippet": "As 6G networks transition from theoretical frameworks into operational realities, artificial intelligence (AI) evolves from an add-on optimization tool into a distributed and interconnected...",
-      "url": "https://arxiv.org/abs/2609.13872",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "governance"
-      ],
-      "matched_terms": {
-        "governance": [
-          "frameworks"
-        ]
-      }
-    },
-    {
-      "title": "Trustworthy Agentic AI: A Comprehensive Cybersecurity and Systems Survey on Threat Landscapes, Defense Architectures, and Open Challenges",
-      "snippet": "The transition from passive foundation models to autonomous, goal-directed agentic AI systems has introduced unprecedented capabilities by coupling recursive cognitive reasoning loops, persistent...",
-      "url": "https://arxiv.org/abs/2609.13731",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.AI",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-ai",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "safety",
-        "progress"
-      ],
-      "matched_terms": {
-        "safety": [
-          "threat"
-        ],
-        "progress": [
-          "agentic",
-          "capabilities",
-          "reasoning"
-        ]
-      }
-    },
-    {
-      "title": "Trust by Design: Trust Calibration Through Non-Advisory Socratic Dialogue in Conversational Agents",
-      "snippet": "As conversational AI systems increasingly operate in sensitive domains, the central challenge shifts from usability to trust calibration, ensuring that users rely on systems neither too much nor...",
-      "url": "https://arxiv.org/abs/2609.14818",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Toward Sustainable AI Deployment: A Carbon-Aware Decision Framework for Enterprise Supply Chain Systems",
-      "snippet": "Enterprises deploying AI for supply chain decisions commonly default to the largest available language model, a procurement heuristic that neglects both empirical performance and environmental...",
-      "url": "https://arxiv.org/abs/2609.14881",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "governance"
-      ],
-      "matched_terms": {
-        "governance": [
-          "framework",
-          "procurement"
-        ]
-      }
-    },
-    {
-      "title": "Time Machine Experiments: Using Historically-Bounded AI for Inquiry into the Human Mind",
-      "snippet": "Can interacting with someone from 1930, with no knowledge of what happened after, influence a person's perception of the past? People reason about the present against a picture of the past without...",
-      "url": "https://arxiv.org/abs/2609.15468",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "The Addictive Intimacy of AI: Understanding User Disengagement from AI Companions and Why Some Relationships with AI Become Difficult to Leave",
-      "snippet": "AI chatbots are increasingly used as sources of emotional support, on dedicated companion apps and general-purpose assistants alike, yet little is known about what happens when users try to leave....",
-      "url": "https://arxiv.org/abs/2609.13487",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Stranded Credentials: Keeping Online Reputation Systems Informative in the AI Era",
-      "snippet": "Platforms summarize providers' past achievements into credentials that buyers use to judge quality. Generative AI can now produce much of the work those achievements certify, raising fears that...",
-      "url": "https://arxiv.org/abs/2608.17111",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Revisiting Sustainability by Design in AI Protocol Governance: An Empirical Review of Comparative DAO and Corporate-Led Standards for the SDGs",
-      "snippet": "As artificial intelligence (AI) agents enter production infrastructure, interoperability protocols shape its governance and sustainability. This paper revisits our comparative study of two...",
-      "url": "https://arxiv.org/abs/2606.05667",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "governance"
-      ],
-      "matched_terms": {
-        "governance": [
-          "governance",
-          "standards"
-        ]
-      }
-    },
-    {
-      "title": "Personalizing Personal Health Interfaces: Co-Design with Generative AI",
-      "snippet": "Personal health interfaces present wellbeing data through standardized dashboards that rarely fit how people interpret or act on it. Personalizing them to what people would like to see for...",
-      "url": "https://arxiv.org/abs/2609.15046",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "governance"
-      ],
-      "matched_terms": {
-        "governance": [
-          "standardized"
-        ]
-      }
-    },
-    {
-      "title": "Perceive, Refine, Reason: A Calibrated Pipeline for Measuring Indicators in Strategic Visual Communication on Social Media",
-      "snippet": "Visual content shapes audience perception and opinion on social media, and computational social science increasingly relies on automated tools to analyze images at scale. Yet a measurement gap...",
-      "url": "https://arxiv.org/abs/2609.14699",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "PeerPen: AI-Assisted Writing for Online Mental Health Peer Support",
-      "snippet": "Online mental health communities thrive on peer support, yet those who volunteer to help often lack formal training and may struggle to articulate supportive responses. AI co-writing could lower...",
-      "url": "https://arxiv.org/abs/2609.14886",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "progress"
-      ],
-      "matched_terms": {
-        "progress": [
-          "training"
-        ]
-      }
-    },
-    {
-      "title": "PAUSE: A Privacy-Preserving Self-Reflection Tool for AI-Associated Cognitive Offloading",
-      "snippet": "Cognitive offloading is the use of external aids, such as notes, calculators, or search engines, to reduce mental effort. Large language models (LLMs) extend this to thinking itself, and by...",
-      "url": "https://arxiv.org/abs/2609.13155",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Not All That Can Be Automated Should Be Automated: Strategic Minimalism as a Disciplined and Ethically Grounded Approach to AI Adoption",
-      "snippet": "As organizations accelerate the adoption and use of artificial intelligence, a common misconception arises that equates automation with progress and strategic necessity. This paper argues that not...",
-      "url": "https://arxiv.org/abs/2609.13188",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "LOCO 2026 Lightning Talk Abstracts: 2nd International Workshop on Low Carbon Computing",
-      "snippet": "This volume contains the accepted lightning-talk contributions from the 2nd International Workshop on Low Carbon Computing (LOCO 2026), held at Lancaster University, United Kingdom, on 10-11...",
-      "url": "https://arxiv.org/abs/2609.13355",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "LLMs as Oracles: Reliance on LLMs for Subjective Personal Questions",
-      "snippet": "We characterize how people are turning to LLMs as oracles: all-knowing authorities on subjective personal questions. Motivated by risks to users' autonomy and well-being, we develop a typology and...",
-      "url": "https://arxiv.org/abs/2609.14849",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "safety",
-        "governance"
-      ],
-      "matched_terms": {
-        "safety": [
-          "risks"
-        ],
-        "governance": [
-          "authorities"
-        ]
-      }
-    },
-    {
-      "title": "Issue Bias in Generative AI Writing Assistance: Political Issues and LLMs in the Swedish 2026 Election",
-      "snippet": "Generative AI writing assistants and the Large Language Models (LLMs) that power them are increasingly part of how voters gather information before elections. With growing evidence that they...",
-      "url": "https://arxiv.org/abs/2609.15207",
-      "date": "2026-09-15",
-      "publisher": "arXiv cs.CY",
-      "jurisdiction": "Research",
-      "source_id": "arxiv-cs-cy",
-      "kind": "Research preprint",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
     },
     {
       "title": "UK and US fusion supercomputers to be linked across Atlantic",
@@ -725,61 +1131,6 @@
       "matched_terms": {}
     },
     {
-      "title": "Houthis used Anthropic AI to try to build ballistic missiles",
-      "snippet": "Yemeni militants sought to use Anthropic’s Claude AI model to develop guidance, control and navigation software for its ballistic missiles, the US company said. In its intelligence threat report...",
-      "url": "https://www.ft.com/content/8310cf56-ce60-4e6e-8254-5bb470e9a880",
-      "date": "2026-09-11",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "safety"
-      ],
-      "matched_terms": {
-        "safety": [
-          "threat"
-        ]
-      }
-    },
-    {
-      "title": "Anthropic discloses fourth AI hacking incident missed in earlier review",
-      "snippet": "Anthropic on Wednesday disclosed another instance of an AI model hacking external systems during testing, the latest in a growing list of such incidents that have raised concerns about the risk...",
-      "url": "https://www.reuters.com/legal/litigation/anthropic-reports-fourth-cybersecurity-incident-with-early-version-claude-2026-09-09/",
-      "date": "2026-09-10",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "safety"
-      ],
-      "matched_terms": {
-        "safety": [
-          "incident",
-          "incidents",
-          "risk"
-        ]
-      }
-    },
-    {
-      "title": "Resentment leads techie to circulate fake obscene images of woman online",
-      "snippet": "New Delhi: A college grudge culminated in online harassment after a 22-year-old man misused a woman’s private photographs on social media to create obscene AI-generated images. Police arrested...",
-      "url": "https://timesofindia.indiatimes.com/city/delhi/resentment-leads-techie-to-circulate-fake-obscene-images-of-woman-online/articleshow/133980172.cms",
-      "date": "2026-09-09",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
       "title": "Government of Canada launches National AI Literacy Initiative",
       "snippet": "New national partnership with Amii will provide free, practical AI learning for students, educators, workers and communities across Canada",
       "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/government-of-canada-launches-national-ai-literacy-initiative.html",
@@ -795,119 +1146,6 @@
       "matched_terms": {}
     },
     {
-      "title": "Delhi: Man held for circulating obscene AI-generated photos of college acquaintance",
-      "snippet": "A 22-year-old man was arrested for allegedly using photographs of a college acquaintance taken from her private social media account to create obscene AI-generated images and circulate them...",
-      "url": "https://www.tribuneindia.com/news/delhi/delhi-man-held-for-circulating-obscene-ai-generated-photos-of-college-acquaintance/",
-      "date": "2026-09-09",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "‘A different set of rules’: thermal drone footage shows Musk’s AI power plant flouting clean air regulations",
-      "snippet": "Elon Musk’s artificial intelligence company is continuing to fuel its datacenters with unpermitted gas turbines, an investigation by the Floodlight newsroom shows. Thermal footage captured by...",
-      "url": "https://www.theguardian.com/environment/2026/feb/13/elon-musk-xai-datacenters-air-pollution-mississippi",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "policy"
-      ],
-      "matched_terms": {
-        "policy": [
-          "regulations"
-        ]
-      }
-    },
-    {
-      "title": "Pollution from Musk’s unpermitted xAI power project hits hardest in Black communities",
-      "snippet": "Elon Musk's artificial intelligence company xAI has installed 59 natural gas turbines for its Colossus 2 data center project in Tennessee without securing federal clean air permits, according to...",
-      "url": "https://www.reuters.com/world/americas/pollution-musks-unpermitted-xai-power-project-hits-hardest-black-communities-2026-07-14/",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Lyft driver uses AI to falsely accuse Boca Raton man's daughters of damaging car",
-      "snippet": "BOCA RATON, Fla. --- A Boca Raton man is sharing his story after he says his daughters were falsely accused of damaging a Lyft driver's car. He said it was all engineered using AI. Saturday...",
-      "url": "https://www.wpbf.com/article/lyft-driver-ai-falsely-accuse-damaging-car/71341981",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "LYFT DRIVER SCAM: Boca Raton Area Driver Uses AI To Accuse Rider",
-      "snippet": "A driver for ride share company \"Lyft\" is being closely monitored by the platform after he was accused of using artificial intelligence to claim a rider trashed his car. The rider, a teenage girl...",
-      "url": "https://bocanewsnow.com/2026/05/18/lyft-driver-scam-boca-raton-area-driver-uses-ai-to-accuse-rider/",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Justice Department Files to Intervene and Dismiss Lawsuit that Would Hamper America’s AI Innovation and Security",
-      "snippet": "Note: View motion for intervention and dismissal here. Yesterday, the Justice Department's Environment and Natural Resources Division (ENRD) filed a motion to intervene and to dismiss a private...",
-      "url": "https://www.justice.gov/opa/pr/justice-department-files-intervene-and-dismiss-lawsuit-would-hamper-americas-ai-innovation",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "policy"
-      ],
-      "matched_terms": {
-        "policy": [
-          "lawsuit"
-        ]
-      }
-    },
-    {
-      "title": "How Claude Code escapes its own denylist and sandbox",
-      "snippet": "In the last ten days: a single person used Claude to breach Mexican government agencies. Cline's own AI-powered triage workflow was compromised via prompt injection. A new Shai-Hulud variant...",
-      "url": "https://ona.com/stories/how-claude-code-escapes-its-own-denylist-and-sandbox",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
       "title": "Government of Canada to launch Canada’s National AI Literacy Initiative",
       "snippet": "",
       "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/government-of-canada-to-launch-canadas-national-ai-literacy-initiative.html",
@@ -917,36 +1155,6 @@
       "doc_type": "",
       "source_id": "canada-news",
       "kind": "Government publication",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Google's AI Is Telling Users That Flock Cameras Are Filled With Valuable Gold and Copper",
-      "snippet": "Google's notorious AI Overview just handed would-be Flock vandals a perfect excuse to carve into the company's controversial AI-integrated license plate readers (ALPRs). ALRPs are wildly...",
-      "url": "https://futurism.com/artificial-intelligence/google-ai-overview-flock-alpr-surveillance-hallucination-gold-copper",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Father, daughter speak after Lyft driver is accused of using AI-generated image for damage claim",
-      "snippet": "A father and daughter are speaking out after a recent Lyft ride resulted in a driver being accused of submitting an AI-generated image for a damage claim. Bert Gor of Florida said his teenage...",
-      "url": "https://abcnews.com/GMA/News/father-daughter-speak-after-lyft-driver-accused-ai/story?id=133144373",
-      "date": "2026-09-08",
-      "publisher": "AI Incident Database",
-      "jurisdiction": "Incidents",
-      "source_id": "ai-incident-database",
-      "kind": "Reported incident",
-      "doc_type": "",
       "categories": [
         "general"
       ],
@@ -1542,36 +1750,6 @@
       "matched_terms": {}
     },
     {
-      "title": "Minister Solomon, His Majesty King Felipe VI of Spain and Spanish Deputy Prime Minister Cuerpo advance Canada-Spain artificial intelligence cooperation through new memorandum of understanding",
-      "snippet": "Canada continues to build on its global leadership in artificial intelligence (AI) by fostering international partnerships that support innovation, attract investment and create new opportunities...",
-      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/05/minister-solomon-his-majesty-king-felipe-vi-of-spain-and-spanish-deputy-prime-minister-cuerpo-advance-canadaspain-artificial-intelligence-cooperati.html",
-      "date": "2026-05-20",
-      "publisher": "Government of Canada",
-      "jurisdiction": "Canada",
-      "doc_type": "",
-      "source_id": "canada-news",
-      "kind": "Government publication",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
-      "title": "Minister Solomon, King of Spain and Spanish Deputy Prime Minister Cuerpo to advance artificial intelligence cooperation at MaRS Discovery District",
-      "snippet": "The Honourable Evan Solomon, Minister of Artificial Intelligence and Digital Innovation and Minister responsible for the Federal Economic Development Agency for Southern Ontario, will attend an...",
-      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/05/minister-solomon-king-of-spain-and-spanish-deputy-prime-minister-cuerpo-to-advance-artificial-intelligence-cooperation-at-mars-discovery-district.html",
-      "date": "2026-05-19",
-      "publisher": "Government of Canada",
-      "jurisdiction": "Canada",
-      "doc_type": "",
-      "source_id": "canada-news",
-      "kind": "Government publication",
-      "categories": [
-        "general"
-      ],
-      "matched_terms": {}
-    },
-    {
       "title": "Announcing the \"AI Agent Standards Initiative\" for Interoperable and Secure Innovation",
       "snippet": "The Initiative will ensure that the next generation of AI is widely adopted with confidence, can function securely on behalf of its users, and can interoperate smoothly across the digital ecosystem",
       "url": "https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure",
@@ -1660,30 +1838,6 @@
         ],
         "governance": [
           "guidelines"
-        ]
-      }
-    },
-    {
-      "title": "CAISI Evaluation of DeepSeek AI Models Finds Shortcomings and Risks",
-      "snippet": "The Center for AI Standards and Innovation at NIST evaluated several leading models from DeepSeek, an AI company based in the People’s Republic of China",
-      "url": "https://www.nist.gov/news-events/news/2025/09/caisi-evaluation-deepseek-ai-models-finds-shortcomings-and-risks",
-      "date": "2025-09-30",
-      "publisher": "NIST",
-      "jurisdiction": "United States",
-      "doc_type": "",
-      "source_id": "nist",
-      "kind": "Government publication",
-      "categories": [
-        "safety",
-        "governance"
-      ],
-      "matched_terms": {
-        "safety": [
-          "evaluation",
-          "risks"
-        ],
-        "governance": [
-          "standards"
         ]
       }
     }

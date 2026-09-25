@@ -1,12 +1,12 @@
 {
   "dataset": "compute-thresholds",
-  "generated": "2026-09-13T04:35:38+00:00",
-  "retrieved": "2026-09-13T04:35:38+00:00",
+  "generated": "2026-09-25T05:00:45+00:00",
+  "retrieved": "2026-09-25T05:00:45+00:00",
   "sources": [
     "epoch-notable-models"
   ],
   "unit": "models per year",
-  "notes": "Models whose reported training compute reaches the EU AI Act Article 51 systemic-risk presumption of 1e+25 FLOP. 22 models in the dataset cross it. Compute figures are often estimates, so treat borderline cases as indicative, not as legal findings.",
+  "notes": "Models whose reported training compute reaches the EU AI Act Article 51 systemic-risk presumption of 1e+25 FLOP. 23 models in the dataset cross it. Compute figures are often estimates, so treat borderline cases as indicative, not as legal findings.",
   "count": 51,
   "records": [
     {
@@ -311,8 +311,8 @@
     },
     {
       "year": "2026",
-      "above_threshold": 4,
-      "below_threshold": 14,
+      "above_threshold": 5,
+      "below_threshold": 16,
       "source_id": "epoch-notable-models"
     }
   ]
