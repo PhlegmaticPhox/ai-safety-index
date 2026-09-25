@@ -245,7 +245,7 @@
       "publisher": "Microsoft AI for Good Lab",
       "publisher_url": "https://www.microsoft.com/en-us/research/",
       "landing_page": "https://github.com/microsoft/ai-diffusion-report",
-      "url": "https://raw.githubusercontent.com/microsoft/ai-diffusion-report/main/data/AI_Diffusion_Q12026_Update.csv",
+      "url": "https://raw.githubusercontent.com/microsoft/ai-diffusion-report/main/data/AI_Diffusion_Q22026_Update.csv",
       "format": "csv",
       "licence": "MIT",
       "licence_url": "https://github.com/microsoft/ai-diffusion-report/blob/main/LICENSE.md",

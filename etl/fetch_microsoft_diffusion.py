@@ -1,6 +1,6 @@
 """Microsoft AI Diffusion - share of working-age population using AI tools, by economy.
 
-147 economies, three time points, MIT licensed. This is the exposure layer of the
+147 economies, one column per reporting period, MIT licensed. This is the exposure layer of the
 flagship map: how much a population actually encounters AI systems, to be set
 against how prepared its jurisdiction is to govern them.
 
