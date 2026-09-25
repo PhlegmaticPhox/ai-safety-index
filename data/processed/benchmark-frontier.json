@@ -1,13 +1,13 @@
 {
   "dataset": "benchmark-frontier",
-  "generated": "2026-09-13T07:56:41+00:00",
-  "retrieved": "2026-09-13T02:56:05+00:00",
+  "generated": "2026-09-25T05:00:46+00:00",
+  "retrieved": "2026-09-25T05:00:46+00:00",
   "sources": [
     "epoch-benchmarks"
   ],
   "unit": "score (0 to 1)",
   "notes": "Best score achieved on each benchmark by any evaluated model, as a running maximum by month. Mixes Epoch's own evaluation runs with externally reported scores, which are not strictly comparable. A rising line shows the best available capability, not the typical one. Category and difficulty tier are our own classification, not Epoch's.",
-  "count": 17,
+  "count": 18,
   "records": [
     {
       "benchmark": "OTIS Mock AIME 2024-2025",
@@ -1211,6 +1211,72 @@
       "saturated_month": null,
       "months_to_saturation": null,
       "runs": 15,
+      "source_id": "epoch-benchmarks"
+    },
+    {
+      "benchmark": "Furniture Assembly",
+      "category": "Games and planning",
+      "category_note": "Choosing well in a game with rules and a long horizon.",
+      "tier": "general",
+      "tier_meaning": "Problems most adults could do, given the time.",
+      "points": [
+        {
+          "month": "2025-11",
+          "best": 0.2833,
+          "model": "Claude Opus 4.5 (64k thinking)"
+        },
+        {
+          "month": "2025-12",
+          "best": 0.3833,
+          "model": "GPT-5.2 (xhigh)"
+        },
+        {
+          "month": "2026-02",
+          "best": 0.3833,
+          "model": "Claude Opus 4.6 (max)"
+        },
+        {
+          "month": "2026-03",
+          "best": 0.3833,
+          "model": "GPT-5.4 (xhigh)"
+        },
+        {
+          "month": "2026-04",
+          "best": 0.4417,
+          "model": "GPT-5.5 (xhigh)"
+        },
+        {
+          "month": "2026-05",
+          "best": 0.4417,
+          "model": "Claude Opus 4.8"
+        },
+        {
+          "month": "2026-06",
+          "best": 0.4417,
+          "model": "Claude Fable 5 (max)"
+        },
+        {
+          "month": "2026-07",
+          "best": 0.6083,
+          "model": "Claude Opus 5 (max)"
+        },
+        {
+          "month": "2026-08",
+          "best": 0.6083,
+          "model": "Grok 4.6 (xhigh)"
+        },
+        {
+          "month": "2026-09",
+          "best": 0.8333,
+          "model": "Claude Opus 5.5 (max)"
+        }
+      ],
+      "first_month": "2025-11",
+      "latest_month": "2026-09",
+      "latest_best": 0.8333,
+      "saturated_month": null,
+      "months_to_saturation": null,
+      "runs": 10,
       "source_id": "epoch-benchmarks"
     },
     {
