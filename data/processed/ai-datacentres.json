@@ -1,6 +1,6 @@
 {
   "dataset": "ai-datacentres",
-  "generated": "2026-09-26T06:21:31+00:00",
+  "generated": "2026-09-26T08:18:46+00:00",
   "retrieved": "2026-09-26T06:21:30+00:00",
   "sources": [
     "epoch-ai-data-centers"
@@ -44,7 +44,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1CRnOKjeb6z5VFPyeA7xaMrbppOD5dCS7TE20kvQyb8E/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-fairwater-wisconsin",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -78,7 +78,7 @@
       "chips": [
         "Trainium2"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1umU-KLAB_6A-lKRCdLuF7SPv74HlqKjDdfDor1bRGuY/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/anthropic-amazon-new-carlisle",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -110,7 +110,7 @@
       "facility_mw_full": 2450.0,
       "h100e_full": 5103588,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1Dd2oXxg3tdBebaWOW-qSj1U1-HZ9zM9LkXseTayWhBM/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-new-mexico",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -144,7 +144,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1cyXcZ_jIsJDjuPKx6_J1scIWeq0-rfM3-2GcSKN4oA0/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-hyperion",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -187,7 +187,7 @@
         "B200",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1oZpZ9nTTV6wW0xjc1pPOQmKS7NCyDzuG2HiycC1GqFs/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/colossus-2",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -221,7 +221,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1MzNM0bbxwhChbKF-x1RT3ilZ0r8pU_ZPi9r5-w0z4A4/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-shackelford",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -250,7 +250,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1zXqoogyqGbmgvdu4vSTepZG3Cy8kMoJjp0n3KaZPkd4/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/qts-cedar-rapids",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -285,7 +285,7 @@
         "B200",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1LOiioZUG696TC3nOAXROvhJBhhN7to-r6KR05Hd0qCk/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-prometheus",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -320,7 +320,7 @@
         "B300",
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1NE3R883YwdkSNVCbVJfy5nMCDy99eNA1wRdwikcJYWk/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/goodnight",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -355,7 +355,7 @@
         "B300",
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/11es1WqQ3StAuMjFOYQ1wzq6YpwQCb-Uz996EvZpnsAs/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-uae",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -387,7 +387,7 @@
       "facility_mw_full": 1383.0,
       "h100e_full": 2880243,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1uqn1l4aQCjT8E7JUmLsT6CrE3PtjajDL19Sj6xw2qg8/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-michigan",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -419,7 +419,7 @@
       "facility_mw_full": 1300.0,
       "h100e_full": 2627590,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1fjTxXhhaiFa7x1YBAAa7d2CcUrnSLGNJYOTd6o3xd04/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-wisconsin",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -451,7 +451,7 @@
       "facility_mw_full": 1035.0,
       "h100e_full": 2940879,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1a3GgdEIeJqMwhqrfreQlnJM4GERZukdtP5QFg4xTtNo/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-fort-wayne",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -483,7 +483,7 @@
       "facility_mw_full": 1200.0,
       "h100e_full": 2496210,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1Ngd8mud1gHPmwamHYb7VhfYMZLiS9hfjMlHxdsu6d28/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-milam",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -518,7 +518,7 @@
         "B200",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/197BW-5tHutOzJ_LTv990eCO_M8nUXT2t1nl--UfMIUk/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-abilene",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -553,7 +553,7 @@
         "Trainium2",
         "Trainium3"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1WWWmkFubzXYb2RY9PZsF4BtrpmbmdcSJtVTw1kcJxVs/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/amazon-ridgeland",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -587,7 +587,7 @@
       "chips": [
         "Ascend 910C"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1zHNmd-avKvWoJc_ivOj6u54g9OyIDjM2-ybubuxj2yc/edit?usp=drive_link",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/vnet-bayin-ulanqab",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -621,7 +621,7 @@
       "chips": [
         "Trainium2"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/10asD982gArQ0CQTVo_v331kEx_vDnwhWAusaYo1zsto/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/amazon-madison-mega-site",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -655,7 +655,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1FpTJoXhLRzKTX8S3kSnPlT8V66ad_htJPuvaYPiHAsE/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/crusoe-abilene-expansion",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -693,7 +693,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1XeruHu2ES3UsSrsAU3HSMkk5zwzFOQzxQE9pQ_fuEUw/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-fairwater-atlanta",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -727,7 +727,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1qcYPDCBHZOg0EKGpK7Ru4-cGd8Y8BkXAxf2W3umOwmo/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-helios",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -757,7 +757,7 @@
         "H100",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1Xu6B3gVZhKvkQ1U5gmXgOgoflyzpgOydm60SYn_lAWE/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/dayone-nusajaya",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -786,7 +786,7 @@
       "chips": [
         "Ascend 910C"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1LtTROd6CTTzqjI0x9EqOby-EcYytmXsaG35z93W1bDk/edit?usp=drive_link",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/huawei-wuhu",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -821,7 +821,7 @@
         "B300",
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1DH2kCU99fLYUj28VDjHWoGbx3IahwltzXqcbBEa-pOc/edit?gid=2010365208#gid=2010365208",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-bowling-green",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -850,7 +850,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1R_LGG2zmZMczforjzOT_qqrBk-683L64lNIoQr5J1CY/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/dayone-kempas",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -884,7 +884,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1a572c9bP48XuHQ3R_GFdrYa17MmkoK8IT7-FOrxRgDw/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-ellendale-nd",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -921,7 +921,7 @@
         "TPU v6e",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1GeUMas99qz2kfy3nhfmVEjPNgDNYfXgOoTiUx1EG_P0/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-omaha",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -958,7 +958,7 @@
         "TPU v6e",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/17vNqp7jsx3CUwFeUfxIyI3KA0uZ0Bh7BNkrVyH77Ohs/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-columbus",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -992,7 +992,7 @@
       "chips": [
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1MrE3TlzhV8IPcb0uPixkfec3txcHt0iLTXhKjeFPsSU/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/anthropic-lake-mariner",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1027,7 +1027,7 @@
         "TPU v5p",
         "TPU v5e"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1lD_rxcr7NwyAXlJf2TUis1AuMry4jGJNxOFP8zn17zc/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-pryor-north",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1061,7 +1061,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1gyeamGR5Oifeomj1gHXQqVYTRfGs9PGBq-YD0IGpKK4/edit?gid=2010365208#gid=2010365208",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-montgomery",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1090,7 +1090,7 @@
       "chips": [
         "H100"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1VaMTR_IA8V30N7aa47QXt1VVLog_-LzLWSrGuFIGF8c/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/stack-infrastructure-nva02",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1119,7 +1119,7 @@
       "chips": [
         "Ascend 910C"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/101jEwxBg5tstkmiGAx3fJt2ruTRtT-9Tqs484oKJBoU/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/huawei-horinger",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1155,7 +1155,7 @@
         "H200",
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1aXs4vx7AMrzUIR3YeBvJRAD_rmDiioY9zR95DZdDa_s/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/colossus-1",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1187,7 +1187,7 @@
         "H200",
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/10uynqa40vg0ycoigE2TRah3aUPEDlMCb-n1w-IdN7sQ/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/aws-new-albany",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1223,7 +1223,7 @@
         "TPU v5p",
         "TPU v6e"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1b9T05Ze9Kv3Um4C6wv2uVYB0q7KgZ4AQaDPnaoh-ro0/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-new-albany",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1257,7 +1257,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1pWiTKivojS1IY4tiv0aHM06FugKbLA2qjLJ-5DFoRF4/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/qts-eagle-mountain",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1294,7 +1294,7 @@
         "TPU v6e",
         "TPU v5p"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1LrjkAu7XNz9VjMLjKm9rZyhaFAwDQfJUpeC1XKE2JR8/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-storey-county",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1324,7 +1324,7 @@
         "TPU v6e",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/10qC79HsjxVN7JeTCz5VzdXaNPzDqknRXNd1D3Jkijnk/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-lincoln",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1358,7 +1358,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1xIG1Y6Rg3s4ShcmUUgwodjgLphcXRLqMqpDcrXh34jQ/edit?usp=sharingsharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-denton-tx",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1390,7 +1390,7 @@
       "facility_mw_full": 314.0,
       "h100e_full": 670136,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1-ywhMnHBDsTCosaOfKibppdxI1n6GzqU1UL-v5Z1sVs/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-cedar-rapids",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1417,7 +1417,7 @@
       "facility_mw_full": 336.0,
       "h100e_full": 291056,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1JNkuiBpWs4M0ToP3DsTZQaevvFEpaW841KQ3PG9JQYE/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/qts-richmond-3",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1454,7 +1454,7 @@
         "TPU v6e",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1nMKioHt4E_5xu4mVeM7kf1eFoegL4TYoZnWsQlE_hl8/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-bristow",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1481,7 +1481,7 @@
       "facility_mw_full": 333.0,
       "h100e_full": 242547,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1tCoNEu-EK4B261RUWGlDO_341hPs9hnwBtkGO2dDOcA/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/qts-richmond-1",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1518,7 +1518,7 @@
         "TPU v5p",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1wIuGUtPoKnZZcFKFmNXy5vQCiBT8RK3S31bIOYlxFmI/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-council-bluffs-east",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1554,7 +1554,7 @@
         "TPU v5e",
         "TPU v5p"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1OKS1FDYBSSB5oVkWYW_gDcZ3Za1UZfR_vK4l3lT8AP4/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-papillion",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1588,7 +1588,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1MiA7Ol7YZ7hnnn2rZM9JZqWMVJcHWvxZTX3oUby581U/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/start-campus-sines-data-campus",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1617,7 +1617,7 @@
       "chips": [
         "H100"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1SC63z3YKLbCg9XNmo2uIcuGxife8xhHqYTc_IyEuzk0/edit?usp=drive_link",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/stream-phoenix",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1651,7 +1651,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1uWCFpC5r9GEYqFaEhgB2bDqXOLvizvIUhDEdIg_XC5E/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-lordstown",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1685,7 +1685,7 @@
       "chips": [
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1sGialfBa0kKKX7Vm8qL_R6Ce3PSzt7NawpAnWolnTVc/edit",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/anthropic-barber-lake",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1719,7 +1719,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/12-VqZMagtKT_6aSSlHXIg22E6iWwVWU5FJ4yZurQtro/edit?gid=2010365208#gid=2010365208",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-cheyenne",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1758,7 +1758,7 @@
         "H100",
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/12pVrAs40UMGZwxdJz5lyFlr-CATUwl4Im42BVDvi8-A/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-goodyear",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1794,7 +1794,7 @@
         "H100",
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1GxpxdT_2dcvnvdmi2dybQfiwb0-XhzWf65i3QVI0FEA/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-project-osmium",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1824,7 +1824,7 @@
         "TPU v6e",
         "TPU v5p"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1A_7rJWFKkspUPlYTmyg5JKL18OIzVgwLdhy3YbLs3eQ/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-mesa",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1858,7 +1858,7 @@
       "chips": [
         "H100"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1IDIlQvAa0AMeV0xAT0592dV1cV8Ptj1B4Kzyefna1fg/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-qts-hillsboro-2",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1885,7 +1885,7 @@
       "facility_mw_full": 252.0,
       "h100e_full": 182921,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/1ABNg-_JXDzzO4bPbXLD7tIZCQNDD-UOkY_0Sktf7bDo/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/qts-richmond-2",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1919,7 +1919,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1AlQw55-NjGpM-Ti15amJZY50REI4vcJ4EYwH7mIfglo/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-jeffersonville",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1953,7 +1953,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/11pdqhcJnw3iAwraTho9AW4m7WyBdvTR9sYzK0z5-SC8/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-rosemount",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -1987,7 +1987,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1SwdruUu3hHAs6hd0m3SvZY22bGBCO7-9aiLSCiJl6-k/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-temple",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2022,7 +2022,7 @@
         "Trainium2",
         "Trainium3"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1InmGZk_dfT4oFdHmD5jVt2Q--H1wgeT8lMmx-qqmwFI/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/aws-berwick",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2056,7 +2056,7 @@
       "chips": [
         "H20"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/12-Dec7BqasGfgwzw4LBy4B45M9B2gO3dkEV6YThuxEk/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/alibaba-zhangbei",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2085,7 +2085,7 @@
       "chips": [
         "TPU v6e"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1qxeBYFdHeNePrvSQdGmO608SBGSLgW6Hrtf_HxcgNfw/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-red-oak",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2117,7 +2117,7 @@
         "TPU v5e",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1QEX9kWixFn14GySGb65aTktC5hn_-wVkCdBzd4HUl1U/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-the-dalles",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2151,7 +2151,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/14s8DmbRuWQQsfaZ7E7pj4XoOq-3RrXiDNn6p0dbZ8nc/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-muskogee-ok",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2185,7 +2185,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1I4oCviRN5Es3njqhSlm3WD7Hxfitb29eVJEGOaTbiTc/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-kuna",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2219,7 +2219,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1Rk-yikcpmRBm2V9iwBTdad2IILaZEODw1Xzk66GYEJk/edit?gid=2010365208#gid=2010365208",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-huntsville",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2255,7 +2255,7 @@
         "B300",
         "H200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1DcKmWfHZdahF2yfzmUprURMkEiCiluypSrobnkxz-wQ/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/nebius-mantsala",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2285,7 +2285,7 @@
         "TPU v5e",
         "TPU v6e"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1idRHPUAUAVqBbAT4GNXj-2JtVA_kM89GwZkLifLNj3E/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-lancaster",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2319,7 +2319,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1mVv_XB56SrZcy2jAwoG6lzgeXQHp0G3adhIaChbNh4E/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-eagle-mountain",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2348,7 +2348,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1PA0eDftvbL8OQPbFyoGGPzBK_j1xEtYcZqs-cGOreVE/edit?usp=drivesdk",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/vantage-tx1",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2383,7 +2383,7 @@
         "H100",
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1d6BKTzXUVmUCBOjAv2WR8GOHKXodNaD0vrDpE6Zmvms/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-chester-va",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2410,7 +2410,7 @@
       "facility_mw_full": 126.0,
       "h100e_full": 202628,
       "chips": [],
-      "sheet": "https://docs.google.com/spreadsheets/d/12x1HahypL5ZlDEbpMrF9ZWB95DSWXztFLL6AwkvU408/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-kansas-city-east",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2440,7 +2440,7 @@
         "TPU v7",
         "TPU v6e"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/13T5HLjkSCBKhOwSaOnxUcGqeSdfSF67ZSMVltEGywFM/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-midlothian",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2474,7 +2474,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1eg37hTqVXt4hHVHSgpc1Z95W8uDgpGW9j9IbrmNbJsM/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-lancaster-greenfield-site",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2508,7 +2508,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1S6JIRsMg8BQ6dfX1PUZM4U4zv0CWWyH0nmZ9E_BulbU/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-narvik-norway",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2542,7 +2542,7 @@
       "chips": [
         "TPU v6e"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1vXTZsF2JXQCSUH20Gx6_kumpzQLuoVebrndE2lHmGTM/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-waltham-cross",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2576,7 +2576,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/11d5_1ctrhEaeCqinR2l_YwvltGLDpMRm4_lcfS5bfV0/edit?usp=drive_link",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-gallatin",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2610,7 +2610,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1mhkRkn27J1JmPrRvXejn_eSQr33e1_yfQ1fsKMa4Bis/edit?usp=drive_link",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-los-lunas",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2644,7 +2644,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1iFwArbo-x0WDxO3mfvZBopGZsd4EvA9HDfjxXKyfy5g/edit?gid=2010365208#gid=2010365208",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-sarpy",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2674,7 +2674,7 @@
         "TPU v6e",
         "TPU v7"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1XNyE95_WdfMangRolxlJQugH_aFGxDyZFHzqAOelLD4/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/google-arcola",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2704,7 +2704,7 @@
         "H100",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1wtryXxH9tEtc3gatXW1GmwtJzZB3uKkSD0Pw-RJBZnY/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-sat40",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2734,7 +2734,7 @@
         "B200",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1C4sc-3wUDCdAm9aKw8xC8xcCCnD4EdXEIM5azFZ4rR4/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/oracle-batam",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2768,7 +2768,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1AoK8Ky5mZJ_hhsFx16S1ugapGMrlIIcMVWYSWqkJmkU/edit?gid=2010365208#gid=2010365208",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/meta-aiken",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2802,7 +2802,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1_8yOR7DUXGIDghGwUSlVuqiFhbfA40iaxr9HyvslST8/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-marble-nc",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2836,7 +2836,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/11RE1IAiuyFAcPcYMPMG4-ev3C13N84c5fq4TY8JK6wY/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/core42-lake-mariner",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2870,7 +2870,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1-x8TTkzOemQ4hI61I5tuHgatFUSI0e5F3RAw8uufooI/edit",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-nebius-new-jersey",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2904,7 +2904,7 @@
       "chips": [
         "Rubin"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1JqKpYvy0REqpg30GweXlCKhUQ1D0mHLH_yI9erMoeEM/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/ecodatacenter-2",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2934,7 +2934,7 @@
         "H100",
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1IqbFMekinpl1wfte8Nav6nUJMdeOq7tCHsRR7X8zV14/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/microsoft-sat14",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2968,7 +2968,7 @@
       "chips": [
         "B200"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1FRJgBDYY-e4bGkkHh54hBNz_b1baQjVwgWCXZnv22eg/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-norway",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -2997,7 +2997,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/11HPAZWME2riqB1Ru6YADdiWUmALWtIZ4ELMcMDqBow4/edit",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/southgate-melbourne",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -3031,7 +3031,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1IYUyvV2o1NHNCtyCSMWNxZClDcz2ZoCg9nwoYcLIib0/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/coreweave-dalton-1-2",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -3066,7 +3066,7 @@
         "H100",
         "A100"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1i9MM0gKZOoc4UXpuMBHhy2qu_y64TlXeD8JUpgiLaWE/edit",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/xai-qts-atlanta",
       "source_id": "epoch-ai-data-centers"
     },
     {
@@ -3095,7 +3095,7 @@
       "chips": [
         "B300"
       ],
-      "sheet": "https://docs.google.com/spreadsheets/d/1rNRBrYaKirxSa_mO-Q5PdcGy5ilOnRkDFOwRSHPF9So/edit?usp=sharing",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/nscale-keflavik",
       "source_id": "epoch-ai-data-centers"
     }
   ]

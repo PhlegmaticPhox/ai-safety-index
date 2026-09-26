@@ -81,7 +81,7 @@ interface SiteRecord {
   facility_mw_full: number | null;
   h100e_full: number | null;
   chips: string[];
-  sheet: string;
+  url: string;
   source_id: string;
 }
 
@@ -573,7 +573,7 @@ const schema = {
                   style={`--o-size:${2 * (sizeRank.get(r.id) ?? 0) + 1};--o-owner:${2 * (ownerRank.get(r.id) ?? 0) + 1};--o-cat:${2 * (categoryRank.get(r.id) ?? 0) + 1}`}
                 >
                   <span class="dcl__name" role="rowheader">
-                    <a href={r.sheet}>{r.name}</a>
+                    <a href={r.url}>{r.name}</a>
                     <span class="dcl__place">{[r.place, r.country].filter(Boolean).join(", ")}</span>
                   </span>
                   <span role="cell">{ownerText(r)}</span>
@@ -606,7 +606,7 @@ const schema = {
       </div>
 
       <p class="caveat">
-        Each site's name links to Epoch AI's calculations for it. The owner is the owner of the chips.
+        Each site's name links to Epoch AI's page for it. The owner is the owner of the chips.
         Owners and users marked likely or speculative carry Epoch's own rating. Planned is the IT
         power at the last stage of the site's timeline. H100e is compute in H100 equivalents, the
         number of Nvidia H100 chips with the same total performance. Category is this site's grouping

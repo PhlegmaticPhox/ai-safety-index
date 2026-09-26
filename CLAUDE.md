@@ -129,7 +129,8 @@ npm run dev          # http://localhost:4321
 npm run build
 npm run check:lib    # render-side logic: path rounding, ranks, country joins, category drift
 npm run check:built  # against dist/: links, anchors, dashes, canonical origin, stale name, noindex,
-                     # unsafe href schemes, every script hashed in the CSP and no .js files,
+                     # unsafe href schemes, no spreadsheet or shared-document links,
+                     # every script hashed in the CSP and no .js files,
                      # every table inside a .scroll-x box
 
 python etl/common.py                                  # licence guard, idempotence, dash rule
@@ -150,6 +151,7 @@ python etl/build_policy_index.py --check-links        # same, for the law index
 python etl/build_frontier_index.py --check-links      # same, for frameworks and thresholds
 python etl/build_usage_index.py --check-links         # same, for every stated figure
 python etl/build_environment_index.py --check-links   # same, for every disclosure
+python etl/fetch_epoch.py --check-links              # every data-centre site page on epoch.ai
 ```
 
 Every self-check runs in CI before any data is written; `check:built` runs after the build. The
@@ -179,6 +181,11 @@ Each of these cost real time. They are rules, not suggestions.
   mangles `\b`, `\n` and friends silently.
 - **Shared furniture belongs in `global.css`.** A class scoped inside one page loses all styling the
   moment a second page uses it and the first stops.
+- **A link leaves for the publisher's page, never a spreadsheet.** Epoch's data-centre download
+  carries a Google Sheets calculations link per site, and the `/datacentres/` list once linked
+  all 93: a reader clicking a site's name landed in a spreadsheet. Each name now links to Epoch's
+  page for the site. `check:built` fails on any href to Google Docs, Drive, OneDrive, SharePoint,
+  Dropbox or Airtable, or to a `.csv`, `.tsv`, `.xls`, `.xlsx`, `.xlsm` or `.ods` file.
 
 **Python / ETL**
 

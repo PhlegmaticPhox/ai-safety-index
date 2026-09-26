@@ -145,6 +145,33 @@ assert.deepEqual(
     `on whichever page this is.`,
 );
 
+/* Where an outbound link may land: a publisher's page or its document, never a
+   spreadsheet or a shared-document host.
+
+   Epoch AI's site download carries a Google Sheets link per data centre, its
+   working calculations, and the /datacentres/ list linked all 93 of them. A
+   reader clicking a site's name landed in a spreadsheet editor. The link now
+   goes to Epoch's page for the site, and this is what stops a column like that
+   one being wired to an href again, from any source, on any page. */
+const DOCUMENT_HOSTS = /^https?:\/\/(?:[^/]+\.)?(?:docs\.google\.com|drive\.google\.com|sheets\.google\.com|onedrive\.live\.com|1drv\.ms|sharepoint\.com|dropbox\.com|airtable\.com)(?:[/:?#]|$)/i;
+const SPREADSHEET_FILE = /\.(?:xlsx?|xlsm|ods|csv|tsv)(?:[?#]|$)/i;
+const documentHrefs = [];
+for (const page of pages) {
+  const html = readFileSync(page, "utf8");
+  for (const [, raw] of html.matchAll(HREF)) {
+    if (DOCUMENT_HOSTS.test(raw) || SPREADSHEET_FILE.test(raw)) {
+      documentHrefs.push(`${relative(DIST, page)}: ${raw.slice(0, 100)}`);
+    }
+  }
+}
+assert.deepEqual(
+  documentHrefs,
+  [],
+  `${documentHrefs.length} href(s) in the built site open a spreadsheet or a shared ` +
+    `document:\n  ${documentHrefs.slice(0, 20).join("\n  ")}\n` +
+    `Link the publisher's page for the record instead.`,
+);
+
 /* Zero client JavaScript in OUR OWN output, asserted rather than assumed.
 
    It is a design rule, and the Content-Security-Policy in public/_headers is
@@ -387,7 +414,7 @@ assert.deepEqual(
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
     `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex, ` +
-    `no unsafe href schemes, no script the CSP would refuse (${hashesUsed.size} hashed inline), ` +
+    `no unsafe href schemes, no spreadsheet or shared-document links, no script the CSP would refuse (${hashesUsed.size} hashed inline), ` +
     `no JavaScript files, every table in a scroll box, ` +
     `every SVG either hidden or named`,
 );

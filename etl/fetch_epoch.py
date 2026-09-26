@@ -16,6 +16,7 @@ opacity as much as it measures capacity.
     python etl/fetch_epoch.py                # fetch and write
     python etl/fetch_epoch.py --offline      # rebuild from the cached files
     python etl/fetch_epoch.py --self-check   # data-centre derivation, no network
+    python etl/fetch_epoch.py --check-links  # probe every data-centre site page
 """
 
 from __future__ import annotations
@@ -27,7 +28,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 
-from common import fetch, normalise_dashes, read_csv, write_dataset
+from common import PROCESSED, check_links, fetch, normalise_dashes, read_csv, write_dataset
 
 MODELS = "epoch-notable-models"
 BENCHMARKS = "epoch-benchmarks"
@@ -44,6 +45,14 @@ DATACENTRES = "epoch-ai-data-centers"
 # site uses what, so no cooling type is taken from them.
 DC_TIMELINES = "https://epoch.ai/data/data_centers/data_center_timelines.csv"
 DC_MAP = "https://epoch.ai/data/ai-data-centers/map"
+# Each site's page on the hub, where a reader lands from the site's name. The
+# path is the name lowercased with every run of other characters as one hyphen,
+# which is _slug(); every one of the 93 sites resolved to a page carrying its
+# name on 26 September 2026, and --check-links probes them all again. The
+# download's "Calculations sheet" column is a Google Sheets document per site.
+# It is not linked: a link leaves for the publisher's own page, never a
+# spreadsheet.
+DC_SITE_PAGE = "https://epoch.ai/data/ai-data-centers/directory/{}"
 
 # EU AI Act Art. 51(2): a GPAI model is presumed to carry systemic risk when the
 # cumulative training compute exceeds 10^25 FLOP. It is the lower of the two
@@ -490,8 +499,7 @@ NO_OWNER = "Owner not recorded"
 CONFIDENCE = ("confident", "likely", "speculative")
 
 DC_SITE_COLUMNS = {
-    "Name", "Owner", "Users", "Project", "Country", "All chip types",
-    "Calculations sheet", "Current power (MW)",
+    "Name", "Owner", "Users", "Project", "Country", "All chip types", "Current power (MW)",
 }
 DC_TIMELINE_COLUMNS = {
     "Data center", "Date", "IT power (MW)", "Power (MW)", "H100 equivalents",
@@ -673,11 +681,9 @@ def datacentre_records(
                 users.append({"name": user, "confidence": conf})
         project, project_conf = _tagged(row.get("Project"), f"{name} project")
 
-        sheet = (row.get("Calculations sheet") or "").strip()
-        if not sheet.startswith("https://docs.google.com/spreadsheets/"):
-            raise ValueError(f"{DATACENTRES}: {name}: unexpected calculations link {sheet!r}")
-
         site_id = _slug(name)
+        if not site_id:
+            raise ValueError(f"{DATACENTRES}: {name!r} gives an empty id, so it has no page to link")
         if site_id in seen_ids:
             raise ValueError(f"{DATACENTRES}: two sites share the id {site_id!r}")
         seen_ids.add(site_id)
@@ -707,7 +713,7 @@ def datacentre_records(
                 "facility_mw_full": full[2],
                 "h100e_full": round(full[3]) if full[3] is not None else None,
                 "chips": [c.strip() for c in _text(row.get("All chip types")).split(",") if c.strip()],
-                "sheet": sheet,
+                "url": DC_SITE_PAGE.format(site_id),
                 "source_id": DATACENTRES,
             }
         )
@@ -765,7 +771,6 @@ def _self_check() -> None:
         "Name": "Test Site", "Owner": "Oracle #likely",
         "Users": "OpenAI #confident, Microsoft #speculative, Meta", "Project": "Stargate #confident",
         "Country": "United States", "All chip types": "B200,GB200",
-        "Calculations sheet": "https://docs.google.com/spreadsheets/d/x/edit",
         "Current power (MW)": "100",
     }
     timeline = [
@@ -789,6 +794,11 @@ def _self_check() -> None:
         {"name": "Meta", "confidence": None},
     ], r["users"]
     assert r["chips"] == ["B200", "GB200"] and r["id"] == "test-site"
+    assert r["url"] == "https://epoch.ai/data/ai-data-centers/directory/test-site", r["url"]
+    # Punctuation collapses the way Epoch's paths do, and no record links a sheet.
+    assert _slug("Google Council Bluffs (East)") == "google-council-bluffs-east"
+    assert _slug("CoreWeave Dalton 1 & 2") == "coreweave-dalton-1-2"
+    assert "sheet" not in r and "google" not in json.dumps(r), r
 
     # Once the projected date passes, the same data reads as fully built.
     [later] = datacentre_records([site], timeline, placed, today="2027-06-01")
@@ -814,7 +824,9 @@ def _self_check() -> None:
         ("a missing column", lambda: datacentre_records([{k: v for k, v in site.items() if k != "Owner"}], timeline, placed, "2026-01-01")),
         ("an unknown signifier", lambda: datacentre_records([{**site, "Owner": "Oracle #sure"}], timeline, placed, "2026-01-01")),
         ("a site with no timeline", lambda: datacentre_records([site], [{**timeline[0], "Data center": "Elsewhere"}], placed, "2026-01-01")),
-        ("a non-sheet link", lambda: datacentre_records([{**site, "Calculations sheet": "javascript:alert(1)"}], timeline, placed, "2026-01-01")),
+        ("a name with no page", lambda: datacentre_records(
+            [{**site, "Name": "()"}], [{**t, "Data center": "()"} for t in timeline],
+            {"()": placed["Test Site"]}, "2026-01-01")),
     ):
         try:
             call()
@@ -850,5 +862,10 @@ def _self_check() -> None:
 if __name__ == "__main__":
     if "--self-check" in sys.argv:
         _self_check()
+    elif "--check-links" in sys.argv:
+        # Every site page the list links to, from the written dataset: 93
+        # requests, so by hand only, like the other modules' link probes.
+        sites = json.loads((PROCESSED / "ai-datacentres.json").read_text(encoding="utf-8"))
+        raise SystemExit(1 if check_links((r["name"], r["url"]) for r in sites["records"]) else 0)
     else:
         run(offline="--offline" in sys.argv)
