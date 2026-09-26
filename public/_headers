@@ -15,7 +15,7 @@
 # emits it, and setting it in two places is how the two drift apart.
 
 /*
-  Content-Security-Policy: default-src 'none'; script-src https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'sha256-IpTuWWqwbljHiMYBxlWBc1+AV6SnVVgqrCOAHhEYbRk=' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
@@ -24,15 +24,25 @@
 
 # Notes on the policy above, directive by directive:
 #
-#   default-src 'none'   The site's own build ships zero JavaScript: the only
-#                        <script> tag it emits is a type="application/ld+json"
-#                        data block, which the parser never prepares as script
-#                        and script-src therefore never reaches, plus 0
-#                        .js/.mjs/.map files in dist. check:built asserts both.
-#                        So the default is the strictest value that exists, and
-#                        anything not listed below is refused outright.
+#   default-src 'none'   The site's own build ships one script, inline, and 0
+#                        .js/.mjs/.map files. Every other <script> tag it emits
+#                        is a type="application/ld+json" data block, which the
+#                        parser never prepares as script and script-src
+#                        therefore never reaches. check:built asserts all of
+#                        it. So the default is the strictest value that exists,
+#                        and anything not listed below is refused outright.
 #
-#   script-src           Exactly one host, and it is not ours. Cloudflare Web
+#   script-src 'sha256'  The one script of ours: ZoomMap's mouse controls on
+#                        /datacentres/ (wheel zoom, drag to pan), added on the
+#                        owner's instruction. Allowed by the hash of its exact
+#                        text, not by 'self' or 'unsafe-inline', so it is the
+#                        only inline code that can run and no file from this
+#                        origin can. Any edit to the script changes the hash;
+#                        check:built recomputes it from dist, prints the new
+#                        value, and fails until this line carries it. It also
+#                        fails on a hash here that no script uses any more.
+#
+#   script-src host      Exactly one host, and it is not ours. Cloudflare Web
 #                        Analytics is enabled on the zone, and Cloudflare injects
 #                        its beacon into the HTML at the edge, AFTER the build.
 #                        Nothing in this repository puts it there, which is
@@ -120,9 +130,10 @@
 #                        produces console noise.
 #
 # Every count above was taken from the current dist by the same definition it
-# states, and two of them are asserted rather than trusted: check:built fails if
-# any page carries an executable script tag or if dist holds a .js, .mjs or .map
-# file. The rest move with the site, so treat a mismatch as a signal to recount
+# states, and the script ones are asserted rather than trusted: check:built fails
+# if any page carries a script with a src, or an inline script whose hash is not
+# in script-src, or if script-src lists a hash nothing uses, or if dist holds a
+# .js, .mjs or .map file. The rest move with the site, so treat a mismatch as a signal to recount
 # rather than as a reason to widen a directive.
 
 # Content-hashed build assets. The hash IS the version, so a changed file gets a

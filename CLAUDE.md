@@ -129,7 +129,8 @@ npm run dev          # http://localhost:4321
 npm run build
 npm run check:lib    # render-side logic: path rounding, ranks, country joins, category drift
 npm run check:built  # against dist/: links, anchors, dashes, canonical origin, stale name, noindex,
-                     # unsafe href schemes, zero client JS, every table inside a .scroll-x box
+                     # unsafe href schemes, every script hashed in the CSP and no .js files,
+                     # every table inside a .scroll-x box
 
 python etl/common.py                                  # licence guard, idempotence, dash rule
 python etl/fetch_news.py --self-check                 # snippet cap, relevance, categories, language
@@ -263,8 +264,14 @@ Set from the tasteskill brief at `DESIGN_VARIANCE 7 / MOTION_INTENSITY 4 / VISUA
 - **The homepage banner is the one exception to "no hero",** added on the owner's instruction,
   which the design lock defers to. It keeps the rest of the rule: the background is four CSS
   gradients in the existing graph-paper language and there is still no image anywhere on the site.
-- **Zero client JavaScript.** Charts and maps render to SVG at build time; interactivity is CSS
-  (`<details>`, `:checked`, the native Popover API). Keep it that way.
+- **No client JavaScript, with one exception.** Charts and maps render to SVG at build time;
+  interactivity is CSS (`<details>`, `:checked`, the native Popover API). Keep it that way.
+  The exception is `ZoomMap`'s mouse controls (wheel zooms, drag pans), added on the owner's
+  instruction, because no CSS can do either. The map works without them. The script is inline,
+  and `public/_headers` allows it by its SHA-256 and nothing else of ours; `check:built`
+  recomputes the hash from `dist` and fails until the policy carries it, so an edit to the script
+  means pasting the new hash it prints. `/about/` and `/privacy/` describe the script, and change
+  with it.
 - Run `python etl/check_contrast.py` after any colour change.
 
 ## Data sources

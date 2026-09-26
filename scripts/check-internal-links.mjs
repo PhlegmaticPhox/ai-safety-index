@@ -15,6 +15,7 @@
  *     node scripts/check-internal-links.mjs
  */
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
@@ -163,10 +164,45 @@ assert.deepEqual(
    attribute reordering in a future Astro release cannot silently fail the build.
    Base.astro escapes < to \u003c inside the JSON, so no <script can hide in the
    payload, and scripts/check-seo.mjs asserts every such block parses. */
-const LD_JSON = /<script\b[^>]*\btype="application\/ld\+json"[^>]*>/gi;
-const scripted = pages
-  .filter((page) => /<script[\s>]/i.test(readFileSync(page, "utf8").replace(LD_JSON, "")))
-  .map((page) => relative(DIST, page));
+const LD_JSON = /<script\b[^>]*\btype="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi;
+
+/* And one script that is JavaScript: ZoomMap's mouse controls, added on the
+   owner's instruction. It is inline, and public/_headers allows it by the
+   SHA-256 of its exact text, so the rule is now "every executable script in
+   dist is inline and its hash is in the policy". A script with a src, or an
+   inline one whose hash the policy does not carry, fails here: in production
+   the browser would refuse it, and the page would lose the behaviour silently.
+   The hash is computed over the bytes between the tags, which is what a
+   browser hashes. */
+const HEADERS = readFileSync("public/_headers", "utf8");
+const cspLine = HEADERS.split("\n").find((line) => /^\s*Content-Security-Policy:/.test(line)) ?? "";
+const scriptSrc = (cspLine.match(/script-src([^;]*)/) ?? ["", ""])[1];
+const allowedHashes = new Set([...scriptSrc.matchAll(/'sha256-([A-Za-z0-9+/=]+)'/g)].map((m) => m[1]));
+const SCRIPT = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
+const scripted = [];
+const hashesUsed = new Set();
+for (const page of pages) {
+  const html = readFileSync(page, "utf8").replace(LD_JSON, "");
+  for (const [, attrs, body] of html.matchAll(SCRIPT)) {
+    const hash = createHash("sha256").update(body, "utf8").digest("base64");
+    if (/\bsrc=/i.test(attrs)) {
+      scripted.push(`${relative(DIST, page)}: a script with a src (${attrs.trim()})`);
+    } else if (!allowedHashes.has(hash)) {
+      scripted.push(`${relative(DIST, page)}: an inline script whose hash 'sha256-${hash}' is not in script-src`);
+    } else {
+      hashesUsed.add(hash);
+    }
+  }
+}
+/* A hash left in the policy after its script changed is an allowance for code
+   that no longer exists, and would let that old text run if it ever came back. */
+const staleHashes = [...allowedHashes].filter((h) => !hashesUsed.has(h));
+assert.deepEqual(
+  staleHashes,
+  [],
+  `script-src in public/_headers allows ${staleHashes.length} hash(es) no script in dist has:\n  ` +
+    `${staleHashes.map((h) => `'sha256-${h}'`).join("\n  ")}\nRemove them.`,
+);
 
 /* The other half of the same rule, and until now it was only ever asserted by
    the comment in public/_headers that claims this file asserts it. A script tag
@@ -187,11 +223,12 @@ assert.deepEqual(
 assert.deepEqual(
   scripted,
   [],
-  `${scripted.length} page(s) contain a <script> tag:\n  ${scripted.join("\n  ")}\n` +
-    `This build is supposed to emit no executable client JavaScript (ld+json data ` +
-    `blocks excepted), /privacy/ describes the ` +
-    `site that way, and the CSP only permits Cloudflare's analytics origin. Either ` +
-    `this is accidental, or all three need to change together.`,
+  `${scripted.length} script(s) the Content-Security-Policy would refuse:\n  ${scripted.join("\n  ")}\n` +
+    `The build may emit only inline scripts whose SHA-256 is listed in script-src in ` +
+    `public/_headers (ld+json data blocks excepted), and /privacy/ and /about/ ` +
+    `describe the one that is. If this is ZoomMap's script after an edit, put the ` +
+    `hash printed above into public/_headers in place of the old one. Anything ` +
+    `else is accidental, or the policy, this check and those pages change together.`,
 );
 
 /* Canonical origin.
@@ -350,6 +387,7 @@ assert.deepEqual(
 console.log(
   `check-internal-links.mjs passed: ${checked} internal links, 0 forbidden dashes, ` +
     `${pages.length} pages, canonical origin ${origin}, no stale name, no noindex, ` +
-    `no unsafe href schemes, no executable client JavaScript, every table in a scroll box, ` +
+    `no unsafe href schemes, no script the CSP would refuse (${hashesUsed.size} hashed inline), ` +
+    `no JavaScript files, every table in a scroll box, ` +
     `every SVG either hidden or named`,
 );

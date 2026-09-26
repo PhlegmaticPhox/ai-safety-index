@@ -1,6 +1,8 @@
 ---
 /**
- * A world map of points that pans and zooms, with no JavaScript.
+ * A world map of points that pans and zooms, with no JavaScript required. The
+ * one script at the foot of this file adds mouse controls on top; see MOUSE
+ * CONTROLS below.
  *
  * Panning is native scrolling. The map is drawn larger than its frame and the
  * frame scrolls: a finger drags it, a trackpad pans it in both axes, a mouse
@@ -49,6 +51,30 @@
  *
  * Every marker is a button that opens its card as a native popover, which is
  * the route on a touch screen. Hovering shows the same card without opening it.
+ *
+ * MOUSE CONTROLS, the site's one first-party script. On the owner's instruction
+ * the wheel zooms and a mouse drag pans, which no CSS can do: a mouse cannot
+ * drag-scroll natively, and a wheel event cannot drive a zoom. Everything above
+ * still works without it and is the baseline; the script only drives the same
+ * radio group and the same scroller.
+ *
+ *  - Wheel: one level per notch, by checking the neighbouring radio, then
+ *    scrolling so the point under the pointer stays under it. Deltas are
+ *    accumulated and levels rate-limited, because a trackpad sends a stream of
+ *    small deltas that would otherwise run straight to the last level. At the
+ *    widest level a wheel outwards, and at the deepest a wheel inwards, is left
+ *    to the page, so scrolling past the map is not trapped. A mostly
+ *    horizontal wheel is left alone and pans natively.
+ *  - Drag: mouse only, and only when there is something to scroll. Snapping is
+ *    off while dragging, or every move lands on the lattice and at 16x the map
+ *    jumps in 27px steps; releasing snaps to the nearest line. A drag that ends
+ *    on a marker does not open its card.
+ *
+ * It is inline and identical wherever the map renders, so the Content-Security-
+ * Policy in public/_headers allows it by its SHA-256 hash and allows no other
+ * script of ours. check:built recomputes the hash from dist and fails if the
+ * policy does not carry it: edit the script, rebuild, and copy the new hash
+ * that check prints into public/_headers.
  */
 import { projectLand } from "../lib/geo";
 
@@ -153,6 +179,11 @@ const rules = [
   `#${id}:has(#${id}-z0:checked) .zmap__cols > i:not(.is-mid),
 #${id}:has(#${id}-z0:checked) .zmap__rows > i:not(.is-mid) { scroll-snap-align: none; }`,
   `#${id}:has(#${id}-z0:checked) .zmap__step--home { opacity: 0.45; pointer-events: none; }`,
+  /* A grab cursor only where a drag can move something, and the drag state the
+     mouse script sets. Exclusive of each other, so neither has to win on
+     specificity. */
+  `#${id}:not(:has(#${id}-z0:checked)):not(.is-dragging) .zmap__view { cursor: grab; }`,
+  `#${id}.is-dragging .zmap__view { cursor: grabbing; scroll-snap-type: none; user-select: none; }`,
   ...filters.map(
     (f) => `#${id}:has(#${id}-f-${f.key}:not(:checked)) .zmap__site.t-${f.key} { display: none; }`,
   ),
@@ -282,6 +313,83 @@ const rules = [
 
 <style set:html={rules} is:inline></style>
 
+<script is:inline>
+(() => {
+  for (const map of document.querySelectorAll(".zmap:not([data-mouse])")) {
+    map.dataset.mouse = "";
+    const view = map.querySelector(".zmap__view");
+    const canvas = map.querySelector(".zmap__canvas");
+    const radios = [...map.querySelectorAll(".zmap__radio")];
+    if (!view || !canvas || radios.length < 2) continue;
+    const level = () => radios.findIndex((r) => r.checked);
+
+    const zoomAt = (to, x, y) => {
+      const before = canvas.getBoundingClientRect();
+      const fx = (x - before.left) / before.width;
+      const fy = (y - before.top) / before.height;
+      radios[to].checked = true;
+      const after = canvas.getBoundingClientRect();
+      view.scrollTo({
+        left: view.scrollLeft + after.left + fx * after.width - x,
+        top: view.scrollTop + after.top + fy * after.height - y,
+        behavior: "instant",
+      });
+    };
+
+    let pending = 0;
+    let last = -Infinity;
+    view.addEventListener("wheel", (e) => {
+      if (e.deltaY === 0 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const to = level() + (e.deltaY < 0 ? 1 : -1);
+      if (to < 0 || to >= radios.length) return;
+      e.preventDefault();
+      const px = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? view.clientHeight : 1);
+      pending = Math.sign(px) === Math.sign(pending) ? pending + px : px;
+      if (Math.abs(pending) < 50 || e.timeStamp - last < 200) return;
+      pending = 0;
+      last = e.timeStamp;
+      zoomAt(to, e.clientX, e.clientY);
+    }, { passive: false });
+
+    let drag = null;
+    let dragged = false;
+    const scrollable = () =>
+      view.scrollWidth > view.clientWidth + 1 || view.scrollHeight > view.clientHeight + 1;
+    view.addEventListener("pointerdown", (e) => {
+      dragged = false;
+      if (e.pointerType !== "mouse" || e.button !== 0 || !scrollable()) return;
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, left: view.scrollLeft, top: view.scrollTop, moving: false };
+    });
+    view.addEventListener("pointermove", (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x;
+      const dy = e.clientY - drag.y;
+      if (!drag.moving) {
+        if (Math.hypot(dx, dy) < 5) return;
+        drag.moving = true;
+        view.setPointerCapture(drag.id);
+        map.classList.add("is-dragging");
+      }
+      view.scrollTo({ left: drag.left - dx, top: drag.top - dy, behavior: "instant" });
+    });
+    const release = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      dragged = drag.moving;
+      drag = null;
+      map.classList.remove("is-dragging");
+    };
+    view.addEventListener("pointerup", release);
+    view.addEventListener("pointercancel", release);
+    view.addEventListener("click", (e) => {
+      if (!dragged) return;
+      dragged = false;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+  }
+})();
+</script>
+
 <style>
   .zmap {
     --zmap-h: min(74svh, 76vw, 720px);
@@ -328,7 +436,6 @@ const rules = [
     scroll-snap-type: both mandatory;
     scrollbar-width: thin;
     scrollbar-color: var(--line) transparent;
-    cursor: grab;
   }
 
   .zmap__view:focus-visible {
