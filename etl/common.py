@@ -62,6 +62,10 @@ ALLOWED_CONTENT_TYPES = {
     "json": {"application/json", "text/json", "application/octet-stream"},
     "rss": {"application/rss+xml", "application/xml", "text/xml", "application/rdf+xml"},
     "atom": {"application/atom+xml", "application/xml", "text/xml"},
+    # One page is fetched as a page on purpose: Epoch AI's data-centre map, the
+    # only place its site coordinates are published. It is declared per call,
+    # never as a source's format, so no data URL can slip through as "html".
+    "html": {"text/html"},
 }
 
 # Types that are never a legitimate answer for a data endpoint. This is the check
@@ -195,20 +199,25 @@ def fetch(
     offline: bool = False,
     max_age_hours: float = 12.0,
     retries: int = 3,
+    fmt: str | None = None,
 ) -> tuple[Path, str]:
     """Download a source to data/raw/, returning (path, retrieved_iso8601).
 
     Serves a cached copy when it is fresh, when offline is set, or when the network
     fails but a previous copy exists. A stale-but-present dataset is far better than
     a broken build: the site surfaces staleness to the reader rather than vanishing.
+
+    `fmt` overrides the source's declared format for this one URL, for a source
+    published as more than one kind of file. The content-type check follows it.
     """
     source = get_source(source_id)
     url = url or source.get("url")
     if not url:
         raise FetchError(f"Source {source_id!r} has no URL; it is reference-only.")
+    declared = fmt or source.get("format")
 
     RAW.mkdir(parents=True, exist_ok=True)
-    path = RAW / (filename or f"{source_id}{_ext_for(source.get('format'))}")
+    path = RAW / (filename or f"{source_id}{_ext_for(declared)}")
     meta_path = path.with_suffix(path.suffix + ".meta.json")
 
     cached = _read_meta(meta_path)
@@ -234,7 +243,7 @@ def fetch(
                     f"{source_id!r} returned more than {MAX_BYTES:,} bytes; refusing it. "
                     f"Either the source grew a great deal or it is not what it was."
                 )
-            _check_content_type(source_id, source.get("format"), content_type)
+            _check_content_type(source_id, declared, content_type)
             path.write_bytes(body)
             retrieved = utcnow()
             meta_path.write_text(
@@ -282,7 +291,7 @@ def _check_content_type(source_id: str, fmt: str | None, received: str) -> None:
     """
     if not fmt or not received:
         return
-    if received in REFUSED_CONTENT_TYPES:
+    if received in REFUSED_CONTENT_TYPES and fmt != "html":
         raise FetchError(
             f"{source_id!r} declares format={fmt!r} but the server returned "
             f"{received!r}. A data URL answering with a web page usually means it "
@@ -456,7 +465,7 @@ def check_links(entries: Iterable[tuple[str, str]]) -> int:
 
 
 def _ext_for(fmt: str | None) -> str:
-    return {"csv": ".csv", "json": ".json", "rss": ".xml", "atom": ".xml", "parquet": ".parquet"}.get(
+    return {"csv": ".csv", "json": ".json", "rss": ".xml", "atom": ".xml", "parquet": ".parquet", "html": ".html"}.get(
         fmt or "", ".dat"
     )
 
@@ -539,6 +548,7 @@ def _self_check() -> None:
         ("rss", "application/xml"),               # incidentdatabase
         ("atom", "application/atom+xml"),         # gov.uk
         ("atom", "application/xml"),              # canada
+        ("html", "text/html"),                    # epoch.ai data-centre map page
     ):
         _check_content_type("selfcheck", fmt, received)  # must not raise
 
@@ -558,6 +568,11 @@ def _self_check() -> None:
             pass
         else:
             raise AssertionError(f"HTML accepted for format={fmt!r}; the stub bug can recur")
+    # Declaring a page as a page is the only way past that refusal, and no
+    # registered source may declare it: the override is per call, for one page.
+    declared_html = [k for k, v in load_sources().items() if v.get("format") == "html"]
+    assert not declared_html, f"sources declared as html pages: {declared_html}"
+    assert _ext_for("html") == ".html"
 
     # Idempotence: writing the same records twice must leave the file untouched,
     # or the daily refresh commits timestamp churn forever.

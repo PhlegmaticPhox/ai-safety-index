@@ -500,10 +500,18 @@ const rules = [
   }
 
   /* On a phone an opened card is a sheet along the bottom of the screen: the
-     one place it can never cover the marker it describes or run off an edge. */
+     one place it can never cover the marker it describes or run off an edge.
+
+     The fallbacks go too, not only the area. A tap shows the card by :hover
+     first, anchored, and Chromium keeps the last fallback that fitted as long
+     as it still fits, so with fallbacks left on, a tapped card kept the
+     anchored position `end span-start` as a 229px column instead of becoming
+     the sheet. Opened by script with no hover first, it was a sheet, which is
+     how the sheet looked tested when it was not. */
   @media (max-width: 640px) {
     .zmap__card:popover-open {
       position-area: none;
+      position-try-fallbacks: none;
       inset: auto 0.75rem 0.75rem;
       inline-size: auto;
       margin: 0;

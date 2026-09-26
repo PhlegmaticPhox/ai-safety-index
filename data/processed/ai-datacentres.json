@@ -1,0 +1,3102 @@
+{
+  "dataset": "ai-datacentres",
+  "generated": "2026-09-26T06:21:31+00:00",
+  "retrieved": "2026-09-26T06:21:30+00:00",
+  "sources": [
+    "epoch-ai-data-centers"
+  ],
+  "unit": "MW of IT power",
+  "notes": "Every site in Epoch AI's AI Data Centers hub. Power, compute and dates are Epoch's estimates; figures dated after the retrieval date are Epoch's projection. Owner is the owner of the chips. Category is this site's own grouping of the owner, not Epoch's.",
+  "count": 93,
+  "records": [
+    {
+      "id": "microsoft-fairwater-wisconsin",
+      "name": "Microsoft Fairwater Wisconsin",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "likely"
+        },
+        {
+          "name": "Microsoft",
+          "confidence": "likely"
+        }
+      ],
+      "project": "Microsoft AI WAN",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Mount Pleasant, Wisconsin",
+      "lat": 42.6839,
+      "lon": -87.9152,
+      "stage": "Expanding",
+      "online": "2026-04-16",
+      "as_of": "2026-05-15",
+      "it_mw": 369.0,
+      "facility_mw": 442.0,
+      "h100e": 445680,
+      "complete": "2028-05-13",
+      "it_mw_full": 2263.0,
+      "facility_mw_full": 2715.0,
+      "h100e_full": 4527539,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1CRnOKjeb6z5VFPyeA7xaMrbppOD5dCS7TE20kvQyb8E/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "anthropic-amazon-new-carlisle",
+      "name": "Anthropic-Amazon New Carlisle",
+      "owner": "Amazon",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Project Rainier",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "New Carlisle, Indiana",
+      "lat": 41.6794,
+      "lon": -86.4712,
+      "stage": "Expanding",
+      "online": "2025-06-23",
+      "as_of": "2026-06-03",
+      "it_mw": 910.0,
+      "facility_mw": 1092.0,
+      "h100e": 685912,
+      "complete": "2028-03-17",
+      "it_mw_full": 1925.0,
+      "facility_mw_full": 2310.0,
+      "h100e_full": 1746038,
+      "chips": [
+        "Trainium2"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1umU-KLAB_6A-lKRCdLuF7SPv74HlqKjDdfDor1bRGuY/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-new-mexico",
+      "name": "OpenAI Stargate New Mexico",
+      "owner": "Oracle",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Santa Teresa, New Mexico",
+      "lat": 31.8203,
+      "lon": -106.6843,
+      "stage": "Under construction",
+      "online": "2028-12-31",
+      "as_of": "2026-06-22",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-12-31",
+      "it_mw_full": 1750.0,
+      "facility_mw_full": 2450.0,
+      "h100e_full": 5103588,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1Dd2oXxg3tdBebaWOW-qSj1U1-HZ9zM9LkXseTayWhBM/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-hyperion",
+      "name": "Meta Hyperion",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Hyperion",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Holly Ridge, Louisiana",
+      "lat": 32.5106,
+      "lon": -91.636,
+      "stage": "Under construction",
+      "online": "2028-01-01",
+      "as_of": "2026-04-19",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-01-01",
+      "it_mw_full": 1632.0,
+      "facility_mw_full": 2203.0,
+      "h100e_full": 4142944,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1cyXcZ_jIsJDjuPKx6_J1scIWeq0-rfM3-2GcSKN4oA0/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "colossus-2",
+      "name": "Colossus 2",
+      "owner": "SpaceXAI",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "confident"
+        },
+        {
+          "name": "Cursor",
+          "confidence": "confident"
+        },
+        {
+          "name": "SpaceXAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Memphis, Tennessee",
+      "lat": 34.9892,
+      "lon": -90.0368,
+      "stage": "Expanding",
+      "online": "2025-10-19",
+      "as_of": "2026-06-15",
+      "it_mw": 946.0,
+      "facility_mw": 1276.0,
+      "h100e": 1111673,
+      "complete": "2027-02-25",
+      "it_mw_full": 1531.0,
+      "facility_mw_full": 2065.0,
+      "h100e_full": 1824154,
+      "chips": [
+        "B200",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1oZpZ9nTTV6wW0xjc1pPOQmKS7NCyDzuG2HiycC1GqFs/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-shackelford",
+      "name": "OpenAI Stargate Shackelford",
+      "owner": "Oracle",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Abilene, Texas",
+      "lat": 32.5438,
+      "lon": -99.5483,
+      "stage": "Under construction",
+      "online": "2027-08-15",
+      "as_of": "2026-09-04",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-11-11",
+      "it_mw_full": 1400.0,
+      "facility_mw_full": 1960.0,
+      "h100e_full": 4562911,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1MzNM0bbxwhChbKF-x1RT3ilZ0r8pU_ZPi9r5-w0z4A4/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "qts-cedar-rapids",
+      "name": "QTS Cedar Rapids",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Cedar Rapids, Iowa",
+      "lat": 41.9097,
+      "lon": -91.7429,
+      "stage": "Under construction",
+      "online": "2026-11-15",
+      "as_of": "2026-05-07",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-11-15",
+      "it_mw_full": 1133.0,
+      "facility_mw_full": 1587.0,
+      "h100e_full": 3668823,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1zXqoogyqGbmgvdu4vSTepZG3Cy8kMoJjp0n3KaZPkd4/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-prometheus",
+      "name": "Meta Prometheus",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Prometheus",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "New Albany, Ohio",
+      "lat": 40.0878,
+      "lon": -82.7428,
+      "stage": "Expanding",
+      "online": "2025-10-14",
+      "as_of": "2026-08-31",
+      "it_mw": 496.0,
+      "facility_mw": 645.0,
+      "h100e": 599845,
+      "complete": "2028-07-01",
+      "it_mw_full": 1022.0,
+      "facility_mw_full": 1328.0,
+      "h100e_full": 1234902,
+      "chips": [
+        "B200",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1LOiioZUG696TC3nOAXROvhJBhhN7to-r6KR05Hd0qCk/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "goodnight",
+      "name": "Goodnight",
+      "owner": "Google",
+      "owner_confidence": "speculative",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Claude, Texas",
+      "lat": 35.0198,
+      "lon": -101.3082,
+      "stage": "Under construction",
+      "online": "2026-12-15",
+      "as_of": "2026-04-16",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-10-01",
+      "it_mw_full": 1006.0,
+      "facility_mw_full": 1294.1,
+      "h100e_full": 2278929,
+      "chips": [
+        "B300",
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1NE3R883YwdkSNVCbVJfy5nMCDy99eNA1wRdwikcJYWk/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-uae",
+      "name": "OpenAI Stargate UAE",
+      "owner": "G42",
+      "owner_confidence": "likely",
+      "category": "Other",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United Arab Emirates",
+      "place": "Abu Dhabi, Abu Dhabi",
+      "lat": 24.1503,
+      "lon": 54.4428,
+      "stage": "Under construction",
+      "online": "2026-12-01",
+      "as_of": "2025-11-16",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-01-01",
+      "it_mw_full": 1000.0,
+      "facility_mw_full": 1400.0,
+      "h100e_full": 2021223,
+      "chips": [
+        "B300",
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/11es1WqQ3StAuMjFOYQ1wzq6YpwQCb-Uz996EvZpnsAs/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-michigan",
+      "name": "OpenAI Stargate Michigan",
+      "owner": "Oracle",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Benton, Michigan",
+      "lat": 42.1212,
+      "lon": -83.8842,
+      "stage": "Under construction",
+      "online": "2028-12-31",
+      "as_of": "2026-03-12",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-12-31",
+      "it_mw_full": 988.0,
+      "facility_mw_full": 1383.0,
+      "h100e_full": 2880243,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1uqn1l4aQCjT8E7JUmLsT6CrE3PtjajDL19Sj6xw2qg8/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-wisconsin",
+      "name": "OpenAI Stargate Wisconsin",
+      "owner": "Oracle",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Port Washington, Wisconsin",
+      "lat": 43.4304,
+      "lon": -87.856,
+      "stage": "Under construction",
+      "online": "2028-12-31",
+      "as_of": "2026-07-24",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-12-31",
+      "it_mw_full": 902.0,
+      "facility_mw_full": 1300.0,
+      "h100e_full": 2627590,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1fjTxXhhaiFa7x1YBAAa7d2CcUrnSLGNJYOTd6o3xd04/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-fort-wayne",
+      "name": "Google Fort Wayne",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Fort Wayne, Indiana",
+      "lat": 41.0318,
+      "lon": -85.0489,
+      "stage": "Under construction",
+      "online": "2026-12-01",
+      "as_of": "2026-08-19",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-06-23",
+      "it_mw_full": 863.0,
+      "facility_mw_full": 1035.0,
+      "h100e_full": 2940879,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1a3GgdEIeJqMwhqrfreQlnJM4GERZukdtP5QFg4xTtNo/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-milam",
+      "name": "OpenAI Stargate Milam",
+      "owner": "Softbank",
+      "owner_confidence": "confident",
+      "category": "Other",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Burlington, Texas",
+      "lat": 30.9963,
+      "lon": -97.0103,
+      "stage": "Under construction",
+      "online": "2028-12-31",
+      "as_of": "2026-03-23",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-12-31",
+      "it_mw_full": 857.0,
+      "facility_mw_full": 1200.0,
+      "h100e_full": 2496210,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1Ngd8mud1gHPmwamHYb7VhfYMZLiS9hfjMlHxdsu6d28/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-abilene",
+      "name": "OpenAI Stargate Abilene",
+      "owner": "Oracle",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Abilene, Texas",
+      "lat": 32.5013,
+      "lon": -99.7856,
+      "stage": "Expanding",
+      "online": "2025-09-26",
+      "as_of": "2026-07-28",
+      "it_mw": 421.0,
+      "facility_mw": 590.0,
+      "h100e": 509348,
+      "complete": "2026-11-01",
+      "it_mw_full": 843.0,
+      "facility_mw_full": 1180.0,
+      "h100e_full": 1018696,
+      "chips": [
+        "B200",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/197BW-5tHutOzJ_LTv990eCO_M8nUXT2t1nl--UfMIUk/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "amazon-ridgeland",
+      "name": "Amazon Ridgeland",
+      "owner": "Amazon",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "speculative"
+        }
+      ],
+      "project": "Project Rainier",
+      "project_confidence": "speculative",
+      "country": "United States",
+      "place": "Ridgeland, Mississippi",
+      "lat": 32.4105,
+      "lon": -90.1898,
+      "stage": "Expanding",
+      "online": "2026-05-15",
+      "as_of": "2026-05-15",
+      "it_mw": 228.0,
+      "facility_mw": 273.0,
+      "h100e": 171299,
+      "complete": "2028-09-29",
+      "it_mw_full": 840.0,
+      "facility_mw_full": 1008.0,
+      "h100e_full": 788277,
+      "chips": [
+        "Trainium2",
+        "Trainium3"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1WWWmkFubzXYb2RY9PZsF4BtrpmbmdcSJtVTw1kcJxVs/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "vnet-bayin-ulanqab",
+      "name": "VNET Bayin Ulanqab",
+      "owner": "VNET",
+      "owner_confidence": "confident",
+      "category": "Other",
+      "users": [
+        {
+          "name": "ByteDance",
+          "confidence": "speculative"
+        }
+      ],
+      "project": "10 GW Hyperscale 2.0",
+      "project_confidence": "confident",
+      "country": "China",
+      "place": "Ulanqab, Inner Mongolia",
+      "lat": 40.9811,
+      "lon": 113.3143,
+      "stage": "Expanding",
+      "online": "2025-07-01",
+      "as_of": "2026-05-06",
+      "it_mw": 221.0,
+      "facility_mw": 252.0,
+      "h100e": 122789,
+      "complete": "2027-09-01",
+      "it_mw_full": 700.0,
+      "facility_mw_full": 798.0,
+      "h100e_full": 388075,
+      "chips": [
+        "Ascend 910C"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1zHNmd-avKvWoJc_ivOj6u54g9OyIDjM2-ybubuxj2yc/edit?usp=drive_link",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "amazon-madison-mega-site",
+      "name": "Amazon Madison Mega Site",
+      "owner": "Amazon",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "speculative"
+        }
+      ],
+      "project": "Project Rainier",
+      "project_confidence": "speculative",
+      "country": "United States",
+      "place": "Canton, Mississippi",
+      "lat": 32.5974,
+      "lon": -90.0914,
+      "stage": "Expanding",
+      "online": "2025-06-23",
+      "as_of": "2026-06-04",
+      "it_mw": 284.0,
+      "facility_mw": 341.0,
+      "h100e": 214348,
+      "complete": "2028-03-15",
+      "it_mw_full": 683.0,
+      "facility_mw_full": 819.0,
+      "h100e_full": 514436,
+      "chips": [
+        "Trainium2"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/10asD982gArQ0CQTVo_v331kEx_vDnwhWAusaYo1zsto/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "crusoe-abilene-expansion",
+      "name": "Crusoe Abilene Expansion",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Microsoft",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Abilene, Texas",
+      "lat": 32.4919,
+      "lon": -99.782,
+      "stage": "Under construction",
+      "online": "2027-09-17",
+      "as_of": "2026-01-15",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-11-11",
+      "it_mw_full": 672.0,
+      "facility_mw_full": 941.0,
+      "h100e_full": 1707933,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1FpTJoXhLRzKTX8S3kSnPlT8V66ad_htJPuvaYPiHAsE/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-fairwater-atlanta",
+      "name": "Microsoft Fairwater Atlanta",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "likely"
+        },
+        {
+          "name": "Microsoft",
+          "confidence": "likely"
+        }
+      ],
+      "project": "Microsoft AI WAN",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Fayetteville, Georgia",
+      "lat": 33.4572,
+      "lon": -84.5245,
+      "stage": "Operating",
+      "online": "2025-10-14",
+      "as_of": "2026-06-14",
+      "it_mw": 636.0,
+      "facility_mw": 859.0,
+      "h100e": 768769,
+      "complete": "2026-06-14",
+      "it_mw_full": 636.0,
+      "facility_mw_full": 859.0,
+      "h100e_full": 768769,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1XeruHu2ES3UsSrsAU3HSMkk5zwzFOQzxQE9pQ_fuEUw/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-helios",
+      "name": "Coreweave Helios",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Afton, Texas",
+      "lat": 33.7751,
+      "lon": -100.8699,
+      "stage": "Expanding",
+      "online": "2026-08-30",
+      "as_of": "2026-08-30",
+      "it_mw": 132.0,
+      "facility_mw": 200.0,
+      "h100e": 159552,
+      "complete": "2029-01-01",
+      "it_mw_full": 528.0,
+      "facility_mw_full": 800.0,
+      "h100e_full": 638207,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1qcYPDCBHZOg0EKGpK7Ru4-cGd8Y8BkXAxf2W3umOwmo/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "dayone-nusajaya",
+      "name": "DayOne Nusajaya",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "Malaysia",
+      "place": "Johor Bahru, Johor",
+      "lat": 1.4294,
+      "lon": 103.5979,
+      "stage": "Expanding",
+      "online": "2024-12-31",
+      "as_of": "2026-04-05",
+      "it_mw": 240.0,
+      "facility_mw": 336.0,
+      "h100e": 281670,
+      "complete": "2026-10-02",
+      "it_mw_full": 473.0,
+      "facility_mw_full": 662.0,
+      "h100e_full": 583837,
+      "chips": [
+        "H100",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1Xu6B3gVZhKvkQ1U5gmXgOgoflyzpgOydm60SYn_lAWE/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "huawei-wuhu",
+      "name": "Huawei Wuhu",
+      "owner": "Huawei",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "China",
+      "place": "Wuhu, Anhui",
+      "lat": 31.2918,
+      "lon": 118.2998,
+      "stage": "Expanding",
+      "online": "2025-01-01",
+      "as_of": "2026-08-06",
+      "it_mw": 157.0,
+      "facility_mw": 181.0,
+      "h100e": 76326,
+      "complete": "2027-12-01",
+      "it_mw_full": 457.0,
+      "facility_mw_full": 526.0,
+      "h100e_full": 221924,
+      "chips": [
+        "Ascend 910C"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1LtTROd6CTTzqjI0x9EqOby-EcYytmXsaG35z93W1bDk/edit?usp=drive_link",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-bowling-green",
+      "name": "Meta Bowling Green",
+      "owner": "Meta",
+      "owner_confidence": null,
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": null
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Bowling Green, Ohio",
+      "lat": 41.4673,
+      "lon": -83.6361,
+      "stage": "Under construction",
+      "online": "2027-02-01",
+      "as_of": "2026-07-30",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-01-01",
+      "it_mw_full": 422.0,
+      "facility_mw_full": 570.0,
+      "h100e_full": 855159,
+      "chips": [
+        "B300",
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1DH2kCU99fLYUj28VDjHWoGbx3IahwltzXqcbBEa-pOc/edit?gid=2010365208#gid=2010365208",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "dayone-kempas",
+      "name": "DayOne Kempas",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "Malaysia",
+      "place": "Kempas, Johor",
+      "lat": 1.5594,
+      "lon": 103.7199,
+      "stage": "Expanding",
+      "online": "2026-01-22",
+      "as_of": "2026-09-01",
+      "it_mw": 322.470096,
+      "facility_mw": 451.4581344,
+      "h100e": 367547,
+      "complete": "2026-10-01",
+      "it_mw_full": 421.691664,
+      "facility_mw_full": 590.3683296,
+      "h100e_full": 480639,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1R_LGG2zmZMczforjzOT_qqrBk-683L64lNIoQr5J1CY/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-ellendale-nd",
+      "name": "CoreWeave Ellendale ND",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Ellendale, North Dakota",
+      "lat": 46.0153,
+      "lon": -98.5725,
+      "stage": "Expanding",
+      "online": "2025-10-27",
+      "as_of": "2026-06-30",
+      "it_mw": 68.0,
+      "facility_mw": 88.0,
+      "h100e": 93482,
+      "complete": "2027-06-01",
+      "it_mw_full": 400.0,
+      "facility_mw_full": 520.0,
+      "h100e_full": 505306,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1a572c9bP48XuHQ3R_GFdrYa17MmkoK8IT7-FOrxRgDw/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-omaha",
+      "name": "Google Omaha",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Omaha, Nebraska",
+      "lat": 41.3417,
+      "lon": -96.0889,
+      "stage": "Expanding",
+      "online": "2024-04-08",
+      "as_of": "2026-06-30",
+      "it_mw": 237.0,
+      "facility_mw": 284.0,
+      "h100e": 198585,
+      "complete": "2028-07-23",
+      "it_mw_full": 395.0,
+      "facility_mw_full": 474.0,
+      "h100e_full": 904497,
+      "chips": [
+        "TPU v5e",
+        "TPU v5p",
+        "TPU v6e",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1GeUMas99qz2kfy3nhfmVEjPNgDNYfXgOoTiUx1EG_P0/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-columbus",
+      "name": "Google Columbus",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Columbus, Ohio",
+      "lat": 39.8491,
+      "lon": -82.9966,
+      "stage": "Expanding",
+      "online": "2024-04-01",
+      "as_of": "2026-08-05",
+      "it_mw": 303.0,
+      "facility_mw": 364.0,
+      "h100e": 331986,
+      "complete": "2027-07-01",
+      "it_mw_full": 386.0,
+      "facility_mw_full": 464.0,
+      "h100e_full": 576049,
+      "chips": [
+        "TPU v5e",
+        "TPU v5p",
+        "TPU v6e",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/17vNqp7jsx3CUwFeUfxIyI3KA0uZ0Bh7BNkrVyH77Ohs/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "anthropic-lake-mariner",
+      "name": "Anthropic Lake Mariner",
+      "owner": "AI XPV Platform",
+      "owner_confidence": "confident",
+      "category": "Other",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Barker, New York",
+      "lat": 43.3564,
+      "lon": -78.602,
+      "stage": "Expanding",
+      "online": "2026-05-31",
+      "as_of": "2026-07-23",
+      "it_mw": 42.0,
+      "facility_mw": 49.0,
+      "h100e": 58565,
+      "complete": "2027-03-31",
+      "it_mw_full": 378.0,
+      "facility_mw_full": 441.0,
+      "h100e_full": 527084,
+      "chips": [
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1MrE3TlzhV8IPcb0uPixkfec3txcHt0iLTXhKjeFPsSU/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-pryor-north",
+      "name": "Google Pryor (North)",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Pryor, Oklahoma",
+      "lat": 36.2453,
+      "lon": -95.3235,
+      "stage": "Operating",
+      "online": "2024-07-19",
+      "as_of": "2026-09-06",
+      "it_mw": 368.0,
+      "facility_mw": 442.0,
+      "h100e": 636685,
+      "complete": "2026-09-06",
+      "it_mw_full": 368.0,
+      "facility_mw_full": 442.0,
+      "h100e_full": 636685,
+      "chips": [
+        "TPU v5p",
+        "TPU v5e"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1lD_rxcr7NwyAXlJf2TUis1AuMry4jGJNxOFP8zn17zc/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-montgomery",
+      "name": "Meta Montgomery",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Montgomery, Alabama",
+      "lat": 32.27,
+      "lon": -86.3257,
+      "stage": "Expanding",
+      "online": "2026-06-18",
+      "as_of": "2026-06-18",
+      "it_mw": 153.0,
+      "facility_mw": 199.0,
+      "h100e": 174517,
+      "complete": "2027-02-23",
+      "it_mw_full": 358.0,
+      "facility_mw_full": 465.0,
+      "h100e_full": 407486,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1gyeamGR5Oifeomj1gHXQqVYTRfGs9PGBq-YD0IGpKK4/edit?gid=2010365208#gid=2010365208",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "stack-infrastructure-nva02",
+      "name": "STACK Infrastructure NVA02",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Manassas, Virginia",
+      "lat": 38.7448,
+      "lon": -77.5396,
+      "stage": "Expanding",
+      "online": "2024-10-01",
+      "as_of": "2026-02-14",
+      "it_mw": 85.0,
+      "facility_mw": 118.0,
+      "h100e": 61142,
+      "complete": "2028-01-01",
+      "it_mw_full": 348.0,
+      "facility_mw_full": 487.0,
+      "h100e_full": 250632,
+      "chips": [
+        "H100"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1VaMTR_IA8V30N7aa47QXt1VVLog_-LzLWSrGuFIGF8c/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "huawei-horinger",
+      "name": "Huawei Horinger",
+      "owner": "Huawei",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "China",
+      "place": "Hohhot, Inner Mongolia",
+      "lat": 40.5398,
+      "lon": 111.8279,
+      "stage": "Expanding",
+      "online": "2025-06-01",
+      "as_of": "2026-08-18",
+      "it_mw": 184.3,
+      "facility_mw": 212.0,
+      "h100e": 89439,
+      "complete": "2028-02-14",
+      "it_mw_full": 346.4,
+      "facility_mw_full": 414.6,
+      "h100e_full": 168108,
+      "chips": [
+        "Ascend 910C"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/101jEwxBg5tstkmiGAx3fJt2ruTRtT-9Tqs484oKJBoU/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "colossus-1",
+      "name": "Colossus 1",
+      "owner": "SpaceXAI",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Memphis, Tennessee",
+      "lat": 35.0602,
+      "lon": -90.1555,
+      "stage": "Operating",
+      "online": "2024-08-11",
+      "as_of": "2026-06-15",
+      "it_mw": 340.0,
+      "facility_mw": 425.0,
+      "h100e": 275796,
+      "complete": "2026-06-15",
+      "it_mw_full": 340.0,
+      "facility_mw_full": 425.0,
+      "h100e_full": 275796,
+      "chips": [
+        "H100",
+        "H200",
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1aXs4vx7AMrzUIR3YeBvJRAD_rmDiioY9zR95DZdDa_s/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "aws-new-albany",
+      "name": "AWS New Albany",
+      "owner": "Amazon",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "New Albany, Ohio",
+      "lat": 40.1059,
+      "lon": -82.7403,
+      "stage": "Expanding",
+      "online": "2024-12-01",
+      "as_of": "2026-05-18",
+      "it_mw": 213.0,
+      "facility_mw": 255.0,
+      "h100e": 201112,
+      "complete": "2027-07-01",
+      "it_mw_full": 338.0,
+      "facility_mw_full": 405.0,
+      "h100e_full": 351693,
+      "chips": [
+        "Trainium2",
+        "H100",
+        "H200",
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/10uynqa40vg0ycoigE2TRah3aUPEDlMCb-n1w-IdN7sQ/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-new-albany",
+      "name": "Google New Albany",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "New Albany, Ohio",
+      "lat": 40.0568,
+      "lon": -82.7677,
+      "stage": "Operating",
+      "online": "2024-04-20",
+      "as_of": "2026-05-18",
+      "it_mw": 333.0,
+      "facility_mw": 400.0,
+      "h100e": 323901,
+      "complete": "2026-05-18",
+      "it_mw_full": 333.0,
+      "facility_mw_full": 400.0,
+      "h100e_full": 323901,
+      "chips": [
+        "TPU v5e",
+        "TPU v5p",
+        "TPU v6e"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1b9T05Ze9Kv3Um4C6wv2uVYB0q7KgZ4AQaDPnaoh-ro0/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "qts-eagle-mountain",
+      "name": "QTS Eagle Mountain",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Eagle Mountain, Utah",
+      "lat": 40.265,
+      "lon": -112.0286,
+      "stage": "Under construction",
+      "online": "2026-12-31",
+      "as_of": "2026-05-02",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-07-01",
+      "it_mw_full": 304.0,
+      "facility_mw_full": 411.0,
+      "h100e_full": 346968,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1pWiTKivojS1IY4tiv0aHM06FugKbLA2qjLJ-5DFoRF4/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-storey-county",
+      "name": "Google Storey County",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Clark, Nevada",
+      "lat": 39.4947,
+      "lon": -119.4313,
+      "stage": "Expanding",
+      "online": "2023-08-30",
+      "as_of": "2026-04-13",
+      "it_mw": 161.0,
+      "facility_mw": 214.0,
+      "h100e": 133906,
+      "complete": "2027-06-30",
+      "it_mw_full": 300.0,
+      "facility_mw_full": 389.0,
+      "h100e_full": 540677,
+      "chips": [
+        "TPU v5e",
+        "TPU v4",
+        "TPU v6e",
+        "TPU v5p"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1LrjkAu7XNz9VjMLjKm9rZyhaFAwDQfJUpeC1XKE2JR8/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-lincoln",
+      "name": "Google Lincoln",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Lincoln, Nebraska",
+      "lat": 40.907,
+      "lon": -96.6536,
+      "stage": "Expanding",
+      "online": "2026-05-12",
+      "as_of": "2026-05-12",
+      "it_mw": 141.0,
+      "facility_mw": 170.0,
+      "h100e": 197575,
+      "complete": "2027-10-01",
+      "it_mw_full": 283.0,
+      "facility_mw_full": 339.0,
+      "h100e_full": 672057,
+      "chips": [
+        "TPU v6e",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/10qC79HsjxVN7JeTCz5VzdXaNPzDqknRXNd1D3Jkijnk/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-denton-tx",
+      "name": "CoreWeave Denton TX",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Denton, Texas",
+      "lat": 33.2148,
+      "lon": -97.21,
+      "stage": "Expanding",
+      "online": "2025-05-31",
+      "as_of": "2026-09-01",
+      "it_mw": 262.0,
+      "facility_mw": 367.0,
+      "h100e": 252653,
+      "complete": "2027-05-31",
+      "it_mw_full": 282.0,
+      "facility_mw_full": 395.0,
+      "h100e_full": 271854,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1xIG1Y6Rg3s4ShcmUUgwodjgLphcXRLqMqpDcrXh34jQ/edit?usp=sharingsharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-cedar-rapids",
+      "name": "Google Cedar Rapids",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Cedar Rapids, Iowa",
+      "lat": 41.917,
+      "lon": -91.7224,
+      "stage": "Under construction",
+      "online": "2026-12-31",
+      "as_of": "2026-04-16",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-05-23",
+      "it_mw_full": 261.0,
+      "facility_mw_full": 314.0,
+      "h100e_full": 670136,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1-ywhMnHBDsTCosaOfKibppdxI1n6GzqU1UL-v5Z1sVs/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "qts-richmond-3",
+      "name": "QTS Richmond 3",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Sandston, Virginia",
+      "lat": 37.4792,
+      "lon": -77.2509,
+      "stage": "Expanding",
+      "online": "2026-02-13",
+      "as_of": "2026-05-14",
+      "it_mw": 144.0,
+      "facility_mw": 202.0,
+      "h100e": 174836,
+      "complete": "2027-02-13",
+      "it_mw_full": 240.0,
+      "facility_mw_full": 336.0,
+      "h100e_full": 291056,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1JNkuiBpWs4M0ToP3DsTZQaevvFEpaW841KQ3PG9JQYE/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-bristow",
+      "name": "Google Bristow",
+      "owner": "Google",
+      "owner_confidence": null,
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": null
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Bristow, Virginia",
+      "lat": 38.7772,
+      "lon": -77.583,
+      "stage": "Operating",
+      "online": "2024-04-29",
+      "as_of": "2026-05-20",
+      "it_mw": 238.0,
+      "facility_mw": 286.0,
+      "h100e": 209861,
+      "complete": "2026-05-20",
+      "it_mw_full": 238.0,
+      "facility_mw_full": 286.0,
+      "h100e_full": 209861,
+      "chips": [
+        "TPU v5e",
+        "TPU v5p",
+        "TPU v6e",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1nMKioHt4E_5xu4mVeM7kf1eFoegL4TYoZnWsQlE_hl8/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "qts-richmond-1",
+      "name": "QTS Richmond 1",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Sandston, Virginia",
+      "lat": 37.4855,
+      "lon": -77.2469,
+      "stage": "Operating",
+      "online": "2024-01-29",
+      "as_of": "2026-02-13",
+      "it_mw": 238.0,
+      "facility_mw": 333.0,
+      "h100e": 242547,
+      "complete": "2026-02-13",
+      "it_mw_full": 238.0,
+      "facility_mw_full": 333.0,
+      "h100e_full": 242547,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1tCoNEu-EK4B261RUWGlDO_341hPs9hnwBtkGO2dDOcA/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-council-bluffs-east",
+      "name": "Google Council Bluffs (East)",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Council Bluffs, Iowa",
+      "lat": 41.1728,
+      "lon": -95.7969,
+      "stage": "Operating",
+      "online": "2024-11-19",
+      "as_of": "2026-07-07",
+      "it_mw": 237.0,
+      "facility_mw": 284.0,
+      "h100e": 255685,
+      "complete": "2026-07-07",
+      "it_mw_full": 237.0,
+      "facility_mw_full": 284.0,
+      "h100e_full": 255685,
+      "chips": [
+        "TPU v5e",
+        "TPU v6e",
+        "TPU v5p",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1wIuGUtPoKnZZcFKFmNXy5vQCiBT8RK3S31bIOYlxFmI/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-papillion",
+      "name": "Google Papillion",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Papillion, Nebraska",
+      "lat": 41.136,
+      "lon": -96.1491,
+      "stage": "Operating",
+      "online": "2023-01-23",
+      "as_of": "2026-05-04",
+      "it_mw": 237.0,
+      "facility_mw": 284.0,
+      "h100e": 100556,
+      "complete": "2026-05-04",
+      "it_mw_full": 237.0,
+      "facility_mw_full": 284.0,
+      "h100e_full": 100556,
+      "chips": [
+        "TPU v4",
+        "TPU v5e",
+        "TPU v5p"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1OKS1FDYBSSB5oVkWYW_gDcZ3Za1UZfR_vK4l3lT8AP4/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "start-campus-sines-data-campus",
+      "name": "Start Campus Sines Data Campus",
+      "owner": "Nscale",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Microsoft",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "Portugal",
+      "place": "Sines, Setúbal",
+      "lat": 37.935,
+      "lon": -8.8127,
+      "stage": "Expanding",
+      "online": "2026-04-03",
+      "as_of": "2026-08-16",
+      "it_mw": 33.0,
+      "facility_mw": 40.0,
+      "h100e": 31834,
+      "complete": "2027-09-30",
+      "it_mw_full": 233.0,
+      "facility_mw_full": 280.0,
+      "h100e_full": 540677,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1MiA7Ol7YZ7hnnn2rZM9JZqWMVJcHWvxZTX3oUby581U/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "stream-phoenix",
+      "name": "Stream Phoenix",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Goodyear, Arizona",
+      "lat": 33.4127,
+      "lon": -112.36,
+      "stage": "Expanding",
+      "online": "2026-05-01",
+      "as_of": "2026-05-01",
+      "it_mw": 64.0,
+      "facility_mw": 77.0,
+      "h100e": 46134,
+      "complete": "2030-01-01",
+      "it_mw_full": 220.0,
+      "facility_mw_full": 267.0,
+      "h100e_full": 160182,
+      "chips": [
+        "H100"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1SC63z3YKLbCg9XNmo2uIcuGxife8xhHqYTc_IyEuzk0/edit?usp=drive_link",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "openai-stargate-lordstown",
+      "name": "OpenAI Stargate Lordstown",
+      "owner": "Softbank",
+      "owner_confidence": "confident",
+      "category": "Other",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": "Stargate",
+      "project_confidence": "confident",
+      "country": "United States",
+      "place": "Lordstown, Ohio",
+      "lat": 41.1531,
+      "lon": -80.8812,
+      "stage": "Under construction",
+      "online": "2027-03-01",
+      "as_of": "2026-07-30",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-03-01",
+      "it_mw_full": 214.0,
+      "facility_mw_full": 300.0,
+      "h100e_full": 545730,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1uWCFpC5r9GEYqFaEhgB2bDqXOLvizvIUhDEdIg_XC5E/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "anthropic-barber-lake",
+      "name": "Anthropic Barber Lake",
+      "owner": "Cipher Mining",
+      "owner_confidence": "confident",
+      "category": "Other",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Colorado City, Texas",
+      "lat": 32.3981,
+      "lon": -100.9198,
+      "stage": "Under construction",
+      "online": "2026-12-30",
+      "as_of": "2026-07-30",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-04-30",
+      "it_mw_full": 207.0,
+      "facility_mw_full": 300.0,
+      "h100e_full": 288530,
+      "chips": [
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1sGialfBa0kKKX7Vm8qL_R6Ce3PSzt7NawpAnWolnTVc/edit",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-cheyenne",
+      "name": "Meta Cheyenne",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Cheyenne, Wyoming",
+      "lat": 41.0801,
+      "lon": -104.8241,
+      "stage": "Expanding",
+      "online": "2026-07-25",
+      "as_of": "2026-07-25",
+      "it_mw": 152.0,
+      "facility_mw": 182.0,
+      "h100e": 172815,
+      "complete": "2027-02-15",
+      "it_mw_full": 207.0,
+      "facility_mw_full": 249.0,
+      "h100e_full": 235978,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/12-VqZMagtKT_6aSSlHXIg22E6iWwVWU5FJ4yZurQtro/edit?gid=2010365208#gid=2010365208",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-goodyear",
+      "name": "Microsoft Goodyear",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "likely"
+        },
+        {
+          "name": "Microsoft",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Goodyear, Arizona",
+      "lat": 33.411,
+      "lon": -112.3663,
+      "stage": "Operating",
+      "online": "2023-04-24",
+      "as_of": "2026-04-27",
+      "it_mw": 202.0,
+      "facility_mw": 263.0,
+      "h100e": 205154,
+      "complete": "2026-04-27",
+      "it_mw_full": 202.0,
+      "facility_mw_full": 263.0,
+      "h100e_full": 205154,
+      "chips": [
+        "H100",
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/12pVrAs40UMGZwxdJz5lyFlr-CATUwl4Im42BVDvi8-A/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-project-osmium",
+      "name": "Microsoft Project Osmium",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Cumming, Iowa",
+      "lat": 41.497,
+      "lon": -93.7894,
+      "stage": "Operating",
+      "online": "2021-01-01",
+      "as_of": "2026-06-16",
+      "it_mw": 190.0,
+      "facility_mw": 228.0,
+      "h100e": 155634,
+      "complete": "2026-06-16",
+      "it_mw_full": 190.0,
+      "facility_mw_full": 228.0,
+      "h100e_full": 155634,
+      "chips": [
+        "A100",
+        "H100",
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1GxpxdT_2dcvnvdmi2dybQfiwb0-XhzWf65i3QVI0FEA/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-mesa",
+      "name": "Google Mesa",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": null,
+      "lat": 33.3546,
+      "lon": -111.6764,
+      "stage": "Operating",
+      "online": "2025-07-01",
+      "as_of": "2026-08-15",
+      "it_mw": 183.0,
+      "facility_mw": 237.0,
+      "h100e": 289540,
+      "complete": "2026-08-15",
+      "it_mw_full": 183.0,
+      "facility_mw_full": 237.0,
+      "h100e_full": 289540,
+      "chips": [
+        "TPU v6e",
+        "TPU v5p"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1A_7rJWFKkspUPlYTmyg5JKL18OIzVgwLdhy3YbLs3eQ/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-qts-hillsboro-2",
+      "name": "Meta-QTS Hillsboro 2",
+      "owner": "Meta",
+      "owner_confidence": "likely",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Hillsboro, Oregon",
+      "lat": 45.5588,
+      "lon": -122.9378,
+      "stage": "Operating",
+      "online": "2023-08-02",
+      "as_of": "2026-04-17",
+      "it_mw": 180.0,
+      "facility_mw": 243.0,
+      "h100e": 123839,
+      "complete": "2026-04-17",
+      "it_mw_full": 180.0,
+      "facility_mw_full": 243.0,
+      "h100e_full": 123839,
+      "chips": [
+        "H100"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1IDIlQvAa0AMeV0xAT0592dV1cV8Ptj1B4Kzyefna1fg/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "qts-richmond-2",
+      "name": "QTS Richmond 2",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Sandston, Virginia",
+      "lat": 37.485,
+      "lon": -77.2428,
+      "stage": "Operating",
+      "online": "2025-02-04",
+      "as_of": "2026-05-14",
+      "it_mw": 180.0,
+      "facility_mw": 252.0,
+      "h100e": 182921,
+      "complete": "2026-05-14",
+      "it_mw_full": 180.0,
+      "facility_mw_full": 252.0,
+      "h100e_full": 182921,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/1ABNg-_JXDzzO4bPbXLD7tIZCQNDD-UOkY_0Sktf7bDo/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-jeffersonville",
+      "name": "Meta Jeffersonville",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Jeffersonville, Indiana",
+      "lat": 38.3695,
+      "lon": -85.6643,
+      "stage": "Operating",
+      "online": "2026-06-04",
+      "as_of": "2026-06-04",
+      "it_mw": 178.0,
+      "facility_mw": 241.0,
+      "h100e": 203133,
+      "complete": "2026-06-04",
+      "it_mw_full": 178.0,
+      "facility_mw_full": 241.0,
+      "h100e_full": 203133,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1AlQw55-NjGpM-Ti15amJZY50REI4vcJ4EYwH7mIfglo/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-rosemount",
+      "name": "Meta Rosemount",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Rosemount, Minnesota",
+      "lat": 44.734,
+      "lon": -93.062,
+      "stage": "Operating",
+      "online": "2026-06-19",
+      "as_of": "2026-06-19",
+      "it_mw": 178.0,
+      "facility_mw": 241.0,
+      "h100e": 215675,
+      "complete": "2026-06-19",
+      "it_mw_full": 178.0,
+      "facility_mw_full": 241.0,
+      "h100e_full": 215675,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/11pdqhcJnw3iAwraTho9AW4m7WyBdvTR9sYzK0z5-SC8/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-temple",
+      "name": "Meta Temple",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Temple, Texas",
+      "lat": 31.131,
+      "lon": -97.3667,
+      "stage": "Expanding",
+      "online": "2025-12-09",
+      "as_of": "2026-02-24",
+      "it_mw": 152.0,
+      "facility_mw": 198.0,
+      "h100e": 173248,
+      "complete": "2026-09-30",
+      "it_mw_full": 178.0,
+      "facility_mw_full": 231.0,
+      "h100e_full": 202473,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1SwdruUu3hHAs6hd0m3SvZY22bGBCO7-9aiLSCiJl6-k/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "aws-berwick",
+      "name": "AWS Berwick",
+      "owner": "Amazon",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Anthropic",
+          "confidence": "speculative"
+        }
+      ],
+      "project": "Project Rainier",
+      "project_confidence": "speculative",
+      "country": "United States",
+      "place": "Berwick, Pennsylvania",
+      "lat": 41.0851,
+      "lon": -76.1488,
+      "stage": "Expanding",
+      "online": "2025-09-09",
+      "as_of": "2026-08-01",
+      "it_mw": 108.0,
+      "facility_mw": 139.0,
+      "h100e": 81354,
+      "complete": "2027-08-01",
+      "it_mw_full": 169.0,
+      "facility_mw_full": 212.0,
+      "h100e_full": 145023,
+      "chips": [
+        "Trainium2",
+        "Trainium3"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1InmGZk_dfT4oFdHmD5jVt2Q--H1wgeT8lMmx-qqmwFI/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "alibaba-zhangbei",
+      "name": "Alibaba Zhangbei",
+      "owner": "Alibaba",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Alibaba",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "China",
+      "place": "Zhangbei, Hebei",
+      "lat": 41.1835,
+      "lon": 114.7324,
+      "stage": "Operating",
+      "online": "2025-09-17",
+      "as_of": "2026-01-03",
+      "it_mw": 169.0,
+      "facility_mw": 203.0,
+      "h100e": 31885,
+      "complete": "2026-01-03",
+      "it_mw_full": 169.0,
+      "facility_mw_full": 203.0,
+      "h100e_full": 31885,
+      "chips": [
+        "H20"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/12-Dec7BqasGfgwzw4LBy4B45M9B2gO3dkEV6YThuxEk/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-red-oak",
+      "name": "Google Red Oak",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Red Oak, Texas",
+      "lat": 32.5377,
+      "lon": -96.7935,
+      "stage": "Expanding",
+      "online": "2025-08-25",
+      "as_of": "2026-02-06",
+      "it_mw": 77.0,
+      "facility_mw": 93.0,
+      "h100e": 108135,
+      "complete": "2026-12-01",
+      "it_mw_full": 154.0,
+      "facility_mw_full": 185.0,
+      "h100e_full": 279434,
+      "chips": [
+        "TPU v6e"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1qxeBYFdHeNePrvSQdGmO608SBGSLgW6Hrtf_HxcgNfw/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-the-dalles",
+      "name": "Google The Dalles",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "The Dalles, Oregon",
+      "lat": 45.6243,
+      "lon": -121.2071,
+      "stage": "Operating",
+      "online": "2025-03-07",
+      "as_of": "2026-04-29",
+      "it_mw": 154.0,
+      "facility_mw": 185.0,
+      "h100e": 175341,
+      "complete": "2026-04-29",
+      "it_mw_full": 154.0,
+      "facility_mw_full": 185.0,
+      "h100e_full": 175341,
+      "chips": [
+        "TPU v6e",
+        "TPU v5p",
+        "TPU v5e",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1QEX9kWixFn14GySGb65aTktC5hn_-wVkCdBzd4HUl1U/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-muskogee-ok",
+      "name": "CoreWeave Muskogee OK",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Muskogee, Oklahoma",
+      "lat": 35.6936,
+      "lon": -95.3885,
+      "stage": "Under construction",
+      "online": "2026-12-31",
+      "as_of": "2026-06-13",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-12-31",
+      "it_mw_full": 153.0,
+      "facility_mw_full": 181.0,
+      "h100e_full": 198080,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/14s8DmbRuWQQsfaZ7E7pj4XoOq-3RrXiDNn6p0dbZ8nc/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-kuna",
+      "name": "Meta Kuna",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Kuna, Idaho",
+      "lat": 43.4675,
+      "lon": -116.2701,
+      "stage": "Operating",
+      "online": "2026-06-01",
+      "as_of": "2026-06-01",
+      "it_mw": 152.0,
+      "facility_mw": 198.0,
+      "h100e": 173248,
+      "complete": "2026-06-01",
+      "it_mw_full": 152.0,
+      "facility_mw_full": 198.0,
+      "h100e_full": 173248,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1I4oCviRN5Es3njqhSlm3WD7Hxfitb29eVJEGOaTbiTc/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-huntsville",
+      "name": "Meta Huntsville",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Huntsville, Alabama",
+      "lat": 34.8539,
+      "lon": -86.6262,
+      "stage": "Operating",
+      "online": "2026-03-04",
+      "as_of": "2026-06-02",
+      "it_mw": 146.0,
+      "facility_mw": 198.0,
+      "h100e": 166761,
+      "complete": "2026-06-02",
+      "it_mw_full": 146.0,
+      "facility_mw_full": 198.0,
+      "h100e_full": 166761,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1Rk-yikcpmRBm2V9iwBTdad2IILaZEODw1Xzk66GYEJk/edit?gid=2010365208#gid=2010365208",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "nebius-mantsala",
+      "name": "Nebius Mantsala",
+      "owner": "Nebius",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Microsoft",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "Finland",
+      "place": "Mantsala, Uusimaa",
+      "lat": 60.6293,
+      "lon": 25.2605,
+      "stage": "Expanding",
+      "online": "2024-10-08",
+      "as_of": "2026-06-29",
+      "it_mw": 75.0,
+      "facility_mw": 90.0,
+      "h100e": 48528,
+      "complete": "2027-12-31",
+      "it_mw_full": 145.0,
+      "facility_mw_full": 196.0,
+      "h100e_full": 226234,
+      "chips": [
+        "H100",
+        "B300",
+        "H200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1DcKmWfHZdahF2yfzmUprURMkEiCiluypSrobnkxz-wQ/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-lancaster",
+      "name": "Google Lancaster",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Lancaster, Ohio",
+      "lat": 39.7253,
+      "lon": -82.6893,
+      "stage": "Operating",
+      "online": "2024-01-01",
+      "as_of": "2026-03-12",
+      "it_mw": 137.0,
+      "facility_mw": 164.0,
+      "h100e": 130369,
+      "complete": "2026-03-12",
+      "it_mw_full": 137.0,
+      "facility_mw_full": 164.0,
+      "h100e_full": 130369,
+      "chips": [
+        "TPU v5e",
+        "TPU v6e"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1idRHPUAUAVqBbAT4GNXj-2JtVA_kM89GwZkLifLNj3E/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-eagle-mountain",
+      "name": "Meta Eagle Mountain",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Eagle Mountain, Utah",
+      "lat": 40.2653,
+      "lon": -112.0193,
+      "stage": "Operating",
+      "online": "2025-12-07",
+      "as_of": "2026-05-02",
+      "it_mw": 133.0,
+      "facility_mw": 179.0,
+      "h100e": 151354,
+      "complete": "2026-05-02",
+      "it_mw_full": 133.0,
+      "facility_mw_full": 179.0,
+      "h100e_full": 151354,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1mVv_XB56SrZcy2jAwoG6lzgeXQHp0G3adhIaChbNh4E/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "vantage-tx1",
+      "name": "Vantage TX1",
+      "owner": null,
+      "owner_confidence": null,
+      "category": "Owner not recorded",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "San Antonio, Texas",
+      "lat": 29.4178,
+      "lon": -98.7897,
+      "stage": "Expanding",
+      "online": "2026-02-15",
+      "as_of": "2026-02-15",
+      "it_mw": 32.0,
+      "facility_mw": 44.8,
+      "h100e": 38706,
+      "complete": "2027-08-31",
+      "it_mw_full": 128.0,
+      "facility_mw_full": 179.2,
+      "h100e_full": 154624,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1PA0eDftvbL8OQPbFyoGGPzBK_j1xEtYcZqs-cGOreVE/edit?usp=drivesdk",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-chester-va",
+      "name": "CoreWeave Chester VA",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Chester, Virginia",
+      "lat": 37.3591,
+      "lon": -77.3295,
+      "stage": "Expanding",
+      "online": "2024-01-31",
+      "as_of": "2026-05-20",
+      "it_mw": 82.0,
+      "facility_mw": 114.0,
+      "h100e": 88428,
+      "complete": "2027-06-30",
+      "it_mw_full": 113.0,
+      "facility_mw_full": 197.0,
+      "h100e_full": 125821,
+      "chips": [
+        "H100",
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1d6BKTzXUVmUCBOjAv2WR8GOHKXodNaD0vrDpE6Zmvms/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-kansas-city-east",
+      "name": "Google Kansas City East",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Kansas City, Missouri",
+      "lat": 39.1758,
+      "lon": -94.4601,
+      "stage": "Operating",
+      "online": "2026-08-01",
+      "as_of": "2026-08-01",
+      "it_mw": 105.0,
+      "facility_mw": 126.0,
+      "h100e": 202628,
+      "complete": "2026-08-01",
+      "it_mw_full": 105.0,
+      "facility_mw_full": 126.0,
+      "h100e_full": 202628,
+      "chips": [],
+      "sheet": "https://docs.google.com/spreadsheets/d/12x1HahypL5ZlDEbpMrF9ZWB95DSWXztFLL6AwkvU408/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-midlothian",
+      "name": "Google Midlothian",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Midlothian, Texas",
+      "lat": 32.4425,
+      "lon": -97.0614,
+      "stage": "Operating",
+      "online": "2026-04-19",
+      "as_of": "2026-07-01",
+      "it_mw": 103.0,
+      "facility_mw": 123.0,
+      "h100e": 143581,
+      "complete": "2026-07-01",
+      "it_mw_full": 103.0,
+      "facility_mw_full": 123.0,
+      "h100e_full": 143581,
+      "chips": [
+        "TPU v7",
+        "TPU v6e"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/13T5HLjkSCBKhOwSaOnxUcGqeSdfSF67ZSMVltEGywFM/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-lancaster-greenfield-site",
+      "name": "CoreWeave Lancaster Greenfield site",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Lancaster, Pennsylvania",
+      "lat": 40.0481,
+      "lon": -76.2622,
+      "stage": "Under construction",
+      "online": "2027-06-30",
+      "as_of": "2026-07-13",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2027-06-30",
+      "it_mw_full": 92.0,
+      "facility_mw_full": 124.0,
+      "h100e_full": 232946,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1eg37hTqVXt4hHVHSgpc1Z95W8uDgpGW9j9IbrmNbJsM/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-narvik-norway",
+      "name": "Microsoft Narvik Norway",
+      "owner": "Nscale",
+      "owner_confidence": "likely",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Microsoft",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "Norway",
+      "place": "Bjerkvik, Narvik",
+      "lat": 68.5763,
+      "lon": 17.5963,
+      "stage": "Under construction",
+      "online": "2026-12-31",
+      "as_of": "2026-07-05",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2026-12-31",
+      "it_mw_full": 92.0,
+      "facility_mw_full": 124.0,
+      "h100e_full": 265285,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1S6JIRsMg8BQ6dfX1PUZM4U4zv0CWWyH0nmZ9E_BulbU/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-waltham-cross",
+      "name": "Google Waltham Cross",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Google DeepMind",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United Kingdom",
+      "place": "Cheshunt, Hertfordshire",
+      "lat": 51.6954,
+      "lon": -0.049,
+      "stage": "Operating",
+      "online": "2025-09-01",
+      "as_of": "2026-04-23",
+      "it_mw": 88.0,
+      "facility_mw": 124.0,
+      "h100e": 123800,
+      "complete": "2026-04-23",
+      "it_mw_full": 88.0,
+      "facility_mw_full": 124.0,
+      "h100e_full": 123800,
+      "chips": [
+        "TPU v6e"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1vXTZsF2JXQCSUH20Gx6_kumpzQLuoVebrndE2lHmGTM/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-gallatin",
+      "name": "Meta Gallatin",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": null,
+      "lat": 36.4071,
+      "lon": -86.3685,
+      "stage": "Operating",
+      "online": "2026-06-15",
+      "as_of": "2026-06-15",
+      "it_mw": 87.0,
+      "facility_mw": 114.0,
+      "h100e": 99545,
+      "complete": "2026-06-15",
+      "it_mw_full": 87.0,
+      "facility_mw_full": 114.0,
+      "h100e_full": 99545,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/11d5_1ctrhEaeCqinR2l_YwvltGLDpMRm4_lcfS5bfV0/edit?usp=drive_link",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-los-lunas",
+      "name": "Meta Los Lunas",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Los Lunas, New Mexico",
+      "lat": 34.8248,
+      "lon": -106.7876,
+      "stage": "Operating",
+      "online": "2026-03-01",
+      "as_of": "2026-03-01",
+      "it_mw": 87.0,
+      "facility_mw": 105.0,
+      "h100e": 99545,
+      "complete": "2026-03-01",
+      "it_mw_full": 87.0,
+      "facility_mw_full": 105.0,
+      "h100e_full": 99545,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1mhkRkn27J1JmPrRvXejn_eSQr33e1_yfQ1fsKMa4Bis/edit?usp=drive_link",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-sarpy",
+      "name": "Meta Sarpy",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Springfield, Nebraska",
+      "lat": 41.1115,
+      "lon": -96.1451,
+      "stage": "Operating",
+      "online": "2026-08-02",
+      "as_of": "2026-08-02",
+      "it_mw": 80.0,
+      "facility_mw": 105.0,
+      "h100e": 91966,
+      "complete": "2026-08-02",
+      "it_mw_full": 80.0,
+      "facility_mw_full": 105.0,
+      "h100e_full": 91966,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1iFwArbo-x0WDxO3mfvZBopGZsd4EvA9HDfjxXKyfy5g/edit?gid=2010365208#gid=2010365208",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "google-arcola",
+      "name": "Google Arcola",
+      "owner": "Google",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Arcola, Virginia",
+      "lat": 38.9419,
+      "lon": -77.5316,
+      "stage": "Operating",
+      "online": "2026-06-16",
+      "as_of": "2026-06-16",
+      "it_mw": 77.0,
+      "facility_mw": 93.0,
+      "h100e": 108135,
+      "complete": "2026-06-16",
+      "it_mw_full": 77.0,
+      "facility_mw_full": 93.0,
+      "h100e_full": 108135,
+      "chips": [
+        "TPU v6e",
+        "TPU v7"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1XNyE95_WdfMangRolxlJQugH_aFGxDyZFHzqAOelLD4/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-sat40",
+      "name": "Microsoft SAT40",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "San Antonio, Texas",
+      "lat": 29.4154,
+      "lon": -98.8042,
+      "stage": "Operating",
+      "online": "2024-05-24",
+      "as_of": "2026-02-04",
+      "it_mw": 75.0,
+      "facility_mw": 106.0,
+      "h100e": 64679,
+      "complete": "2026-02-04",
+      "it_mw_full": 75.0,
+      "facility_mw_full": 106.0,
+      "h100e_full": 64679,
+      "chips": [
+        "H100",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1wtryXxH9tEtc3gatXW1GmwtJzZB3uKkSD0Pw-RJBZnY/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "oracle-batam",
+      "name": "Oracle Batam",
+      "owner": "Oracle",
+      "owner_confidence": "likely",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "Indonesia",
+      "place": "Batam, Riau Islands",
+      "lat": 1.1883,
+      "lon": 104.105,
+      "stage": "Operating",
+      "online": "2025-05-15",
+      "as_of": "2026-05-06",
+      "it_mw": 72.0,
+      "facility_mw": 94.0,
+      "h100e": 84386,
+      "complete": "2026-05-06",
+      "it_mw_full": 72.0,
+      "facility_mw_full": 94.0,
+      "h100e_full": 84386,
+      "chips": [
+        "B200",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1C4sc-3wUDCdAm9aKw8xC8xcCCnD4EdXEIM5azFZ4rR4/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "meta-aiken",
+      "name": "Meta Aiken",
+      "owner": "Meta",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Meta",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Aiken, South Carolina",
+      "lat": 33.6424,
+      "lon": -81.8428,
+      "stage": "Operating",
+      "online": "2026-08-07",
+      "as_of": "2026-08-07",
+      "it_mw": 69.0,
+      "facility_mw": 90.0,
+      "h100e": 78322,
+      "complete": "2026-08-07",
+      "it_mw_full": 69.0,
+      "facility_mw_full": 90.0,
+      "h100e_full": 78322,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1AoK8Ky5mZJ_hhsFx16S1ugapGMrlIIcMVWYSWqkJmkU/edit?gid=2010365208#gid=2010365208",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-marble-nc",
+      "name": "CoreWeave Marble NC",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Marble, North Carolina",
+      "lat": 35.1875,
+      "lon": -83.9161,
+      "stage": "Operating",
+      "online": "2026-03-13",
+      "as_of": "2026-05-06",
+      "it_mw": 65.0,
+      "facility_mw": 91.0,
+      "h100e": 78828,
+      "complete": "2026-05-06",
+      "it_mw_full": 65.0,
+      "facility_mw_full": 91.0,
+      "h100e_full": 78828,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1_8yOR7DUXGIDghGwUSlVuqiFhbfA40iaxr9HyvslST8/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "core42-lake-mariner",
+      "name": "Core42 Lake Mariner",
+      "owner": "Core42",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "G42",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Barker, New York",
+      "lat": 43.3549,
+      "lon": -78.606,
+      "stage": "Operating",
+      "online": "2025-10-01",
+      "as_of": "2026-07-23",
+      "it_mw": 58.0,
+      "facility_mw": 58.0,
+      "h100e": 71753,
+      "complete": "2026-07-23",
+      "it_mw_full": 58.0,
+      "facility_mw_full": 58.0,
+      "h100e_full": 71753,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/11RE1IAiuyFAcPcYMPMG4-ev3C13N84c5fq4TY8JK6wY/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-nebius-new-jersey",
+      "name": "Microsoft-Nebius New Jersey",
+      "owner": "Nebius",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "Microsoft",
+          "confidence": "likely"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Vineland, New Jersey",
+      "lat": 39.4268,
+      "lon": -75.0168,
+      "stage": "Operating",
+      "online": "2026-04-15",
+      "as_of": "2026-07-12",
+      "it_mw": 50.0,
+      "facility_mw": 70.0,
+      "h100e": 56847,
+      "complete": "2026-07-12",
+      "it_mw_full": 50.0,
+      "facility_mw_full": 70.0,
+      "h100e_full": 56847,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1-x8TTkzOemQ4hI61I5tuHgatFUSI0e5F3RAw8uufooI/edit",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "ecodatacenter-2",
+      "name": "EcoDataCenter 2",
+      "owner": "Mistral AI",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "Mistral AI",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "Sweden",
+      "place": "Borlänge, Dalarna County",
+      "lat": 60.5263,
+      "lon": 15.417,
+      "stage": "Under construction",
+      "online": "2027-06-30",
+      "as_of": "2026-08-17",
+      "it_mw": 0.0,
+      "facility_mw": 0.0,
+      "h100e": 0,
+      "complete": "2028-06-30",
+      "it_mw_full": 48.0,
+      "facility_mw_full": 67.0,
+      "h100e_full": 138912,
+      "chips": [
+        "Rubin"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1JqKpYvy0REqpg30GweXlCKhUQ1D0mHLH_yI9erMoeEM/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "microsoft-sat14",
+      "name": "Microsoft SAT14",
+      "owner": "Microsoft",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "San Antonio, Texas",
+      "lat": 29.4752,
+      "lon": -98.6809,
+      "stage": "Operating",
+      "online": "2024-07-01",
+      "as_of": "2026-03-31",
+      "it_mw": 47.0,
+      "facility_mw": 66.0,
+      "h100e": 45174,
+      "complete": "2026-03-31",
+      "it_mw_full": 47.0,
+      "facility_mw_full": 66.0,
+      "h100e_full": 45174,
+      "chips": [
+        "H100",
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1IqbFMekinpl1wfte8Nav6nUJMdeOq7tCHsRR7X8zV14/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-norway",
+      "name": "CoreWeave Norway",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "Norway",
+      "place": "Øvrebø, Agder",
+      "lat": 58.2588,
+      "lon": 7.8984,
+      "stage": "Operating",
+      "online": "2025-07-27",
+      "as_of": "2026-04-25",
+      "it_mw": 42.0,
+      "facility_mw": 50.0,
+      "h100e": 50773,
+      "complete": "2026-04-25",
+      "it_mw_full": 42.0,
+      "facility_mw_full": 50.0,
+      "h100e_full": 50773,
+      "chips": [
+        "B200"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1FRJgBDYY-e4bGkkHh54hBNz_b1baQjVwgWCXZnv22eg/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "southgate-melbourne",
+      "name": "Southgate Melbourne",
+      "owner": "Firmus",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "Australia",
+      "place": "Melbourne, Victoria",
+      "lat": -37.8172,
+      "lon": 144.8433,
+      "stage": "Operating",
+      "online": "2026-08-09",
+      "as_of": "2026-08-09",
+      "it_mw": 41.0,
+      "facility_mw": 57.0,
+      "h100e": 46488,
+      "complete": "2026-08-09",
+      "it_mw_full": 41.0,
+      "facility_mw_full": 57.0,
+      "h100e_full": 46488,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/11HPAZWME2riqB1Ru6YADdiWUmALWtIZ4ELMcMDqBow4/edit",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "coreweave-dalton-1-2",
+      "name": "CoreWeave Dalton 1 & 2",
+      "owner": "CoreWeave",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [
+        {
+          "name": "OpenAI",
+          "confidence": "speculative"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Dalton, Georgia",
+      "lat": 34.7132,
+      "lon": -84.951,
+      "stage": "Operating",
+      "online": "2026-02-20",
+      "as_of": "2026-02-20",
+      "it_mw": 28.0,
+      "facility_mw": 40.0,
+      "h100e": 32239,
+      "complete": "2026-02-20",
+      "it_mw_full": 28.0,
+      "facility_mw_full": 40.0,
+      "h100e_full": 32239,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1IYUyvV2o1NHNCtyCSMWNxZClDcz2ZoCg9nwoYcLIib0/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "xai-qts-atlanta",
+      "name": "xAI QTS Atlanta",
+      "owner": "SpaceXAI",
+      "owner_confidence": "confident",
+      "category": "AI developer",
+      "users": [
+        {
+          "name": "SpaceXAI",
+          "confidence": "confident"
+        }
+      ],
+      "project": null,
+      "project_confidence": null,
+      "country": "United States",
+      "place": "Atlanta, Georgia",
+      "lat": 33.7783,
+      "lon": -84.4194,
+      "stage": "Operating",
+      "online": "2025-02-20",
+      "as_of": "2026-07-10",
+      "it_mw": 17.32971,
+      "facility_mw": 24.0,
+      "h100e": 11470,
+      "complete": "2026-07-10",
+      "it_mw_full": 17.32971,
+      "facility_mw_full": 24.0,
+      "h100e_full": 11470,
+      "chips": [
+        "H100",
+        "A100"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1i9MM0gKZOoc4UXpuMBHhy2qu_y64TlXeD8JUpgiLaWE/edit",
+      "source_id": "epoch-ai-data-centers"
+    },
+    {
+      "id": "nscale-keflavik",
+      "name": "Nscale Keflavik",
+      "owner": "Nscale",
+      "owner_confidence": "confident",
+      "category": "Cloud provider",
+      "users": [],
+      "project": null,
+      "project_confidence": null,
+      "country": "Iceland",
+      "place": "Reykjanesbær, Suðurnes",
+      "lat": 63.9762,
+      "lon": -22.5764,
+      "stage": "Expanding",
+      "online": "2026-04-23",
+      "as_of": "2026-07-27",
+      "it_mw": 5.11,
+      "facility_mw": 6.64,
+      "h100e": 5821,
+      "complete": "2026-12-31",
+      "it_mw_full": 10.21,
+      "facility_mw_full": 13.28,
+      "h100e_full": 11642,
+      "chips": [
+        "B300"
+      ],
+      "sheet": "https://docs.google.com/spreadsheets/d/1rNRBrYaKirxSa_mO-Q5PdcGy5ilOnRkDFOwRSHPF9So/edit?usp=sharing",
+      "source_id": "epoch-ai-data-centers"
+    }
+  ]
+}

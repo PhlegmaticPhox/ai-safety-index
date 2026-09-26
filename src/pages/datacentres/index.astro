@@ -4,14 +4,27 @@
  *
  * The map and the list are one dataset, Epoch AI's AI Data Centers hub, which
  * follows the largest AI sites through satellite imagery, permits and company
- * statements. It is not a census. Epoch states what share of the world's AI
- * compute its sites hold, and the page prints that share beside every total so
- * a sum over the hub is never read as a sum over the world.
+ * statements. It is not a census, and Epoch's own estimate of what share of the
+ * world's AI compute it covers is printed in the map caveat, from the registry,
+ * so a sum over the hub is never read as a sum over the world.
  *
  * Each marker carries two magnitudes of one quantity: the ring is the IT power
- * the site is being built to, the disc inside it the IT power operating now.
- * Area, not radius, is proportional to power, so a site four times the power
- * draws twice the diameter.
+ * at the last stage of the site's timeline, which Epoch projects from permits
+ * and plans, and the disc inside it the IT power operating on the retrieval
+ * date. Area, not radius, is proportional to power, so a site four times the
+ * power draws twice the diameter.
+ *
+ * What the owner asked for and Epoch does not record: training or inference,
+ * power source, and cooling type. Epoch's notes describe cooling equipment in
+ * prose, and sites have changed it (Colossus 1 replaced air-cooled chillers
+ * with cooling towers), so classifying the prose would publish an inference.
+ * The chillers and cooling-tower files in Epoch's download are catalogues of
+ * equipment models, not per-site records. The card says "not recorded" for all
+ * three on every site rather than dropping the rows, so the absence is visible
+ * where the question is asked. Epoch's per-site water estimates are not shown:
+ * they cover a quarter of sites at scattered dates, and several read zero at
+ * sites drawing over 60 MW, including one whose notes mention cooling towers,
+ * with nothing documenting whether a zero is an estimate or a blank.
  *
  * The comparison with every datacentre, AI or not, comes from the Environmental
  * Disclosure Index, which records each figure as its publisher states it. Where
@@ -42,43 +55,49 @@ import {
 import sitesFile from "../../../data/processed/ai-datacentres.json";
 import sharesFile from "../../../data/processed/datacentre-shares.json";
 
+type Confidence = "confident" | "likely" | "speculative" | null;
+
 interface SiteRecord {
   id: string;
   name: string;
   owner: string | null;
-  users: string[];
+  owner_confidence: Confidence;
+  category: string;
+  users: Array<{ name: string; confidence: Confidence }>;
+  project: string | null;
+  project_confidence: Confidence;
   country: string | null;
   place: string | null;
   lat: number;
   lon: number;
-  stage: "Operating" | "Under construction" | "Planned";
-  first_power: string | null;
-  power_mw: number | null;
-  power_mw_planned: number | null;
+  stage: "Operating" | "Expanding" | "Under construction";
+  online: string | null;
+  as_of: string;
+  it_mw: number;
+  facility_mw: number | null;
   h100e: number | null;
-  h100e_planned: number | null;
-  capex_usd: number | null;
-  chips: string | null;
-  cooling: string | null;
-  water: "evaporative" | "closed-loop" | "both" | null;
-  power_source: string | null;
-  use: string | null;
-  category: string;
-  url: string | null;
+  complete: string;
+  it_mw_full: number;
+  facility_mw_full: number | null;
+  h100e_full: number | null;
+  chips: string[];
+  sheet: string;
   source_id: string;
 }
 
 interface ShareRecord {
   measure: string;
   scope: string;
-  period: string;
+  period: string | null;
   total: number | null;
   ai: number | null;
   unit: string | null;
   ai_share_pct: number | null;
+  share_basis: "stated" | "computed" | null;
   ai_definition: string | null;
   statement: string;
-  publisher: string;
+  publisher: string | null;
+  document: string | null;
   url: string | null;
   source_id: string;
 }
@@ -86,60 +105,103 @@ interface ShareRecord {
 const sites = confirmed(sitesFile as Dataset<SiteRecord>);
 const shares = confirmed(sharesFile as Dataset<ShareRecord>);
 
-const cites = [...new Set([...sites.sources, ...shares.sources])];
+/* Natural Earth for the land and borders the map draws, as /map/ cites it. */
+const cites = [...new Set([...sites.sources, ...shares.sources, "natural-earth"])];
 assertRenderable(...cites);
+
+/* The day the ETL read the timelines against. A date after it is Epoch's
+   projection, and is printed as due rather than as history. */
+const today = sites.retrieved.slice(0, 10);
 
 /* ---------------------------------------------------------------------------
    Formatting. Power is printed in watts with the prefix that keeps it under
    four digits, because a reader compares 300 MW with 1.2 GW more easily than
    300 with 1,200.
    --------------------------------------------------------------------------- */
-const trim = (v: number) => (v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(0) : v.toFixed(1).replace(/\.0$/, ""));
+const trim = (v: number) => (v >= 100 ? v.toFixed(0) : v.toFixed(1).replace(/\.0$/, ""));
 const fmtPower = (mw: number | null) =>
   mw === null ? "not recorded" : mw >= 1000 ? `${trim(mw / 1000)} GW` : `${trim(mw)} MW`;
-const fmtCount = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 0 });
+const fmtCount = (n: number) => n.toLocaleString("en-GB", { maximumFractionDigits: 1 });
 const fmtH100e = (n: number | null) =>
-  n === null ? "not recorded" : n >= 1e6 ? `${trim(n / 1e6)} million H100e` : `${fmtCount(Math.round(n / 1000) * 1000)} H100e`;
-const fmtUsd = (n: number | null) =>
-  n === null ? "not recorded" : n >= 1e9 ? `$${trim(n / 1e9)} billion` : `$${trim(n / 1e6)} million`;
-const monthName = (ym: string | null) =>
-  ym === null
-    ? "not yet"
-    : new Date(`${ym.slice(0, 7)}-01T00:00:00Z`).toLocaleDateString("en-GB", {
-        month: "short",
-        year: "numeric",
-        timeZone: "UTC",
-      });
+  n === null
+    ? "not recorded"
+    : n >= 1e6
+      ? `${trim(n / 1e6)} million H100e`
+      : `${(n >= 1000 ? Math.round(n / 1000) * 1000 : Math.round(n)).toLocaleString("en-GB")} H100e`;
+const month = (iso: string) =>
+  new Date(`${iso.slice(0, 7)}-01T00:00:00Z`).toLocaleDateString("en-GB", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 const listJoin = (items: string[]) =>
   items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
-const orUnknown = (v: string | null) => v ?? "not recorded";
 
-const WATER: Record<string, string> = {
-  evaporative: "Evaporative",
-  "closed-loop": "Closed loop",
-  both: "Both",
+/* Epoch rates every owner and user confident, likely or speculative. Only the
+   two weaker ratings are printed; the caveat says so. */
+const rated = (name: string, confidence: Confidence) =>
+  confidence === "likely" || confidence === "speculative" ? `${name} (${confidence})` : name;
+const ownerText = (r: SiteRecord) => (r.owner ? rated(r.owner, r.owner_confidence) : "not recorded");
+const usersText = (r: SiteRecord) =>
+  r.users.length ? listJoin(r.users.map((u) => rated(u.name, u.confidence))) : "not recorded";
+const onlineText = (r: SiteRecord) =>
+  r.online === null ? "not recorded" : r.online <= today ? month(r.online) : `Due ${month(r.online)}`;
+/* "Expanding" is operating too, and the label says so, or the Operating filter
+   would read as if it held every working site. */
+const STAGE_LABEL: Record<SiteRecord["stage"], string> = {
+  Operating: "Operating",
+  Expanding: "Operating, expanding",
+  "Under construction": "Under construction",
 };
+const statusText = (r: SiteRecord) =>
+  r.online === null
+    ? STAGE_LABEL[r.stage]
+    : r.online <= today
+      ? `${STAGE_LABEL[r.stage]}, online since ${month(r.online)}`
+      : `${STAGE_LABEL[r.stage]}, due online ${month(r.online)}`;
+const growing = (r: SiteRecord) => r.it_mw_full > r.it_mw;
+
+/* Now and planned in one phrase, for the card. A site already at its last
+   stage prints one figure; one not yet operating prints only the plan. */
+const nowAndPlanned = (r: SiteRecord, now: number | null, full: number | null, fmt: (v: number | null) => string) =>
+  r.it_mw > 0
+    ? growing(r)
+      ? `${fmt(now)} now, ${fmt(full)} by ${month(r.complete)}`
+      : fmt(now)
+    : `${fmt(full)} by ${month(r.complete)}`;
 
 /* ---------------------------------------------------------------------------
    Totals over the hub.
    --------------------------------------------------------------------------- */
 const records = sites.records;
 const sum = (xs: Array<number | null>) => xs.reduce<number>((a, b) => a + (b ?? 0), 0);
-const powerNow = sum(records.map((r) => r.power_mw));
-const powerPlanned = sum(records.map((r) => r.power_mw_planned ?? r.power_mw));
-const operating = records.filter((r) => r.stage === "Operating");
-const building = records.filter((r) => r.stage !== "Operating");
+const powerNow = sum(records.map((r) => r.it_mw));
+const powerPlanned = sum(records.map((r) => r.it_mw_full));
+const h100eNow = sum(records.map((r) => r.h100e));
+const lastYear = records.map((r) => r.complete).sort().at(-1)!.slice(0, 4);
+const byStage = (s: SiteRecord["stage"]) => records.filter((r) => r.stage === s);
+const operating = byStage("Operating");
+const expanding = byStage("Expanding");
+const building = byStage("Under construction");
 const countries = [...new Set(records.map((r) => r.country).filter((c): c is string => !!c))];
-const planned = (r: SiteRecord) => r.power_mw_planned ?? r.power_mw;
-const bySize = [...records].sort(
-  (a, b) => (planned(b) ?? -1) - (planned(a) ?? -1) || a.name.localeCompare(b.name),
-);
+const inCountry = (c: string) => records.filter((r) => r.country === c).length;
+const bySize = [...records].sort((a, b) => b.it_mw_full - a.it_mw_full || a.name.localeCompare(b.name));
 const largest = bySize[0];
-const largestNow = [...records].sort((a, b) => (b.power_mw ?? -1) - (a.power_mw ?? -1))[0];
-const coolingKnown = records.filter((r) => r.water !== null);
-const evaporative = records.filter((r) => r.water === "evaporative" || r.water === "both");
-const useKnown = records.filter((r) => r.use !== null);
-const sourceKnown = records.filter((r) => r.power_source !== null);
+const largestNow = [...records].sort((a, b) => b.it_mw - a.it_mw)[0];
+const withUsers = records.filter((r) => r.users.length > 0);
+const allConfident = withUsers.filter((r) => r.users.every((u) => u.confidence === "confident"));
+
+/* Our grouping of the chip owner, fixed in reading order. A category the ETL
+   adds without this list knowing it fails the build here, rather than sorting
+   to an arbitrary place. */
+const CATEGORY_ORDER = ["Cloud provider", "AI developer", "Other", "Owner not recorded"];
+const unknownCategory = records.find((r) => !CATEGORY_ORDER.includes(r.category));
+if (unknownCategory) {
+  throw new Error(`datacentres: category "${unknownCategory.category}" is not in CATEGORY_ORDER.`);
+}
+const cloud = records.filter((r) => r.category === "Cloud provider");
+const developer = records.filter((r) => r.category === "AI developer");
+const pctOf = (part: number) => Math.round((100 * part) / powerNow);
 
 /* ---------------------------------------------------------------------------
    The map.
@@ -149,71 +211,84 @@ const sourceKnown = records.filter((r) => r.power_source !== null);
    says. */
 const K = 0.62;
 const FLOOR = 9;
-const diameter = (mw: number | null) => (mw === null ? FLOOR : Math.max(FLOOR, K * Math.sqrt(mw)));
+const diameter = (mw: number) => Math.max(FLOOR, K * Math.sqrt(mw));
 const STAGE_KEY: Record<SiteRecord["stage"], string> = {
   Operating: "operating",
+  Expanding: "expanding",
   "Under construction": "building",
-  Planned: "planned",
 };
+const NOT_RECORDED = "Training or inference, power source, cooling type";
 
 const points: ZoomPoint[] = bySize.map((r) => {
-  const full = planned(r);
-  const now = r.power_mw ?? 0;
+  const rows: Array<[string, string]> = [
+    ["Status", statusText(r)],
+    ["IT power", nowAndPlanned(r, r.it_mw, r.it_mw_full, fmtPower)],
+    ["Facility power", nowAndPlanned(r, r.facility_mw, r.facility_mw_full, fmtPower)],
+    ["Compute", nowAndPlanned(r, r.h100e, r.h100e_full, fmtH100e)],
+    ["Chips", r.chips.length ? r.chips.join(", ") : "not recorded"],
+    ["Owner of chips", ownerText(r)],
+    ["Used by", usersText(r)],
+  ];
+  if (r.project) rows.push(["Project", rated(r.project, r.project_confidence)]);
+  rows.push(["Not recorded", NOT_RECORDED]);
   return {
     lon: r.lon,
     lat: r.lat,
-    d: diameter(full),
-    fill: full ? Math.sqrt(Math.min(now, full) / full) : 0,
-    muted: full === null,
+    d: diameter(r.it_mw_full),
+    fill: Math.sqrt(Math.min(r.it_mw, r.it_mw_full) / r.it_mw_full),
     tags: [STAGE_KEY[r.stage]],
-    label: `${r.name}, ${r.stage.toLowerCase()}, ${fmtPower(r.power_mw)} now, ${fmtPower(full)} planned`,
+    label: `${r.name}, ${STAGE_LABEL[r.stage].toLowerCase()}, ${r.it_mw > 0 ? `${fmtPower(r.it_mw)} now` : "none operating"}, ${fmtPower(r.it_mw_full)} planned`,
     name: r.name,
-    sub: [r.owner ? `Owned by ${r.owner}` : "Owner not recorded", r.place].filter(Boolean).join(", "),
-    rows: [
-      ["Status", r.stage],
-      ["Operating since", monthName(r.first_power)],
-      ["IT power", `${fmtPower(r.power_mw)} now, ${fmtPower(full)} planned`],
-      ["Compute", r.h100e !== null || r.h100e_planned !== null ? `${fmtH100e(r.h100e)} now` : "not recorded"],
-      ["Used by", r.users.length ? listJoin(r.users) : "not recorded"],
-      ["Used for", orUnknown(r.use)],
-      ["Power source", orUnknown(r.power_source)],
-      ["Cooling", r.cooling ? `${r.cooling}${r.water ? `, ${WATER[r.water].toLowerCase()}` : ""}` : "not recorded"],
-    ],
+    sub: [r.place, r.country].filter(Boolean).join(", "),
+    rows,
     href: `#site-${r.id}`,
     hrefLabel: "Row in the list",
   };
 });
 
 /* Sample rings for the key, drawn at the same scale as the markers. */
-const KEY_SIZES = [100, 1000, 5000].map((mw) => ({ mw, d: diameter(mw) }));
+const KEY_SIZES = [100, 500, 2000].map((mw) => ({ mw, d: diameter(mw) }));
 
 /* ---------------------------------------------------------------------------
    The list, and its three orders.
    --------------------------------------------------------------------------- */
 const rank = (sorted: SiteRecord[]) => new Map(sorted.map((r, i) => [r.id, i]));
 const byOwner = [...records].sort(
-  (a, b) => (a.owner ?? "￿").localeCompare(b.owner ?? "￿") || (planned(b) ?? -1) - (planned(a) ?? -1),
+  (a, b) =>
+    (a.owner ?? "￿").localeCompare(b.owner ?? "￿") || b.it_mw_full - a.it_mw_full,
 );
-const CATEGORY_ORDER = [...new Set(records.map((r) => r.category))].sort();
 const byCategory = [...records].sort(
   (a, b) =>
     CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category) ||
-    (planned(b) ?? -1) - (planned(a) ?? -1),
+    b.it_mw_full - a.it_mw_full,
 );
 const sizeRank = rank(bySize);
 const ownerRank = rank(byOwner);
 const categoryRank = rank(byCategory);
-const peak = Math.max(...records.map((r) => planned(r) ?? 0));
+
+/* Collapsed, the list shows the first ten rows of the chosen order and a
+   control for the rest, the site's rule for a long ranking. A <details> cannot
+   hold the tail when the tail changes with the sort, so each row carries a
+   class for every order it leads in, and a checkbox lifts the limit. Under
+   Category the first three of each group show, so every group is visible. A
+   row that is the target of a map link always shows. */
+const TOP = 10;
+const PER_GROUP = 3;
+const groupIndex = new Map(
+  byCategory.map((r) => [r.id, byCategory.filter((o) => o.category === r.category).indexOf(r)]),
+);
+const peak = Math.max(...records.map((r) => r.it_mw_full));
 
 /* Group headings for the category order. Each heading takes the even slot just
    before its first row, so rows take odd slots: order is an integer, and two
    rows must never tie with a heading. */
-const categoryHeads = CATEGORY_ORDER.map((category) => {
+const categoryHeads = CATEGORY_ORDER.filter((c) => records.some((r) => r.category === c)).map((category) => {
   const members = byCategory.filter((r) => r.category === category);
   return {
     category,
     count: members.length,
-    power: sum(members.map(planned)),
+    now: sum(members.map((r) => r.it_mw)),
+    planned: sum(members.map((r) => r.it_mw_full)),
     slot: 2 * (categoryRank.get(members[0].id) ?? 0),
   };
 });
@@ -222,6 +297,8 @@ const categoryHeads = CATEGORY_ORDER.map((category) => {
    Shares of all datacentres.
    --------------------------------------------------------------------------- */
 const shareRows = shares.records;
+const fmtAmount = (v: number | null, unit: string | null) =>
+  v === null ? "-" : `${fmtCount(v)}${unit ? ` ${unit}` : ""}`;
 
 const retrievedAt = oldestRetrieved(sites, shares);
 const checked = freshness(retrievedAt);
@@ -240,9 +317,9 @@ const schema = {
   creator: { "@type": "Organization", name: epoch.publisher, url: epoch.publisher_url },
   publisher: { "@id": `${SITE_URL}/#publisher` },
   dateModified: sites.generated,
-  keywords: ["AI data centres", "datacentre power", "H100 equivalents", "datacentre cooling", "AI infrastructure map"],
+  keywords: ["AI data centres", "datacentre power", "H100 equivalents", "AI infrastructure map", "datacentre electricity"],
   variableMeasured: [
-    { "@type": "PropertyValue", name: "IT power", unitText: "MW", description: "IT power operating now and planned at completion." },
+    { "@type": "PropertyValue", name: "IT power", unitText: "MW", description: "IT power operating on the retrieval date and planned at the last stage of each site's timeline." },
     { "@type": "PropertyValue", name: "compute", unitText: "H100 equivalents", description: "Compute capacity in H100 equivalents." },
   ],
 };
@@ -251,7 +328,7 @@ const schema = {
 <Base
   field="capability"
   title="AI datacentres"
-  description="Every large AI datacentre Epoch AI tracks, on a map that pans and zooms: owner, users, IT power, compute, power source and cooling, and the share of all datacentres that AI accounts for."
+  description="Every AI datacentre Epoch AI tracks, on a map that pans and zooms: owner, users, IT power and compute, and AI's share of all datacentre electricity."
   cites={cites}
   schema={schema}
 >
@@ -275,41 +352,42 @@ const schema = {
           span={2}
           emphasis
           value={fmtPower(powerNow)}
-          label="IT power operating across the sites tracked"
-          detail={`${fmtPower(powerPlanned)} once every site is built to plan. ${operating.length} of ${sites.count} sites are operating; ${building.length} are under construction or planned.`}
+          label="IT power operating across the sites"
+          detail={`${fmtH100e(h100eNow)} of compute. ${fmtPower(powerPlanned)} planned, the last of it in ${lastYear}.`}
           source={sites.sources}
           retrieved={sites.retrieved}
-          note="Summed by this site over Epoch AI's per-site estimates. IT power excludes cooling and other overheads."
+          note="Summed by this site over Epoch AI's per-site estimates. IT power excludes cooling and other overheads. Planned is Epoch's projection."
         />
         <StatTile
           span={2}
-          value={fmtPower(planned(largest))}
-          label={`Largest site at completion: ${largest.name}`}
-          detail={`${largest.owner ? `Owned by ${largest.owner}` : "Owner not recorded"}${largest.users.length ? `, used by ${listJoin(largest.users)}` : ""}. ${fmtPower(largest.power_mw)} operating now.`}
+          value={fmtPower(largestNow.it_mw)}
+          label={`Largest operating: ${largestNow.name}`}
+          detail={`Chips owned by ${ownerText(largestNow)}, used by ${usersText(largestNow)}. ${fmtH100e(largestNow.h100e)}.`}
           source={sites.sources}
           retrieved={sites.retrieved}
         />
         <StatTile
           span={2}
-          value={fmtPower(largestNow.power_mw)}
-          label={`Largest operating now: ${largestNow.name}`}
-          detail={`${largestNow.owner ? `Owned by ${largestNow.owner}` : "Owner not recorded"}. ${fmtH100e(largestNow.h100e)}.`}
+          value={fmtPower(largest.it_mw_full)}
+          label={`Largest planned: ${largest.name}`}
+          detail={`By ${month(largest.complete)}. Chips owned by ${ownerText(largest)}, used by ${usersText(largest)}. ${largest.it_mw > 0 ? `${fmtPower(largest.it_mw)} operating now.` : "None operating yet."}`}
           source={sites.sources}
           retrieved={sites.retrieved}
         />
         <StatTile
           span={3}
-          value={`${evaporative.length} of ${coolingKnown.length}`}
-          label="Sites with a recorded cooling system that cool by evaporating water"
-          detail={`Cooling towers evaporate water to reject heat; closed-loop and air-cooled systems do not. ${sites.count - coolingKnown.length} sites have no cooling system recorded.`}
+          value={`${pctOf(sum(cloud.map((r) => r.it_mw)))}%`}
+          label="Of operating IT power at sites where a cloud provider owns the chips"
+          detail={`${cloud.length} of ${sites.count} sites. AI developers own the chips at ${developer.length} sites, with ${pctOf(sum(developer.map((r) => r.it_mw)))}% of operating power.`}
           source={sites.sources}
           retrieved={sites.retrieved}
+          note="Owners are Epoch AI's. The grouping into cloud providers and AI developers is this site's."
         />
         <StatTile
           span={3}
-          value={`${useKnown.length} of ${sites.count}`}
-          label="Sites with a recorded use, training or inference"
-          detail={`${sourceKnown.length} of ${sites.count} have a recorded power source. Operators rarely state either for a single site.`}
+          value={`${withUsers.length} of ${sites.count}`}
+          label="Sites with a named user"
+          detail={`Epoch rates every named user confident at ${allConfident.length} of them. Use, power source and cooling type are recorded for no site.`}
           source={sites.sources}
           retrieved={sites.retrieved}
         />
@@ -323,19 +401,19 @@ const schema = {
       <div class="section-head">
         <h2>Where they are</h2>
         <p>
-          Every site in Epoch AI's AI Data Centers hub, sized by IT power. The ring is the power the
-          site is being built to, the disc inside it the power operating now.
+          Every site in Epoch AI's AI Data Centers hub, sized by IT power. The ring is the power planned
+          at the site's last projected stage, the disc the power operating now.
         </p>
       </div>
 
       <ZoomMap
         id="dcmap"
         points={points}
-        label={`AI datacentres on a world map, ${sites.count} sites in ${countries.length} countries. The largest at completion is ${largest.name} at ${fmtPower(planned(largest))}.`}
+        label={`AI datacentres on a world map, ${sites.count} sites in ${countries.length} countries. The largest planned is ${largest.name} at ${fmtPower(largest.it_mw_full)}.`}
         filters={[
           { key: "operating", label: `Operating (${operating.length})` },
-          { key: "building", label: `Under construction (${records.filter((r) => r.stage === "Under construction").length})` },
-          { key: "planned", label: `Planned (${records.filter((r) => r.stage === "Planned").length})` },
+          { key: "expanding", label: `Operating, expanding (${expanding.length})` },
+          { key: "building", label: `Under construction (${building.length})` },
         ]}
       >
         <div class="key">
@@ -349,23 +427,18 @@ const schema = {
             <span class="dc-ring dc-ring--part" style={`--d:${diameter(1000).toFixed(1)}px`} aria-hidden="true" />
             Disc: operating now
           </span>
-          <span class="key__item">
-            <span class="dc-ring dc-ring--muted" style={`--d:${FLOOR}px`} aria-hidden="true" />
-            Power not recorded
-          </span>
           <Provenance
-            source={sites.sources}
+            source={[...sites.sources, "natural-earth"]}
             retrieved={sites.retrieved}
-            note="Locations, owners, users and power are Epoch AI's. Marker area is proportional to IT power, with a floor so the smallest sites stay visible."
+            note="Locations, owners, users, power and compute are Epoch AI's; land and borders are Natural Earth's. Marker area is proportional to IT power, with a floor so the smallest sites stay visible."
             label="map"
           />
         </div>
       </ZoomMap>
 
       <p class="caveat">
-        {epoch.caveats} IT power is the power delivered to the computing equipment, before cooling
-        and other overheads. A site marked planned has been announced or permitted; construction has
-        not been observed.
+        {epoch.caveats} IT power is the power available to the computing equipment; facility power adds
+        cooling and other overheads.
       </p>
     </div>
   </section>
@@ -376,8 +449,8 @@ const schema = {
       <div class="section-head">
         <h2>AI against every datacentre</h2>
         <p>
-          How much of all datacentre capacity AI accounts for, by count, electricity and water, as
-          each publisher states it. A dash means no publisher separates AI from the total.
+          AI's share of all datacentres by number, electricity and water, as each publisher states it.
+          A dash means the publisher gives no figure.
         </p>
       </div>
 
@@ -385,7 +458,7 @@ const schema = {
         <table class="grid-table">
           <caption class="visually-hidden">
             AI's share of all datacentres by number, electricity and water, with the total, the AI
-            portion, the definition of AI used and the publisher.
+            portion, the share, what counts as AI, and the publisher.
           </caption>
           <thead>
             <tr>
@@ -395,24 +468,36 @@ const schema = {
               <th scope="col" class="ta-end">AI</th>
               <th scope="col" class="ta-end">AI share</th>
               <th scope="col" class="bar-col"><span class="visually-hidden">AI share, relative</span></th>
-              <th scope="col" class="wrap-cell">What counts as AI</th>
+              <th scope="col" class="wrap-cell">What the publisher states</th>
             </tr>
           </thead>
           <tbody>
             {
               shareRows.map((s) => (
                 <tr>
-                  <th scope="row">{s.url ? <a href={s.url}>{s.measure}</a> : s.measure}</th>
-                  <td class="muted-cell">{s.scope}, {s.period}</td>
-                  <td class="ta-end num">{s.total !== null ? `${fmtCount(s.total)} ${s.unit ?? ""}`.trim() : "-"}</td>
-                  <td class="ta-end num">{s.ai !== null ? `${fmtCount(s.ai)} ${s.unit ?? ""}`.trim() : "-"}</td>
+                  <th scope="row">
+                    {s.measure}
+                    {s.url && s.publisher && (
+                      <span class="dcs__pub">
+                        <a href={s.url}>{s.publisher}</a>
+                      </span>
+                    )}
+                  </th>
+                  <td class="muted-cell">{[s.scope, s.period].filter(Boolean).join(", ")}</td>
+                  <td class="ta-end num">{fmtAmount(s.total, s.unit)}</td>
+                  <td class="ta-end num">{fmtAmount(s.ai, s.unit)}</td>
                   <td class="ta-end num">{s.ai_share_pct !== null ? `${s.ai_share_pct}%` : "-"}</td>
                   <td class="bar-col">
                     {s.ai_share_pct !== null && (
                       <span class="bar" style={`--w:${s.ai_share_pct.toFixed(1)}%`} aria-hidden="true" />
                     )}
                   </td>
-                  <td class="wrap-cell muted-cell">{s.ai_definition ?? s.statement}</td>
+                  <td class="wrap-cell muted-cell">
+                    {s.statement}
+                    {s.ai_definition && <span class="dcs__def">Counted as AI: {s.ai_definition}</span>}
+                    {s.share_basis === "computed" && <span class="dcs__def">Share computed by this site from the two stated figures.</span>}
+                    {s.document && <span class="dcs__def">{s.document}.</span>}
+                  </td>
                 </tr>
               ))
             }
@@ -421,12 +506,12 @@ const schema = {
       </div>
 
       <p class="caveat">
-        Each figure is the publisher's own and counts what its publisher defines as AI, which is not the
-        same line in every row. The bar is drawn to 100%.
+        Each figure is its publisher's own, and each publisher draws the line around AI differently.
+        Both reports are licensed CC BY 4.0. The bar is drawn to 100%.
         <Provenance
           source={shares.sources}
           retrieved={shares.retrieved}
-          note="Recorded by this site from each publisher's report, with the definition of AI it uses."
+          note="Recorded by this site from the International Energy Agency's Energy and AI (2025) and Lawrence Berkeley National Laboratory's 2025 update of its US data centre energy report, both CC BY 4.0."
         />
       </p>
     </div>
@@ -437,10 +522,7 @@ const schema = {
     <div class="wrap">
       <div class="section-head">
         <h2>Every site</h2>
-        <p>
-          The sites on the map, with owner, users, IT power and compute. Sorted by IT power at
-          completion unless another order is chosen.
-        </p>
+        <p>The sites on the map, largest planned first, with owner, users, status and IT power.</p>
       </div>
 
       <div class="dcl">
@@ -454,62 +536,81 @@ const schema = {
         </div>
 
         <div class="scroll-x">
-          <div class="dcl__rows" role="table" aria-label="AI datacentres, largest at completion first">
+          <div class="dcl__rows" role="table" aria-label="AI datacentres, largest planned first">
             <div class="dcl__head" role="row">
               <span role="columnheader">Site</span>
-              <span role="columnheader">Owner</span>
+              <span role="columnheader">Owner of chips</span>
               <span role="columnheader">Used by</span>
               <span role="columnheader">Category</span>
               <span role="columnheader">Status</span>
+              <span role="columnheader">Online</span>
               <span role="columnheader" class="ta-end">IT power now</span>
-              <span role="columnheader" class="ta-end">At completion</span>
-              <span role="columnheader"><span class="visually-hidden">At completion, relative</span></span>
-              <span role="columnheader" class="ta-end">Compute now</span>
-              <span role="columnheader">Cooling</span>
+              <span role="columnheader" class="ta-end">Planned</span>
+              <span role="columnheader"><span class="visually-hidden">Planned, relative</span></span>
+              <span role="columnheader" class="ta-end">H100e now</span>
             </div>
             {
               categoryHeads.map((h) => (
                 <div class="dcl__group" style={`--o-cat:${h.slot}`} aria-hidden="true">
                   <span>{h.category}</span>
-                  <span class="mono">{h.count} sites, {fmtPower(h.power)} at completion</span>
+                  <span class="mono">
+                    {h.count} sites, {fmtPower(h.now)} operating, {fmtPower(h.planned)} planned
+                  </span>
                 </div>
               ))
             }
             {
               bySize.map((r) => (
                 <div
-                  class="dcl__row"
+                  class:list={[
+                    "dcl__row",
+                    (sizeRank.get(r.id) ?? TOP) < TOP && "top-size",
+                    (ownerRank.get(r.id) ?? TOP) < TOP && "top-owner",
+                    (groupIndex.get(r.id) ?? PER_GROUP) < PER_GROUP && "top-cat",
+                  ]}
                   role="row"
                   id={`site-${r.id}`}
                   style={`--o-size:${2 * (sizeRank.get(r.id) ?? 0) + 1};--o-owner:${2 * (ownerRank.get(r.id) ?? 0) + 1};--o-cat:${2 * (categoryRank.get(r.id) ?? 0) + 1}`}
                 >
                   <span class="dcl__name" role="rowheader">
-                    {r.url ? <a href={r.url}>{r.name}</a> : r.name}
+                    <a href={r.sheet}>{r.name}</a>
                     <span class="dcl__place">{[r.place, r.country].filter(Boolean).join(", ")}</span>
                   </span>
-                  <span role="cell">{orUnknown(r.owner)}</span>
-                  <span role="cell" class="muted-cell">{r.users.length ? listJoin(r.users) : "not recorded"}</span>
+                  <span role="cell">{ownerText(r)}</span>
+                  <span role="cell" class="muted-cell">{usersText(r)}</span>
                   <span role="cell" class="muted-cell">{r.category}</span>
-                  <span role="cell" class="muted-cell">{r.stage}</span>
-                  <span role="cell" class="ta-end num">{r.power_mw !== null ? fmtPower(r.power_mw) : "-"}</span>
-                  <span role="cell" class="ta-end num">{planned(r) !== null ? fmtPower(planned(r)) : "-"}</span>
-                  <span role="cell" class="dcl__bar">
-                    {planned(r) !== null && (
-                      <span class="bar bar--thin" style={`--w:${(((planned(r) ?? 0) / peak) * 100).toFixed(1)}%`} aria-hidden="true" />
-                    )}
+                  <span role="cell" class="muted-cell">{STAGE_LABEL[r.stage]}</span>
+                  <span role="cell" class="muted-cell num">{onlineText(r)}</span>
+                  <span role="cell" class="ta-end num">{r.it_mw > 0 ? fmtPower(r.it_mw) : "none yet"}</span>
+                  <span role="cell" class="ta-end num">
+                    {fmtPower(r.it_mw_full)}
+                    {growing(r) && <span class="dcl__by">by {r.complete.slice(0, 4)}</span>}
                   </span>
-                  <span role="cell" class="ta-end num">{r.h100e !== null ? fmtH100e(r.h100e).replace(" H100e", "") : "-"}</span>
-                  <span role="cell" class="muted-cell">{r.cooling ?? "not recorded"}</span>
+                  <span role="cell" class="dcl__bar">
+                    <span class="bar bar--thin" style={`--w:${((r.it_mw_full / peak) * 100).toFixed(1)}%`} aria-hidden="true" />
+                  </span>
+                  <span role="cell" class="ta-end num">
+                    {r.h100e !== null && r.h100e > 0 ? fmtH100e(r.h100e).replace(" H100e", "") : r.h100e === null ? "-" : "none yet"}
+                  </span>
                 </div>
               ))
             }
           </div>
         </div>
+
+        <input type="checkbox" id="dcl-all" class="dcl__radio" />
+        <label for="dcl-all" class="dcl__more">
+          <span class="dcl__more-closed">Show all <span class="reveal__count">{sites.count}</span> sites</span>
+          <span class="dcl__more-open">Show the first ten</span>
+        </label>
       </div>
 
       <p class="caveat">
-        Compute is in H100 equivalents, the number of Nvidia H100 chips with the same total
-        performance. Category is this site's grouping of each site's owner.
+        Each site's name links to Epoch AI's calculations for it. The owner is the owner of the chips.
+        Owners and users marked likely or speculative carry Epoch's own rating. Planned is the IT
+        power at the last stage of the site's timeline. H100e is compute in H100 equivalents, the
+        number of Nvidia H100 chips with the same total performance. Category is this site's grouping
+        of the owner: cloud providers rent compute to others, AI developers run it for their own models.
         <Provenance
           source={sites.sources}
           retrieved={sites.retrieved}
@@ -524,39 +625,33 @@ const schema = {
     <div class="wrap">
       <div class="section-head">
         <h2>What this page cannot show</h2>
-        <p>Questions a reader brings that no published source answers site by site.</p>
+        <p>Questions about each site that no field in the hub answers.</p>
       </div>
 
       <ul class="cards">
         <li class="card">
           <span class="card__title">Every AI datacentre</span>
           <p>
-            The hub follows the largest sites. Smaller AI clusters, and most sites outside the United
-            States, are not yet on it.
+            The hub holds the largest sites Epoch has found: {inCountry("United States")} of {sites.count} in
+            the United States, {inCountry("China")} in China.
           </p>
         </li>
         <li class="card">
           <span class="card__title">Training or inference</span>
-          <p>Operators do not say which a site runs, and a site can move between the two.</p>
+          <p>Recorded for no site.</p>
         </li>
         <li class="card">
-          <span class="card__title">Renewable or fossil, per site</span>
+          <span class="card__title">Renewable or fossil power</span>
           <p>
-            Operators report clean-energy purchases for the whole company, not for a site. What grid
-            and on-site generation serve a site is recorded where permits show it.
+            Recorded for no site. Operators' renewable claims cover the whole company.
           </p>
           <span class="card__meta mono"><a href="/environment/#grid">Environment</a></span>
         </li>
         <li class="card">
-          <span class="card__title">Water per site</span>
+          <span class="card__title">Cooling type</span>
           <p>
-            No operator publishes water use for a single AI site. The cooling system shows whether a site
-            can evaporate water, not how much.
+            No field records it. Epoch's notes describe the cooling equipment seen in imagery, in prose.
           </p>
-        </li>
-        <li class="card">
-          <span class="card__title">Chinese sites</span>
-          <p>Least documented in every public source, and so least represented here.</p>
         </li>
         <li class="card">
           <span class="card__title">Compute by country</span>
@@ -583,9 +678,17 @@ const schema = {
     background: radial-gradient(closest-side, var(--accent) 55%, transparent calc(55% + 0.5px));
   }
 
-  .dc-ring--muted {
-    border-color: var(--muted-2);
-    background: var(--muted-2);
+  /* The share table's publisher line and the notes under each statement. */
+  .dcs__pub,
+  .dcs__def {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  .dcs__def {
+    margin-block-start: 0.2rem;
   }
 
   /* The list. A grid, not a table, because a table row cannot take the CSS
@@ -622,10 +725,13 @@ const schema = {
 
   .dcl__rows {
     display: grid;
+    /* Minimums sum to 79rem with the gaps, inside the 1320px the page column
+       has at 1440px, so a laptop never scrolls the list sideways. At 84rem it
+       did, by 24px, and the last column was cut off. */
     grid-template-columns:
-      minmax(13rem, 1.6fr) minmax(8rem, 1fr) minmax(9rem, 1.2fr) minmax(8rem, 1fr)
-      7.5rem 6rem 6.5rem minmax(5rem, 0.8fr) 7rem minmax(9rem, 1fr);
-    min-inline-size: 84rem;
+      minmax(12rem, 1.6fr) minmax(8rem, 1fr) minmax(8rem, 1.2fr) minmax(7rem, 0.9fr)
+      8.5rem 6rem 5.5rem 6rem minmax(4rem, 0.8fr) 6.5rem;
+    min-inline-size: 79rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -656,6 +762,7 @@ const schema = {
     order: var(--o-size, 0);
     padding-block: 0.35rem;
     border-block-end: 1px solid var(--line-soft);
+    scroll-margin-block-start: 5rem;
   }
 
   .dcl:has(#dcl-owner:checked) .dcl__row {
@@ -695,18 +802,79 @@ const schema = {
     font-weight: 500;
   }
 
-  .dcl__place {
+  .dcl__place,
+  .dcl__by {
     color: var(--muted);
     font-size: 0.75rem;
     font-weight: 400;
   }
 
-  .dcl__row {
-    scroll-margin-block-start: 5rem;
+  .dcl__by {
+    display: block;
   }
 
   .dcl__row:target {
     background: var(--accent-wash);
+  }
+
+  /* The collapsed list. See the frontmatter for why this is not a <details>. */
+  .dcl:not(:has(#dcl-all:checked)):has(#dcl-size:checked) .dcl__row:not(.top-size, :target),
+  .dcl:not(:has(#dcl-all:checked)):has(#dcl-owner:checked) .dcl__row:not(.top-owner, :target),
+  .dcl:not(:has(#dcl-all:checked)):has(#dcl-category:checked) .dcl__row:not(.top-cat, :target) {
+    display: none;
+  }
+
+  /* Drawn like the summary of the site's other disclosures, .reveal. */
+  .dcl__more {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-block-start: 0.4rem;
+    padding-block: 0.5rem;
+    border-block-start: 1px solid var(--line-soft);
+    color: var(--muted);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: color 0.18s var(--ease);
+  }
+
+  .dcl__more::before {
+    content: "";
+    inline-size: 0.42rem;
+    block-size: 0.42rem;
+    border-inline-end: 1.5px solid currentColor;
+    border-block-end: 1.5px solid currentColor;
+    transform: rotate(45deg) translate(-1px, -1px);
+    transition: transform 0.18s var(--ease);
+  }
+
+  .dcl__more:hover {
+    color: var(--ink);
+  }
+
+  #dcl-all:focus-visible + .dcl__more {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .dcl__more-open,
+  #dcl-all:checked + .dcl__more .dcl__more-closed {
+    display: none;
+  }
+
+  #dcl-all:checked + .dcl__more .dcl__more-open {
+    display: inline;
+  }
+
+  #dcl-all:checked + .dcl__more::before {
+    transform: rotate(-135deg) translate(-1px, -1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dcl__more,
+    .dcl__more::before {
+      transition: none;
+    }
   }
 
   .dcl__bar {

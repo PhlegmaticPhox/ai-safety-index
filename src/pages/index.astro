@@ -34,6 +34,8 @@ import footprintFile from "../../data/processed/training-footprints.json";
 import operatorFile from "../../data/processed/operator-energy.json";
 import environmentFile from "../../data/processed/environment-developers.json";
 import volumesFile from "../../data/processed/token-volumes.json";
+import datacentresFile from "../../data/processed/ai-datacentres.json";
+import dcSharesFile from "../../data/processed/datacentre-shares.json";
 import statusFile from "../../data/processed/_status.json";
 import { isSafeUrl, type NewsRecord } from "../lib/news";
 
@@ -151,6 +153,27 @@ interface EnterpriseRecord {
   year: string;
   source_id: string;
 }
+interface DatacentreRecord {
+  name: string;
+  owner: string | null;
+  owner_confidence: string | null;
+  category: string;
+  users: Array<{ name: string; confidence: string | null }>;
+  country: string | null;
+  stage: string;
+  it_mw: number;
+  it_mw_full: number;
+  complete: string;
+  source_id: string;
+}
+interface DcShareRecord {
+  measure: string;
+  scope: string;
+  period: string | null;
+  ai_share_pct: number | null;
+  publisher: string | null;
+  source_id: string;
+}
 
 const exposure = confirmed(exposureFile as Dataset<ExposureRecord>);
 const governance = confirmed(governanceFile as Dataset<GovernanceRecord>);
@@ -168,11 +191,13 @@ const footprints = confirmed(footprintFile as Dataset<FootprintRecord>);
 const operators = confirmed(operatorFile as Dataset<OperatorRecord>);
 const environment = confirmed(environmentFile as Dataset<EnvironmentRecord>);
 const volumes = confirmed(volumesFile as Dataset<VolumeRecord>);
+const datacentres = confirmed(datacentresFile as Dataset<DatacentreRecord>);
+const dcShares = confirmed(dcSharesFile as Dataset<DcShareRecord>);
 
 const datasets = [
   exposure, governance, models, releases, benchmarks, clusters,
   thresholds, frameworks, research, policy, enterprise, feed,
-  footprints, operators, environment, volumes,
+  footprints, operators, environment, volumes, datacentres, dcShares,
 ];
 const cites = [...new Set(datasets.flatMap((d) => d.sources))];
 assertRenderable(...cites);
@@ -329,6 +354,37 @@ const monthLong = (ym: string) =>
   new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
 const monthShort = (ym: string) =>
   new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
+
+/* Datacentres: IT power operating now and planned, and the largest sites by
+   what they are planned to reach. Planned is Epoch's projection, so each rung
+   carries its date. */
+const fmtMW = (mw: number) => {
+  const v = mw >= 1000 ? mw / 1000 : mw;
+  const s = v >= 100 ? v.toFixed(0) : v.toFixed(1).replace(/\.0$/, "");
+  return `${s} ${mw >= 1000 ? "GW" : "MW"}`;
+};
+const dcNow = datacentres.records.reduce((s, r) => s + r.it_mw, 0);
+const dcPlanned = datacentres.records.reduce((s, r) => s + r.it_mw_full, 0);
+const dcOperating = datacentres.records.filter((r) => r.it_mw > 0).length;
+const dcCloudShare = Math.round(
+  (100 * datacentres.records.filter((r) => r.category === "Cloud provider").reduce((s, r) => s + r.it_mw, 0)) / dcNow,
+);
+const dcLastYear = datacentres.records.map((r) => r.complete).sort().at(-1)!.slice(0, 4);
+const dcCountries = new Set(datacentres.records.map((r) => r.country).filter(Boolean)).size;
+const dcLargest = [...datacentres.records].sort((a, b) => b.it_mw_full - a.it_mw_full).slice(0, 4);
+/* Epoch's weaker confidence ratings travel with the name, as on /datacentres/. */
+const dcRated = (name: string, confidence: string | null) =>
+  confidence === "likely" || confidence === "speculative" ? `${name} (${confidence})` : name;
+const dcUsers = (r: DatacentreRecord) =>
+  r.users.length
+    ? r.users.map((u) => dcRated(u.name, u.confidence)).join(", ").replace(/, ([^,]*)$/, " and $1")
+    : null;
+const dcElectricity = dcShares.records.find(
+  (s) => s.measure === "Electricity" && s.scope === "World" && s.ai_share_pct !== null,
+);
+const dcRung = (r: DatacentreRecord) =>
+  `${r.name}, chips owned by ${r.owner ? dcRated(r.owner, r.owner_confidence) : "an owner not recorded"}${dcUsers(r) ? `, used by ${dcUsers(r)}` : ""}. ` +
+  (r.it_mw > 0 ? `${fmtMW(r.it_mw)} operating now.` : "Under construction.");
 
 const recentNews = [...feed.records]
   .sort((a, b) => b.date.localeCompare(a.date))
@@ -623,12 +679,60 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 03 ENVIRONMENT ===================== -->
-  <section class="section section--sunk" id="environment" data-accent="environment" aria-labelledby="environment-h">
+  <!-- ===================== 03 DATACENTRES ===================== -->
+  <section class="section section--sunk" id="datacentres" data-accent="capability" aria-labelledby="datacentres-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">03 / Environment</span>
+          <span class="eyebrow">03 / Datacentres</span>
+          <h2 class="sec-title" id="datacentres-h">{fmtMW(dcNow)} operating, {fmtMW(dcPlanned)} planned</h2>
+        </div>
+        <p class="sec-lede">
+          IT power at the {datacentres.count} AI datacentres Epoch AI tracks, in {dcCountries} countries.
+          Planned is Epoch's projection from permits and plans, to {dcLastYear}.
+        </p>
+      </div>
+
+      <div class="ladder">
+        {
+          dcLargest.map((r) => (
+            <div class="rung">
+              <span class="rung__x num">{monthShort(r.complete.slice(0, 7))}</span>
+              <span class="rung__what">{dcRung(r)}</span>
+              <span class="rung__n num">{fmtMW(r.it_mw_full)}</span>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="tagrow">
+        <span class="tag">{dcOperating} of {datacentres.count} sites operating</span>
+        <span class="tag">{dcCloudShare}% of operating power where a cloud provider owns the chips</span>
+        {
+          dcElectricity && (
+            <span class="tag">
+              {dcElectricity.ai_share_pct}% of all datacentre electricity on accelerated servers, IEA, {dcElectricity.period}
+            </span>
+          )
+        }
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/datacentres/">Explore datacentres</a>
+        <p class="srcline">
+          Data: <a href="https://epoch.ai/data/ai-data-centers">Epoch AI, AI Data Centers</a>. Power and
+          compute are Epoch's estimates.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 ENVIRONMENT ===================== -->
+  <section class="section section--band" id="environment" data-accent="environment" aria-labelledby="environment-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">04 / Environment</span>
           <h2 class="sec-title" id="environment-h">
             {frontierFootprinted} of {frontierRuns.length} frontier runs {frontierFootprinted === 1 ? "has" : "have"} a published footprint
           </h2>
@@ -676,12 +780,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 04 ALIGNMENT ===================== -->
-  <section class="section section--band" id="alignment" data-accent="alignment" aria-labelledby="alignment-h">
+  <!-- ===================== 05 ALIGNMENT ===================== -->
+  <section class="section section--sunk" id="alignment" data-accent="alignment" aria-labelledby="alignment-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">04 / Alignment</span>
+          <span class="eyebrow">05 / Alignment</span>
           <h2 class="sec-title" id="alignment-h">
             {perHundred} safety papers per hundred
           </h2>
@@ -753,12 +857,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 05 USAGE ===================== -->
-  <section class="section section--sunk" id="usage" data-accent="usage" aria-labelledby="usage-h">
+  <!-- ===================== 06 USAGE ===================== -->
+  <section class="section section--band" id="usage" data-accent="usage" aria-labelledby="usage-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">05 / Usage</span>
+          <span class="eyebrow">06 / Usage</span>
           <h2 class="sec-title" id="usage-h">
             {fmtTokens(latestVolumes[0].tokens_per_month as number)} tokens a month
           </h2>
@@ -796,12 +900,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 06 ADOPTION ===================== -->
-  <section class="section section--band" id="adoption" data-accent="adoption" aria-labelledby="adoption-h">
+  <!-- ===================== 07 ADOPTION ===================== -->
+  <section class="section section--sunk" id="adoption" data-accent="adoption" aria-labelledby="adoption-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">06 / Adoption</span>
+          <span class="eyebrow">07 / Adoption</span>
           <h2 class="sec-title" id="adoption-h">Who is actually using it</h2>
         </div>
         <p class="sec-lede">
@@ -836,12 +940,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 07 POLICY ===================== -->
-  <section class="section section--sunk" id="policy" data-accent="policy" aria-labelledby="policy-h">
+  <!-- ===================== 08 POLICY ===================== -->
+  <section class="section section--band" id="policy" data-accent="policy" aria-labelledby="policy-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">07 / Policy and governance</span>
+          <span class="eyebrow">08 / Policy and governance</span>
           <h2 class="sec-title" id="policy-h">
             {binding.length} of {policy.count} are binding
           </h2>
@@ -884,12 +988,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 08 NEWS ===================== -->
-  <section class="section section--band" id="news" data-accent="news" aria-labelledby="news-h">
+  <!-- ===================== 09 NEWS ===================== -->
+  <section class="section section--sunk" id="news" data-accent="news" aria-labelledby="news-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">08 / The wire</span>
+          <span class="eyebrow">09 / The wire</span>
           <h2 class="sec-title" id="news-h">Official publications and preprints</h2>
         </div>
         <p class="sec-lede">
