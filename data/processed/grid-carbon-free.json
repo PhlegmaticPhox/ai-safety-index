@@ -1,0 +1,255 @@
+{
+  "dataset": "grid-carbon-free",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
+  "sources": [
+    "environmental-disclosure-index"
+  ],
+  "unit": "percent",
+  "notes": "Our own reading of primary publications, reviewed 2026-09-25. Google's hourly carbon-free energy by data-centre grid region, 2025, from its 2026 Environmental Report.",
+  "count": 22,
+  "records": [
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Finland",
+      "grid": "Fingrid",
+      "google_cfe_pct": 98,
+      "grid_cfe_pct": 95,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Denmark",
+      "grid": "Energinet",
+      "google_cfe_pct": 92,
+      "grid_cfe_pct": 89,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Chile",
+      "grid": "Sistema Interconectado Central",
+      "google_cfe_pct": 90,
+      "grid_cfe_pct": 62,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "MISO",
+      "google_cfe_pct": 88,
+      "grid_cfe_pct": 36,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "Salt River Project, Arizona",
+      "google_cfe_pct": 86,
+      "grid_cfe_pct": 56,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "Southwest Power Pool",
+      "google_cfe_pct": 84,
+      "grid_cfe_pct": 47,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "Bonneville Power Administration",
+      "google_cfe_pct": 83,
+      "grid_cfe_pct": 84,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "ERCOT, Texas",
+      "google_cfe_pct": 83,
+      "grid_cfe_pct": 46,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Netherlands",
+      "grid": "TenneT",
+      "google_cfe_pct": 82,
+      "grid_cfe_pct": 55,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Belgium",
+      "grid": "Elia",
+      "google_cfe_pct": 79,
+      "grid_cfe_pct": 72,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United Kingdom",
+      "grid": "National Grid ESO",
+      "google_cfe_pct": 75,
+      "grid_cfe_pct": 71,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Germany",
+      "grid": "Germany",
+      "google_cfe_pct": 70,
+      "grid_cfe_pct": 64,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "Duke Energy Carolinas",
+      "google_cfe_pct": 65,
+      "grid_cfe_pct": 57,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "NV Energy",
+      "google_cfe_pct": 65,
+      "grid_cfe_pct": 32,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Ireland",
+      "grid": "EirGrid",
+      "google_cfe_pct": 60,
+      "grid_cfe_pct": 50,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "Tennessee Valley Authority",
+      "google_cfe_pct": 58,
+      "grid_cfe_pct": 47,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "PJM",
+      "google_cfe_pct": 57,
+      "grid_cfe_pct": 40,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "Southern Company",
+      "google_cfe_pct": 42,
+      "grid_cfe_pct": 33,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "United States",
+      "grid": "South Carolina",
+      "google_cfe_pct": 31,
+      "grid_cfe_pct": 25,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Japan",
+      "grid": "TEPCO",
+      "google_cfe_pct": 23,
+      "grid_cfe_pct": 18,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Taiwan",
+      "grid": "Taiwan Power Company",
+      "google_cfe_pct": 15,
+      "grid_cfe_pct": 15,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Google",
+      "year": 2025,
+      "country": "Singapore",
+      "grid": "Energy Market Authority",
+      "google_cfe_pct": 5,
+      "grid_cfe_pct": 5,
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    }
+  ]
+}

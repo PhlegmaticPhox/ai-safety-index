@@ -1,0 +1,340 @@
+{
+  "dataset": "environment-developers",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
+  "sources": [
+    "environmental-disclosure-index"
+  ],
+  "unit": null,
+  "notes": "Our own reading of primary publications, reviewed 2026-09-25. Each cell is marked disclosed, partly disclosed, reported by others, or not disclosed.",
+  "count": 7,
+  "records": [
+    {
+      "developer": "OpenAI",
+      "epoch_orgs": [
+        "OpenAI"
+      ],
+      "training": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No energy or emissions figure for any model.",
+        "links": []
+      },
+      "sites": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "Stargate sites built with Oracle and SoftBank. The first, at Abilene, Texas, runs on Oracle Cloud Infrastructure.",
+        "links": [
+          {
+            "label": "OpenAI",
+            "url": "https://openai.com/index/five-new-stargate-sites/"
+          }
+        ]
+      },
+      "power": {
+        "status": "reported",
+        "status_meaning": "Reported by others, not the developer",
+        "text": "Permits filed for on-site natural-gas turbines at the Abilene campus. OpenAI publishes no energy figure for any site.",
+        "links": [
+          {
+            "label": "DCD",
+            "url": "https://www.datacenterdynamics.com/en/news/natural-gas-plant-planned-for-stargate-ai-data-center-campus-report/"
+          }
+        ]
+      },
+      "inference": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "0.34 Wh for an average ChatGPT query, June 2025, stated without a method.",
+        "links": [
+          {
+            "label": "Sam Altman",
+            "url": "https://blog.samaltman.com/the-gentle-singularity"
+          }
+        ]
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "Google DeepMind",
+      "epoch_orgs": [
+        "Google DeepMind",
+        "Google",
+        "DeepMind"
+      ],
+      "training": {
+        "status": "partial",
+        "status_meaning": "Partly published by the developer",
+        "text": "1,497 tCO2e to pre-train the open Gemma 3 models. No figure for any Gemini model.",
+        "links": [
+          {
+            "label": "Gemma 3 model card",
+            "url": "https://ai.google.dev/gemma/docs/core/model_card_3"
+          }
+        ]
+      },
+      "sites": {
+        "status": "partial",
+        "status_meaning": "Partly published by the developer",
+        "text": "Google's own data centres. Which sites train or serve a given model is not stated.",
+        "links": [
+          {
+            "label": "Google",
+            "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf"
+          }
+        ]
+      },
+      "power": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "65% carbon-free energy hour by hour across Google's data centres in 2025, and 100% matched with renewable purchases over the year.",
+        "links": [
+          {
+            "label": "Google",
+            "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf"
+          }
+        ]
+      },
+      "inference": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "0.24 Wh, 0.03 gCO2e and 0.26 mL of water for the median Gemini Apps text prompt, May 2025, with a published method.",
+        "links": [
+          {
+            "label": "Google",
+            "url": "https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference"
+          }
+        ]
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "Anthropic",
+      "epoch_orgs": [
+        "Anthropic"
+      ],
+      "training": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No energy or emissions figure for any model.",
+        "links": []
+      },
+      "sites": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "Amazon's Trainium clusters including Project Rainier, Google TPUs, and from May 2026 all of SpaceX's Colossus 1 in Memphis, over 300 MW.",
+        "links": [
+          {
+            "label": "Amazon",
+            "url": "https://www.anthropic.com/news/anthropic-amazon-compute"
+          },
+          {
+            "label": "Google",
+            "url": "https://www.anthropic.com/news/google-broadcom-partnership-compute"
+          },
+          {
+            "label": "SpaceX",
+            "url": "https://www.anthropic.com/news/higher-limits-spacex"
+          }
+        ]
+      },
+      "power": {
+        "status": "reported",
+        "status_meaning": "Reported by others, not the developer",
+        "text": "Colossus 1 holds a permit for 15 on-site gas turbines. Amazon and Google state 100% annual renewable matching for their own consumption. Anthropic publishes no energy figure.",
+        "links": [
+          {
+            "label": "DCD",
+            "url": "https://www.datacenterdynamics.com/en/news/elon-musk-xai-gas-turbines-memphis/"
+          },
+          {
+            "label": "Amazon",
+            "url": "https://www.aboutamazon.com/news/sustainability/amazon-sustainability-report-2025"
+          },
+          {
+            "label": "Google",
+            "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf"
+          }
+        ]
+      },
+      "inference": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No per-prompt figure.",
+        "links": []
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "Meta",
+      "epoch_orgs": [
+        "Meta AI"
+      ],
+      "training": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "GPU hours and emissions in every Llama model card since Llama 2. Llama 3.1 405B: 8,930 tCO2e location-based.",
+        "links": [
+          {
+            "label": "Llama 3.1 model card",
+            "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md"
+          }
+        ]
+      },
+      "sites": {
+        "status": "partial",
+        "status_meaning": "Partly published by the developer",
+        "text": "Meta's own GPU clusters. Which site trained a given model is not stated.",
+        "links": [
+          {
+            "label": "Llama 3.1 model card",
+            "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md"
+          }
+        ]
+      },
+      "power": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "100% of electricity matched with renewable energy since 2020, so market-based training emissions are reported as zero.",
+        "links": [
+          {
+            "label": "Llama 3.1 model card",
+            "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md"
+          }
+        ]
+      },
+      "inference": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No per-prompt figure.",
+        "links": []
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "xAI",
+      "epoch_orgs": [
+        "xAI"
+      ],
+      "training": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No energy or emissions figure for any model.",
+        "links": []
+      },
+      "sites": {
+        "status": "reported",
+        "status_meaning": "Reported by others, not the developer",
+        "text": "Grok 3 was trained on Colossus, a converted factory in Memphis, Tennessee.",
+        "links": [
+          {
+            "label": "R&D World",
+            "url": "https://www.rdworldonline.com/how-xai-turned-a-factory-shell-into-an-ai-colossus-to-power-grok-3-and-beyond/"
+          }
+        ]
+      },
+      "power": {
+        "status": "reported",
+        "status_meaning": "Reported by others, not the developer",
+        "text": "15 on-site gas turbines, 247 MW, permitted in July 2025. Around 35 ran before the permit was granted.",
+        "links": [
+          {
+            "label": "DCD",
+            "url": "https://www.datacenterdynamics.com/en/news/elon-musk-xai-gas-turbines-memphis/"
+          }
+        ]
+      },
+      "inference": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No per-prompt figure.",
+        "links": []
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "DeepSeek",
+      "epoch_orgs": [
+        "DeepSeek"
+      ],
+      "training": {
+        "status": "partial",
+        "status_meaning": "Partly published by the developer",
+        "text": "GPU hours only: 2.788 million H800 GPU hours for DeepSeek-V3. No energy or emissions figure.",
+        "links": [
+          {
+            "label": "DeepSeek-V3 report",
+            "url": "https://arxiv.org/abs/2412.19437"
+          }
+        ]
+      },
+      "sites": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "Not stated.",
+        "links": []
+      },
+      "power": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "Not stated.",
+        "links": []
+      },
+      "inference": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "No per-prompt figure.",
+        "links": []
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "Mistral AI",
+      "epoch_orgs": [
+        "Mistral AI"
+      ],
+      "training": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "Lifecycle analysis of Mistral Large 2: 20.4 ktCO2e and 281,000 m3 of water for training and 18 months of use, to January 2025.",
+        "links": [
+          {
+            "label": "Mistral AI",
+            "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai"
+          }
+        ]
+      },
+      "sites": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "Not stated in the lifecycle analysis.",
+        "links": []
+      },
+      "power": {
+        "status": "none",
+        "status_meaning": "Not disclosed",
+        "text": "Not stated in the lifecycle analysis.",
+        "links": []
+      },
+      "inference": {
+        "status": "disclosed",
+        "status_meaning": "Published by the developer",
+        "text": "1.14 gCO2e and 45 mL of water for a 400-token Le Chat response.",
+        "links": [
+          {
+            "label": "Mistral AI",
+            "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai"
+          }
+        ]
+      },
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    }
+  ]
+}

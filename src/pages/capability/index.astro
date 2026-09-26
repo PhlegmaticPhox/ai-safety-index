@@ -15,7 +15,7 @@ import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import StatTile from "../../components/StatTile.astro";
 import BarTable from "../../components/BarTable.astro";
-import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 
 import modelsFile from "../../../data/processed/frontier-models.json";
 import releasesFile from "../../../data/processed/model-releases.json";
@@ -57,6 +57,7 @@ interface LegalThreshold {
   status: string;
   applies_to: string;
   consequence: string;
+  applies_from: string | null;
   url: string;
   note: string;
   source_id: string;
@@ -69,10 +70,10 @@ interface ThresholdRecord {
   source_id: string;
 }
 
-const models = modelsFile as Dataset<ModelRecord>;
-const releases = releasesFile as Dataset<ReleaseRecord>;
-const thresholds = thresholdFile as Dataset<ThresholdRecord>;
-const legal = legalFile as Dataset<LegalThreshold>;
+const models = confirmed(modelsFile as Dataset<ModelRecord>);
+const releases = confirmed(releasesFile as Dataset<ReleaseRecord>);
+const thresholds = confirmed(thresholdFile as Dataset<ThresholdRecord>);
+const legal = confirmed(legalFile as Dataset<LegalThreshold>);
 
 const cites = [
   ...new Set([...models.sources, ...releases.sources, ...legal.sources]),
@@ -319,6 +320,24 @@ const crossings = legal.records.map((rule) => {
 const crossingMax = Math.max(...crossings.map((c) => c.count), 1);
 const distinctLines = [...new Set(legal.records.map((r) => r.exponent))].sort((a, b) => a - b);
 const inForceRules = legal.records.filter((r) => r.status === "in force");
+
+/* The sentence under the table, built from the records so it cannot go on
+   saying "four thresholds exist" after a fifth is indexed. */
+const NUMBER_WORD = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+const word = (n: number) => NUMBER_WORD[n] ?? String(n);
+const byExponent = new Map<number, number>();
+for (const rule of legal.records) byExponent.set(rule.exponent, (byExponent.get(rule.exponent) ?? 0) + 1);
+const [sharedExponent, sharedCount] = [...byExponent.entries()].sort((a, b) => b[1] - a[1])[0];
+const statusCount = (status: string) => legal.records.filter((r) => r.status === status).length;
+const thresholdSummary = [
+  `${word(legal.count).replace(/^./, (c) => c.toUpperCase())} thresholds exist`,
+  `${word(sharedCount)} of them at 1e${sharedExponent}`,
+  `${word(inForceRules.length)} in force`,
+  statusCount("enacted") && `${word(statusCount("enacted"))} enacted but not yet applicable`,
+  statusCount("revoked") && `${word(statusCount("revoked"))} revoked`,
+  statusCount("vetoed") && `${word(statusCount("vetoed"))} vetoed`,
+].filter(Boolean);
+const thresholdSentence = `${thresholdSummary.slice(0, -1).join(", ")} and ${thresholdSummary[thresholdSummary.length - 1]}.`;
 
 const thresholdByYear = thresholds.records.filter((r) => Number(r.year) >= 2019);
 
@@ -962,6 +981,7 @@ const checked = freshness(retrievedAt);
                     <a href={rule.url}>{rule.instrument}</a>
                     <span class="mono">1e{rule.exponent}</span>
                     <span class="tag">{rule.status}</span>
+                    {rule.applies_from && <span class="mono">applies from {rule.applies_from}</span>}
                   </p>
                   <p class="rules__applies">
                     <strong>Applies to</strong> {rule.applies_to}
@@ -978,8 +998,7 @@ const checked = freshness(retrievedAt);
       </details>
 
       <p class="caveat">
-        Four thresholds exist, two of them are the same number, one is revoked and one was
-        vetoed. Whether a model sits above a line is arithmetic on Epoch's compute figures, most
+        {thresholdSentence} Whether a model sits above a line is arithmetic on Epoch's compute figures, most
         of which are estimates rather than disclosures, and the EU threshold is a rebuttable
         presumption rather than a hard boundary. Nothing here is a legal finding about any model
         or developer.
@@ -1043,12 +1062,6 @@ const checked = freshness(retrievedAt);
     color: var(--ink);
     font-weight: 500;
     margin-inline-end: 0.3rem;
-  }
-
-  .bento {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.75rem;
   }
 
   .mini {

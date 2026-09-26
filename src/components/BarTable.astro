@@ -192,4 +192,29 @@ const hidden = rows.slice(top);
   .is-mine th[scope="row"] {
     color: var(--accent-ink);
   }
+
+  /* Phone widths. The desktop columns (7.5rem, 8.5rem and 46%) add up to more
+     than a 358px table, and fixed layout does not widen, so the label column was
+     squeezed to nothing: "Netherlands" printed over "43.5%" on the homepage, and
+     the nowrap headers ran into each other. The numbers need about 5rem each and
+     the bar only has to read as a comparison. Placed after the rules it
+     overrides, because at equal specificity the later rule wins. */
+  @media (max-width: 640px) {
+    .col-v {
+      inline-size: 5.5rem;
+    }
+
+    .col-m {
+      inline-size: 5rem;
+    }
+
+    .col-b {
+      inline-size: 24%;
+    }
+
+    .bars--fixed thead th {
+      white-space: normal;
+      vertical-align: bottom;
+    }
+  }
 </style>

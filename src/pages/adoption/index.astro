@@ -12,7 +12,7 @@ import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import BarTable from "../../components/BarTable.astro";
 import StatTile from "../../components/StatTile.astro";
-import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 import { alpha3, alpha3FromAlpha2 } from "../../lib/geo";
 
 import countryFile from "../../../data/processed/enterprise-ai-country.json";
@@ -54,11 +54,11 @@ interface ExposureRecord {
   source_id: string;
 }
 
-const byCountry = countryFile as Dataset<CountryRecord>;
-const bySize = sizeFile as Dataset<SizeRecord>;
-const byTech = techFile as Dataset<TechRecord>;
-const byIndustry = industryFile as Dataset<IndustryRecord>;
-const exposure = exposureFile as Dataset<ExposureRecord>;
+const byCountry = confirmed(countryFile as Dataset<CountryRecord>);
+const bySize = confirmed(sizeFile as Dataset<SizeRecord>);
+const byTech = confirmed(techFile as Dataset<TechRecord>);
+const byIndustry = confirmed(industryFile as Dataset<IndustryRecord>);
+const exposure = confirmed(exposureFile as Dataset<ExposureRecord>);
 
 const cites = [
   ...new Set([...byCountry.sources, ...exposure.sources]),
@@ -557,10 +557,9 @@ const checked = freshness(retrievedAt);
 </Base>
 
 <style>
+  /* The grid itself is shared, in global.css. This page sets the tiles further
+     below its masthead lede than the others do. */
   .bento {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0.75rem;
     margin-block-start: 1.75rem;
   }
 

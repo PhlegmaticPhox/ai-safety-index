@@ -100,6 +100,20 @@
       "cadence": "daily",
       "caveats": "Covers all EU digital policy, not only AI; requires topical filtering. Reuse decision does not extend to third-party material or EU logos."
     },
+    "environmental-disclosure-index": {
+      "name": "Environmental Disclosure Index",
+      "publisher": "This site",
+      "publisher_url": "/",
+      "landing_page": "/environment/",
+      "url": null,
+      "format": "json",
+      "licence": "MIT",
+      "licence_url": "https://opensource.org/licenses/MIT",
+      "attribution": "AI Safety Tracker, \"Environmental Disclosure Index\". Licensed MIT.",
+      "redistribution": "permitted",
+      "cadence": "quarterly",
+      "caveats": "Our own reading of what frontier developers and the operators of their data centres have published about training energy, emissions, power sources and energy per prompt, with permits and press reporting marked separately from company statements. Most cells record an absence. Company figures are self-reported and mostly unaudited, and market-based emissions reflect contracts rather than the grid at the hour of use."
+    },
     "epoch-benchmarks": {
       "name": "AI Benchmarking Hub",
       "publisher": "Epoch AI",
@@ -296,6 +310,20 @@
       "cadence": "continuous",
       "caveats": "An open index of scholarly works. Counts here are matches on a stated search phrase in title or abstract, not a curated field classification: a paper that studies alignment without using the phrase is missed, and one that mentions it in passing is counted. The exact query behind every number is printed with it. Recent years undercount because indexing lags publication, and the current year is always partial."
     },
+    "openrouter-rankings": {
+      "name": "LLM Rankings",
+      "publisher": "OpenRouter",
+      "publisher_url": "https://openrouter.ai",
+      "landing_page": "https://openrouter.ai/rankings",
+      "url": null,
+      "format": null,
+      "licence": "no-licence-verified",
+      "licence_url": "https://openrouter.ai/terms",
+      "attribution": "OpenRouter, \"LLM Rankings\".",
+      "redistribution": "prohibited",
+      "cadence": "weekly",
+      "caveats": "RULED OUT for charting. The only public per-model token counts, measured on traffic routed through OpenRouter's own service, which is a developer-heavy sample rather than the market. No permission to reuse the data could be verified, so the default is reserved and nothing from it is plotted here."
+    },
     "owid": {
       "name": "Our World in Data AI charts",
       "publisher": "Our World in Data",
@@ -365,6 +393,20 @@
       "redistribution": "permitted",
       "cadence": "daily",
       "caveats": "Full-text keyword matching on \"artificial intelligence\" returns documents that merely mention AI in passing. Requires topical filtering before display."
+    },
+    "usage-disclosure-index": {
+      "name": "AI Usage Disclosure Index",
+      "publisher": "This site",
+      "publisher_url": "/",
+      "landing_page": "/usage/",
+      "url": null,
+      "format": "json",
+      "licence": "MIT",
+      "licence_url": "https://opensource.org/licenses/MIT",
+      "attribution": "AI Safety Tracker, \"AI Usage Disclosure Index\". Licensed MIT.",
+      "redistribution": "permitted",
+      "cadence": "quarterly",
+      "caveats": "Our own compilation of the token volumes, user counts and shares of use that companies and studies have put on the record, each linked to where it was stated. Scopes, units and token definitions differ between companies, so no two figures are comparable without the scope printed beside each. Figures known only through press reporting are marked as such. Not a market share estimate, and not a measure of any company's actual volume beyond what it chose to state."
     }
   }
 }

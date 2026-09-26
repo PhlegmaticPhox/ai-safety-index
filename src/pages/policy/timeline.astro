@@ -13,7 +13,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, type Dataset } from "../../lib/sources";
 
 import indexFile from "../../../data/processed/policy-index.json";
 
@@ -29,7 +29,7 @@ interface PolicyRecord {
   source_id: string;
 }
 
-const index = indexFile as Dataset<PolicyRecord>;
+const index = confirmed(indexFile as Dataset<PolicyRecord>);
 assertRenderable(...index.sources);
 const checked = freshness(index.retrieved);
 

@@ -31,6 +31,8 @@ MODULES = [
     "build_governance",
     "build_policy_index",
     "build_frontier_index",
+    "build_usage_index",
+    "build_environment_index",
 ]
 
 
@@ -70,6 +72,25 @@ def main() -> int:
 def _write_status(failed: list[tuple[str, Exception]], offline: bool) -> None:
     from datetime import datetime, timezone
 
+    from common import CONFIRMED
+
+    path = Path(__file__).resolve().parent.parent / "data" / "processed" / "_status.json"
+
+    # Per dataset, when its data was last confirmed: fetched, or reviewed, and
+    # found either changed or identical. Merged over the previous file rather than
+    # replacing it, so a source that fails today keeps yesterday's confirmation
+    # instead of falling back to the day its figures last moved. Only ever moves
+    # forward.
+    confirmed: dict[str, str] = {}
+    if path.exists():
+        try:
+            confirmed = json.loads(path.read_text(encoding="utf-8")).get("datasets", {})
+        except (json.JSONDecodeError, OSError):
+            confirmed = {}
+    for name, stamp in CONFIRMED.items():
+        if stamp > confirmed.get(name, ""):
+            confirmed[name] = stamp
+
     failed_names = {name for name, _ in failed}
     status = {
         "last_checked": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -77,8 +98,8 @@ def _write_status(failed: list[tuple[str, Exception]], offline: bool) -> None:
         "modules": {
             name: ("failed" if name in failed_names else "ok") for name in MODULES
         },
+        "datasets": dict(sorted(confirmed.items())),
     }
-    path = Path(__file__).resolve().parent.parent / "data" / "processed" / "_status.json"
     path.write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
     print(f"  wrote {path.name}")
 

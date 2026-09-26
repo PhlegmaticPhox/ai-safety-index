@@ -7,7 +7,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import NewsList from "../../components/NewsList.astro";
-import { assertRenderable, freshness, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, type Dataset } from "../../lib/sources";
 import { CATEGORIES, byDateDesc, type Category, type NewsRecord } from "../../lib/news";
 
 import feedFile from "../../../data/processed/news-feed.json";
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const { category } = Astro.props;
-const feed = feedFile as Dataset<NewsRecord>;
+const feed = confirmed(feedFile as Dataset<NewsRecord>);
 assertRenderable(...feed.sources);
 
 const all = [...feed.records].sort(byDateDesc);

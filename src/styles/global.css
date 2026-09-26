@@ -937,6 +937,20 @@ img {
 }
 
 /* ---------------------------------------------------------------------------
+   Bento.
+
+   The six-column grid a data page's headline tiles sit in, each tile setting its
+   own span. Four pages use it; it was scoped inside two of them until the third
+   arrived, which is the point at which a scoped copy stops being a shortcut and
+   starts being a second definition to keep in step.
+   --------------------------------------------------------------------------- */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
+}
+
+/* ---------------------------------------------------------------------------
    Metric strip.
 
    A row of figures with no card around each one. Used where the numbers are a

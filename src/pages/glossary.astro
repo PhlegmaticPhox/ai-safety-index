@@ -134,6 +134,48 @@ const entries: Entry[] = [
     href: "/adoption/",
     hrefLabel: "Adoption",
   },
+  {
+    term: "Token",
+    definition:
+      "The unit a language model reads and writes: a word, part of a word, or a piece of an image or audio. Each company splits text differently, so a token count from one company is not the same unit as another's.",
+    href: "/usage/",
+    hrefLabel: "Usage",
+  },
+  {
+    term: "Tokens per month",
+    definition:
+      "A disclosed token volume converted to a month by this site, so that per-minute, per-day and per-year figures can be drawn on one axis. A quarterly or annual total becomes a monthly average and is marked as one.",
+    href: "/usage/#tokens",
+    hrefLabel: "Usage: tokens processed",
+  },
+  {
+    term: "Location-based emissions",
+    definition:
+      "Emissions from electricity counted at the average carbon intensity of the grid a data centre drew from, whatever contracts the operator holds.",
+    href: "/environment/#footprints",
+    hrefLabel: "Environment: published footprints",
+  },
+  {
+    term: "Market-based emissions",
+    definition:
+      "Emissions from electricity after subtracting renewable energy the operator bought by contract. A company matching all its annual use with renewable purchases can report close to zero while its data centres draw fossil power at some hours.",
+    href: "/environment/#footprints",
+    hrefLabel: "Environment: published footprints",
+  },
+  {
+    term: "Renewable matching",
+    definition:
+      "Buying as much renewable electricity over a year as a company uses, through contracts or certificates. Says nothing about whether the power used in a given hour, on a given grid, was clean.",
+    href: "/environment/#grid",
+    hrefLabel: "Environment: renewable claims against the grid",
+  },
+  {
+    term: "Hourly carbon-free energy",
+    definition:
+      "The share of electricity that was carbon-free in the same hour and on the same grid in which it was used. Google is the only data-centre operator that publishes it.",
+    href: "/environment/#grid",
+    hrefLabel: "Environment: renewable claims against the grid",
+  },
 ];
 
 const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term));

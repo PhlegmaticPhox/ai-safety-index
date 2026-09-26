@@ -53,10 +53,12 @@ figures, each figure carrying a `<Provenance>` marker and a caveat where it coul
 
 | Route | What is on it |
 |---|---|
-| `/` | Banner stating the site's purpose, then `What is on this site` (one line per section), then `Explore metrics`: one panel per section with that section's headline figures, heading as the way in. Full-width choropleth of AI use with a scrubber that steps through reporting periods with no JavaScript (`TimeMap`), plus the ranked table behind it. |
+| `/` | Full-width choropleth of AI use as the banner (`TimeMap`), a stat band, then one numbered panel per section, 01 Progress to 08 The wire, each with that section's headline figure and a button as the way in. |
 | `/progress/` | **Outputs.** Benchmark scores by category and by difficulty tier (both our own classification), how long each test stayed useful, straight-line extrapolations of open benchmarks, a rail of per-benchmark frontier lines, the most recent notable models, release cadence by quarter. |
 | `/capability/` | **Inputs.** Training compute over time with the fitted frontier, disclosed cost, how models ship (open weights / API / unreleased), how far behind the open-weight frontier is, who builds them, and the compute thresholds written into law against the models that cross them. |
+| `/environment/` | What each frontier developer has published about training energy, emissions, sites, power sources and energy per prompt, cell by cell and marked by who said it (`What we know`). Training runs by developer against which have a published footprint, every published footprint with emissions per 1e24 FLOP, per-prompt figures, and operators' annual renewable matching against Google's hourly carbon-free share by grid region. |
 | `/alignment/` | How close is AGI, answered only from measured quantities. Published frontier safety frameworks side by side. Safety research against capability research from OpenAlex. Reported incidents. A section on what the page cannot show. |
+| `/usage/` | Every aggregate token count a company has stated, normalised to tokens per month and drawn only within one company's own scope, the developers that state none, disclosed user counts per product, and published shares of use by topic (ChatGPT, Claude.ai, the Claude API). |
 | `/adoption/` | Population use against enterprise use, by size, by industry, by technology, by country. |
 | `/map/` | Exposure against governance readiness: a divergence map, the two layers separately, a scatter, and the table behind all three. |
 | `/policy/` + 11 jurisdiction routes | The law that actually applies to AI, tagged by how binding each instrument is, with a link to every primary source. |
@@ -91,12 +93,23 @@ data actually moved rather than that a timestamp did. Last-checked time lives in
 
 Current modules: `fetch_epoch` (5 datasets), `fetch_microsoft_diffusion`, `fetch_eurostat` (4),
 `fetch_news` (8 feeds), `fetch_openalex`, `build_governance`, `build_policy_index`
-(+ `policy_jurisdictions.py`, the instrument lists), `build_frontier_index` (2).
+(+ `policy_jurisdictions.py`, the instrument lists), `build_frontier_index` (2),
+`build_usage_index` (3), `build_environment_index` (5).
 
-Four datasets are our own work, all MIT licensed like the code: **Governance Readiness Index**,
-**AI Law and Policy Index**, **Frontier Safety Framework Index**, **Compute Threshold Index**. They exist because the
-established trackers are protected databases; coding primary instruments ourselves sidesteps that
-and makes the result ours to license.
+Six datasets are our own work, all MIT licensed like the code: **Governance Readiness Index**,
+**AI Law and Policy Index**, **Frontier Safety Framework Index**, **Compute Threshold Index**,
+**AI Usage Disclosure Index**, **Environmental Disclosure Index**. They exist because the
+established trackers are protected databases, or because no dataset exists at all and the figures
+live as single sentences in earnings calls, model cards and sustainability reports; coding primary
+documents ourselves sidesteps both and makes the result ours to license.
+
+**A page's date is the later of two facts.** A dataset file is rewritten only when its records
+change, so its envelope `retrieved` says when the data last moved. `run_all.py` also writes, per
+dataset, when it was last confirmed into `_status.json` (`datasets`), and `confirmed()` in
+`src/lib/sources.ts` shows whichever is later. Every page wraps its datasets in `confirmed()`.
+Hand-coded indexes pass `retrieved=review_stamp(REVIEWED)`, never `utcnow()`, so the daily run
+cannot confirm a review that did not happen: bump `REVIEWED` only after re-reading the
+instruments. The frameworks and thresholds indexes carry separate review dates for that reason.
 
 ```bash
 npm install
@@ -116,11 +129,15 @@ python etl/fetch_microsoft_diffusion.py --self-check  # source encoding
 python etl/build_governance.py --self-check           # scoring rubric
 python etl/build_policy_index.py --self-check         # schema and coverage
 python etl/build_frontier_index.py --self-check       # frameworks and compute thresholds
+python etl/build_usage_index.py --self-check          # token normalisation, scopes, shares
+python etl/build_environment_index.py --self-check    # disclosure cells, derived energy
 python etl/check_contrast.py                          # palette against WCAG AA
 
 python etl/build_governance.py --check-links          # probe every cited instrument
 python etl/build_policy_index.py --check-links        # same, for the law index
 python etl/build_frontier_index.py --check-links      # same, for frameworks and thresholds
+python etl/build_usage_index.py --check-links         # same, for every stated figure
+python etl/build_environment_index.py --check-links   # same, for every disclosure
 ```
 
 Every self-check runs in CI before any data is written; `check:built` runs after the build. The
@@ -241,7 +258,7 @@ Set from the tasteskill brief at `DESIGN_VARIANCE 7 / MOTION_INTENSITY 4 / VISUA
 
 ## Data sources
 
-Full registry with licences in `data/sources.json`; 26 registered, 16 in use.
+Full registry with licences in `data/sources.json`; 29 registered, 20 in use.
 
 **Backbone:** Epoch AI (models, benchmarks, clusters, CC BY 4.0), Microsoft AI Diffusion (147
 economies, MIT), Eurostat enterprise adoption (Decision 2011/833/EU), OpenAlex (research volume,
@@ -257,6 +274,9 @@ Commission (Decision 2011/833/EU), Government of Canada (OGL Canada), arXiv cs.A
 - **METR time horizons**: their analysis repository carries no LICENSE file, so no reuse permission
   exists and the default is reserved. Their headline finding is stated as attributed prose with a
   link, which is a fact rather than their data, and `/alignment/` says so on the page.
+- **OpenRouter rankings**: the only public per-model token counts, measured on its own routed
+  traffic. No reuse permission could be verified, so `/usage/` links to it in prose and plots
+  nothing from it.
 
 **Legal constraints** (detail in `docs/00-research-findings.md` section 3):
 
@@ -314,7 +334,7 @@ comparison, be able to state plainly what links the two variables. If you cannot
 
 ## What this site has that the others do not
 
-Five joins nobody else publishes. If a change would break one of them, it is the wrong change.
+Seven joins nobody else publishes. If a change would break one of them, it is the wrong change.
 
 1. **Compute thresholds against actual models** (`/capability/#thresholds`). Every training-compute
    threshold written into law, with the count of models above each.
@@ -328,6 +348,12 @@ Five joins nobody else publishes. If a change would break one of them, it is the
    with the literal query printed next to every series, so the definition is arguable.
 5. **What law applies where** (`/policy/`). Eleven jurisdictions, and the number the page leads on is
    how few binding instruments name AI at all.
+6. **Training runs against published footprints** (`/environment/#training-runs`). Epoch's compute
+   estimates for every developer's runs, against which of them have any published energy or
+   emissions figure. The count the page leads on is how few frontier-scale runs do.
+7. **Token volumes on one axis** (`/usage/#tokens`). Every aggregate token count a company has
+   stated, normalised to a month, each line joining only one company's own scope, with the
+   developers that state none listed beside them.
 
 ## Not done
 
@@ -342,6 +368,11 @@ Five joins nobody else publishes. If a change would break one of them, it is the
 - The Anthropic Economic Index is registered but unused: the release files are 77MB and 219MB, too
   much to pull daily without streaming aggregation.
 - The site is newly indexable. Submitting the sitemap to Search Console needs a Google account.
+- The Frontier Safety Framework Index was last read on 13 September 2026. Amazon revised its
+  framework on 17 September 2026, and the index keeps the earlier review date until someone reads
+  the revision.
+- `/environment/` sizes training runs by compute. Epoch's notable-models file also carries an
+  estimated training power draw per model, which `fetch_epoch.py` does not yet extract.
 
 `docs/02-plan.md` and `docs/01-ideas-backlog.md` are the original plan and idea list, now marked
 item by item with what was built. Read them for the reasoning and the unbuilt ideas, not for current

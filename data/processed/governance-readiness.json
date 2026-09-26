@@ -1,12 +1,12 @@
 {
   "dataset": "governance-readiness",
-  "generated": "2026-09-13T08:05:53+00:00",
-  "retrieved": "2026-09-13T08:05:53+00:00",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
   "sources": [
     "governance-readiness-index"
   ],
   "unit": "readiness score, 0 to 100",
-  "notes": "Our own coding of 58 jurisdictions against five dimensions (binding_law, oversight_body, evaluation_capacity, transparency_duty, strategy), reviewed 2026-09. Measures how much governance machinery exists, not how strict it is, so a high score is not a compliment and a low one is not an accusation. The 27 EU member states are scored once at bloc level because the AI Act is a regulation applying directly; their national measures are not separately scored. Not legal advice. Every jurisdiction lists the primary instruments it was coded from.",
+  "notes": "Our own coding of 58 jurisdictions against five dimensions (binding_law, oversight_body, evaluation_capacity, transparency_duty, strategy), reviewed 2026-09-25. Measures how much governance machinery exists, not how strict it is, so a high score is not a compliment and a low one is not an accusation. The 27 EU member states are scored once at bloc level because the AI Act is a regulation applying directly; their national measures are not separately scored. Not legal advice. Every jurisdiction lists the primary instruments it was coded from.",
   "count": 58,
   "records": [
     {
@@ -40,7 +40,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -74,7 +74,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -108,7 +108,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -142,7 +142,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -176,7 +176,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -210,7 +210,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -244,7 +244,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -278,7 +278,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -312,7 +312,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -346,7 +346,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -380,7 +380,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -414,7 +414,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -448,7 +448,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -482,7 +482,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -516,7 +516,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -550,7 +550,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -584,7 +584,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -618,7 +618,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -652,7 +652,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -686,7 +686,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -720,7 +720,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -754,7 +754,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -788,7 +788,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -822,7 +822,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -856,7 +856,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -890,7 +890,7 @@
           "year": 2023
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -924,7 +924,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -958,7 +958,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -992,7 +992,7 @@
           "year": 2021
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1026,7 +1026,80 @@
           "year": 2024
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "VNM",
+      "name": "Vietnam",
+      "basis": "national",
+      "scores": {
+        "binding_law": 3,
+        "oversight_body": 1,
+        "evaluation_capacity": 0,
+        "transparency_duty": 2,
+        "strategy": 1
+      },
+      "total": 7,
+      "readiness": 70,
+      "note": "The Law on Artificial Intelligence, No. 134/2025/QH15, passed in December 2025 and in force from March 2026, is Vietnam's first standalone AI statute and replaces the AI chapter of the Law on Digital Technology Industry. Systems already on the market have grace periods into 2027, and it is scored 3 on the same basis as the EU AI Act, whose obligations also phase in. Worth noting against Australia: Vietnam has a binding AI labelling duty and Australia does not.",
+      "instruments": [
+        {
+          "title": "Law on Artificial Intelligence (No. 134/2025/QH15)",
+          "url": "https://en.baochinhphu.vn/first-ever-law-on-artificial-intelligence-approved-111251211093619398.htm",
+          "year": 2025
+        },
+        {
+          "title": "Law on Digital Technology Industry",
+          "url": "https://datafiles.chinhphu.vn/",
+          "year": 2025
+        },
+        {
+          "title": "National Strategy on AI Research and Development",
+          "url": "https://vanban.chinhphu.vn/",
+          "year": 2021
+        }
+      ],
+      "reviewed": "2026-09-25",
+      "source_id": "governance-readiness-index"
+    },
+    {
+      "code": "AUS",
+      "name": "Australia",
+      "basis": "national",
+      "scores": {
+        "binding_law": 1,
+        "oversight_body": 1,
+        "evaluation_capacity": 2,
+        "transparency_duty": 1,
+        "strategy": 1
+      },
+      "total": 6,
+      "readiness": 60,
+      "note": "No horizontal AI statute and no AI regulator. The mandatory guardrails for high-risk AI proposed in September 2024 were set aside by the December 2025 National AI Plan in favour of existing law; in July 2026 the government announced it would legislate Australian Standards for AI instead, with legislation expected in 2027, and opened an Office of AI in the Department of the Prime Minister and Cabinet. Until then binding duties on AI use exist inside government through the DTA policy, and in privacy, consumer, online safety and financial services law. The Australian AI Safety Institute began operating in 2026 and started testing frontier models in July.",
+      "instruments": [
+        {
+          "title": "Voluntary AI Safety Standard",
+          "url": "https://www.industry.gov.au/publications/voluntary-ai-safety-standard",
+          "year": 2024
+        },
+        {
+          "title": "Proposals paper: mandatory guardrails for AI in high-risk settings",
+          "url": "https://consult.industry.gov.au/ai-mandatory-guardrails",
+          "year": 2024
+        },
+        {
+          "title": "Policy for the responsible use of AI in government",
+          "url": "https://www.digital.gov.au/policy/ai/policy",
+          "year": 2024
+        },
+        {
+          "title": "Australian AI Safety Institute",
+          "url": "https://www.industry.gov.au/science-technology-and-innovation/technology/artificial-intelligence/ai-safety-institute",
+          "year": 2025
+        }
+      ],
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1060,7 +1133,7 @@
           "year": 2023
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1094,7 +1167,7 @@
           "year": 2023
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1110,7 +1183,7 @@
       },
       "total": 6,
       "readiness": 60,
-      "note": "No federal horizontal AI statute. Executive Order 14110 was rescinded in January 2025 and replaced by Executive Order 14179, which directs policy without creating duties on developers. Binding obligations sit in sectoral rules and in state law, most substantially Colorado's SB 24-205. The Center for AI Standards and Innovation at NIST, formerly the US AI Safety Institute, runs model evaluations.",
+      "note": "No federal horizontal AI statute. Executive Order 14110 was rescinded in January 2025 and replaced by Executive Order 14179, which directs policy without creating duties on developers. Binding obligations sit in sectoral rules and in state law: Colorado's SB 24-205 on high-risk decisions, and frontier-model transparency statutes in California, SB 53, in force from January 2026, and New York, the RAISE Act, from January 2027. The Center for AI Standards and Innovation at NIST, formerly the US AI Safety Institute, runs model evaluations.",
       "instruments": [
         {
           "title": "Executive Order 14179",
@@ -1126,38 +1199,19 @@
           "title": "Colorado SB 24-205",
           "url": "https://leg.colorado.gov/bills/sb24-205",
           "year": 2024
-        }
-      ],
-      "reviewed": "2026-09",
-      "source_id": "governance-readiness-index"
-    },
-    {
-      "code": "VNM",
-      "name": "Vietnam",
-      "basis": "national",
-      "scores": {
-        "binding_law": 2,
-        "oversight_body": 1,
-        "evaluation_capacity": 0,
-        "transparency_duty": 2,
-        "strategy": 1
-      },
-      "total": 6,
-      "readiness": 60,
-      "note": "The Law on Digital Technology Industry, passed in June 2025 and effective January 2026, carries an AI chapter with risk classification and a duty to mark AI-generated content. It scores 2 rather than 3 because the AI provisions sit inside a broader industry law rather than a dedicated horizontal instrument. Worth noting against Australia: Vietnam has a binding AI labelling duty and Australia does not.",
-      "instruments": [
+        },
         {
-          "title": "Law on Digital Technology Industry",
-          "url": "https://datafiles.chinhphu.vn/",
+          "title": "California SB 53",
+          "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
           "year": 2025
         },
         {
-          "title": "National Strategy on AI Research and Development",
-          "url": "https://vanban.chinhphu.vn/",
-          "year": 2021
+          "title": "New York RAISE Act (S6953-B)",
+          "url": "https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B",
+          "year": 2025
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1191,7 +1245,7 @@
           "year": 2017
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1225,41 +1279,7 @@
           "year": 2025
         }
       ],
-      "reviewed": "2026-09",
-      "source_id": "governance-readiness-index"
-    },
-    {
-      "code": "AUS",
-      "name": "Australia",
-      "basis": "national",
-      "scores": {
-        "binding_law": 1,
-        "oversight_body": 1,
-        "evaluation_capacity": 0,
-        "transparency_duty": 1,
-        "strategy": 1
-      },
-      "total": 4,
-      "readiness": 40,
-      "note": "No horizontal AI statute and no AI regulator. The Voluntary AI Safety Standard is guidance; the mandatory guardrails for high-risk AI proposed in September 2024 have not been legislated. Binding duties on AI use exist inside government through the DTA policy, and in privacy, consumer, online safety and financial services law. Australia has no AI evaluation institute.",
-      "instruments": [
-        {
-          "title": "Voluntary AI Safety Standard",
-          "url": "https://www.industry.gov.au/publications/voluntary-ai-safety-standard",
-          "year": 2024
-        },
-        {
-          "title": "Proposals paper: mandatory guardrails for AI in high-risk settings",
-          "url": "https://consult.industry.gov.au/ai-mandatory-guardrails",
-          "year": 2024
-        },
-        {
-          "title": "Policy for the responsible use of AI in government",
-          "url": "https://www.digital.gov.au/policy/ai/policy",
-          "year": 2024
-        }
-      ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1293,7 +1313,7 @@
           "year": 2024
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1322,7 +1342,7 @@
           "year": 2020
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1351,7 +1371,7 @@
           "year": 2020
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1380,7 +1400,7 @@
           "year": 2023
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1409,7 +1429,7 @@
           "year": 2019
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1438,7 +1458,7 @@
           "year": 2020
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1467,7 +1487,7 @@
           "year": 2000
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1496,7 +1516,7 @@
           "year": 2024
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1525,7 +1545,7 @@
           "year": 2012
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1554,7 +1574,7 @@
           "year": 2020
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1583,7 +1603,7 @@
           "year": 2020
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1612,7 +1632,7 @@
           "year": 1981
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1641,7 +1661,7 @@
           "year": 2019
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1670,7 +1690,7 @@
           "year": 2010
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1699,7 +1719,7 @@
           "year": 2018
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1728,7 +1748,7 @@
           "year": 2020
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1757,7 +1777,7 @@
           "year": 2023
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1786,7 +1806,7 @@
           "year": 2021
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1815,7 +1835,7 @@
           "year": 2013
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1844,7 +1864,7 @@
           "year": 2016
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     },
     {
@@ -1868,7 +1888,7 @@
           "year": 2023
         }
       ],
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "governance-readiness-index"
     }
   ]

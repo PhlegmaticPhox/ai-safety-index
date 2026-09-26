@@ -106,6 +106,31 @@ def utcnow() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def review_stamp(day: str) -> str:
+    """The envelope timestamp for a hand-coded index reviewed on `day` (YYYY-MM-DD).
+
+    A hand-coded index is as current as its last review, not as its last build:
+    it is rebuilt every day and nobody reads the instruments every day. Stamping
+    the review date rather than utcnow() is what lets a page say "reviewed 3 days
+    ago" and mean it, and what keeps the daily run from confirming a review that
+    did not happen.
+    """
+    datetime.strptime(day, "%Y-%m-%d")  # a malformed date fails the build, not the page
+    return f"{day}T00:00:00+00:00"
+
+
+# Every dataset this run wrote or found unchanged, mapped to the retrieval time of
+# the data behind it. run_all.py writes this into _status.json.
+#
+# It exists because write_dataset() skips an unchanged dataset, which is right for
+# the history and wrong for the reader: Eurostat's figures did not move for twelve
+# days, so the envelope kept the retrieval time of the last run that changed them,
+# and /adoption/ said "retrieved 12 days ago" about data fetched that morning. The
+# envelope still answers "when did this data last change"; this answers "when did
+# we last confirm it", and the site shows the later of the two.
+CONFIRMED: dict[str, str] = {}
+
+
 # Written as escape sequences on purpose, never as the literal characters.
 # Spelling them literally once let a project-wide dash sweep rewrite the
 # normalisation line AND the assertion guarding it into a matching pair that
@@ -317,6 +342,14 @@ def write_dataset(
     PROCESSED.mkdir(parents=True, exist_ok=True)
     path = PROCESSED / f"{name}.json"
 
+    # One stamp for both branches below. For a fetched source it is the time the
+    # bytes were retrieved, which is the cached copy's time when the network
+    # failed, so a fallback never claims a confirmation it did not make. A
+    # hand-coded index passes its review_stamp().
+    stamp = retrieved or utcnow()
+    if not name.startswith("_"):
+        CONFIRMED[name] = stamp
+
     # Skip the write when the records are byte-identical to what is already on
     # disk. The generated and retrieved stamps move on every run by definition,
     # so without this a daily scheduled refresh commits timestamp churn forever
@@ -340,7 +373,7 @@ def write_dataset(
     payload = {
         "dataset": name,
         "generated": utcnow(),
-        "retrieved": retrieved or utcnow(),
+        "retrieved": stamp,
         "sources": source_ids,
         "unit": unit,
         "notes": notes,
@@ -544,6 +577,38 @@ def _self_check() -> None:
             raise AssertionError("write_dataset failed to write changed records")
     finally:
         probe.unlink(missing_ok=True)
+
+    # Confirmation. An unchanged dataset keeps its old envelope, which is the
+    # point of the check above, but the run must still record that it looked,
+    # with the retrieval time it was handed. Without this the site dates Eurostat
+    # by the last day its figures moved rather than the last day anyone checked.
+    named = PROCESSED / "selfcheck-confirmed.json"
+    try:
+        rows = [{"a": 1, "source_id": "epoch-notable-models"}]
+        write_dataset("selfcheck-confirmed", rows, ["epoch-notable-models"],
+                      retrieved="2026-01-01T00:00:00+00:00")
+        before = named.read_bytes()
+        write_dataset("selfcheck-confirmed", rows, ["epoch-notable-models"],
+                      retrieved="2026-02-01T00:00:00+00:00")
+        assert named.read_bytes() == before, "confirmation rewrote an unchanged dataset"
+        assert CONFIRMED.get("selfcheck-confirmed") == "2026-02-01T00:00:00+00:00", (
+            "an unchanged dataset was not recorded as confirmed at its new retrieval time"
+        )
+        assert "_selfcheck" not in CONFIRMED, "a self-check scratch dataset leaked into CONFIRMED"
+    finally:
+        named.unlink(missing_ok=True)
+        CONFIRMED.pop("selfcheck-confirmed", None)
+
+    # A review stamp is a calendar day at midnight UTC, and a malformed one fails
+    # here rather than rendering "reviewed NaN days ago".
+    assert review_stamp("2026-09-25") == "2026-09-25T00:00:00+00:00"
+    for bad in ("2026-09", "2026-13-01", "25/09/2026"):
+        try:
+            review_stamp(bad)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"review_stamp accepted {bad!r}")
 
     print("common.py self-check passed")
 

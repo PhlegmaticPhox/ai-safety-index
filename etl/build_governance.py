@@ -33,10 +33,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import check_links, utcnow, write_dataset
+from common import check_links, review_stamp, write_dataset
 
 SOURCE = "governance-readiness-index"
-REVIEWED = "2026-09"
+REVIEWED = "2026-09-25"
 
 # The five dimensions, with the maximum each can contribute. Anything scored
 # above its maximum is a coding error and fails the build rather than silently
@@ -138,7 +138,9 @@ JURISDICTIONS = [
             "No federal horizontal AI statute. Executive Order 14110 was rescinded in "
             "January 2025 and replaced by Executive Order 14179, which directs policy "
             "without creating duties on developers. Binding obligations sit in sectoral "
-            "rules and in state law, most substantially Colorado's SB 24-205. The Center "
+            "rules and in state law: Colorado's SB 24-205 on high-risk decisions, and "
+            "frontier-model transparency statutes in California, SB 53, in force from "
+            "January 2026, and New York, the RAISE Act, from January 2027. The Center "
             "for AI Standards and Innovation at NIST, formerly the US AI Safety "
             "Institute, runs model evaluations."
         ),
@@ -146,6 +148,8 @@ JURISDICTIONS = [
             {"title": "Executive Order 14179", "url": "https://www.federalregister.gov/documents/2025/01/31/2025-02172/removing-barriers-to-american-leadership-in-artificial-intelligence", "year": 2025},
             {"title": "NIST AI Risk Management Framework", "url": "https://www.nist.gov/itl/ai-risk-management-framework", "year": 2023},
             {"title": "Colorado SB 24-205", "url": "https://leg.colorado.gov/bills/sb24-205", "year": 2024},
+            {"title": "California SB 53", "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53", "year": 2025},
+            {"title": "New York RAISE Act (S6953-B)", "url": "https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B", "year": 2025},
         ],
     },
     {
@@ -243,19 +247,24 @@ JURISDICTIONS = [
     {
         "code": "AUS",
         "name": "Australia",
-        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 0,
+        "scores": {"binding_law": 1, "oversight_body": 1, "evaluation_capacity": 2,
                    "transparency_duty": 1, "strategy": 1},
         "note": (
-            "No horizontal AI statute and no AI regulator. The Voluntary AI Safety "
-            "Standard is guidance; the mandatory guardrails for high-risk AI proposed in "
-            "September 2024 have not been legislated. Binding duties on AI use exist "
+            "No horizontal AI statute and no AI regulator. The mandatory guardrails for "
+            "high-risk AI proposed in September 2024 were set aside by the December 2025 "
+            "National AI Plan in favour of existing law; in July 2026 the government "
+            "announced it would legislate Australian Standards for AI instead, with "
+            "legislation expected in 2027, and opened an Office of AI in the Department "
+            "of the Prime Minister and Cabinet. Until then binding duties on AI use exist "
             "inside government through the DTA policy, and in privacy, consumer, online "
-            "safety and financial services law. Australia has no AI evaluation institute."
+            "safety and financial services law. The Australian AI Safety Institute began "
+            "operating in 2026 and started testing frontier models in July."
         ),
         "instruments": [
             {"title": "Voluntary AI Safety Standard", "url": "https://www.industry.gov.au/publications/voluntary-ai-safety-standard", "year": 2024},
             {"title": "Proposals paper: mandatory guardrails for AI in high-risk settings", "url": "https://consult.industry.gov.au/ai-mandatory-guardrails", "year": 2024},
             {"title": "Policy for the responsible use of AI in government", "url": "https://www.digital.gov.au/policy/ai/policy", "year": 2024},
+            {"title": "Australian AI Safety Institute", "url": "https://www.industry.gov.au/science-technology-and-innovation/technology/artificial-intelligence/ai-safety-institute", "year": 2025},
         ],
     },
     {
@@ -436,17 +445,19 @@ JURISDICTIONS = [
     {
         "code": "VNM",
         "name": "Vietnam",
-        "scores": {"binding_law": 2, "oversight_body": 1, "evaluation_capacity": 0,
+        "scores": {"binding_law": 3, "oversight_body": 1, "evaluation_capacity": 0,
                    "transparency_duty": 2, "strategy": 1},
         "note": (
-            "The Law on Digital Technology Industry, passed in June 2025 and effective "
-            "January 2026, carries an AI chapter with risk classification and a duty to "
-            "mark AI-generated content. It scores 2 rather than 3 because the AI "
-            "provisions sit inside a broader industry law rather than a dedicated "
-            "horizontal instrument. Worth noting against Australia: Vietnam has a binding "
-            "AI labelling duty and Australia does not."
+            "The Law on Artificial Intelligence, No. 134/2025/QH15, passed in December "
+            "2025 and in force from March 2026, is Vietnam's first standalone AI statute "
+            "and replaces the AI chapter of the Law on Digital Technology Industry. Systems "
+            "already on the market have grace periods into 2027, and it is scored 3 on the "
+            "same basis as the EU AI Act, whose obligations also phase in. Worth noting "
+            "against Australia: Vietnam has a binding AI labelling duty and Australia does "
+            "not."
         ),
         "instruments": [
+            {"title": "Law on Artificial Intelligence (No. 134/2025/QH15)", "url": "https://en.baochinhphu.vn/first-ever-law-on-artificial-intelligence-approved-111251211093619398.htm", "year": 2025},
             {"title": "Law on Digital Technology Industry", "url": "https://datafiles.chinhphu.vn/", "year": 2025},
             {"title": "National Strategy on AI Research and Development", "url": "https://vanban.chinhphu.vn/", "year": 2021},
         ],
@@ -737,7 +748,7 @@ def run(offline: bool = False) -> None:
             "directly; their national measures are not separately scored. Not legal "
             "advice. Every jurisdiction lists the primary instruments it was coded from."
         ),
-        retrieved=utcnow(),
+        retrieved=review_stamp(REVIEWED),
     )
 
 

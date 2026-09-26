@@ -16,7 +16,7 @@ import TimeMap from "../components/TimeMap.astro";
 import CountryExplorer from "../components/CountryExplorer.astro";
 import BarTable from "../components/BarTable.astro";
 import { alpha3 } from "../lib/geo";
-import { assertRenderable, freshness, type Dataset } from "../lib/sources";
+import { assertRenderable, confirmed, freshness, type Dataset } from "../lib/sources";
 
 import exposureFile from "../../data/processed/ai-exposure.json";
 import governanceFile from "../../data/processed/governance-readiness.json";
@@ -30,6 +30,10 @@ import researchFile from "../../data/processed/research-volume.json";
 import policyFile from "../../data/processed/policy-index.json";
 import enterpriseFile from "../../data/processed/enterprise-ai-country.json";
 import feedFile from "../../data/processed/news-feed.json";
+import footprintFile from "../../data/processed/training-footprints.json";
+import operatorFile from "../../data/processed/operator-energy.json";
+import environmentFile from "../../data/processed/environment-developers.json";
+import volumesFile from "../../data/processed/token-volumes.json";
 import statusFile from "../../data/processed/_status.json";
 import { isSafeUrl, type NewsRecord } from "../lib/news";
 
@@ -108,6 +112,38 @@ interface PolicyRecord {
   year: number;
   source_id: string;
 }
+interface FootprintRecord {
+  model: string;
+  epoch_model: string | null;
+  tco2e: number | null;
+  tco2e_basis: string | null;
+  source_id: string;
+}
+interface OperatorRecord {
+  operator: string;
+  period: string;
+  renewable_match_pct: number;
+  hourly_cfe_pct: number | null;
+  source_id: string;
+}
+interface EnvironmentRecord {
+  developer: string;
+  training: { status: string };
+  sites: { status: string };
+  power: { status: string };
+  inference: { status: string };
+  source_id: string;
+}
+interface VolumeRecord {
+  company: string;
+  series: string | null;
+  series_label: string | null;
+  as_of: string | null;
+  tokens_per_month: number | null;
+  average: boolean;
+  disclosed: boolean;
+  source_id: string;
+}
 interface EnterpriseRecord {
   code: string;
   name: string;
@@ -116,22 +152,27 @@ interface EnterpriseRecord {
   source_id: string;
 }
 
-const exposure = exposureFile as Dataset<ExposureRecord>;
-const governance = governanceFile as Dataset<GovernanceRecord>;
-const models = modelsFile as Dataset<ModelRecord>;
-const releases = releasesFile as Dataset<ReleaseRecord>;
-const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
-const clusters = clusterFile as Dataset<ClusterRecord>;
-const thresholds = thresholdFile as Dataset<ThresholdRecord>;
-const frameworks = frameworkFile as Dataset<FrameworkRecord>;
-const research = researchFile as Dataset<ResearchRecord>;
-const policy = policyFile as Dataset<PolicyRecord>;
-const enterprise = enterpriseFile as Dataset<EnterpriseRecord>;
-const feed = feedFile as Dataset<NewsRecord>;
+const exposure = confirmed(exposureFile as Dataset<ExposureRecord>);
+const governance = confirmed(governanceFile as Dataset<GovernanceRecord>);
+const models = confirmed(modelsFile as Dataset<ModelRecord>);
+const releases = confirmed(releasesFile as Dataset<ReleaseRecord>);
+const benchmarks = confirmed(benchmarkFile as Dataset<BenchmarkRecord>);
+const clusters = confirmed(clusterFile as Dataset<ClusterRecord>);
+const thresholds = confirmed(thresholdFile as Dataset<ThresholdRecord>);
+const frameworks = confirmed(frameworkFile as Dataset<FrameworkRecord>);
+const research = confirmed(researchFile as Dataset<ResearchRecord>);
+const policy = confirmed(policyFile as Dataset<PolicyRecord>);
+const enterprise = confirmed(enterpriseFile as Dataset<EnterpriseRecord>);
+const feed = confirmed(feedFile as Dataset<NewsRecord>);
+const footprints = confirmed(footprintFile as Dataset<FootprintRecord>);
+const operators = confirmed(operatorFile as Dataset<OperatorRecord>);
+const environment = confirmed(environmentFile as Dataset<EnvironmentRecord>);
+const volumes = confirmed(volumesFile as Dataset<VolumeRecord>);
 
 const datasets = [
   exposure, governance, models, releases, benchmarks, clusters,
   thresholds, frameworks, research, policy, enterprise, feed,
+  footprints, operators, environment, volumes,
 ];
 const cites = [...new Set(datasets.flatMap((d) => d.sources))];
 assertRenderable(...cites);
@@ -254,6 +295,40 @@ const paired = enterprise.records
   })
   .filter((p): p is NonNullable<typeof p> => p !== null);
 const peopleAhead = paired.filter((p) => p.people > p.firms).length;
+
+/* Environment: frontier-scale runs against published training footprints. A
+   lifecycle figure folds in months of use, so it does not count as one. */
+const footprinted = new Set(
+  footprints.records
+    .filter((f) => f.epoch_model && f.tco2e !== null && f.tco2e_basis !== "lifecycle")
+    .map((f) => f.epoch_model as string),
+);
+const frontierRuns = models.records.filter((m) => m.compute_flop >= EU_THRESHOLD);
+const frontierFootprinted = frontierRuns.filter((m) => footprinted.has(m.model)).length;
+const googleOps = operators.records.find((o) => o.operator === "Google");
+const QUESTION_KEYS = ["training", "sites", "power", "inference"] as const;
+const envCells = environment.records.length * QUESTION_KEYS.length;
+const envNone = environment.records.reduce(
+  (n, r) => n + QUESTION_KEYS.filter((k) => r[k].status === "none").length,
+  0,
+);
+
+/* Usage: the latest stated volume in each series, largest first. */
+const latestVolumes = [...new Set(volumes.records.filter((r) => r.disclosed).map((r) => r.series as string))]
+  .map((key) =>
+    volumes.records
+      .filter((r) => r.series === key)
+      .sort((a, b) => (b.as_of as string).localeCompare(a.as_of as string))[0],
+  )
+  .sort((a, b) => (b.tokens_per_month as number) - (a.tokens_per_month as number));
+const undisclosedVolume = volumes.records.filter((r) => !r.disclosed).map((r) => r.company);
+const trimTokens = (v: number) => (v >= 10 ? v.toFixed(0) : v.toFixed(1).replace(/\.0$/, ""));
+const fmtTokens = (n: number) =>
+  n >= 1e15 ? `${trimTokens(n / 1e15)} quadrillion` : `${trimTokens(n / 1e12)} trillion`;
+const monthLong = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
+const monthShort = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
 
 const recentNews = [...feed.records]
   .sort((a, b) => b.date.localeCompare(a.date))
@@ -548,12 +623,65 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 03 ALIGNMENT ===================== -->
-  <section class="section section--sunk" id="alignment" data-accent="alignment" aria-labelledby="alignment-h">
+  <!-- ===================== 03 ENVIRONMENT ===================== -->
+  <section class="section section--sunk" id="environment" data-accent="environment" aria-labelledby="environment-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">03 / Alignment</span>
+          <span class="eyebrow">03 / Environment</span>
+          <h2 class="sec-title" id="environment-h">
+            {frontierFootprinted} of {frontierRuns.length} frontier runs {frontierFootprinted === 1 ? "has" : "have"} a published footprint
+          </h2>
+        </div>
+        <p class="sec-lede">
+          Training runs at or above 1e25 FLOP, and how many have a published energy or emissions
+          figure. Beyond them, what is known comes from permits, press reports and company-wide
+          sustainability reports.
+        </p>
+      </div>
+
+      <div class="figure">
+        <div
+          class="matrix"
+          role="img"
+          aria-label={`${frontierRuns.length} cells, ${frontierFootprinted} filled, showing ${frontierFootprinted} of ${frontierRuns.length} models at or above 1e25 FLOP have a published training-emissions figure.`}
+        >
+          {cells(frontierRuns.length, frontierFootprinted).map((on) => <i class={on ? "on" : undefined} />)}
+        </div>
+        <div class="figure__read">
+          <b class="num">{frontierFootprinted} of {frontierRuns.length}</b>
+          {googleOps && googleOps.hourly_cfe_pct !== null && (
+            <p>
+              Google's data centres ran on {googleOps.hourly_cfe_pct}% carbon-free electricity hour
+              by hour in {googleOps.period}, against {googleOps.renewable_match_pct}% matched over the
+              year. No other operator publishes the hourly figure.
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div class="tagrow">
+        <span class="tag">{envNone} of {envCells} developer disclosures record nothing published</span>
+        <span class="tag">{footprints.count} published training footprints</span>
+        <span class="tag">{operators.count} operators' renewable claims</span>
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/environment/">Explore environment</a>
+        <p class="srcline">
+          Data: our own index of what developers and operators publish, and
+          {" "}<a href="https://epoch.ai/data/notable-ai-models">Epoch AI</a> compute estimates
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 ALIGNMENT ===================== -->
+  <section class="section section--band" id="alignment" data-accent="alignment" aria-labelledby="alignment-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">04 / Alignment</span>
           <h2 class="sec-title" id="alignment-h">
             {perHundred} safety papers per hundred
           </h2>
@@ -625,12 +753,55 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 04 ADOPTION ===================== -->
+  <!-- ===================== 05 USAGE ===================== -->
+  <section class="section section--sunk" id="usage" data-accent="usage" aria-labelledby="usage-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow">05 / Usage</span>
+          <h2 class="sec-title" id="usage-h">
+            {fmtTokens(latestVolumes[0].tokens_per_month as number)} tokens a month
+          </h2>
+        </div>
+        <p class="sec-lede">
+          The largest token volume any company has stated: {latestVolumes[0].series_label},
+          {" "}{monthLong(latestVolumes[0].as_of as string)}. Each figure below counts something
+          different, and {undisclosedVolume.length} tracked developers state none.
+        </p>
+      </div>
+
+      <div class="ladder">
+        {
+          latestVolumes.map((v) => (
+            <div class="rung">
+              <span class="rung__x num">{monthShort(v.as_of as string)}</span>
+              <span class="rung__what">{v.series_label}{v.average && ", yearly average"}</span>
+              <span class="rung__n num">{fmtTokens(v.tokens_per_month as number)}</span>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="tagrow">
+        <span class="tag">No volume stated by {undisclosedVolume.join(", ").replace(/, ([^,]*)$/, " or $1")}</span>
+        <span class="tag">Tokens per month, converted by this site</span>
+      </div>
+
+      <div class="sec-foot">
+        <a class="btn btn--go" href="/usage/">Explore usage</a>
+        <p class="srcline">
+          Data: our own index of company statements, each linked to where it was made
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 06 ADOPTION ===================== -->
   <section class="section section--band" id="adoption" data-accent="adoption" aria-labelledby="adoption-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">04 / Adoption</span>
+          <span class="eyebrow">06 / Adoption</span>
           <h2 class="sec-title" id="adoption-h">Who is actually using it</h2>
         </div>
         <p class="sec-lede">
@@ -665,12 +836,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 05 POLICY ===================== -->
+  <!-- ===================== 07 POLICY ===================== -->
   <section class="section section--sunk" id="policy" data-accent="policy" aria-labelledby="policy-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">05 / Policy and governance</span>
+          <span class="eyebrow">07 / Policy and governance</span>
           <h2 class="sec-title" id="policy-h">
             {binding.length} of {policy.count} are binding
           </h2>
@@ -713,12 +884,12 @@ const pins = PIN_SITES.map((site) => {
     </div>
   </section>
 
-  <!-- ===================== 06 NEWS ===================== -->
+  <!-- ===================== 08 NEWS ===================== -->
   <section class="section section--band" id="news" data-accent="news" aria-labelledby="news-h">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="eyebrow">06 / The wire</span>
+          <span class="eyebrow">08 / The wire</span>
           <h2 class="sec-title" id="news-h">Official publications and preprints</h2>
         </div>
         <p class="sec-lede">

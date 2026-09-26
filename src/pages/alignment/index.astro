@@ -18,7 +18,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
-import { assertRenderable, freshness, oldestRetrieved, getSource, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, oldestRetrieved, getSource, type Dataset } from "../../lib/sources";
 
 import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
 import frameworkFile from "../../../data/processed/safety-frameworks.json";
@@ -68,10 +68,10 @@ interface ResearchRecord {
   source_id: string;
 }
 
-const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
-const frameworks = frameworkFile as Dataset<FrameworkRecord>;
-const research = researchFile as Dataset<ResearchRecord>;
-const feed = feedFile as Dataset<NewsRecord>;
+const benchmarks = confirmed(benchmarkFile as Dataset<BenchmarkRecord>);
+const frameworks = confirmed(frameworkFile as Dataset<FrameworkRecord>);
+const research = confirmed(researchFile as Dataset<ResearchRecord>);
+const feed = confirmed(feedFile as Dataset<NewsRecord>);
 
 const cites = [
   ...new Set([...benchmarks.sources, ...frameworks.sources, ...research.sources, ...feed.sources]),

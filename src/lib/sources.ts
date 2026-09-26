@@ -2,6 +2,7 @@
 // scripts/check-lib.mjs import this module directly to test the licence guard.
 // Vite honours it too, so the site build is unaffected.
 import sourcesFile from "../../data/sources.json" with { type: "json" };
+import statusFile from "../../data/processed/_status.json" with { type: "json" };
 
 export type Redistribution =
   | "permitted"
@@ -102,6 +103,29 @@ export function freshness(iso: string): { label: string; stale: boolean } {
  */
 export function oldestRetrieved(...datasets: Array<{ retrieved: string }>): string {
   return datasets.map((d) => d.retrieved).sort()[0];
+}
+
+/**
+ * When the pipeline last confirmed each dataset, from etl/run_all.py.
+ *
+ * A dataset file is only rewritten when its records change, so its envelope says
+ * when the data last MOVED. A source that publishes annually therefore aged on
+ * the page every day it was fetched and found identical: /adoption/ read
+ * "retrieved 12 days ago" over Eurostat figures fetched that morning. The status
+ * file carries the later fact, and the page shows whichever is later.
+ */
+const confirmedAt: Record<string, string> =
+  (statusFile as { datasets?: Record<string, string> }).datasets ?? {};
+
+/**
+ * A dataset with `retrieved` moved forward to its last confirmation, if that is
+ * later. Never moved back: a confirmation older than the file is ignored.
+ * Hand-coded indexes are confirmed at their review date, so this cannot make a
+ * review look more recent than it was.
+ */
+export function confirmed<T>(dataset: Dataset<T>, seen: Record<string, string> = confirmedAt): Dataset<T> {
+  const at = seen[dataset.dataset];
+  return at && at > dataset.retrieved ? { ...dataset, retrieved: at } : dataset;
 }
 
 export { sources };

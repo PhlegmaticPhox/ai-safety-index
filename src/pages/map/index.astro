@@ -18,7 +18,7 @@ import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import WorldMap, { type MapDatum } from "../../components/WorldMap.astro";
 import CountryExplorer from "../../components/CountryExplorer.astro";
-import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 import { alpha3, percentileRanks } from "../../lib/geo";
 
 import exposureFile from "../../../data/processed/ai-exposure.json";
@@ -44,8 +44,8 @@ interface GovernanceRecord {
   source_id: string;
 }
 
-const exposure = exposureFile as Dataset<ExposureRecord>;
-const governance = governanceFile as Dataset<GovernanceRecord>;
+const exposure = confirmed(exposureFile as Dataset<ExposureRecord>);
+const governance = confirmed(governanceFile as Dataset<GovernanceRecord>);
 
 const cites = [...new Set([...exposure.sources, ...governance.sources, "natural-earth"])];
 assertRenderable(...cites);

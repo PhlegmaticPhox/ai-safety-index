@@ -1,0 +1,117 @@
+{
+  "dataset": "usage-reach",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
+  "sources": [
+    "usage-disclosure-index"
+  ],
+  "unit": "users",
+  "notes": "Disclosed user counts per product, reviewed 2026-09-25. Weekly and monthly counts are different measures and are labelled.",
+  "count": 8,
+  "records": [
+    {
+      "product": "Google AI Overviews",
+      "company": "Google",
+      "users": 2500000000.0,
+      "measure": "monthly users",
+      "as_of": "2026-05",
+      "basis": "company",
+      "url": "https://blog.google/innovation-and-ai/sundar-pichai-io-2026/",
+      "note": "People shown an AI summary at the top of a Search result, not people who chose an assistant.",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "Google AI Mode",
+      "company": "Google",
+      "users": 1000000000.0,
+      "measure": "monthly users",
+      "as_of": "2026-05",
+      "basis": "company",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/google-io-2026-all-our-announcements/",
+      "note": "Search's conversational mode, launched in the US in 2025.",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "Meta AI",
+      "company": "Meta",
+      "users": 1000000000.0,
+      "measure": "monthly users",
+      "as_of": "2025-05",
+      "basis": "reported",
+      "url": "https://www.cnbc.com/2025/05/28/zuckerberg-meta-ai-one-billion-monthly-users.html",
+      "note": "Across Meta's apps, where the assistant is built into search and chat.",
+      "basis_meaning": "Company statement, as reported by the press",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "Gemini app",
+      "company": "Google",
+      "users": 950000000.0,
+      "measure": "monthly users",
+      "as_of": "2026-07",
+      "basis": "company",
+      "url": "https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q2-2026/",
+      "note": "",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "ChatGPT",
+      "company": "OpenAI",
+      "users": 900000000.0,
+      "measure": "weekly users",
+      "as_of": "2026-03",
+      "basis": "company",
+      "url": "https://openai.com/index/accelerating-the-next-phase-ai/",
+      "note": "The only figure here counted weekly, which is a stricter test than monthly.",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "Microsoft AI features",
+      "company": "Microsoft",
+      "users": 900000000.0,
+      "measure": "monthly users",
+      "as_of": "2025-10",
+      "basis": "company",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q1",
+      "note": "Every AI feature across Microsoft's products counted together.",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "Microsoft Copilot family",
+      "company": "Microsoft",
+      "users": 150000000.0,
+      "measure": "monthly users",
+      "as_of": "2025-10",
+      "basis": "company",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q1",
+      "note": "",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    },
+    {
+      "product": "GitHub Copilot",
+      "company": "Microsoft",
+      "users": 50000000.0,
+      "measure": "users",
+      "as_of": "2026-07",
+      "basis": "company",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+      "note": "Users, with no period stated.",
+      "basis_meaning": "Published by the company",
+      "reviewed": "2026-09-25",
+      "source_id": "usage-disclosure-index"
+    }
+  ]
+}

@@ -59,6 +59,12 @@ jobs:
       - name: Frontier index self-check
         run: python etl/build_frontier_index.py --self-check
 
+      - name: Usage index self-check
+        run: python etl/build_usage_index.py --self-check
+
+      - name: Environment index self-check
+        run: python etl/build_environment_index.py --self-check
+
       - name: Eurostat decoder self-check
         run: python etl/fetch_eurostat.py --self-check
 

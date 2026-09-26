@@ -106,13 +106,16 @@ const jsonld = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
 const year = new Date().getFullYear();
 
 /* Nav order runs outward from the models themselves: what they can do, what they
-   cost, whether anyone can steer them, who uses them, where, under what law,
-   what changed this week, and where every number came from. */
+   cost to build, what they cost in energy, whether anyone can steer them, how
+   much they are used, who uses them, where, under what law, what changed this
+   week, and where every number came from. */
 const nav = [
   { href: "/", label: "Home" },
   { href: "/progress/", label: "Progress" },
   { href: "/capability/", label: "Capability" },
+  { href: "/environment/", label: "Environment" },
   { href: "/alignment/", label: "Alignment" },
+  { href: "/usage/", label: "Usage" },
   { href: "/adoption/", label: "Adoption" },
   { href: "/map/", label: "Map" },
   { href: "/policy/", label: "Policy" },
@@ -173,7 +176,7 @@ const nav = [
           <span>AI Safety <span class="brand__accent">Tracker</span></span>
         </a>
         {/* Two renderings of one list. Exactly one is ever displayed: the row
-            above 860px, the menu below it, each `display: none` at the other
+            above 960px, the menu below it, each `display: none` at the other
             width and so absent from the accessibility tree rather than merely
             invisible. Duplicating eight links costs a few hundred bytes and
             avoids depending on overriding the UA's popover display rule, which
@@ -336,16 +339,17 @@ const nav = [
         display: none;
       }
 
-      /* 860px, not the 640px this used to be, and the number is measured rather
-         than chosen. Nine non-wrapping links plus the wordmark plus the wrap
-         padding need 804px of header at an 805px viewport, and the wordmark is
-         clamp()ed on vw so the requirement grows with the viewport: the fixed
-         point where the row first fits is 805px exactly. Below it the row
-         overflowed the DOCUMENT rather than wrapping, because every link carries
-         white-space: nowrap, which put all 35 pages 5px wider than an iPad in
-         portrait and panned the whole site sideways there. 860 leaves headroom
-         for a platform whose Geist rasterises a little wider than this one's. */
-      @media (max-width: 860px) {
+      /* 960px, and the number is measured rather than chosen. With nine links
+         the row first fitted at an 805px viewport and the breakpoint was 860.
+         Environment and Usage moved that fixed point to between 901 and 910px,
+         measured by scrolling the document sideways at each width: the
+         wordmark is clamp()ed on vw, so the requirement grows with the
+         viewport. Below it the row overflows the DOCUMENT rather than wrapping,
+         because every link carries white-space: nowrap, which once put every
+         page 5px wider than an iPad in portrait and panned the whole site
+         sideways there. 960 keeps the same 55px of headroom for a platform
+         whose Geist rasterises a little wider than this one's. */
+      @media (max-width: 960px) {
         /* One row again, the same height as the desktop header: brand at the
            start, one control at the end. The nav used to wrap to two rows of
            links here and stack the bar to 120px, which is what made a sticky

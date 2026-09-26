@@ -192,6 +192,19 @@ AUSTRALIA = [
             "deployed by states, not the Commonwealth."
         ),
     },
+    {
+        "title": "Australian AI Safety Institute",
+        "force": "agency-binding",
+        "year": 2025,
+        "body": "Department of Industry, Science and Resources",
+        "topics": ["safety"],
+        "url": "https://www.industry.gov.au/science-technology-and-innovation/technology/artificial-intelligence/ai-safety-institute",
+        "note": (
+            "Announced in November 2025 and operating from early 2026, with the Australian "
+            "Signals Directorate as a technical partner. It began testing frontier models in "
+            "July 2026."
+        ),
+    },
     # --- Voluntary ---
     {
         "title": "Voluntary AI Safety Standard",
@@ -244,8 +257,11 @@ AUSTRALIA = [
         "note": (
             "Consulted on in late 2024. Proposed a risk-based regime with ten mandatory "
             "guardrails and canvassed three options for giving them effect: a new AI act, "
-            "framework legislation, or amendments to existing law. Nothing has been "
-            "legislated, which is the single most important fact in this index."
+            "framework legislation, or amendments to existing law. The December 2025 "
+            "National AI Plan set it aside in favour of existing law. In July 2026 the "
+            "government announced it would legislate Australian Standards for AI instead, "
+            "with legislation expected in 2027. Nothing has been legislated, which is the "
+            "single most important fact in this index."
         ),
     },
     # --- Regulator guidance ---
@@ -575,6 +591,20 @@ UNITED_STATES = [
             "developers above a compute threshold must publish a safety framework and report "
             "critical safety incidents. It reaches most frontier labs because most of them "
             "are in California."
+        ),
+    },
+    {
+        "title": "New York RAISE Act, Responsible AI Safety and Education Act",
+        "force": "statute",
+        "year": 2025,
+        "body": "New York State Legislature",
+        "topics": ["safety", "transparency"],
+        "url": "https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B",
+        "note": (
+            "Signed in December 2025 and narrowed by a chapter amendment in March 2026 to "
+            "track California's SB 53: developers with over $500 million in annual revenue "
+            "that train models above 1e26 FLOP must publish safety protocols and report "
+            "safety incidents to the state. Applies from January 2027."
         ),
     },
     {

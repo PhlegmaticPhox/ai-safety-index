@@ -1,0 +1,69 @@
+{
+  "dataset": "operator-energy",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
+  "sources": [
+    "environmental-disclosure-index"
+  ],
+  "unit": null,
+  "notes": "Our own reading of primary publications, reviewed 2026-09-25. Company-wide figures from each operator's own sustainability report, not figures for any model.",
+  "count": 4,
+  "records": [
+    {
+      "operator": "Google",
+      "period": "2025",
+      "dc_twh": 42.4158,
+      "dc_twh_prior": 30.6371,
+      "renewable_match_pct": 100,
+      "hourly_cfe_pct": 65,
+      "scope2_location_t": 15148700,
+      "scope2_market_t": 2815000,
+      "note": "Data-centre electricity rose 38% on 2024. The hourly carbon-free share was 13% across Google's Asia Pacific grid regions and 68% in the United States.",
+      "url": "https://storage.googleapis.com/gweb-mobius-cdn/sustainability/uploads/7f477eb723fe0c23d03f94b90a08882b9f28187d.pdf",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Microsoft",
+      "period": "FY2025",
+      "dc_twh": null,
+      "dc_twh_prior": null,
+      "renewable_match_pct": 100,
+      "hourly_cfe_pct": null,
+      "scope2_location_t": null,
+      "scope2_market_t": null,
+      "note": "Matched 100% of annual electricity with renewable energy in fiscal 2025. No hourly or per-region figure is published.",
+      "url": "https://www.microsoft.com/en-us/corporate-responsibility/topics/sustainability/report/",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Amazon",
+      "period": "2025",
+      "dc_twh": null,
+      "dc_twh_prior": null,
+      "renewable_match_pct": 100,
+      "hourly_cfe_pct": null,
+      "scope2_location_t": null,
+      "scope2_market_t": null,
+      "note": "Matched 100% of electricity with renewable energy for a third year. Runs AWS, where Anthropic trains and serves on Trainium chips.",
+      "url": "https://www.aboutamazon.com/news/sustainability/amazon-sustainability-report-2025",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "operator": "Meta",
+      "period": "since 2020",
+      "dc_twh": null,
+      "dc_twh_prior": null,
+      "renewable_match_pct": 100,
+      "hourly_cfe_pct": null,
+      "scope2_location_t": null,
+      "scope2_market_t": null,
+      "note": "Stated in its Llama model cards: net zero operations and 100% renewable matching since 2020.",
+      "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    }
+  ]
+}

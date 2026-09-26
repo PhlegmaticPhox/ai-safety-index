@@ -8,12 +8,12 @@
  */
 import Base from "../../layouts/Base.astro";
 import NewsList from "../../components/NewsList.astro";
-import { assertRenderable, freshness, getSource, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, getSource, type Dataset } from "../../lib/sources";
 import { CATEGORIES, byDateDesc, type NewsRecord } from "../../lib/news";
 
 import feedFile from "../../../data/processed/news-feed.json";
 
-const feed = feedFile as Dataset<NewsRecord>;
+const feed = confirmed(feedFile as Dataset<NewsRecord>);
 assertRenderable(...feed.sources);
 
 const items = [...feed.records].sort(byDateDesc);

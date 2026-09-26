@@ -11,7 +11,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
-import { assertRenderable, freshness, oldestRetrieved, getSource, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, oldestRetrieved, getSource, type Dataset } from "../../lib/sources";
 
 import indexFile from "../../../data/processed/policy-index.json";
 import governanceFile from "../../../data/processed/governance-readiness.json";
@@ -40,8 +40,8 @@ interface GovernanceRecord {
   source_id: string;
 }
 
-const policy = indexFile as Dataset<PolicyRecord>;
-const governance = governanceFile as Dataset<GovernanceRecord>;
+const policy = confirmed(indexFile as Dataset<PolicyRecord>);
+const governance = confirmed(governanceFile as Dataset<GovernanceRecord>);
 const cites = [...new Set([...policy.sources, ...governance.sources])];
 assertRenderable(...cites);
 

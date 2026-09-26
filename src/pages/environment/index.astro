@@ -1,0 +1,948 @@
+---
+/**
+ * Environment: the energy and emissions behind frontier AI, and how little of it
+ * is published.
+ *
+ * The question a reader brings is which models pollute most and whether they run
+ * on clean or fossil power. No dataset answers it. What exists is four separate
+ * things, and the page keeps them separate rather than blending them into an
+ * estimate of its own:
+ *
+ *   1. How big each training run was: Epoch AI's compute estimates. Compute is
+ *      the nearest measured quantity to energy, and the page says in the caveat
+ *      why it is not the same thing.
+ *   2. What each developer has said about its own energy, sites and emissions,
+ *      and what permits and press reporting add: our own index, cell by cell,
+ *      marked by who said it.
+ *   3. The few training footprints and per-prompt figures actually published.
+ *   4. The operators' company-wide claims, where the gap between matching a
+ *      year's electricity with renewable contracts and being carbon-free in the
+ *      hour of use is the answer to "renewables or fossil fuels" that exists.
+ *
+ * Emissions per unit of compute is computed here, from a published emissions
+ * figure and Epoch's compute estimate for the same model, and labelled as such.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import StatTile from "../../components/StatTile.astro";
+import BarTable from "../../components/BarTable.astro";
+import {
+  assertRenderable,
+  confirmed,
+  freshness,
+  getSource,
+  oldestRetrieved,
+  type Dataset,
+} from "../../lib/sources";
+
+import developersFile from "../../../data/processed/environment-developers.json";
+import footprintsFile from "../../../data/processed/training-footprints.json";
+import inferenceFile from "../../../data/processed/inference-energy.json";
+import operatorsFile from "../../../data/processed/operator-energy.json";
+import gridFile from "../../../data/processed/grid-carbon-free.json";
+import modelsFile from "../../../data/processed/frontier-models.json";
+
+interface Cell {
+  status: "disclosed" | "partial" | "reported" | "none";
+  status_meaning: string;
+  text: string;
+  links: Array<{ label: string; url: string }>;
+}
+interface DeveloperRecord {
+  developer: string;
+  epoch_orgs: string[];
+  training: Cell;
+  sites: Cell;
+  power: Cell;
+  inference: Cell;
+  source_id: string;
+}
+interface FootprintRecord {
+  model: string;
+  developer: string;
+  year: number;
+  epoch_model: string | null;
+  hardware: string | null;
+  gpu_hours: number | null;
+  device_w: number | null;
+  energy_mwh: number | null;
+  energy_derived: boolean;
+  tco2e: number | null;
+  tco2e_basis: string | null;
+  market_tco2e: number | null;
+  who: string;
+  scope: string;
+  url: string;
+  source_id: string;
+}
+interface InferenceRecord {
+  developer: string;
+  product: string;
+  statistic: string;
+  wh: number | null;
+  gco2e: number | null;
+  water_ml: number | null;
+  as_of: string;
+  method: string;
+  note: string;
+  url: string;
+  source_id: string;
+}
+interface OperatorRecord {
+  operator: string;
+  period: string;
+  dc_twh: number | null;
+  dc_twh_prior: number | null;
+  renewable_match_pct: number;
+  hourly_cfe_pct: number | null;
+  scope2_location_t: number | null;
+  scope2_market_t: number | null;
+  note: string;
+  url: string;
+  source_id: string;
+}
+interface GridRecord {
+  year: number;
+  country: string;
+  grid: string;
+  google_cfe_pct: number;
+  grid_cfe_pct: number;
+  url: string;
+  source_id: string;
+}
+interface ModelRecord {
+  model: string;
+  organisation: string;
+  published: string;
+  compute_flop: number;
+  confidence: string;
+  source_id: string;
+}
+
+const developers = confirmed(developersFile as Dataset<DeveloperRecord>);
+const footprints = confirmed(footprintsFile as Dataset<FootprintRecord>);
+const inference = confirmed(inferenceFile as Dataset<InferenceRecord>);
+const operators = confirmed(operatorsFile as Dataset<OperatorRecord>);
+const grid = confirmed(gridFile as Dataset<GridRecord>);
+const models = confirmed(modelsFile as Dataset<ModelRecord>);
+
+const own = developers.sources;
+const cites = [...new Set([...own, ...models.sources])];
+assertRenderable(...cites);
+
+const QUESTIONS: Array<{ key: "training" | "sites" | "power" | "inference"; label: string }> = [
+  { key: "training", label: "Training energy or emissions" },
+  { key: "sites", label: "Where it trains and serves" },
+  { key: "power", label: "What powers those sites" },
+  { key: "inference", label: "Energy per prompt" },
+];
+const STATUS_TAG: Record<Cell["status"], string> = {
+  disclosed: "Published",
+  partial: "Partly published",
+  reported: "Reported by others",
+  none: "Not disclosed",
+};
+
+const fmtCompute = (flop: number) => {
+  const exp = Math.floor(Math.log10(flop));
+  return `${(flop / 10 ** exp).toFixed(1)}e${exp}`;
+};
+const fmtNum = (n: number, digits = 0) =>
+  n.toLocaleString("en-GB", { maximumFractionDigits: digits, minimumFractionDigits: digits });
+const monthName = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+const listJoin = (items: string[]) =>
+  items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+
+/* ---------------------------------------------------------------------------
+   The join: each developer's training runs from Epoch, against what it has
+   published about the energy behind them.
+   --------------------------------------------------------------------------- */
+/* Runs below RUNS_ABOVE are mostly narrow research models, such as protein
+   folding and weather, which would stretch the axis across five empty decades. */
+const RUNS_FROM = 2020;
+const RUNS_ABOVE = 1e21;
+const rows = developers.records
+  .map((dev) => {
+    const runs = models.records
+      .filter(
+        (m) =>
+          dev.epoch_orgs.includes(m.organisation) &&
+          Number(m.published.slice(0, 4)) >= RUNS_FROM &&
+          m.compute_flop >= RUNS_ABOVE,
+      )
+      .sort((a, b) => b.compute_flop - a.compute_flop);
+    return { ...dev, runs, largest: runs[0] ?? null };
+  })
+  .sort((a, b) => (b.largest?.compute_flop ?? 0) - (a.largest?.compute_flop ?? 0));
+
+const cellsTotal = rows.length * QUESTIONS.length;
+const cellsNone = rows.reduce(
+  (n, r) => n + QUESTIONS.filter((q) => r[q.key].status === "none").length,
+  0,
+);
+
+/* Models at or above the EU systemic-risk threshold, and which of them have a
+   published training-emissions figure. A lifecycle figure does not count: it
+   folds in months of use and cannot be read as the training run. */
+const EU_FLOP = 1e25;
+const withTrainingFigure = new Set(
+  footprints.records
+    .filter((f) => f.epoch_model && f.tco2e !== null && f.tco2e_basis !== "lifecycle")
+    .map((f) => f.epoch_model as string),
+);
+const frontier = models.records.filter((m) => m.compute_flop >= EU_FLOP);
+const frontierDisclosed = frontier.filter((m) => withTrainingFigure.has(m.model));
+const largestRuns = [...models.records].sort((a, b) => b.compute_flop - a.compute_flop).slice(0, 10);
+const largestRun = largestRuns[0];
+
+/* Strip plot geometry. One row per developer, dots for every run since
+   RUNS_FROM on a log axis, the largest drawn solid and named. */
+const SP = { w: 1000, row: 36, l: 150, r: 24, t: 30, b: 34 };
+const allRunLogs = rows.flatMap((r) => r.runs.map((m) => Math.log10(m.compute_flop)));
+/* A twentieth of a decade of tolerance on the rounding. The largest run is
+   recorded at 1.0001e27, and a bare ceil() gave it an empty decade of axis to
+   the right; within the tolerance a point sits under a pixel past the end. */
+const xMinExp = Math.floor(Math.min(...allRunLogs) + 0.05);
+const xMaxExp = Math.ceil(Math.max(...allRunLogs) - 0.05);
+const SP_H = SP.t + rows.length * SP.row + SP.b;
+const sx = (flop: number) =>
+  SP.l + ((Math.log10(flop) - xMinExp) / (xMaxExp - xMinExp)) * (SP.w - SP.l - SP.r);
+const rowY = (i: number) => SP.t + i * SP.row + SP.row / 2;
+
+/* ---------------------------------------------------------------------------
+   Published footprints, with emissions per unit of compute where both exist.
+   --------------------------------------------------------------------------- */
+const computeOf = new Map(models.records.map((m) => [m.model, m.compute_flop]));
+const footprintRows = footprints.records.map((f) => {
+  const compute = f.epoch_model ? computeOf.get(f.epoch_model) ?? null : null;
+  const perE24 =
+    compute && f.tco2e !== null && f.tco2e_basis === "location-based" ? f.tco2e / (compute / 1e24) : null;
+  return { ...f, compute, perE24 };
+});
+const intensities = footprintRows.filter((f) => f.perE24 !== null).map((f) => f.perE24 as number);
+const maxIntensity = Math.max(...intensities);
+const minIntensity = Math.min(...intensities);
+const llama = footprintRows.find((f) => f.model === "Llama 3.1 405B");
+
+/* ---------------------------------------------------------------------------
+   Operators and grids.
+   --------------------------------------------------------------------------- */
+const google = operators.records.find((o) => o.operator === "Google")!;
+const gridRows = [...grid.records]
+  .sort((a, b) => a.google_cfe_pct - b.google_cfe_pct || a.grid.localeCompare(b.grid))
+  .map((g) => ({
+    label: `${g.country === "United States" ? "US" : g.country}, ${g.grid}`,
+    value: g.google_cfe_pct,
+    display: `${g.google_cfe_pct}%`,
+    meta: `${g.grid_cfe_pct}%`,
+  }));
+const lowest = [...grid.records].sort((a, b) => a.google_cfe_pct - b.google_cfe_pct)[0];
+const googlePrompt = inference.records.find((r) => r.developer === "Google")!;
+const openaiPrompt = inference.records.find((r) => r.developer === "OpenAI");
+
+const retrievedAt = oldestRetrieved(developers, footprints, inference, operators, grid, models);
+const checked = freshness(retrievedAt);
+
+const src = getSource("environmental-disclosure-index");
+const SITE_URL = "https://aisafetytracker.org";
+const schema = {
+  "@type": "Dataset",
+  "@id": `${SITE_URL}/environment/#dataset`,
+  name: src.name,
+  description: developers.notes,
+  url: `${SITE_URL}/environment/`,
+  license: src.licence_url,
+  isAccessibleForFree: true,
+  creator: { "@id": `${SITE_URL}/#publisher` },
+  publisher: { "@id": `${SITE_URL}/#publisher` },
+  dateModified: developers.generated,
+  keywords: [
+    "AI energy use",
+    "AI carbon emissions",
+    "data centre renewable energy",
+    "training emissions",
+    "carbon-free energy",
+  ],
+  measurementTechnique:
+    "Each developer's published model cards, technical reports and statements read for training energy, emissions, sites and per-prompt energy, with permits and press reporting recorded separately and marked as such.",
+  variableMeasured: [
+    { "@type": "PropertyValue", name: "disclosure status", description: "Published, partly published, reported by others, or not disclosed." },
+    { "@type": "PropertyValue", name: "tco2e", description: "Published training emissions in tonnes of CO2 equivalent, with basis." },
+    { "@type": "PropertyValue", name: "hourly carbon-free energy", description: "Share of electricity carbon-free in the hour and grid it was used." },
+  ],
+};
+---
+
+<Base
+  field="environment"
+  title="Environmental impact of frontier AI"
+  description="What frontier AI developers publish about training energy, emissions and power sources, set against the size of their training runs, and what they do not."
+  cites={cites}
+  schema={schema}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Environment</h1>
+        <p class="masthead__meta mono">
+          {rows.length} developers
+          <span aria-hidden="true">/</span>
+          {footprints.count} published footprints
+          <span aria-hidden="true">/</span>
+          {operators.count} operators
+          <span aria-hidden="true">/</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</time>
+        </p>
+      </div>
+
+      <div class="bento">
+        <StatTile
+          span={2}
+          emphasis
+          value={`${frontierDisclosed.length} of ${frontier.length}`}
+          label="Models at or above 1e25 FLOP with a published training-emissions figure"
+          detail={frontierDisclosed.length
+            ? `${listJoin(frontierDisclosed.map((m) => m.model))}. No figure is published for any model by OpenAI, Anthropic or xAI, or for any Gemini model.`
+            : "No figure is published for any of them."}
+          source={[...own, ...models.sources]}
+          retrieved={footprints.retrieved}
+          note="Joined by this site: Epoch AI's compute estimates against this site's index of published footprints. A lifecycle figure covering months of use is not counted as a training figure."
+        />
+        <StatTile
+          span={2}
+          value={String(google.hourly_cfe_pct)}
+          unit="%"
+          label={`Google data-centre electricity that was carbon-free in the hour it was used, ${google.period}`}
+          detail={`Against ${google.renewable_match_pct}% matched over the year by renewable purchases. No other operator publishes the hourly figure.`}
+          source={own}
+          retrieved={operators.retrieved}
+        />
+        <StatTile
+          span={2}
+          value={String(googlePrompt.wh)}
+          unit="Wh"
+          label={`Google's figure for the ${googlePrompt.statistic} in ${googlePrompt.product}`}
+          detail={`${monthName(googlePrompt.as_of)}, with a published method.${openaiPrompt ? ` OpenAI states ${openaiPrompt.wh} Wh for an ${openaiPrompt.statistic}, without one.` : ""}`}
+          source={own}
+          retrieved={inference.retrieved}
+        />
+        <StatTile
+          span={3}
+          value={fmtNum((google.scope2_location_t ?? 0) / 1e6, 1)}
+          unit="MtCO2e"
+          label={`Google's electricity emissions at the grid's average intensity, ${google.period}`}
+          detail={`${fmtNum((google.scope2_market_t ?? 0) / 1e6, 1)} MtCO2e once its renewable contracts are subtracted. Data centres drew ${fmtNum(google.dc_twh ?? 0, 1)} TWh, up from ${fmtNum(google.dc_twh_prior ?? 0, 1)} TWh the year before.`}
+          source={own}
+          retrieved={operators.retrieved}
+          note="Location-based and market-based scope 2 emissions, from Google's 2026 Environmental Report."
+        />
+        <StatTile
+          span={3}
+          value={fmtCompute(largestRun.compute_flop)}
+          unit="FLOP"
+          label="Largest reported training run"
+          detail={`${largestRun.model}, ${largestRun.organisation}, ${largestRun.published.slice(0, 7)}. No energy use, site or emissions figure is published for it.`}
+          source={models.sources}
+          retrieved={models.retrieved}
+          note="Compute is Epoch AI's estimate, not a disclosure."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE KNOW -->
+  <section class="section section--sunk" id="what-we-know">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What we know</h2>
+        <p>
+          What each developer has published about the energy behind its models, and what
+          permits and press reporting add. {cellsNone} of {cellsTotal} entries record nothing
+          published.
+        </p>
+      </div>
+
+      <ul class="devs">
+        {
+          rows.map((dev) => (
+            <li class="dev">
+              <div class="dev__head">
+                <h3 class="dev__name">{dev.developer}</h3>
+                {dev.largest && (
+                  <span class="dev__run mono">
+                    largest run {fmtCompute(dev.largest.compute_flop)} FLOP, {dev.largest.model}
+                  </span>
+                )}
+              </div>
+              <dl class="dev__facts">
+                {QUESTIONS.map((q) => {
+                  const cell = dev[q.key];
+                  return (
+                    <div class:list={["fact", cell.status === "none" && "is-none"]}>
+                      <dt>
+                        {q.label}
+                        <span class="tag">{STATUS_TAG[cell.status]}</span>
+                      </dt>
+                      <dd>
+                        {cell.text}
+                        {cell.links.length > 0 && (
+                          <span class="fact__links">
+                            {cell.links.map((link) => (
+                              <a href={link.url}>{link.label}</a>
+                            ))}
+                          </span>
+                        )}
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="caveat">
+        "Published" means the developer's own model card, report or statement. "Reported by others"
+        means a permit, a regulator or the press, with the developer silent. A company's
+        clean-energy claims cover its whole operation, never one model. Largest runs are Epoch AI's
+        compute estimates for models published since {RUNS_FROM}.
+        <Provenance
+          source={[...own, ...models.sources]}
+          retrieved={developers.retrieved}
+          note="Our own reading of each developer's publications. Every claim links to where it was made."
+        />
+      </p>
+    </div>
+  </section>
+
+  <!-- TRAINING RUNS -->
+  <section class="section" id="training-runs">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How big the training runs are</h2>
+        <p>
+          Every run since {RUNS_FROM} above {fmtCompute(RUNS_ABOVE)} FLOP with a compute estimate, by
+          developer, on a logarithmic scale. The largest per developer is named.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${SP.w} ${SP_H}`}
+            class="plot"
+            role="img"
+            aria-label={`Training compute of every model since ${RUNS_FROM} for ${rows.length} developers, logarithmic scale. The largest is ${largestRun.model} at ${fmtCompute(largestRun.compute_flop)} FLOP. ${frontierDisclosed.length} of the ${frontier.length} models at or above 1e25 FLOP have a published training-emissions figure.`}
+          >
+            {
+              Array.from({ length: xMaxExp - xMinExp + 1 }, (_, i) => xMinExp + i).map((exp) => (
+                <g>
+                  <line x1={sx(10 ** exp)} x2={sx(10 ** exp)} y1={SP.t - 6} y2={SP_H - SP.b} class="plot__grid" />
+                  <text x={sx(10 ** exp)} y={SP_H - SP.b + 16} text-anchor="middle" class="ax">{`1e${exp}`}</text>
+                </g>
+              ))
+            }
+            <line x1={sx(EU_FLOP)} x2={sx(EU_FLOP)} y1={SP.t - 14} y2={SP_H - SP.b} class="plot__threshold" />
+            <text x={sx(EU_FLOP) + 5} y={SP.t - 8} class="ax">1e25, EU threshold</text>
+
+            {
+              rows.map((dev, i) => (
+                <g>
+                  <line x1={SP.l} x2={SP.w - SP.r} y1={rowY(i)} y2={rowY(i)} class="plot__row" />
+                  <text x={SP.l - 12} y={rowY(i) + 4} text-anchor="end" class="plot__dev">{dev.developer}</text>
+                  {dev.runs.map((m) => (
+                    <circle
+                      cx={sx(m.compute_flop)}
+                      cy={rowY(i)}
+                      r={m === dev.largest ? 5 : 3.5}
+                      class:list={["plot__run", m === dev.largest && "is-largest", withTrainingFigure.has(m.model) && "is-disclosed"]}
+                    >
+                      <title>{`${m.model} (${dev.developer}, ${m.published.slice(0, 7)}): ${fmtCompute(m.compute_flop)} FLOP, confidence ${m.confidence || "unknown"}. ${withTrainingFigure.has(m.model) ? "Training emissions published." : "No training emissions figure published."}`}</title>
+                    </circle>
+                  ))}
+                  {dev.largest && (
+                    <text
+                      x={sx(dev.largest.compute_flop) + (sx(dev.largest.compute_flop) > SP.w - 190 ? -9 : 9)}
+                      y={rowY(i) - 8}
+                      text-anchor={sx(dev.largest.compute_flop) > SP.w - 190 ? "end" : "start"}
+                      class="ax ax--label"
+                    >
+                      {dev.largest.model}
+                    </text>
+                  )}
+                </g>
+              ))
+            }
+            <text x={SP.l} y={SP_H - 6} class="ax">Training compute, FLOP</text>
+          </svg>
+        </div>
+
+        <div class="key">
+          <span class="key__item"><span class="key__swatch" /> Largest run per developer</span>
+          <span class="key__item"><span class="key__swatch" style="--swatch:var(--muted)" /> Other runs</span>
+          <span class="key__item"><span class="key__ring" aria-hidden="true" /> Ringed: emissions figure published</span>
+          <Provenance
+            source={[...models.sources, ...own]}
+            retrieved={models.retrieved}
+            note="Compute is Epoch AI's estimate. Whether emissions are published is this site's index."
+            label="chart"
+          />
+        </div>
+      </figure>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            The ten largest training runs with a compute estimate, and whether any energy or
+            emissions figure has been published for each.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Model</th>
+              <th scope="col">Developer</th>
+              <th scope="col" class="ta-end">Compute, FLOP</th>
+              <th scope="col">Published</th>
+              <th scope="col">Training emissions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              largestRuns.map((m) => (
+                <tr>
+                  <th scope="row">{m.model}</th>
+                  <td class="muted-cell">{m.organisation}</td>
+                  <td class="ta-end num">{fmtCompute(m.compute_flop)}</td>
+                  <td class="num muted-cell">{m.published.slice(0, 7)}</td>
+                  <td class:list={[!withTrainingFigure.has(m.model) && "muted-cell"]}>
+                    {withTrainingFigure.has(m.model) ? "Published" : "Not published"}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        Compute is the nearest measured quantity to training energy, and not a measure of emissions.
+        The energy a run needs is its compute divided by the efficiency of the chips it ran on,
+        which improves with each hardware generation, and the emissions are that energy times the
+        carbon intensity of the grid behind the data centre, which no developer on this chart
+        states for its largest run. Compute figures are mostly Epoch AI's estimates, faintest
+        where developers publish least, and cover the final training run only.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTPRINTS -->
+  <section class="section section--sunk" id="footprints">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Training footprints that have been published</h2>
+        <p>
+          Every published figure for the energy or emissions of training a model, with who measured
+          it and on what basis. Emissions per 1e24 FLOP are computed here where both figures exist.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Published training energy and emissions by model, with the basis of each figure and
+            emissions per unit of compute.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Model</th>
+              <th scope="col">Published by</th>
+              <th scope="col" class="ta-end">Energy, MWh</th>
+              <th scope="col" class="ta-end">tCO2e</th>
+              <th scope="col">Basis</th>
+              <th scope="col" class="ta-end">Market-based</th>
+              <th scope="col" class="ta-end">tCO2e per 1e24 FLOP</th>
+              <th scope="col" class="bar-col"><span class="visually-hidden">Per 1e24 FLOP, relative</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              footprintRows.map((f) => (
+                <tr>
+                  <th scope="row"><a href={f.url}>{f.model}</a></th>
+                  <td class="muted-cell">{f.who}</td>
+                  <td class="ta-end num">
+                    {f.energy_mwh !== null ? `${fmtNum(f.energy_mwh)}${f.energy_derived ? "*" : ""}` : "-"}
+                  </td>
+                  <td class="ta-end num">{f.tco2e !== null ? fmtNum(f.tco2e, f.tco2e < 100 ? 1 : 0) : "-"}</td>
+                  <td class="muted-cell">{f.tco2e_basis ?? (f.gpu_hours ? `${fmtNum(f.gpu_hours / 1e6, 2)}M GPU hours only` : "-")}</td>
+                  <td class="ta-end num muted-cell">{f.market_tco2e !== null ? fmtNum(f.market_tco2e) : "-"}</td>
+                  <td class="ta-end num">{f.perE24 !== null ? fmtNum(f.perE24) : "-"}</td>
+                  <td class="bar-col">
+                    {f.perE24 !== null && (
+                      <span class="bar bar--thin" style={`--w:${((f.perE24 / maxIntensity) * 100).toFixed(1)}%`} aria-hidden="true" />
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <details class="reveal">
+        <summary>
+          What each figure covers <span class="reveal__count">{footprints.count}</span>
+        </summary>
+        <div class="reveal__body">
+          <ul class="scopes">
+            {footprints.records.map((f) => (
+              <li><span class="scopes__model">{f.model}</span> {f.scope}</li>
+            ))}
+          </ul>
+        </div>
+      </details>
+
+      <p class="caveat">
+        Location-based emissions use the average carbon intensity of the grid the data centre drew
+        from; market-based emissions subtract renewable energy bought by contract, which is how
+        {" "}{llama?.model ?? "a model"} is reported at {fmtNum(llama?.tco2e ?? 0)} tCO2e on one basis and zero on
+        the other. Energy marked * is derived here from the model card's GPU hours and stated power
+        per chip. Per unit of compute, the published figures differ
+        {" "}{Math.round(maxIntensity / minIntensity)}-fold, from the French grid under BLOOM to the
+        older chips and grid under GPT-3, whose figure is an outside estimate. Compute for each
+        model is Epoch AI's estimate.
+        <Provenance
+          source={[...own, ...models.sources]}
+          retrieved={footprints.retrieved}
+          note="Emissions per 1e24 FLOP computed by this site from the published emissions figure and Epoch AI's compute estimate for the same model."
+        />
+      </p>
+    </div>
+  </section>
+
+  <!-- PER PROMPT -->
+  <section class="section" id="per-prompt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Energy per prompt</h2>
+        <p>Every per-prompt figure a developer has published. Each measures a different statistic.</p>
+      </div>
+
+      <ul class="strip">
+        {
+          inference.records.map((r) => (
+            <li class="strip__item">
+              <span class="strip__value">{r.wh !== null ? `${r.wh} Wh` : `${r.gco2e} gCO2e`}</span>
+              <span class="strip__label">
+                {r.developer}, {r.statistic}, {r.product}, {monthName(r.as_of)}.
+                {r.wh !== null && r.gco2e !== null && ` ${r.gco2e} gCO2e.`}
+                {r.water_ml !== null && ` ${r.water_ml} mL of water.`} Method {r.method}.
+                {" "}<a href={r.url}>Source</a>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="caveat">
+        A median prompt and an average query are different statistics: a few very long requests
+        raise an average and leave a median where it was. None of the three covers image or video
+        generation, long reasoning or agent runs, and Google's emissions figure uses its
+        market-based fleet average. Anthropic, Meta, xAI and DeepSeek publish no per-prompt figure.
+        <Provenance source={own} retrieved={inference.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- GRID -->
+  <section class="section section--sunk" id="grid">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Renewable claims against the grid</h2>
+        <p>
+          What the operators of frontier data centres report for their own electricity. Annual
+          matching counts renewable energy bought over a year; hourly carbon-free energy counts
+          what was clean in the hour and on the grid where it was used.
+        </p>
+      </div>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Data-centre electricity, annual renewable matching and hourly carbon-free energy by
+            operator, from each operator's own report.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Operator</th>
+              <th scope="col">Period</th>
+              <th scope="col" class="ta-end">Data centres, TWh</th>
+              <th scope="col" class="ta-end">Matched over the year</th>
+              <th scope="col" class="ta-end">Carbon-free by the hour</th>
+              <th scope="col" class="wrap-cell">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              operators.records.map((o) => (
+                <tr>
+                  <th scope="row"><a href={o.url}>{o.operator}</a></th>
+                  <td class="muted-cell">{o.period}</td>
+                  <td class="ta-end num">{o.dc_twh !== null ? fmtNum(o.dc_twh, 1) : "-"}</td>
+                  <td class="ta-end num">{o.renewable_match_pct}%</td>
+                  <td class:list={["ta-end", "num", o.hourly_cfe_pct === null && "muted-cell"]}>
+                    {o.hourly_cfe_pct !== null ? `${o.hourly_cfe_pct}%` : "not published"}
+                  </td>
+                  <td class="wrap-cell muted-cell">{o.note}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="chart grid-regions">
+        <figcaption class="chart__cap">
+          <span>
+            Google, carbon-free share of data-centre electricity by grid region, hour by hour,
+            {" "}{grid.records[0].year}
+            <Provenance
+              source={own}
+              retrieved={grid.retrieved}
+              note="Google CFE counts Google's clean-energy contracts in that grid region; grid CFE is the region's own carbon-free share. Both from Google's 2026 Environmental Report."
+            />
+          </span>
+          <span class="chart__meta mono">lowest first</span>
+        </figcaption>
+        <BarTable
+          rows={gridRows}
+          head="Grid region"
+          valueHead="Google"
+          metaHead="Whole grid"
+          top={10}
+          caption="Hourly carbon-free energy share of Google's data-centre electricity by grid region in 2025, lowest first, with the grid's own carbon-free share."
+        />
+      </figure>
+
+      <p class="caveat">
+        Every operator here matches all of its annual electricity with renewable purchases. Only
+        Google publishes how much was carbon-free in the hour of use: {google.hourly_cfe_pct}%
+        across its data centres, and {lowest.google_cfe_pct}% on the {lowest.grid} grid in
+        {" "}{lowest.country}. The remainder came from fossil-fuelled generation on the grid at that
+        hour. No operator publishes which grid region serves which model, so the regional figures
+        describe where Google computes, not where any one model runs.
+        <Provenance source={own} retrieved={operators.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- GAPS -->
+  <section class="section" id="gaps">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What this page cannot show</h2>
+        <p>Questions a reader brings that no published source answers.</p>
+      </div>
+
+      <ul class="cards">
+        <li class="card">
+          <span class="card__title">Energy used by the largest runs</span>
+          <p>No developer publishes it for any model above 1e26 FLOP.</p>
+        </li>
+        <li class="card">
+          <span class="card__title">Which grid serves which model</span>
+          <p>
+            Inference moves between regions with demand. No operator publishes where a given model
+            is served from, hour by hour.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">Water per model</span>
+          <p>Published by Google and Mistral AI per prompt, and by Mistral AI for one model's lifecycle.</p>
+        </li>
+        <li class="card">
+          <span class="card__title">Chip manufacture</span>
+          <p>
+            Of the footprints listed here, only BLOOM's study and Mistral AI's lifecycle analysis
+            count the emissions of making the hardware.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">Chinese developers</span>
+          <p>DeepSeek publishes GPU hours and nothing on power, sites or emissions.</p>
+        </li>
+        <li class="card">
+          <span class="card__title">Tokens behind the energy</span>
+          <p>How much the models are used, as each company states it.</p>
+          <span class="card__meta mono"><a href="/usage/">Usage</a></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .plot {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 44rem;
+    block-size: auto;
+  }
+
+  .plot__grid {
+    stroke: var(--line-soft);
+    stroke-width: 1;
+  }
+
+  .plot__row {
+    stroke: var(--line);
+    stroke-width: 1;
+    stroke-dasharray: 2 4;
+  }
+
+  .plot__threshold {
+    stroke: var(--accent);
+    stroke-width: 1;
+    stroke-dasharray: 5 4;
+    opacity: 0.6;
+  }
+
+  .plot__dev {
+    fill: var(--ink);
+    font-family: var(--f-sans);
+    font-size: 12px;
+  }
+
+  .plot__run {
+    fill: var(--muted);
+    fill-opacity: 0.45;
+  }
+
+  .plot__run.is-largest {
+    fill: var(--accent);
+    fill-opacity: 1;
+  }
+
+  /* A ring, not a colour, marks the runs with a published footprint, so the
+     encoding survives greyscale and does not compete with the largest-run fill. */
+  .plot__run.is-disclosed {
+    stroke: var(--ink);
+    stroke-width: 1.5;
+  }
+
+  .key__ring {
+    inline-size: 0.7rem;
+    block-size: 0.7rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    flex: none;
+  }
+
+  /* Developer cards. Two across on a laptop, one on a phone. */
+  .devs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .dev {
+    padding: 0.85rem 1rem 0.9rem;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+  }
+
+  .dev__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.2rem 1rem;
+    padding-block-end: 0.5rem;
+    border-block-end: 1px solid var(--line-soft);
+  }
+
+  .dev__name {
+    font-size: 1rem;
+  }
+
+  .dev__run {
+    color: var(--muted);
+    font-size: 0.6875rem;
+  }
+
+  .dev__facts {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0.6rem 0 0;
+  }
+
+  .fact dt {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .fact .tag {
+    padding: 0 0.45rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .fact dd {
+    margin: 0.15rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .fact.is-none dd {
+    color: var(--muted);
+  }
+
+  .fact__links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-inline-start: 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .scopes {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-inline-size: 88ch;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .scopes__model {
+    color: var(--ink);
+    font-weight: 500;
+    margin-inline-end: 0.35rem;
+  }
+
+  .grid-regions {
+    margin-block-start: 1.5rem;
+  }
+
+  .strip {
+    margin-block-end: 0.5rem;
+  }
+</style>

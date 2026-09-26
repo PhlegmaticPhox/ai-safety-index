@@ -32,7 +32,9 @@ BASE = {
 FIELDS = {
     'progress':   ('#f2a950', 217, 1.00, 'Outputs. The base navy, because benchmarks are what the site leads on.'),
     'capability': ('#83a9c7', 206, 0.42, 'Inputs. A restrained steel blue for compute and silicon.'),
+    'environment': ('#a9c47c', 148, 0.34, 'Energy. A moss ground for power, emissions and where they are counted.'),
     'alignment':  ('#4fc3a1', 197, 0.80, 'Safety. A colder, greener blue.'),
+    'usage':      ('#aba6ea', 236, 0.55, 'Volume. An indigo ground for how much the models are used and for what.'),
     'adoption':   ('#8eb59c', 165, 0.38, 'People. A quiet green-teal, distinct from the site\'s technical pages.'),
     'map':        ('#63b3ec', 206, 0.90, 'Governance, and the one page where ground and data hue agree.'),
     'policy':     ('#b5c65a', 183, 0.80, 'Law. The ground goes to a deep teal.'),

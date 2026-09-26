@@ -32,11 +32,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import check_links, utcnow, write_dataset
+from common import check_links, review_stamp, write_dataset
 from policy_jurisdictions import JURISDICTIONS
 
 SOURCE = "policy-index"
-REVIEWED = "2026-09"
+REVIEWED = "2026-09-25"
 
 # How binding a thing is. This is the distinction that matters most to a reader
 # and the one most often blurred in press coverage: a voluntary standard and a
@@ -114,7 +114,7 @@ def run(offline: bool = False) -> None:
             "that never mention AI are included where they apply to it, which is most of "
             "the list in most jurisdictions."
         ),
-        retrieved=utcnow(),
+        retrieved=review_stamp(REVIEWED),
     )
 
 

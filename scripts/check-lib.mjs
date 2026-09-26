@@ -134,7 +134,12 @@ assert.equal(geo.alpha3("Not A Country At All"), null, "unknown names must not g
   // 2. A blocked source must throw. These three are registered PRECISELY so that
   //    wiring them in fails the build; if this passes silently, the site can
   //    publish data it has no licence to publish.
-  const mustBlock = ["artificial-analysis", "stanford-ai-index", "metr-time-horizons"];
+  const mustBlock = [
+    "artificial-analysis",
+    "stanford-ai-index",
+    "metr-time-horizons",
+    "openrouter-rankings",
+  ];
   for (const blocked of mustBlock) {
     assert.throws(
       () => assertRenderable(blocked),
@@ -337,6 +342,26 @@ assert.equal(geo.alpha3("Not A Country At All"), null, "unknown names must not g
     `src/styles/fonts.css declares font-display ${[...displays].join(", ")}; the whole reason ` +
       `the file exists is that every face is optional.`,
   );
+}
+
+/* confirmed(). A dataset rewritten only when its records change keeps the
+   retrieval time of its last change, and the pipeline's status file carries the
+   last time it was confirmed. The page must show the later of the two and never
+   the earlier: a confirmation older than the file would make fresh data look
+   stale, and one for a different dataset would lend its date to the wrong one. */
+{
+  const { confirmed } = await import("../src/lib/sources.ts");
+  const file = { dataset: "eurostat", retrieved: "2026-09-13T06:10:16+00:00", records: [] };
+  const later = { eurostat: "2026-09-25T06:20:00+00:00" };
+  assert.equal(confirmed(file, later).retrieved, "2026-09-25T06:20:00+00:00");
+  assert.equal(file.retrieved, "2026-09-13T06:10:16+00:00", "confirmed() mutated its input");
+  assert.equal(
+    confirmed(file, { eurostat: "2026-09-01T00:00:00+00:00" }).retrieved,
+    file.retrieved,
+    "an older confirmation moved a dataset's date backwards",
+  );
+  assert.equal(confirmed(file, { other: "2026-09-25T00:00:00+00:00" }).retrieved, file.retrieved);
+  assert.equal(confirmed(file, {}).retrieved, file.retrieved);
 }
 
 console.log("check-lib.mjs passed");

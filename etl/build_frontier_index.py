@@ -32,11 +32,17 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import check_links, utcnow, write_dataset
+from common import check_links, review_stamp, write_dataset
 
 FRAMEWORK_SOURCE = "safety-frameworks-index"
 THRESHOLD_SOURCE = "legal-thresholds-index"
-REVIEWED = "2026-09"
+# Reviewed separately, because they move separately. The thresholds were
+# re-read on the later date and New York's RAISE Act added. The frameworks were
+# not: Amazon revised its framework on 17 September 2026, and until someone reads
+# the revision the index says when it was last read rather than claiming a review
+# that did not happen.
+FRAMEWORKS_REVIEWED = "2026-09-13"
+THRESHOLDS_REVIEWED = "2026-09-25"
 
 # The four things worth comparing across frameworks, because they are the four
 # that differ. Everything else in these documents is close to boilerplate.
@@ -185,9 +191,15 @@ DEVELOPERS = [
     },
 ]
 
-# Every training-compute threshold written into an instrument. Four exist. Two of
-# them are the same number, one is revoked, and one is the only one in force in
-# binding law that applies to the market rather than to a single US state.
+# Every training-compute threshold written into an instrument. Five exist. Four
+# of them are the same number, 1e26, of which one is revoked, one was vetoed and
+# one is enacted but not yet applicable. The EU's is the only one in force in
+# binding law that applies to a market rather than to a single US state.
+#
+# An enacted threshold carries the date it applies from, which the page prints.
+# Its status is not flipped automatically on that date: commencement dates move
+# (Colorado's has moved more than once), and a status a script changed without
+# anyone reading the law would be a guess presented as a fact.
 THRESHOLDS = [
     {
         "jurisdiction": "European Union",
@@ -250,6 +262,27 @@ THRESHOLDS = [
             "dropped the audit and shutdown requirements."
         ),
     },
+    {
+        "jurisdiction": "United States (New York)",
+        "instrument": "RAISE Act, Responsible AI Safety and Education Act",
+        "flop": 1e26,
+        "status": "enacted",
+        "applies_to": (
+            "Frontier developers with over $500 million in annual revenue, for models trained "
+            "above the threshold and above $100m in compute cost"
+        ),
+        "consequence": (
+            "Duty to publish safety and security protocols and to report safety incidents "
+            "to the state."
+        ),
+        "applies_from": "2027-01-01",
+        "url": "https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B",
+        "note": (
+            "Signed in December 2025 and amended in March 2026 to track California's SB 53. "
+            "It applies from 1 January 2027, so it is counted here as enacted rather than in "
+            "force."
+        ),
+    },
 ]
 
 
@@ -269,7 +302,7 @@ def build_frameworks() -> list[dict]:
             {
                 **entry,
                 "halt_meaning": HALT[entry["halt"]],
-                "reviewed": REVIEWED,
+                "reviewed": FRAMEWORKS_REVIEWED,
                 "source_id": FRAMEWORK_SOURCE,
             }
         )
@@ -279,17 +312,23 @@ def build_frameworks() -> list[dict]:
 def build_thresholds() -> list[dict]:
     records = []
     for entry in THRESHOLDS:
-        if entry["status"] not in ("in force", "revoked", "vetoed", "proposed"):
+        if entry["status"] not in ("in force", "enacted", "revoked", "vetoed", "proposed"):
             raise ValueError(f"{entry['instrument']}: unknown status {entry['status']!r}")
         if not entry["url"].startswith("https://"):
             raise ValueError(f"{entry['instrument']}: citation must be an https URL")
+        if (entry["status"] == "enacted") != bool(entry.get("applies_from")):
+            raise ValueError(
+                f"{entry['instrument']}: an enacted threshold needs the date it applies "
+                f"from, and only an enacted one carries it"
+            )
         records.append(
             {
+                "applies_from": None,
                 **entry,
                 # Carried alongside the float so a page never has to reconstruct the
                 # exponent for display and get it subtly wrong.
                 "exponent": round(math.log10(entry["flop"])),
-                "reviewed": REVIEWED,
+                "reviewed": THRESHOLDS_REVIEWED,
                 "source_id": THRESHOLD_SOURCE,
             }
         )
@@ -305,10 +344,10 @@ def run(offline: bool = False) -> None:
         unit=None,
         notes=(
             f"Our own reading of each developer's published frontier safety framework, "
-            f"reviewed {REVIEWED}. Self-assessment under self-written frameworks with no "
-            f"common scale and no external audit. Not a ranking."
+            f"reviewed {FRAMEWORKS_REVIEWED}. Self-assessment under self-written frameworks "
+            f"with no common scale and no external audit. Not a ranking."
         ),
-        retrieved=utcnow(),
+        retrieved=review_stamp(FRAMEWORKS_REVIEWED),
     )
     write_dataset(
         "legal-thresholds",
@@ -317,10 +356,10 @@ def run(offline: bool = False) -> None:
         unit="FLOP of training compute",
         notes=(
             f"Every training-compute threshold written into law, executive action or an "
-            f"official policy document, reviewed {REVIEWED}. Whether a model crosses one is "
-            f"arithmetic on compute estimates and is not a legal finding."
+            f"official policy document, reviewed {THRESHOLDS_REVIEWED}. Whether a model "
+            f"crosses one is arithmetic on compute estimates and is not a legal finding."
         ),
-        retrieved=utcnow(),
+        retrieved=review_stamp(THRESHOLDS_REVIEWED),
     )
 
 

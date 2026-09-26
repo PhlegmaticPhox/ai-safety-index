@@ -7,7 +7,7 @@
  * is asking: where did this number come from and what does it mean.
  */
 import Base from "../../layouts/Base.astro";
-import { assertRenderable, getSource, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, getSource, type Dataset } from "../../lib/sources";
 
 import governanceFile from "../../../data/processed/governance-readiness.json";
 
@@ -24,7 +24,7 @@ interface GovernanceRecord {
   source_id: string;
 }
 
-const governance = governanceFile as Dataset<GovernanceRecord>;
+const governance = confirmed(governanceFile as Dataset<GovernanceRecord>);
 assertRenderable(...governance.sources);
 
 const DIMENSIONS = [

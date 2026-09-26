@@ -15,7 +15,7 @@
 import Base from "../../layouts/Base.astro";
 import Provenance from "../../components/Provenance.astro";
 import Sparkline from "../../components/Sparkline.astro";
-import { assertRenderable, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
+import { assertRenderable, confirmed, freshness, oldestRetrieved, type Dataset } from "../../lib/sources";
 
 import benchmarkFile from "../../../data/processed/benchmark-frontier.json";
 import releasesFile from "../../../data/processed/model-releases.json";
@@ -46,8 +46,8 @@ interface ReleaseRecord {
   source_id: string;
 }
 
-const benchmarks = benchmarkFile as Dataset<BenchmarkRecord>;
-const releases = releasesFile as Dataset<ReleaseRecord>;
+const benchmarks = confirmed(benchmarkFile as Dataset<BenchmarkRecord>);
+const releases = confirmed(releasesFile as Dataset<ReleaseRecord>);
 const cites = [...new Set([...benchmarks.sources, ...releases.sources])];
 assertRenderable(...cites);
 

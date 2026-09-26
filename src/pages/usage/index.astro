@@ -1,0 +1,746 @@
+---
+/**
+ * Usage: how much the models are used, by whom, and for what.
+ *
+ * Every figure here is something a company or a study chose to state. There is
+ * no measured dataset of AI use by model or by company: the volumes exist as
+ * single sentences in earnings calls and keynotes, each counting something
+ * different. So the page's unit of record is the statement, printed with the
+ * scope it was made about, and the chart only ever joins statements that count
+ * the same thing.
+ *
+ * Tokens per month is this site's normalisation, not any company's. A per-minute
+ * rate is multiplied by the minutes in an average month, and a quarterly or
+ * annual total becomes a monthly average and is drawn hollow, because an average
+ * over a year is a different statement from a month's volume.
+ */
+import Base from "../../layouts/Base.astro";
+import Provenance from "../../components/Provenance.astro";
+import StatTile from "../../components/StatTile.astro";
+import {
+  assertRenderable,
+  confirmed,
+  freshness,
+  getSource,
+  oldestRetrieved,
+  type Dataset,
+} from "../../lib/sources";
+
+import volumesFile from "../../../data/processed/token-volumes.json";
+import reachFile from "../../../data/processed/usage-reach.json";
+import purposesFile from "../../../data/processed/usage-purposes.json";
+
+interface VolumeRecord {
+  company: string;
+  series: string | null;
+  series_label: string | null;
+  scope: string | null;
+  stated: string | null;
+  value: number | null;
+  per: string | null;
+  as_of: string | null;
+  announced: string | null;
+  venue: string | null;
+  tokens_per_month: number | null;
+  average: boolean;
+  basis: string | null;
+  basis_meaning: string | null;
+  note: string;
+  url: string | null;
+  disclosed: boolean;
+  source_id: string;
+}
+
+interface ReachRecord {
+  product: string;
+  company: string;
+  users: number;
+  measure: string;
+  as_of: string;
+  basis: string;
+  note: string;
+  url: string;
+  source_id: string;
+}
+
+interface PurposeRecord {
+  product: string;
+  company: string;
+  unit: string;
+  period: string;
+  category: string;
+  kind: string;
+  share: number | null;
+  display: string;
+  publisher: string;
+  url: string;
+  source_id: string;
+}
+
+const volumes = confirmed(volumesFile as Dataset<VolumeRecord>);
+const reach = confirmed(reachFile as Dataset<ReachRecord>);
+const purposes = confirmed(purposesFile as Dataset<PurposeRecord>);
+
+const cites = [...new Set([...volumes.sources, ...reach.sources, ...purposes.sources])];
+assertRenderable(...cites);
+
+/* Referenced in prose only. Registered as prohibited so that wiring its data in
+   fails the build; see data/sources.json. */
+const openrouter = getSource("openrouter-rankings");
+
+/* ---------------------------------------------------------------------------
+   Formatting. Token counts span four orders of magnitude, so they are written
+   as words rather than in scientific notation: a lay reader knows what a
+   trillion is and does not know what 1e12 is.
+   --------------------------------------------------------------------------- */
+const trim = (v: number) => (v >= 10 ? v.toFixed(0) : v.toFixed(1).replace(/\.0$/, ""));
+const fmtTokens = (n: number) => {
+  if (n >= 1e15) return `${trim(n / 1e15)} quadrillion`;
+  if (n >= 1e12) return `${trim(n / 1e12)} trillion`;
+  if (n >= 1e9) return `${trim(n / 1e9)} billion`;
+  return `${trim(n / 1e6)} million`;
+};
+const fmtUsers = (n: number) =>
+  n >= 1e9 ? `${trim(n / 1e9)} billion` : `${Math.round(n / 1e6)} million`;
+const monthName = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+const shortMonth = (ym: string) =>
+  new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
+/* ---------------------------------------------------------------------------
+   1. Volumes by series.
+   --------------------------------------------------------------------------- */
+type Disclosed = VolumeRecord & { series: string; as_of: string; tokens_per_month: number };
+const disclosed = volumes.records.filter((r): r is Disclosed => r.disclosed);
+const absent = volumes.records.filter((r) => !r.disclosed);
+const companies = [...new Set(disclosed.map((r) => r.company))];
+
+const seriesKeys = [...new Set(disclosed.map((r) => r.series))];
+const series = seriesKeys
+  .map((key) => {
+    const points = disclosed.filter((r) => r.series === key).sort((a, b) => a.as_of.localeCompare(b.as_of));
+    return { key, label: points[0].series_label!, company: points[0].company, scope: points[0].scope!, points, latest: points[points.length - 1] };
+  })
+  .sort((a, b) => b.latest.tokens_per_month - a.latest.tokens_per_month);
+
+const largest = series[0].latest;
+const googleAll = series.find((s) => s.key === "google-all")!;
+const googleLatest = googleAll.latest;
+/* The year-on-year multiple Google's own figures imply: the latest against the
+   figure closest to twelve months before it. Computed here, labelled as such. */
+const monthsOf = (ym: string) => Number(ym.slice(0, 4)) * 12 + Number(ym.slice(5, 7));
+const yearBefore = [...googleAll.points]
+  .filter((p) => monthsOf(googleLatest.as_of) - monthsOf(p.as_of) >= 11)
+  .sort((a, b) => b.as_of.localeCompare(a.as_of))[0];
+const googleMultiple = yearBefore ? googleLatest.tokens_per_month / yearBefore.tokens_per_month : null;
+const openaiApi = series.find((s) => s.key === "openai-api")!.latest;
+
+/* Per company, fixed rather than by rank, so a company keeps its colour when
+   another overtakes it. Google carries the accent because it is the only company
+   with two series; line style carries scope, not company: solid counts every
+   product, dashed counts an API or platform only. */
+const COMPANY_STYLE: Record<string, { stroke: string; opacity: number }> = {
+  Google: { stroke: "var(--accent)", opacity: 1 },
+  ByteDance: { stroke: "var(--ink)", opacity: 0.85 },
+  OpenAI: { stroke: "var(--ink)", opacity: 0.6 },
+  Microsoft: { stroke: "var(--ink)", opacity: 0.4 },
+};
+const API_ONLY = new Set(["google-api", "openai-api", "microsoft-foundry"]);
+
+const TV = { w: 1000, h: 360, l: 104, r: 196, t: 16, b: 34 };
+const decimal = (ym: string) => Number(ym.slice(0, 4)) + (Number(ym.slice(5, 7)) - 0.5) / 12;
+const tMin = Math.floor(Math.min(...disclosed.map((r) => decimal(r.as_of))));
+const tMax = Math.max(...disclosed.map((r) => decimal(r.as_of))) + 1 / 6;
+const logs = disclosed.map((r) => Math.log10(r.tokens_per_month));
+const yMin = Math.floor(Math.min(...logs));
+const yMax = Math.ceil(Math.max(...logs));
+const tx = (t: number) => TV.l + ((t - tMin) / (tMax - tMin)) * (TV.w - TV.l - TV.r);
+const ty = (v: number) =>
+  TV.h - TV.b - ((Math.log10(v) - yMin) / (yMax - yMin)) * (TV.h - TV.t - TV.b);
+const DECADE_WORD: Record<number, string> = {
+  9: "1 billion", 10: "10 billion", 11: "100 billion", 12: "1 trillion", 13: "10 trillion",
+  14: "100 trillion", 15: "1 quadrillion", 16: "10 quadrillion", 17: "100 quadrillion",
+};
+
+/* A line joins only a series' own monthly figures. An average over a year is a
+   different kind of point and is left unjoined rather than drawn as a trend. */
+const lines = series.map((s) => {
+  const style = COMPANY_STYLE[s.company] ?? { stroke: "var(--muted)", opacity: 0.6 };
+  const joined = s.points.filter((p) => !p.average);
+  const d = joined
+    .map((p, i) => `${i === 0 ? "M" : "L"}${tx(decimal(p.as_of)).toFixed(1)} ${ty(p.tokens_per_month).toFixed(1)}`)
+    .join(" ");
+  const end = s.latest;
+  const endX = tx(decimal(end.as_of));
+  const endY = ty(end.tokens_per_month);
+  /* A series that stopped early is labelled beside its last point; the rest are
+     labelled in the right margin, where they cannot sit on another line. */
+  const inline = endX < TV.l + 0.72 * (TV.w - TV.l - TV.r);
+  return { ...s, ...style, d: joined.length > 1 ? d : "", dashed: API_ONLY.has(s.key), endX, endY, inline };
+});
+const LABEL_GAP = 14;
+let cursor = -Infinity;
+const margin = lines
+  .filter((l) => !l.inline)
+  .sort((a, b) => a.endY - b.endY)
+  .map((l) => {
+    const labelY = Math.max(l.endY, cursor + LABEL_GAP);
+    cursor = labelY;
+    return { key: l.key, labelY };
+  });
+const labelY = (key: string) => margin.find((m) => m.key === key)?.labelY ?? 0;
+
+/* ---------------------------------------------------------------------------
+   2. Reach.
+   --------------------------------------------------------------------------- */
+const topReach = reach.records[0];
+const chatgpt = reach.records.find((r) => r.product === "ChatGPT");
+
+/* ---------------------------------------------------------------------------
+   3. What it is used for.
+   --------------------------------------------------------------------------- */
+const coding = purposes.records.filter((p) => p.kind === "coding");
+const products = [...new Set(purposes.records.map((p) => p.product))];
+const byProduct = products.map((product) => ({
+  product,
+  rows: purposes.records.filter((p) => p.product === product),
+}));
+
+const retrievedAt = oldestRetrieved(volumes, reach, purposes);
+const checked = freshness(retrievedAt);
+
+/* Dataset markup for the index this page is the landing page of, as /policy/
+   does for its own. Values come from the envelope and the registry. */
+const src = getSource("usage-disclosure-index");
+const SITE_URL = "https://aisafetytracker.org";
+const periods = disclosed.map((r) => r.as_of).sort();
+const schema = {
+  "@type": "Dataset",
+  "@id": `${SITE_URL}/usage/#dataset`,
+  name: src.name,
+  description: volumes.notes,
+  url: `${SITE_URL}/usage/`,
+  license: src.licence_url,
+  isAccessibleForFree: true,
+  creator: { "@id": `${SITE_URL}/#publisher` },
+  publisher: { "@id": `${SITE_URL}/#publisher` },
+  dateModified: volumes.generated,
+  temporalCoverage: `${periods[0]}/${periods[periods.length - 1]}`,
+  keywords: ["AI usage", "tokens processed", "AI adoption", "LLM usage", "AI users"],
+  measurementTechnique:
+    "Each figure transcribed from the company's own statement or a study's published text, with its scope and a link to where it was stated. Rates normalised to tokens per month by this site.",
+  variableMeasured: [
+    { "@type": "PropertyValue", name: "tokens_per_month", description: "Disclosed token volume normalised to a month." },
+    { "@type": "PropertyValue", name: "users", description: "Disclosed weekly or monthly users per product." },
+    { "@type": "PropertyValue", name: "share", description: "Published share of use by topic or task." },
+  ],
+};
+---
+
+<Base
+  field="usage"
+  title="AI usage: tokens processed by company"
+  description="How many tokens Google, ByteDance, OpenAI and Microsoft say they process, how many people use each product, and what the use is for."
+  cites={cites}
+  schema={schema}
+>
+  <section class="section section--open">
+    <div class="wrap">
+      <div class="masthead">
+        <h1>Usage</h1>
+        <p class="masthead__meta mono">
+          {disclosed.length} disclosed volumes
+          <span aria-hidden="true">/</span>
+          {companies.length} of {companies.length + absent.length} developers
+          <span aria-hidden="true">/</span>
+          {reach.count} user counts
+          <span aria-hidden="true">/</span>
+          <time datetime={retrievedAt} class={checked.stale ? "is-stale" : undefined}>reviewed {checked.label}</time>
+        </p>
+      </div>
+
+      <div class="bento">
+        <StatTile
+          span={2}
+          emphasis
+          value={trim(largest.tokens_per_month / 1e15)}
+          unit="quadrillion tokens a month"
+          label={`Largest disclosed volume: ${largest.series_label}`}
+          detail={`Stated as ${largest.stated}, ${monthName(largest.as_of)}. ${largest.basis_meaning}.`}
+          source={volumes.sources}
+          retrieved={volumes.retrieved}
+          note="Converted to a month by this site: a daily figure times 30.44."
+        />
+        <StatTile
+          span={2}
+          value={trim(googleLatest.tokens_per_month / 1e15)}
+          unit="quadrillion a month"
+          label="Google, across every product"
+          detail={`${monthName(googleLatest.as_of)}${googleMultiple && yearBefore ? `, ${googleMultiple.toFixed(1)} times the figure for ${monthName(yearBefore.as_of)}` : ""}. Search, the Gemini app and the API are not reported separately.`}
+          source={volumes.sources}
+          retrieved={volumes.retrieved}
+          note="The multiple is computed by this site from Google's own two figures."
+        />
+        <StatTile
+          span={2}
+          value={trim(openaiApi.value! / 1e9)}
+          unit="billion tokens a minute"
+          label="OpenAI's API"
+          detail={`${monthName(openaiApi.as_of)}, about ${fmtTokens(openaiApi.tokens_per_month)} a month. ChatGPT is not included.`}
+          source={volumes.sources}
+          retrieved={volumes.retrieved}
+        />
+        <StatTile
+          span={3}
+          value={`${companies.length} of ${companies.length + absent.length}`}
+          label="Developers that have published a token volume"
+          detail={`${absent.map((r) => r.company).join(", ").replace(/, ([^,]*)$/, " and $1")} have published none. Microsoft has published none since fiscal 2025.`}
+          source={volumes.sources}
+          retrieved={volumes.retrieved}
+          note="None found in the company's own publications at the review date."
+        />
+        <StatTile
+          span={3}
+          value={trim(topReach.users / 1e9)}
+          unit={`billion ${topReach.measure}`}
+          label={`Largest disclosed audience: ${topReach.product}`}
+          detail={`${monthName(topReach.as_of)}. ${topReach.note}${chatgpt ? ` ChatGPT: ${fmtUsers(chatgpt.users)} ${chatgpt.measure}.` : ""}`}
+          source={reach.sources}
+          retrieved={reach.retrieved}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- VOLUME -->
+  <section class="section section--sunk" id="tokens">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Tokens processed, as each company states it</h2>
+        <p>
+          Every aggregate token count a company has published or stated, converted to tokens per
+          month. Logarithmic: each step of the axis is ten times the one below it.
+        </p>
+      </div>
+
+      <figure class="chart">
+        <div class="scroll-x">
+          <svg
+            viewBox={`0 0 ${TV.w} ${TV.h}`}
+            class="plot"
+            role="img"
+            aria-label={`Disclosed token volumes per month by company, ${periods[0]} to ${periods[periods.length - 1]}, logarithmic scale. The largest is ${largest.series_label} at ${fmtTokens(largest.tokens_per_month)} tokens a month in ${monthName(largest.as_of)}. Google across every product reached ${fmtTokens(googleLatest.tokens_per_month)} in ${monthName(googleLatest.as_of)}.`}
+          >
+            {
+              Array.from({ length: yMax - yMin + 1 }, (_, i) => yMin + i).map((exp) => (
+                <g>
+                  <line x1={TV.l} x2={TV.w - TV.r} y1={ty(10 ** exp)} y2={ty(10 ** exp)} class="plot__grid" />
+                  <text x={TV.l - 8} y={ty(10 ** exp) + 3.5} text-anchor="end" class="ax">
+                    {DECADE_WORD[exp] ?? `1e${exp}`}
+                  </text>
+                </g>
+              ))
+            }
+            {
+              Array.from({ length: Math.floor(tMax) - tMin + 1 }, (_, i) => tMin + i).map((year) => (
+                <g>
+                  <line x1={tx(year)} x2={tx(year)} y1={TV.t} y2={TV.h - TV.b} class="plot__grid" />
+                  <text x={tx(year) + 4} y={TV.h - 12} class="ax">{year}</text>
+                </g>
+              ))
+            }
+
+            {
+              lines.map((l) => (
+                <g>
+                  {l.d && (
+                    <path
+                      d={l.d}
+                      fill="none"
+                      stroke={l.stroke}
+                      stroke-opacity={l.opacity}
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                      stroke-dasharray={l.dashed ? "5 4" : undefined}
+                    />
+                  )}
+                  {l.points.map((p) => (
+                    <circle
+                      cx={tx(decimal(p.as_of))}
+                      cy={ty(p.tokens_per_month)}
+                      r="4"
+                      fill={p.average ? "var(--band)" : l.stroke}
+                      fill-opacity={p.average ? 1 : l.opacity}
+                      stroke={l.stroke}
+                      stroke-opacity={l.opacity}
+                      stroke-width="1.5"
+                    >
+                      <title>{`${l.label}: ${p.stated} (${monthName(p.as_of)}), about ${fmtTokens(p.tokens_per_month)} a month${p.average ? " on average" : ""}. ${p.venue}.`}</title>
+                    </circle>
+                  ))}
+                  {l.inline ? (
+                    <text x={l.endX + 9} y={l.endY + 4} class="ax ax--label" fill={l.stroke} fill-opacity={Math.max(l.opacity, 0.75)}>
+                      {l.label}
+                    </text>
+                  ) : (
+                    <>
+                      <line
+                        x1={l.endX + 5}
+                        x2={TV.w - TV.r + 6}
+                        y1={l.endY}
+                        y2={labelY(l.key)}
+                        stroke={l.stroke}
+                        stroke-opacity={l.opacity * 0.5}
+                        stroke-width="1"
+                      />
+                      <text x={TV.w - TV.r + 10} y={labelY(l.key) + 4} class="ax ax--label" fill={l.stroke} fill-opacity={Math.max(l.opacity, 0.75)}>
+                        {l.label}
+                      </text>
+                    </>
+                  )}
+                </g>
+              ))
+            }
+          </svg>
+        </div>
+
+        <div class="key">
+          <span class="key__item"><span class="key__swatch" /> Google</span>
+          <span class="key__item"><span class="key__swatch" style="--swatch:var(--ink)" /> Other companies, by shade</span>
+          <span class="key__item"><span class="key__swatch key__swatch--line" style="--swatch:var(--muted)" /> Dashed: API or platform only</span>
+          <span class="key__item"><span class="key__ring" aria-hidden="true" /> Hollow: average over a year</span>
+          <Provenance
+            source={volumes.sources}
+            retrieved={volumes.retrieved}
+            note="Each point is a statement by the company. Per-minute and per-day rates converted to a month by this site."
+            label="chart"
+          />
+        </div>
+      </figure>
+
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            The latest disclosed token volume for each series, what it counts, and the developers
+            that have published none.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Series</th>
+              <th scope="col" class="wrap-cell">What is counted</th>
+              <th scope="col">As stated</th>
+              <th scope="col" class="ta-end">Per month</th>
+              <th scope="col">Period</th>
+              <th scope="col">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              series.map((s) => (
+                <tr>
+                  <th scope="row">{s.label}</th>
+                  <td class="wrap-cell muted-cell">{s.scope}</td>
+                  <td>{s.latest.stated}</td>
+                  <td class="ta-end num">{fmtTokens(s.latest.tokens_per_month)}{s.latest.average && " (average)"}</td>
+                  <td class="num">{shortMonth(s.latest.as_of)}</td>
+                  <td class="muted-cell">
+                    <a href={s.latest.url!}>{s.latest.venue}</a>
+                    {s.latest.basis === "reported" && ", press report"}
+                  </td>
+                </tr>
+              ))
+            }
+            {
+              absent.map((r) => (
+                <tr class="is-absent">
+                  <th scope="row">{r.company}</th>
+                  <td class="wrap-cell muted-cell">{r.note}</td>
+                  <td class="muted-cell">None found</td>
+                  <td class="ta-end muted-cell">-</td>
+                  <td class="muted-cell">-</td>
+                  <td class="muted-cell">-</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <details class="reveal">
+        <summary>
+          Every disclosed figure <span class="reveal__count">{disclosed.length}</span>
+        </summary>
+        <div class="reveal__body scroll-x">
+          <table class="grid-table">
+            <caption class="visually-hidden">Every disclosed token volume, by series and date.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Series</th>
+                <th scope="col">As stated</th>
+                <th scope="col" class="ta-end">Per month</th>
+                <th scope="col">Period</th>
+                <th scope="col">Stated at</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                series.flatMap((s) =>
+                  [...s.points].reverse().map((p) => (
+                    <tr>
+                      <th scope="row">{s.label}</th>
+                      <td>{p.stated}</td>
+                      <td class="ta-end num">{fmtTokens(p.tokens_per_month)}{p.average && " (average)"}</td>
+                      <td class="num">{shortMonth(p.as_of)}</td>
+                      <td class="muted-cell">
+                        <a href={p.url!}>{p.venue}</a>{p.basis === "reported" && ", press report"}
+                      </td>
+                    </tr>
+                  )),
+                )
+              }
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <p class="caveat">
+        No two series count the same thing. Google's all-product figure includes Search, where AI
+        Overviews and AI Mode answer queries by default, and Google does not report how much of the
+        total Search accounts for. OpenAI's figure excludes ChatGPT. ByteDance's figures are known
+        from press reports of its cloud unit's conference statements. A token is not a fixed unit
+        either: each company uses its own tokeniser, and an image or a second of video can be
+        hundreds of tokens, so growth driven by video inflates a count faster than growth in text.
+        Months are the period each figure describes; several were announced a month or two later.
+        <Provenance source={volumes.sources} retrieved={volumes.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- REACH -->
+  <section class="section" id="reach">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Who uses them</h2>
+        <p>
+          Disclosed user counts per product, largest first. Weekly and monthly counts are
+          different measures and are labelled.
+        </p>
+      </div>
+
+      {/* A plain table rather than BarTable: the measure and its date are what
+          make two counts comparable or not, and in BarTable's fixed meta column
+          they overran the number beside them at phone width. This one scrolls
+          in its box instead. */}
+      <div class="scroll-x">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Disclosed users per AI product, largest first, with whether each is counted weekly
+            or monthly and when.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col" class="ta-end">Users</th>
+              <th scope="col">Counted</th>
+              <th scope="col">As of</th>
+              <th scope="col" class="bar-col"><span class="visually-hidden">Users, relative</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              reach.records.map((r) => (
+                <tr>
+                  <th scope="row"><a href={r.url}>{r.product}</a></th>
+                  <td class="ta-end num">{fmtUsers(r.users)}</td>
+                  <td class="muted-cell">{r.measure === "users" ? "period not stated" : r.measure.replace(" users", "")}</td>
+                  <td class="num muted-cell">{shortMonth(r.as_of)}</td>
+                  <td class="bar-col">
+                    <span class="bar" style={`--w:${((r.users / topReach.users) * 100).toFixed(1)}%`} aria-hidden="true" />
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        The counts measure different things. AI Overviews counts people shown an AI summary at the
+        top of a Search result, and Meta AI counts people reached inside Facebook, Instagram,
+        WhatsApp and Messenger, where the assistant is built into search and chat. ChatGPT is
+        counted weekly, which is a stricter test than monthly. Microsoft's 900 million counts every
+        AI feature across its products together. No user count was found for Anthropic, xAI or DeepSeek.
+        <Provenance source={reach.sources} retrieved={reach.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- PURPOSE -->
+  <section class="section section--sunk" id="purpose">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What the tokens are for</h2>
+        <p>
+          Shares of use by topic or task, as each study states them. Each study counts a different
+          unit, and none counts tokens.
+        </p>
+      </div>
+
+      <ul class="strip">
+        {
+          coding.map((p) => (
+            <li class="strip__item">
+              <span class="strip__value">{p.display}</span>
+              <span class="strip__label">
+                of {p.product} {p.unit} were {p.category.toLowerCase()}, {monthName(p.period)}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="scroll-x purpose">
+        <table class="grid-table">
+          <caption class="visually-hidden">
+            Published shares of use by product, unit, topic or task, and period.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Share of</th>
+              <th scope="col">Topic or task</th>
+              <th scope="col" class="ta-end">Share</th>
+              <th scope="col" class="bar-col"><span class="visually-hidden">Share, relative</span></th>
+              <th scope="col">Period</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              byProduct.flatMap((group) =>
+                group.rows.map((p, i) => (
+                  <tr class:list={[i === 0 && "is-first"]}>
+                    <th scope="row">{i === 0 ? p.product : <span class="visually-hidden">{p.product}</span>}</th>
+                    <td class="muted-cell">{p.unit}</td>
+                    <td>{p.category}</td>
+                    <td class="ta-end num">{p.display}</td>
+                    <td class="bar-col">
+                      {p.share !== null && (
+                        <span class="bar bar--thin" style={`--w:${(p.share * 100).toFixed(1)}%`} aria-hidden="true" />
+                      )}
+                    </td>
+                    <td class="num muted-cell">
+                      <a href={p.url}>{shortMonth(p.period)}</a>
+                    </td>
+                  </tr>
+                )),
+              )
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="caveat">
+        ChatGPT's shares come from a sample of consumer messages classified by topic, published as
+        {" "}<a href="https://www.nber.org/papers/w34255">NBER working paper 34255</a>; its three
+        largest topics together make up nearly four fifths of messages. Claude's come from the
+        {" "}<a href="https://www.anthropic.com/economic-index">Anthropic Economic Index</a>, which
+        maps sampled conversations to occupational tasks, so coding appears as computer and
+        mathematical tasks. The two populations differ as well as the units: a consumer chatbot and
+        a developer's API draw different users for different work. The only public per-model and
+        per-purpose token counts come from{" "}<a href={openrouter.landing_page}>{openrouter.publisher}</a>,
+        a service that routes developers' requests to many models, and measure only its own traffic.
+        They are not plotted here: no permission to reuse them could be verified.
+        <Provenance source={purposes.sources} retrieved={purposes.retrieved} />
+      </p>
+    </div>
+  </section>
+
+  <!-- GAPS -->
+  <section class="section" id="gaps">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What this page cannot show</h2>
+        <p>Questions a reader brings that no published source answers.</p>
+      </div>
+
+      <ul class="cards">
+        <li class="card">
+          <span class="card__title">Tokens by model</span>
+          <p>
+            No developer publishes volume per model. Companies attribute growth to model families
+            in prose, without numbers.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">Search's share of Google's total</span>
+          <p>
+            Google reports one figure across every product. How much of it is AI Overviews and AI
+            Mode is not published.
+          </p>
+        </li>
+        <li class="card">
+          <span class="card__title">{absent.length} developers with no figure</span>
+          <p>{absent.map((r) => r.company).join(", ").replace(/, ([^,]*)$/, " and $1")} publish no token volume.</p>
+        </li>
+        <li class="card">
+          <span class="card__title">Energy per token</span>
+          <p>Published per prompt by three developers, and by none per token.</p>
+          <span class="card__meta mono"><a href="/environment/">Environment</a></span>
+        </li>
+        <li class="card">
+          <span class="card__title">A common unit</span>
+          <p>
+            Tokenisers differ between companies, and image and video tokens are counted alongside
+            text. There is no conversion between one company's token and another's.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .plot {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 44rem;
+    block-size: auto;
+  }
+
+  .plot__grid {
+    stroke: var(--line-soft);
+    stroke-width: 1;
+  }
+
+  /* A hollow marker in the legend, matching the averaged points on the chart. */
+  .key__ring {
+    inline-size: 0.7rem;
+    block-size: 0.7rem;
+    border: 1.5px solid var(--muted);
+    border-radius: 50%;
+    flex: none;
+  }
+
+  .is-absent th[scope="row"] {
+    color: var(--muted);
+  }
+
+  /* Groups in the use table are separated by a heavier rule, and the product name
+     is printed once per group. */
+  .purpose tr.is-first:not(:first-child) th,
+  .purpose tr.is-first:not(:first-child) td {
+    border-block-start-color: var(--line);
+  }
+
+  .strip {
+    margin-block-end: 1rem;
+  }
+</style>

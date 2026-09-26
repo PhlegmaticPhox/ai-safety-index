@@ -53,6 +53,24 @@
   --line-soft: #2c3841;
 }
 
+/* Energy. A moss ground for power, emissions and where they are counted. */
+[data-field="environment"],
+[data-accent="environment"] {
+  --field: #a9c47c;
+  --field-line: rgb(169 196 124 / 0.34);
+  --field-dot: rgb(169 196 124 / 0.13);
+}
+
+[data-field="environment"] {
+  --bg: #121a15;
+  --bg-deep: #0c120f;
+  --band: #18231d;
+  --surface: #1f2c24;
+  --surface-2: #26362e;
+  --line: #34463c;
+  --line-soft: #2a3a32;
+}
+
 /* Safety. A colder, greener blue. */
 [data-field="alignment"],
 [data-accent="alignment"] {
@@ -69,6 +87,24 @@
   --surface-2: #1c3641;
   --line: #284652;
   --line-soft: #203a45;
+}
+
+/* Volume. An indigo ground for how much the models are used and for what. */
+[data-field="usage"],
+[data-accent="usage"] {
+  --field: #aba6ea;
+  --field-line: rgb(171 166 234 / 0.34);
+  --field-dot: rgb(171 166 234 / 0.13);
+}
+
+[data-field="usage"] {
+  --bg: #161725;
+  --bg-deep: #0f101d;
+  --band: #1e1f33;
+  --surface: #252741;
+  --surface-2: #2f314d;
+  --line: #3d3f61;
+  --line-soft: #323453;
 }
 
 /* People. A quiet green-teal, distinct from the site's technical pages. */

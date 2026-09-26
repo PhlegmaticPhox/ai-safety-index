@@ -1,15 +1,16 @@
 {
   "dataset": "legal-thresholds",
-  "generated": "2026-09-13T07:56:00+00:00",
-  "retrieved": "2026-09-13T07:56:00+00:00",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
   "sources": [
     "legal-thresholds-index"
   ],
   "unit": "FLOP of training compute",
-  "notes": "Every training-compute threshold written into law, executive action or an official policy document, reviewed 2026-09. Whether a model crosses one is arithmetic on compute estimates and is not a legal finding.",
-  "count": 4,
+  "notes": "Every training-compute threshold written into law, executive action or an official policy document, reviewed 2026-09-25. Whether a model crosses one is arithmetic on compute estimates and is not a legal finding.",
+  "count": 5,
   "records": [
     {
+      "applies_from": null,
       "jurisdiction": "European Union",
       "instrument": "Regulation (EU) 2024/1689, Article 51(2)",
       "flop": 1e+25,
@@ -19,10 +20,11 @@
       "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
       "note": "A rebuttable presumption rather than a hard line: a developer can argue its model does not carry systemic risk despite the compute, and the Commission can designate a model that falls below it.",
       "exponent": 25,
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "legal-thresholds-index"
     },
     {
+      "applies_from": null,
       "jurisdiction": "United States (California)",
       "instrument": "SB 53, Transparency in Frontier Artificial Intelligence Act",
       "flop": 1e+26,
@@ -32,10 +34,11 @@
       "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53",
       "note": "Counts the initial training run plus later fine-tuning and material modification, so it is a cumulative figure rather than a single-run one. Larger obligations attach above an annual revenue threshold as well.",
       "exponent": 26,
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "legal-thresholds-index"
     },
     {
+      "applies_from": null,
       "jurisdiction": "United States (federal)",
       "instrument": "Executive Order 14110, section 4.2",
       "flop": 1e+26,
@@ -45,10 +48,11 @@
       "url": "https://www.federalregister.gov/executive-order/14110",
       "note": "The first compute threshold in any official instrument, revoked in January 2025. Included because it is still widely quoted as current, and because California later adopted the same number.",
       "exponent": 26,
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
       "source_id": "legal-thresholds-index"
     },
     {
+      "applies_from": null,
       "jurisdiction": "United States (California)",
       "instrument": "SB 1047, Safe and Secure Innovation for Frontier AI Models Act",
       "flop": 1e+26,
@@ -58,7 +62,21 @@
       "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202320240SB1047",
       "note": "Vetoed in September 2024. Its successor, SB 53, kept the compute threshold and dropped the audit and shutdown requirements.",
       "exponent": 26,
-      "reviewed": "2026-09",
+      "reviewed": "2026-09-25",
+      "source_id": "legal-thresholds-index"
+    },
+    {
+      "applies_from": "2027-01-01",
+      "jurisdiction": "United States (New York)",
+      "instrument": "RAISE Act, Responsible AI Safety and Education Act",
+      "flop": 1e+26,
+      "status": "enacted",
+      "applies_to": "Frontier developers with over $500 million in annual revenue, for models trained above the threshold and above $100m in compute cost",
+      "consequence": "Duty to publish safety and security protocols and to report safety incidents to the state.",
+      "url": "https://www.nysenate.gov/legislation/bills/2025/S6953/amendment/B",
+      "note": "Signed in December 2025 and amended in March 2026 to track California's SB 53. It applies from 1 January 2027, so it is counted here as enacted rather than in force.",
+      "exponent": 26,
+      "reviewed": "2026-09-25",
       "source_id": "legal-thresholds-index"
     }
   ]

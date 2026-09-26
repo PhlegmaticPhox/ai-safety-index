@@ -1,0 +1,55 @@
+{
+  "dataset": "inference-energy",
+  "generated": "2026-09-25T23:47:07+00:00",
+  "retrieved": "2026-09-25T00:00:00+00:00",
+  "sources": [
+    "environmental-disclosure-index"
+  ],
+  "unit": "Wh per prompt",
+  "notes": "Our own reading of primary publications, reviewed 2026-09-25. Every published per-prompt figure. Median, mean and per-response figures are different statistics.",
+  "count": 3,
+  "records": [
+    {
+      "developer": "Google",
+      "product": "Gemini Apps",
+      "statistic": "median text prompt",
+      "wh": 0.24,
+      "gco2e": 0.03,
+      "water_ml": 0.26,
+      "as_of": "2025-05",
+      "method": "published",
+      "note": "Counts idle machines and data-centre overhead. Emissions use Google's market-based fleet average for 2024.",
+      "url": "https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "OpenAI",
+      "product": "ChatGPT",
+      "statistic": "average query",
+      "wh": 0.34,
+      "gco2e": null,
+      "water_ml": null,
+      "as_of": "2025-06",
+      "method": "not published",
+      "note": "Stated in a blog post by OpenAI's chief executive. Which models and which queries are averaged is not stated.",
+      "url": "https://blog.samaltman.com/the-gentle-singularity",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    },
+    {
+      "developer": "Mistral AI",
+      "product": "Le Chat",
+      "statistic": "400-token response",
+      "wh": null,
+      "gco2e": 1.14,
+      "water_ml": 45.0,
+      "as_of": "2025-01",
+      "method": "published",
+      "note": "Marginal impact of one response from Mistral Large 2, from an ISO 14040/44 lifecycle analysis. Energy is not given separately.",
+      "url": "https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai",
+      "reviewed": "2026-09-25",
+      "source_id": "environmental-disclosure-index"
+    }
+  ]
+}
