@@ -1,7 +1,7 @@
 {
   "dataset": "news-feed",
-  "generated": "2026-09-25T05:00:53+00:00",
-  "retrieved": "2026-09-25T05:00:53+00:00",
+  "generated": "2026-09-26T11:32:15+00:00",
+  "retrieved": "2026-09-26T11:32:15+00:00",
   "sources": [
     "ai-incident-database",
     "arxiv-cs-ai",
@@ -14,7 +14,7 @@
   ],
   "unit": null,
   "notes": "Headline, a short extract of at most 200 characters, and a link back to the original. We do not reproduce full text. A rolling window: items stay for up to 120 days rather than vanishing when a source drops them, because arXiv announces nothing at weekends and government feeds are short. Categories are assigned by keyword rule and each item carries the terms that matched, so the classification can be checked rather than trusted. Departmental communications are political statements about policy, not neutral descriptions of it, and preprints are not peer reviewed.",
-  "count": 102,
+  "count": 103,
   "records": [
     {
       "title": "iCoder-27B: Recursive AI-Led Development of Frontier Industrial Coding Model",
@@ -711,6 +711,21 @@
           "deceptive"
         ]
       }
+    },
+    {
+      "title": "Government of Canada invests in 10,000 AI-related work placements for young Canadians",
+      "snippet": "New funding through Mitacs will help young Canadians gain AI skills and work experience and help Canadian businesses adopt AI",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/government-of-canada-invests-in-10000-ai-related-work-placements-for-young-canadians.html",
+      "date": "2026-09-25",
+      "publisher": "Government of Canada",
+      "jurisdiction": "Canada",
+      "doc_type": "",
+      "source_id": "canada-news",
+      "kind": "Government publication",
+      "categories": [
+        "general"
+      ],
+      "matched_terms": {}
     },
     {
       "title": "University confirms use of AI-edited photo amid controversy",

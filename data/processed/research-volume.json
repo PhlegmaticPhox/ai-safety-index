@@ -1,7 +1,7 @@
 {
   "dataset": "research-volume",
-  "generated": "2026-09-25T11:57:50+00:00",
-  "retrieved": "2026-09-25T11:57:43+00:00",
+  "generated": "2026-09-26T11:32:23+00:00",
+  "retrieved": "2026-09-26T11:32:15+00:00",
   "sources": [
     "openalex"
   ],
@@ -48,27 +48,27 @@
         },
         {
           "year": 2022,
-          "count": 1450
+          "count": 1449
         },
         {
           "year": 2023,
-          "count": 18046
+          "count": 18045
         },
         {
           "year": 2024,
-          "count": 59633
+          "count": 59630
         },
         {
           "year": 2025,
-          "count": 120299
+          "count": 120292
         },
         {
           "year": 2026,
-          "count": 176030
+          "count": 176117
         }
       ],
-      "total": 377132,
-      "latest_complete": 120299,
+      "total": 377207,
+      "latest_complete": 120292,
       "partial_year": 2026,
       "source_id": "openalex"
     },
@@ -190,10 +190,10 @@
         },
         {
           "year": 2026,
-          "count": 14995
+          "count": 15001
         }
       ],
-      "total": 35383,
+      "total": 35389,
       "latest_complete": 10596,
       "partial_year": 2026,
       "source_id": "openalex"
@@ -249,15 +249,15 @@
         },
         {
           "year": 2025,
-          "count": 2815
+          "count": 2814
         },
         {
           "year": 2026,
-          "count": 7524
+          "count": 7529
         }
       ],
-      "total": 12421,
-      "latest_complete": 2815,
+      "total": 12425,
+      "latest_complete": 2814,
       "partial_year": 2026,
       "source_id": "openalex"
     },
@@ -316,10 +316,10 @@
         },
         {
           "year": 2026,
-          "count": 15243
+          "count": 15251
         }
       ],
-      "total": 23137,
+      "total": 23145,
       "latest_complete": 5053,
       "partial_year": 2026,
       "source_id": "openalex"

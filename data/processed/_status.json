@@ -1,5 +1,5 @@
 {
-  "last_checked": "2026-09-25T11:57:50+00:00",
+  "last_checked": "2026-09-26T11:32:23+00:00",
   "offline": false,
   "modules": {
     "fetch_microsoft_diffusion": "ok",
@@ -9,6 +9,36 @@
     "fetch_openalex": "ok",
     "build_governance": "ok",
     "build_policy_index": "ok",
-    "build_frontier_index": "ok"
+    "build_frontier_index": "ok",
+    "build_usage_index": "ok",
+    "build_environment_index": "ok"
+  },
+  "datasets": {
+    "ai-datacentres": "2026-09-26T11:32:11+00:00",
+    "ai-exposure": "2026-09-26T11:32:10+00:00",
+    "benchmark-frontier": "2026-09-26T11:32:10+00:00",
+    "compute-clusters": "2026-09-26T11:32:10+00:00",
+    "compute-thresholds": "2026-09-26T11:32:10+00:00",
+    "datacentre-shares": "2026-09-26T00:00:00+00:00",
+    "enterprise-ai-country": "2026-09-26T11:32:11+00:00",
+    "enterprise-ai-industry": "2026-09-26T11:32:13+00:00",
+    "enterprise-ai-size": "2026-09-26T11:32:12+00:00",
+    "enterprise-ai-technology": "2026-09-26T11:32:12+00:00",
+    "environment-developers": "2026-09-25T00:00:00+00:00",
+    "frontier-models": "2026-09-26T11:32:10+00:00",
+    "governance-readiness": "2026-09-25T00:00:00+00:00",
+    "grid-carbon-free": "2026-09-25T00:00:00+00:00",
+    "inference-energy": "2026-09-25T00:00:00+00:00",
+    "legal-thresholds": "2026-09-25T00:00:00+00:00",
+    "model-releases": "2026-09-26T11:32:10+00:00",
+    "news-feed": "2026-09-26T11:32:15+00:00",
+    "operator-energy": "2026-09-25T00:00:00+00:00",
+    "policy-index": "2026-09-25T00:00:00+00:00",
+    "research-volume": "2026-09-26T11:32:15+00:00",
+    "safety-frameworks": "2026-09-26T00:00:00+00:00",
+    "token-volumes": "2026-09-25T00:00:00+00:00",
+    "training-footprints": "2026-09-25T00:00:00+00:00",
+    "usage-purposes": "2026-09-25T00:00:00+00:00",
+    "usage-reach": "2026-09-25T00:00:00+00:00"
   }
 }
