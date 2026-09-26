@@ -20,7 +20,7 @@ const sourceCount = Object.keys(sources).length;
         <p class="masthead__meta mono">
           {sourceCount} sources registered
           <span aria-hidden="true">/</span>
-          zero first-party JavaScript
+          one first-party script
           <span aria-hidden="true">/</span>
           every figure cited
         </p>
@@ -86,8 +86,9 @@ const sourceCount = Object.keys(sources).length;
         <h2>Construction</h2>
         <p>
           A Python pipeline fetches and processes each source. A static site generator renders the
-          result. Charts and maps are drawn to SVG when the site is built, so the build ships no
-          JavaScript. The host injects one analytics script, described in the
+          result. Charts and maps are drawn to SVG when the site is built. The build ships one
+          script, which zooms and pans the datacentre map by mouse; the map works without it. The
+          host injects one analytics script, described in the
           <a href="/privacy/">privacy policy</a>. Data is refreshed daily. A dataset is rewritten
           only when its records change. The date on a page is the last time its source was
           checked, or, for an index compiled here, the last time it was reviewed.

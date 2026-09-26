@@ -1,108 +1,111 @@
 {
   "dataset": "safety-frameworks",
-  "generated": "2026-09-26T05:32:30+00:00",
-  "retrieved": "2026-09-13T00:00:00+00:00",
+  "generated": "2026-09-26T07:49:26+00:00",
+  "retrieved": "2026-09-26T00:00:00+00:00",
   "sources": [
     "safety-frameworks-index"
   ],
   "unit": null,
-  "notes": "Our own reading of each developer's published frontier safety framework, reviewed 2026-09-13. Self-assessment under self-written frameworks with no common scale and no external audit. Not a ranking.",
+  "notes": "Our own reading of each developer's published frontier safety framework, reviewed 2026-09-26. Self-assessment under self-written frameworks with no common scale and no external audit. Not a ranking.",
   "count": 8,
   "records": [
     {
       "developer": "Anthropic",
       "framework": "Responsible Scaling Policy",
-      "scale": "AI Safety Levels, ASL-1 to ASL-4 and above",
-      "levels": 4,
+      "scale": "Four capability thresholds, each paired with recommended mitigations; AI Safety Levels now name present safeguards only",
+      "levels": 0,
       "domains": [
         "CBRN",
-        "cyber",
-        "autonomy"
+        "loss of control",
+        "AI R&D"
       ],
       "external": true,
-      "halt": "yes",
+      "halt": "qualified",
       "since": 2023,
-      "url": "https://www.anthropic.com/news/anthropics-responsible-scaling-policy",
-      "note": "The first of these frameworks, and the one the others are written against. Ties defined capability thresholds to required security and deployment standards, and commits to holding deployment until the corresponding standard is met.",
-      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
-      "reviewed": "2026-09-13",
+      "url": "https://www-cdn.anthropic.com/files/4zrzovbb/website/0bacdc8440ea96e62a8766d99ebe1d4eea6d5f3a.pdf",
+      "note": "Rewritten as version 3 in February 2026; version 3.4 took effect on 8 July 2026. The earlier commitment not to train or deploy without adequate safeguards is gone: it commits to delay development and deployment only while Anthropic leads or its competitors have strong safety measures, and otherwise publishes Risk Reports with a risk-benefit determination by its chief executive and Responsible Scaling Officer. It no longer has a cyber threshold.",
+      "halt_meaning": "Commits to a decision process rather than to an outcome.",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
       "developer": "OpenAI",
       "framework": "Preparedness Framework",
-      "scale": "Capability levels: Low, Medium, High, Critical",
-      "levels": 4,
+      "scale": "Capability thresholds: High and Critical",
+      "levels": 2,
       "domains": [
         "CBRN",
         "cyber",
-        "autonomy",
-        "persuasion"
+        "AI R&D"
       ],
       "external": true,
       "halt": "yes",
       "since": 2023,
-      "url": "https://openai.com/index/updating-our-preparedness-framework/",
-      "note": "Tracked categories have changed between versions, with persuasion removed as a tracked category in the 2025 revision. A framework that can be revised by its author is a different kind of object from a statute, which is the general point of this index.",
+      "url": "https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf",
+      "note": "Version 2, April 2025, is still the published version. OpenAI's Frontier Governance Framework of May 2026 sets out how it meets EU and Californian law and leaves this as its own standard. Three tracked categories at two thresholds: persuasion was dropped in 2025, and long-range autonomy and nuclear risk are research categories without thresholds. At a Critical threshold it commits to halt further development until safeguards are specified.",
       "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
-      "reviewed": "2026-09-13",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
       "developer": "Google DeepMind",
       "framework": "Frontier Safety Framework",
-      "scale": "Critical Capability Levels",
+      "scale": "Critical Capability Levels per domain, with lower Tracked Capability Levels for some",
       "levels": 0,
       "domains": [
         "CBRN",
         "cyber",
-        "ML R&D",
-        "deceptive alignment"
+        "manipulation",
+        "AI R&D",
+        "loss of control"
       ],
       "external": false,
       "halt": "qualified",
       "since": 2024,
-      "url": "https://deepmind.google/discover/blog/strengthening-our-frontier-safety-framework/",
-      "note": "Defines capability levels per domain rather than one ladder, so it has no single level count. The only framework here that names deceptive alignment as a tracked domain in its own right.",
+      "url": "https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/strengthening-our-frontier-safety-framework/frontier-safety-framework_3-1.pdf",
+      "note": "Version 3.1 took effect on 17 April 2026. Adds Tracked Capability Levels below the critical ones, for CBRN and for a domain that now merges machine-learning R&D with misalignment. Risk acceptance weighs what other publicly available models can do, and for misuse risks applies to external deployment only, not to internal use or further development.",
       "halt_meaning": "Commits to a decision process rather than to an outcome.",
-      "reviewed": "2026-09-13",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
       "developer": "Meta",
-      "framework": "Frontier AI Framework",
-      "scale": "Outcomes-led: moderate, high, critical risk",
+      "framework": "Advanced AI Scaling Framework",
+      "scale": "Risk thresholds: moderate or lower, high, critical",
       "levels": 3,
       "domains": [
         "CBRN",
-        "cyber"
+        "cyber",
+        "loss of control"
       ],
       "external": false,
       "halt": "yes",
       "since": 2025,
-      "url": "https://ai.meta.com/static-resource/meta-frontier-ai-framework/",
-      "note": "Matters more than its length suggests, because Meta releases open weights. A decision not to release is the only mitigation available once weights are out, which makes the pre-release threshold the whole of the policy.",
+      "url": "https://ai.meta.com/static-resource/Meta_Advanced-AI-Scaling-Framework-v2",
+      "note": "Version 2, April 2026, renamed from the Frontier AI Framework. The critical tier changed from Stop to Develop with Mitigations, so every tier now permits development and deployment once mitigations are validated to bring risk down to moderate. Adds loss of control, and covers any model trained with 1e26 FLOP or more.",
       "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
-      "reviewed": "2026-09-13",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
       "developer": "Microsoft",
       "framework": "Frontier Governance Framework",
-      "scale": "Leading indicator thresholds per capability",
-      "levels": 0,
+      "scale": "Risk levels per capability: low, medium, high, critical",
+      "levels": 4,
       "domains": [
         "CBRN",
         "cyber",
-        "autonomy"
+        "AI R&D",
+        "loss of control",
+        "manipulation"
       ],
       "external": true,
-      "halt": "qualified",
+      "halt": "yes",
       "since": 2025,
-      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/final/en-us/microsoft-brand/documents/Microsoft-Frontier-Governance-Framework.pdf",
-      "note": "Published as a Seoul commitment signatory. Covers models Microsoft itself develops, which is a narrower set than the models it deploys.",
-      "halt_meaning": "Commits to a decision process rather than to an outcome.",
-      "reviewed": "2026-09-13",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Frontier-Governance-Framework-Feb-2026.pdf",
+      "note": "Revised in February 2026 to align with the EU Code of Practice and the Californian and New York frontier AI laws, adding loss of control and harmful manipulation. Commits to pause development and deployment of a model whose risk cannot be sufficiently mitigated. Covers models in scope of those laws, and Microsoft's substantial fine-tunes of other developers' models.",
+      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
@@ -113,34 +116,36 @@
       "domains": [
         "CBRN",
         "cyber",
-        "autonomy",
-        "persuasion"
+        "loss of control",
+        "manipulation"
       ],
       "external": true,
       "halt": "yes",
       "since": 2025,
       "url": "https://www.amazon.science/publications/amazons-frontier-model-safety-framework",
       "note": "Revised in September 2026. Names four critical risk domains, adding harmful manipulation, and commits not to deploy a model that meets a threshold until safeguards appropriately mitigate the risks.",
-      "reviewed": "2026-09-26",
       "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
       "developer": "xAI",
-      "framework": "Risk Management Framework",
-      "scale": "Benchmark thresholds per risk area",
+      "framework": "Frontier Artificial Intelligence Framework",
+      "scale": "Risk tiers per domain, not published",
       "levels": 0,
       "domains": [
         "CBRN",
-        "cyber"
+        "cyber",
+        "loss of control",
+        "manipulation"
       ],
       "external": false,
-      "halt": "qualified",
+      "halt": "yes",
       "since": 2025,
-      "url": "https://x.ai/documents/2025.02.20-RMF-Draft.pdf",
-      "note": "The shortest of the frameworks here, and the only one published as a draft. Ties thresholds to specific public benchmark scores, which is more falsifiable than most and also easier to saturate.",
-      "halt_meaning": "Commits to a decision process rather than to an outcome.",
-      "reviewed": "2026-09-13",
+      "url": "https://media.x.ai/v1/website/xai-frontier-artificial-intelligence-framework-30-june-2026-99c40684.pdf",
+      "note": "Effective 30 June 2026, replacing the 2025 Risk Management Framework, and written in the terms of the EU Code of Practice. Commits to proceed with development or release only if systemic risks are determined acceptable. Refers to risk tiers and benchmarks without publishing either.",
+      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     },
     {
@@ -155,7 +160,7 @@
       "url": "https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024",
       "note": "Listed as an absence. DeepSeek releases open-weight models at or near the frontier and has published no safety framework, and is not among the Seoul signatories. The linked document is the commitment list it is absent from.",
       "halt_meaning": "No published framework, so nothing to commit to.",
-      "reviewed": "2026-09-13",
+      "reviewed": "2026-09-26",
       "source_id": "safety-frameworks-index"
     }
   ]

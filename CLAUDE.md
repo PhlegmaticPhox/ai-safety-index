@@ -129,7 +129,8 @@ npm run dev          # http://localhost:4321
 npm run build
 npm run check:lib    # render-side logic: path rounding, ranks, country joins, category drift
 npm run check:built  # against dist/: links, anchors, dashes, canonical origin, stale name, noindex,
-                     # unsafe href schemes, zero client JS, every table inside a .scroll-x box
+                     # unsafe href schemes, every script hashed in the CSP and no .js files,
+                     # every table inside a .scroll-x box
 
 python etl/common.py                                  # licence guard, idempotence, dash rule
 python etl/fetch_news.py --self-check                 # snippet cap, relevance, categories, language
@@ -263,8 +264,14 @@ Set from the tasteskill brief at `DESIGN_VARIANCE 7 / MOTION_INTENSITY 4 / VISUA
 - **The homepage banner is the one exception to "no hero",** added on the owner's instruction,
   which the design lock defers to. It keeps the rest of the rule: the background is four CSS
   gradients in the existing graph-paper language and there is still no image anywhere on the site.
-- **Zero client JavaScript.** Charts and maps render to SVG at build time; interactivity is CSS
-  (`<details>`, `:checked`, the native Popover API). Keep it that way.
+- **No client JavaScript, with one exception.** Charts and maps render to SVG at build time;
+  interactivity is CSS (`<details>`, `:checked`, the native Popover API). Keep it that way.
+  The exception is `ZoomMap`'s mouse controls (wheel zooms, drag pans), added on the owner's
+  instruction, because no CSS can do either. The map works without them. The script is inline,
+  and `public/_headers` allows it by its SHA-256 and nothing else of ours; `check:built`
+  recomputes the hash from `dist` and fails until the policy carries it, so an edit to the script
+  means pasting the new hash it prints. `/about/` and `/privacy/` describe the script, and change
+  with it.
 - Run `python etl/check_contrast.py` after any colour change.
 
 ## Data sources
@@ -384,11 +391,6 @@ Seven joins nobody else publishes. If a change would break one of them, it is th
 - The Anthropic Economic Index is registered but unused: the release files are 77MB and 219MB, too
   much to pull daily without streaming aggregation.
 - The site is newly indexable. Submitting the sitemap to Search Console needs a Google account.
-- The Frontier Safety Framework Index keeps the review date 13 September 2026. Amazon's 17
-  September revision has been read and its record carries its own date, 26 September. Meta
-  (Advanced AI Scaling Framework v2, April 2026), Microsoft (February 2026), xAI (Frontier AI
-  Framework, June 2026), Anthropic (RSP v3.0 to v3.4, February to July 2026) and Google DeepMind
-  (FSF 3.1, April 2026) have revisions the records predate. Re-read those before moving the date.
 - `/environment/` sizes training runs by compute. Epoch's notable-models file also carries an
   estimated training power draw per model, which `fetch_epoch.py` does not yet extract.
 - `/datacentres/` shows training or inference, power source and cooling type as not recorded for
