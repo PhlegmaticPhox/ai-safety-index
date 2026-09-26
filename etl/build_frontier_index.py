@@ -38,9 +38,11 @@ FRAMEWORK_SOURCE = "safety-frameworks-index"
 THRESHOLD_SOURCE = "legal-thresholds-index"
 # Reviewed separately, because they move separately. The thresholds were
 # re-read on the later date and New York's RAISE Act added. The frameworks were
-# not: Amazon revised its framework on 17 September 2026, and until someone reads
-# the revision the index says when it was last read rather than claiming a review
-# that did not happen.
+# not. Amazon's 17 September 2026 revision was read on 26 September and its record
+# carries that date. The rest still cite earlier documents: Meta, Microsoft, xAI,
+# Anthropic and Google DeepMind all published revisions during 2026 that postdate
+# the versions these records were coded from. Until those are read, the index
+# gives the older date rather than claiming a review that did not happen.
 FRAMEWORKS_REVIEWED = "2026-09-13"
 THRESHOLDS_REVIEWED = "2026-09-25"
 
@@ -150,12 +152,23 @@ DEVELOPERS = [
         "framework": "Frontier Model Safety Framework",
         "scale": "Critical capability thresholds",
         "levels": 0,
-        "domains": ["CBRN", "cyber", "autonomy"],
-        "external": False,
-        "halt": "qualified",
+        "domains": ["CBRN", "cyber", "autonomy", "persuasion"],
+        "external": True,
+        "halt": "yes",
         "since": 2025,
         "url": "https://www.amazon.science/publications/amazons-frontier-model-safety-framework",
-        "note": "Published as a Seoul commitment signatory ahead of the Paris AI Action Summit.",
+        "note": (
+            "Revised in September 2026. Names four critical risk domains, adding harmful "
+            "manipulation, and commits not to deploy a model that meets a threshold until "
+            "safeguards appropriately mitigate the risks."
+        ),
+        # Read after the rest of the index, so this record carries its own date.
+        # Loss of control is coded autonomy, harmful manipulation persuasion.
+        # halt: "we will not deploy the model until safeguards appropriately
+        # mitigate the risks" (section 2). external: "We will therefore use a
+        # range of internal and external evaluation approaches" (section 2),
+        # alongside red teaming by outside vendors.
+        "reviewed": "2026-09-26",
     },
     {
         "developer": "xAI",
@@ -302,7 +315,7 @@ def build_frameworks() -> list[dict]:
             {
                 **entry,
                 "halt_meaning": HALT[entry["halt"]],
-                "reviewed": FRAMEWORKS_REVIEWED,
+                "reviewed": entry.get("reviewed", FRAMEWORKS_REVIEWED),
                 "source_id": FRAMEWORK_SOURCE,
             }
         )
