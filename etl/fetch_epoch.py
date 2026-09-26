@@ -1,19 +1,28 @@
-"""Epoch AI: model registry, benchmark runs, compute clusters, accelerator specs.
+"""Epoch AI: model registry, benchmark runs, compute clusters, data centres.
 
-Produces four datasets:
+Produces six datasets:
   frontier-models      models with a training-compute figure, for the capability trend
+  model-releases       every notable model with a date, compute figure or not
   benchmark-frontier   best-score-to-date per benchmark, for the saturation view
   compute-clusters     clusters aggregated by country, for the compute map
   compute-thresholds   which released models cross the EU AI Act systemic-risk threshold
+  ai-datacentres       one record per site in the AI Data Centers hub, for /datacentres/
 
-All four are CC BY 4.0. Read the caveats in data/sources.json before drawing
+All six are CC BY 4.0. Read the caveats in data/sources.json before drawing
 conclusions, especially on cluster counts: Chinese clusters are systematically
 less well documented than US ones, so the country split measures reporting
 opacity as much as it measures capacity.
+
+    python etl/fetch_epoch.py                # fetch and write
+    python etl/fetch_epoch.py --offline      # rebuild from the cached files
+    python etl/fetch_epoch.py --self-check   # data-centre derivation, no network
 """
 
 from __future__ import annotations
 
+import html
+import json
+import re
 import sys
 from collections import defaultdict
 from datetime import date
@@ -24,6 +33,17 @@ MODELS = "epoch-notable-models"
 BENCHMARKS = "epoch-benchmarks"
 CLUSTERS = "epoch-gpu-clusters"
 HARDWARE = "epoch-ml-hardware"
+DATACENTRES = "epoch-ai-data-centers"
+
+# The hub publishes three things this page needs from two places. The sites and
+# their dated timelines are CSV downloads, documented field by field at
+# https://epoch.ai/data/data-centers-documentation/records. Coordinates are in
+# neither: the only place Epoch publishes them is the props of the map on its
+# hub's map page, one fetch for every site. The chillers and cooling-tower files
+# in the same download are catalogues of equipment models, not records of which
+# site uses what, so no cooling type is taken from them.
+DC_TIMELINES = "https://epoch.ai/data/data_centers/data_center_timelines.csv"
+DC_MAP = "https://epoch.ai/data/ai-data-centers/map"
 
 # EU AI Act Art. 51(2): a GPAI model is presumed to carry systemic risk when the
 # cumulative training compute exceeds 10^25 FLOP. It is the lower of the two
@@ -433,12 +453,402 @@ def build_releases(offline: bool) -> None:
     )
 
 
+# Our own grouping of each site's owner, which Epoch defines as the owner of the
+# chips, not of the building. The line that matters for a reader is who controls
+# the compute: a company renting it to others, or a developer running it for its
+# own models. Epoch has no such column, so this is ours and the page says so.
+#
+# An owner that appears upstream and is not listed here fails the build, as an
+# unmapped benchmark does. "Other" is a deliberate list, not a catch-all: SoftBank
+# is an investor, G42 a technology group, Cipher Mining a bitcoin miner hosting AI,
+# VNET a datacentre operator, and AI XPV Platform could not be identified from
+# any public source.
+OWNER_CATEGORIES = {
+    "Amazon": "Cloud provider",
+    "Google": "Cloud provider",
+    "Microsoft": "Cloud provider",
+    "Oracle": "Cloud provider",
+    "Alibaba": "Cloud provider",
+    "Huawei": "Cloud provider",
+    "CoreWeave": "Cloud provider",
+    "Nebius": "Cloud provider",
+    "Nscale": "Cloud provider",
+    "Firmus": "Cloud provider",
+    "Core42": "Cloud provider",
+    "Meta": "AI developer",
+    "SpaceXAI": "AI developer",
+    "Mistral AI": "AI developer",
+    "Softbank": "Other",
+    "G42": "Other",
+    "Cipher Mining": "Other",
+    "VNET": "Other",
+    "AI XPV Platform": "Other",
+}
+NO_OWNER = "Owner not recorded"
+
+# Epoch's three confidence signifiers, from its records documentation.
+CONFIDENCE = ("confident", "likely", "speculative")
+
+DC_SITE_COLUMNS = {
+    "Name", "Owner", "Users", "Project", "Country", "All chip types",
+    "Calculations sheet", "Current power (MW)",
+}
+DC_TIMELINE_COLUMNS = {
+    "Data center", "Date", "IT power (MW)", "Power (MW)", "H100 equivalents",
+}
+
+
+def _tagged(value: str | None, what: str) -> tuple[str, str | None]:
+    """Split "Oracle #likely" into ("Oracle", "likely").
+
+    A name with no signifier keeps a null confidence rather than borrowing one:
+    three entries upstream carry none, and "not stated" is not "confident".
+    """
+    text = _text(value)
+    match = re.fullmatch(r"(.*?)\s*#(\w+)", text)
+    if not match:
+        return text, None
+    name, level = match.group(1).strip(), match.group(2).lower()
+    if level not in CONFIDENCE:
+        raise ValueError(f"{DATACENTRES}: {what}: unknown confidence signifier #{level}")
+    return name, level
+
+
+def _slug(name: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+class _Unsupported:
+    """An Astro prop type this decoder does not read. Never a valid field value."""
+
+    def __init__(self, kind: int):
+        self.kind = kind
+
+    def __repr__(self) -> str:
+        return f"<unsupported Astro prop type {self.kind}>"
+
+
+def _astro(node):
+    """Decode an Astro island's serialised props.
+
+    Every value is a [type, payload] pair: 0 a plain value, whose objects hold
+    further pairs, and 1 an array of pairs. Other types (dates, maps, regular
+    expressions) are left as a marker the caller's validation rejects, so a field
+    that changes type fails the build instead of reading as empty.
+    """
+    if isinstance(node, list) and len(node) == 2 and isinstance(node[0], int):
+        kind, payload = node
+        if kind == 0:
+            if isinstance(payload, dict):
+                return {key: _astro(value) for key, value in payload.items()}
+            return payload
+        if kind == 1:
+            return [_astro(value) for value in payload]
+        return _Unsupported(kind)
+    return node
+
+
+def map_sites(page: str) -> dict[str, dict]:
+    """Every site on Epoch's hub map, by name, with its coordinates and place."""
+    for match in re.finditer(r'\sprops="([^"]*)"', page):
+        raw = html.unescape(match.group(1))
+        if '"dataCenters"' not in raw:
+            continue
+        props = {key: _astro(value) for key, value in json.loads(raw).items()}
+        sites = props.get("dataCenters")
+        break
+    else:
+        raise ValueError(
+            f"{DATACENTRES}: no map data found on {DC_MAP}. Epoch has changed the page; "
+            f"check whether the coordinates are now published as a download."
+        )
+    if not isinstance(sites, list) or not sites:
+        raise ValueError(f"{DATACENTRES}: map data is not a list of sites: {type(sites).__name__}")
+
+    out: dict[str, dict] = {}
+    for site in sites:
+        name = site.get("id") if isinstance(site, dict) else None
+        facts = site.get("facts") if isinstance(site, dict) else None
+        lng_lat = site.get("lngLat") if isinstance(site, dict) else None
+        if not isinstance(name, str) or not isinstance(facts, dict):
+            raise ValueError(f"{DATACENTRES}: map site without a name or facts: {site!r:.200}")
+        if (
+            not isinstance(lng_lat, list)
+            or len(lng_lat) != 2
+            or not all(isinstance(v, (int, float)) for v in lng_lat)
+            or not (-180 <= lng_lat[0] <= 180 and -90 <= lng_lat[1] <= 90)
+        ):
+            raise ValueError(f"{DATACENTRES}: {name}: unusable coordinates {lng_lat!r}")
+        place = [_text(facts.get(k)) for k in ("city", "state") if isinstance(facts.get(k), str)]
+        out[name] = {
+            "lon": round(float(lng_lat[0]), 4),
+            "lat": round(float(lng_lat[1]), 4),
+            "place": ", ".join(p for p in place if p) or None,
+            "operational": facts.get("operational"),
+        }
+    return out
+
+
+def _timeline(rows: list[dict]) -> list[tuple[str, float, float | None, float | None]]:
+    """(date, IT MW, facility MW, H100e) for every dated row with an IT power figure.
+
+    Epoch leaves a row's figures blank when it records only a construction note,
+    so a blank is skipped rather than read as zero, which would switch a working
+    site off for a day.
+    """
+    series = []
+    for row in rows:
+        day = (row.get("Date") or "").strip()[:10]
+        it = _float(row.get("IT power (MW)"))
+        if len(day) == 10 and it is not None:
+            series.append((day, it, _float(row.get("Power (MW)")), _float(row.get("H100 equivalents"))))
+    return sorted(series)
+
+
+def datacentre_records(
+    sites: list[dict], timelines: list[dict], placed: dict[str, dict], today: str
+) -> list[dict]:
+    """One record per site, from Epoch's three published pieces.
+
+    `today` is the retrieval date. Timeline rows after it are Epoch's
+    projection, so "now" is the last row on or before it and "at completion" is
+    the last row of all: the last, not the largest, because a site can shrink
+    (Colossus 1 removed chips in 2025 and added them back).
+    """
+    if not sites or not timelines:
+        raise ValueError(f"{DATACENTRES}: empty download")
+    for label, rows, required in (
+        ("data_centers.csv", sites, DC_SITE_COLUMNS),
+        ("data_center_timelines.csv", timelines, DC_TIMELINE_COLUMNS),
+    ):
+        missing = required - set(rows[0].keys())
+        if missing:
+            raise ValueError(f"{DATACENTRES}: {label}: expected columns missing: {sorted(missing)}")
+
+    by_site: dict[str, list[dict]] = defaultdict(list)
+    for row in timelines:
+        by_site[_text(row.get("Data center"))].append(row)
+
+    records = []
+    seen_ids: set[str] = set()
+    for row in sites:
+        name = _text(row["Name"])
+        if name not in placed:
+            raise ValueError(
+                f"{DATACENTRES}: {name!r} is in the download but not on the map page, so it "
+                f"has no coordinates. Epoch's two publications disagree; do not guess a location."
+            )
+        series = _timeline(by_site.get(name, []))
+        if not series:
+            raise ValueError(f"{DATACENTRES}: {name!r} has no timeline with an IT power figure")
+
+        past = [point for point in series if point[0] <= today]
+        now = past[-1] if past else (today, 0.0, 0.0, 0.0)
+        full = series[-1]
+        online = next((point[0] for point in series if point[1] > 0), None)
+
+        it_now, it_full = now[1], full[1]
+        if it_now > 0:
+            stage = "Expanding" if it_full > it_now else "Operating"
+        else:
+            stage = "Under construction"
+
+        # Epoch's own flag on the map, against ours from the timeline. They are
+        # computed on different days, so a disagreement is printed, not fatal:
+        # a projected first building can come online between the two.
+        flag = placed[name]["operational"]
+        if isinstance(flag, bool) and flag != (it_now > 0):
+            print(f"  note {DATACENTRES}: {name}: map says operational={flag}, timeline says {it_now} MW on {today}")
+
+        owner, owner_conf = _tagged(row.get("Owner"), f"{name} owner")
+        if owner and owner not in OWNER_CATEGORIES:
+            raise ValueError(
+                f"{DATACENTRES}: owner {owner!r} ({name}) has no category. Epoch has added an "
+                f"owner since this mapping was written. Add it to OWNER_CATEGORIES."
+            )
+        users = []
+        for part in (row.get("Users") or "").split(","):
+            if part.strip():
+                user, conf = _tagged(part, f"{name} user")
+                users.append({"name": user, "confidence": conf})
+        project, project_conf = _tagged(row.get("Project"), f"{name} project")
+
+        sheet = (row.get("Calculations sheet") or "").strip()
+        if not sheet.startswith("https://docs.google.com/spreadsheets/"):
+            raise ValueError(f"{DATACENTRES}: {name}: unexpected calculations link {sheet!r}")
+
+        site_id = _slug(name)
+        if site_id in seen_ids:
+            raise ValueError(f"{DATACENTRES}: two sites share the id {site_id!r}")
+        seen_ids.add(site_id)
+
+        records.append(
+            {
+                "id": site_id,
+                "name": name,
+                "owner": owner or None,
+                "owner_confidence": owner_conf if owner else None,
+                "category": OWNER_CATEGORIES.get(owner, NO_OWNER),
+                "users": users,
+                "project": project or None,
+                "project_confidence": project_conf if project else None,
+                "country": _text(row.get("Country")) or None,
+                "place": placed[name]["place"],
+                "lat": placed[name]["lat"],
+                "lon": placed[name]["lon"],
+                "stage": stage,
+                "online": online,
+                "as_of": now[0],
+                "it_mw": it_now,
+                "facility_mw": now[2],
+                "h100e": round(now[3]) if now[3] is not None else None,
+                "complete": full[0],
+                "it_mw_full": it_full,
+                "facility_mw_full": full[2],
+                "h100e_full": round(full[3]) if full[3] is not None else None,
+                "chips": [c.strip() for c in _text(row.get("All chip types")).split(",") if c.strip()],
+                "sheet": sheet,
+                "source_id": DATACENTRES,
+            }
+        )
+
+    unplaced = set(placed) - {r["name"] for r in records}
+    if unplaced:
+        print(f"  note {DATACENTRES}: on the map but not in the download: {sorted(unplaced)}")
+
+    records.sort(key=lambda r: (-r["it_mw_full"], r["name"]))
+    return records
+
+
+def build_datacentres(offline: bool) -> None:
+    sites_path, retrieved = fetch(DATACENTRES, offline=offline)
+    timeline_path, _ = fetch(
+        DATACENTRES, url=DC_TIMELINES, filename=f"{DATACENTRES}-timelines.csv", offline=offline
+    )
+    map_path, _ = fetch(
+        DATACENTRES, url=DC_MAP, filename=f"{DATACENTRES}-map.html", offline=offline, fmt="html"
+    )
+    records = datacentre_records(
+        read_csv(sites_path, encoding="utf-8"),
+        read_csv(timeline_path, encoding="utf-8"),
+        map_sites(map_path.read_text(encoding="utf-8")),
+        today=retrieved[:10],
+    )
+
+    write_dataset(
+        "ai-datacentres",
+        records,
+        source_ids=[DATACENTRES],
+        unit="MW of IT power",
+        notes=(
+            "Every site in Epoch AI's AI Data Centers hub. Power, compute and dates are "
+            "Epoch's estimates; figures dated after the retrieval date are Epoch's "
+            "projection. Owner is the owner of the chips. Category is this site's own "
+            "grouping of the owner, not Epoch's."
+        ),
+        retrieved=retrieved,
+    )
+
+
 def run(offline: bool = False) -> None:
     build_models(offline=offline)
     build_releases(offline=offline)
     build_benchmarks(offline=offline)
     build_clusters(offline=offline)
+    # Last, so a change to Epoch's map page cannot stop the four above.
+    build_datacentres(offline=offline)
+
+
+def _self_check() -> None:
+    """The data-centre derivation, against small hand-made inputs. No network."""
+    site = {
+        "Name": "Test Site", "Owner": "Oracle #likely",
+        "Users": "OpenAI #confident, Microsoft #speculative, Meta", "Project": "Stargate #confident",
+        "Country": "United States", "All chip types": "B200,GB200",
+        "Calculations sheet": "https://docs.google.com/spreadsheets/d/x/edit",
+        "Current power (MW)": "100",
+    }
+    timeline = [
+        {"Data center": "Test Site", "Date": "2025-01-01", "IT power (MW)": "0", "Power (MW)": "0", "H100 equivalents": "0"},
+        {"Data center": "Test Site", "Date": "2025-06-01", "IT power (MW)": "100", "Power (MW)": "140", "H100 equivalents": "120000.4"},
+        # A note-only row: blank figures must not read as the site switching off.
+        {"Data center": "Test Site", "Date": "2025-09-01", "IT power (MW)": "", "Power (MW)": "", "H100 equivalents": ""},
+        {"Data center": "Test Site", "Date": "2027-01-01", "IT power (MW)": "300", "Power (MW)": "420", "H100 equivalents": ""},
+    ]
+    placed = {"Test Site": {"lon": -99.7, "lat": 32.5, "place": "Abilene, Texas", "operational": True}}
+
+    [r] = datacentre_records([site], timeline, placed, today="2026-01-01")
+    assert r["stage"] == "Expanding", r["stage"]
+    assert (r["it_mw"], r["facility_mw"], r["h100e"]) == (100.0, 140.0, 120000), r
+    assert (r["it_mw_full"], r["complete"], r["h100e_full"]) == (300.0, "2027-01-01", None), r
+    assert r["online"] == "2025-06-01" and r["as_of"] == "2025-06-01", r
+    assert (r["owner"], r["owner_confidence"], r["category"]) == ("Oracle", "likely", "Cloud provider")
+    assert r["users"] == [
+        {"name": "OpenAI", "confidence": "confident"},
+        {"name": "Microsoft", "confidence": "speculative"},
+        {"name": "Meta", "confidence": None},
+    ], r["users"]
+    assert r["chips"] == ["B200", "GB200"] and r["id"] == "test-site"
+
+    # Once the projected date passes, the same data reads as fully built.
+    [later] = datacentre_records([site], timeline, placed, today="2027-06-01")
+    assert later["stage"] == "Operating" and later["it_mw"] == 300.0, later
+
+    # Before anything is built: under construction, and a zero that is Epoch's.
+    [early] = datacentre_records([site], timeline, placed, today="2025-03-01")
+    assert early["stage"] == "Under construction" and early["it_mw"] == 0.0, early
+
+    # A site that shrinks is measured at its last row, not its largest.
+    shrink = timeline[:2] + [{**timeline[1], "Date": "2025-08-01", "IT power (MW)": "80"}]
+    [small] = datacentre_records([site], shrink, placed, today="2026-01-01")
+    assert small["it_mw_full"] == 80.0 and small["stage"] == "Operating", small
+
+    # No owner: its own category, and null rather than an empty string.
+    [orphan] = datacentre_records([{**site, "Owner": ""}], timeline, placed, today="2026-01-01")
+    assert orphan["owner"] is None and orphan["category"] == NO_OWNER, orphan
+
+    # The failures that must be loud.
+    for label, call in (
+        ("an unmapped owner", lambda: datacentre_records([{**site, "Owner": "Newco #confident"}], timeline, placed, "2026-01-01")),
+        ("a site with no coordinates", lambda: datacentre_records([site], timeline, {}, "2026-01-01")),
+        ("a missing column", lambda: datacentre_records([{k: v for k, v in site.items() if k != "Owner"}], timeline, placed, "2026-01-01")),
+        ("an unknown signifier", lambda: datacentre_records([{**site, "Owner": "Oracle #sure"}], timeline, placed, "2026-01-01")),
+        ("a site with no timeline", lambda: datacentre_records([site], [{**timeline[0], "Data center": "Elsewhere"}], placed, "2026-01-01")),
+        ("a non-sheet link", lambda: datacentre_records([{**site, "Calculations sheet": "javascript:alert(1)"}], timeline, placed, "2026-01-01")),
+    ):
+        try:
+            call()
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"datacentre_records accepted {label}")
+
+    # The map decoder, on a page shaped like Epoch's.
+    props = {"dataCenters": [1, [[0, {
+        "id": [0, "Test Site"],
+        "facts": [0, {"city": [0, "Abilene"], "state": [0, "Texas"], "operational": [0, True]}],
+        "lngLat": [1, [[0, -99.7], [0, 32.5]]],
+    }]]]}
+    page = f'<astro-island props="{html.escape(json.dumps(props))}"></astro-island>'
+    got = map_sites(page)
+    assert got == {"Test Site": {"lon": -99.7, "lat": 32.5, "place": "Abilene, Texas", "operational": True}}, got
+    for broken in (
+        page.replace("dataCenters", "sites"),
+        page.replace(html.escape("[0, -99.7]"), html.escape("[3, \"2026-01-01\"]")),
+        page.replace(html.escape("[0, 32.5]"), html.escape("[0, 95.0]")),
+    ):
+        try:
+            map_sites(broken)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("map_sites accepted a page it should have refused")
+
+    print(f"fetch_epoch self-check passed: {len(OWNER_CATEGORIES)} owners mapped")
 
 
 if __name__ == "__main__":
-    run(offline="--offline" in sys.argv)
+    if "--self-check" in sys.argv:
+        _self_check()
+    else:
+        run(offline="--offline" in sys.argv)

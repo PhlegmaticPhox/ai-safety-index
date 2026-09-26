@@ -1,7 +1,7 @@
 """Environmental Disclosure Index: what frontier developers and the companies that
 run their data centres have published about energy, emissions and power sources.
 
-Five datasets, all hand-coded from primary publications:
+Six datasets, all hand-coded from primary publications:
 
     environment-developers   one record per developer: its training footprint,
                              where it computes, what powers those sites, and its
@@ -13,6 +13,8 @@ Five datasets, all hand-coded from primary publications:
                              the operators' own sustainability reports
     grid-carbon-free         Google's hourly carbon-free share by grid region, the
                              only per-region figure any operator publishes
+    datacentre-shares        AI's share of all datacentres, by count, electricity
+                             and water, only where a publisher states it
 
 WHY IT IS MOSTLY ABSENCES. The question a reader brings, "which models pollute
 most, and do they run on renewables or fossil fuels", has no dataset behind it.
@@ -440,6 +442,72 @@ GRID_REGIONS = [
 ]
 
 
+# AI against every datacentre, for /datacentres/. Read separately from the rest
+# of the index and dated separately, so re-reading these reports never implies
+# the developers above were re-read, or the other way round.
+#
+# Both publishers were read from their own file hosts: the IEA's report pages and
+# LBNL's publication site answer non-browsers with a bot challenge, and the same
+# PDFs are served without one at the IEA's asset store and at OSTI, the US
+# Department of Energy's report repository. Both documents are CC BY 4.0.
+#
+# The rule for every row: a total, an AI portion and a share only where the
+# publisher states them. `share_basis` is "stated" when the publisher gives the
+# percentage and "computed" when this site divides two figures the publisher
+# gives. Nothing is read off a chart. Where a publisher gives no AI portion the
+# row keeps its total and says so, and where no publisher gives even a total the
+# row is all absence, because that is the answer to the question it asks.
+SHARES_REVIEWED = "2026-09-26"
+IEA_ENERGY_AI = "https://iea.blob.core.windows.net/assets/dd7c2387-2f60-4b60-8c5f-6563b6aa1e4c/EnergyandAI.pdf"
+LBNL_2025 = "https://www.osti.gov/servlets/purl/3374245"
+
+SHARES = [
+    {
+        "measure": "Datacentres", "scope": "World", "period": None,
+        "total": None, "ai": None, "unit": None, "ai_share_pct": None, "share_basis": None,
+        "ai_definition": None,
+        "statement": "Neither the IEA nor LBNL counts datacentres, AI or otherwise.",
+        "publisher": None, "document": None, "url": None,
+    },
+    {
+        "measure": "Servers installed", "scope": "United States", "period": "2024",
+        "total": 30.9, "ai": 4.2, "unit": "million", "ai_share_pct": None, "share_basis": "computed",
+        "ai_definition": "Accelerated servers, those with GPUs or other AI accelerator chips.",
+        "statement": "30.9 million servers installed in US datacentres in 2024, including 4.2 million accelerated servers.",
+        "publisher": "Lawrence Berkeley National Laboratory",
+        "document": "United States Data Center Energy Usage Report: 2025 Update (June 2026), p.17",
+        "url": f"{LBNL_2025}#page=20",
+    },
+    {
+        "measure": "Electricity", "scope": "World", "period": "2024",
+        "total": 415.0, "ai": None, "unit": "TWh", "ai_share_pct": 15.0, "share_basis": "stated",
+        "ai_definition": "Electricity used by accelerated servers, which the IEA uses as a proxy for AI and describes as imperfect.",
+        "statement": "Around 415 TWh in 2024, about 1.5% of global electricity demand. Accelerated servers accounted for 15% of it.",
+        "publisher": "International Energy Agency",
+        "document": "Energy and AI (April 2025), pp.56 and 63",
+        "url": f"{IEA_ENERGY_AI}#page=56",
+    },
+    {
+        "measure": "Electricity", "scope": "United States", "period": "2024",
+        "total": 192.0, "ai": None, "unit": "TWh", "ai_share_pct": None, "share_basis": None,
+        "ai_definition": None,
+        "statement": "192 TWh in 2024, 4.7% of US electricity, excluding cryptocurrency mining. An AI share is stated only for 2030: 55% in the reference case.",
+        "publisher": "Lawrence Berkeley National Laboratory",
+        "document": "United States Data Center Energy Usage Report: 2025 Update (June 2026), pp.8 and 25",
+        "url": f"{LBNL_2025}#page=11",
+    },
+    {
+        "measure": "Water consumed", "scope": "World", "period": "2023",
+        "total": 560.0, "ai": None, "unit": "billion litres", "ai_share_pct": None, "share_basis": None,
+        "ai_definition": None,
+        "statement": "Around 560 billion litres a year: about two thirds through electricity generation and fuel supply, a quarter in cooling on site, the rest in chip manufacture. No AI portion is given.",
+        "publisher": "International Energy Agency",
+        "document": "Energy and AI (April 2025), p.242",
+        "url": f"{IEA_ENERGY_AI}#page=242",
+    },
+]
+
+
 def _https(url: str, what: str) -> None:
     if not url.startswith("https://"):
         raise ValueError(f"{what}: citation must be an https URL, got {url!r}")
@@ -519,6 +587,41 @@ def build_grid() -> list[dict]:
     return sorted(records, key=lambda r: (-r["google_cfe_pct"], r["grid"]))
 
 
+def build_shares() -> list[dict]:
+    records = []
+    for entry in SHARES:
+        what = f"{entry['measure']}, {entry['scope']}"
+        total, ai, share, basis = entry["total"], entry["ai"], entry["ai_share_pct"], entry["share_basis"]
+        # An absence cannot carry a citation and a figure cannot lack one, the
+        # same rule the developer cells follow.
+        if entry["url"] is None:
+            if any(v is not None for v in (total, ai, share, entry["publisher"])):
+                raise ValueError(f"{what}: a figure or publisher with no citation")
+        else:
+            _https(entry["url"], what)
+            if total is None:
+                raise ValueError(f"{what}: a cited row needs the publisher's total")
+        if ai is not None and total is None:
+            raise ValueError(f"{what}: an AI portion needs the total it is a portion of")
+        if basis == "computed":
+            if share is not None or ai is None or total is None:
+                raise ValueError(f"{what}: a computed share needs both figures and no stated share")
+            share = round(100 * ai / total, 1)
+        elif basis == "stated":
+            if share is None:
+                raise ValueError(f"{what}: marked stated with no share")
+        elif basis is not None or share is not None:
+            raise ValueError(f"{what}: a share needs a basis, and a basis a share")
+        if share is not None and not 0 <= share <= 100:
+            raise ValueError(f"{what}: {share} is not a percentage")
+        if (share is None) != (entry["ai_definition"] is None):
+            raise ValueError(f"{what}: a share needs its definition of AI, and a definition a share")
+        records.append(
+            {**entry, "ai_share_pct": share, "reviewed": SHARES_REVIEWED, "source_id": SOURCE}
+        )
+    return records
+
+
 def run(offline: bool = False) -> None:
     """Hand-written, so there is nothing to fetch and offline changes nothing."""
     stamp = review_stamp(REVIEWED)
@@ -547,6 +650,15 @@ def run(offline: bool = False) -> None:
         "grid-carbon-free", build_grid(), source_ids=[SOURCE], unit="percent",
         notes=f"{common_note} Google's hourly carbon-free energy by data-centre grid region, 2025, from its 2026 Environmental Report.",
         retrieved=stamp,
+    )
+    write_dataset(
+        "datacentre-shares", build_shares(), source_ids=[SOURCE], unit=None,
+        notes=(
+            f"Our own reading of the IEA's Energy and AI and LBNL's 2025 US data centre report, "
+            f"reviewed {SHARES_REVIEWED}. A total, an AI portion and a share only where the "
+            f"publisher states them; a computed share divides two stated figures."
+        ),
+        retrieved=review_stamp(SHARES_REVIEWED),
     )
 
 
@@ -580,6 +692,34 @@ def _self_check() -> None:
     )
     assert len(grid) >= 20 and grid[0]["google_cfe_pct"] >= grid[-1]["google_cfe_pct"]
 
+    # Shares: the computed one by hand, 4.2 / 30.9 = 13.59%, and the stated one
+    # passed through untouched. At least one row must be an absence.
+    shares = build_shares()
+    servers = next(r for r in shares if r["measure"] == "Servers installed")
+    assert servers["ai_share_pct"] == 13.6 and servers["share_basis"] == "computed", servers
+    world = next(r for r in shares if r["measure"] == "Electricity" and r["scope"] == "World")
+    assert world["ai_share_pct"] == 15.0 and world["ai"] is None, world
+    assert any(r["ai_share_pct"] is None for r in shares), "no row records an absence"
+    assert {r["measure"] for r in shares} >= {"Datacentres", "Electricity", "Water consumed"}
+    for bad in (
+        {"ai": 1.0, "total": None, "url": None},                      # a figure with no citation
+        {"share_basis": "computed", "ai_share_pct": 10.0},            # a stated share marked computed
+        {"ai_definition": None},                                      # a share with no definition
+        {"url": "http://example.com"},                                # not https
+    ):
+        target = 1 if "ai_definition" not in bad else 2
+        saved = dict(SHARES[target])
+        SHARES[target].update(bad)
+        try:
+            build_shares()
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"build_shares accepted {bad}")
+        finally:
+            SHARES[target].clear()
+            SHARES[target].update(saved)
+
     # The validator must reject a "not disclosed" cell carrying a citation.
     DEVELOPERS[0]["training"]["links"].append({"label": "x", "url": "https://example.com"})
     try:
@@ -595,7 +735,7 @@ def _self_check() -> None:
         f"build_environment_index self-check passed: {len(developers)} developers "
         f"({none_cells} cells not disclosed), {len(footprints)} training footprints, "
         f"{len(inference)} per-prompt figures, {len(operators)} operators, "
-        f"{len(grid)} grid regions"
+        f"{len(grid)} grid regions, {len(shares)} datacentre share rows"
     )
 
 
@@ -610,6 +750,7 @@ if __name__ == "__main__":
         entries += [(r["model"], r["url"]) for r in build_footprints()]
         entries += [(r["product"], r["url"]) for r in build_inference()]
         entries += [(r["operator"], r["url"]) for r in build_operators()]
+        entries += [(f"{r['measure']}, {r['scope']}", r["url"]) for r in build_shares() if r["url"]]
         raise SystemExit(1 if check_links(entries) else 0)
     else:
         _self_check()

@@ -68,6 +68,9 @@ jobs:
       - name: Eurostat decoder self-check
         run: python etl/fetch_eurostat.py --self-check
 
+      - name: Epoch data-centre self-check
+        run: python etl/fetch_epoch.py --self-check
+
       - name: Palette contrast check
         run: python etl/check_contrast.py
 

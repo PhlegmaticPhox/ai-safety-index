@@ -1,0 +1,656 @@
+---
+/**
+ * A world map of points that pans and zooms, with no JavaScript.
+ *
+ * Panning is native scrolling. The map is drawn larger than its frame and the
+ * frame scrolls: a finger drags it, a trackpad pans it in both axes, a mouse
+ * wheel scrolls it and shift-wheel scrolls it sideways, the scrollbars can be
+ * dragged, and the arrow keys move it once the frame has focus. Nothing had to
+ * be written for any of that.
+ *
+ * Zoom is a radio group. Each level sets the width of the map to a multiple of
+ * the frame, and the step controls are labels for the level either side.
+ *
+ * The hard part is where a zoom lands. A scroll offset is a pixel count, so
+ * doubling the width under an unchanged offset slides the view toward the top
+ * left corner of the world, and every zoom would throw the reader somewhere
+ * they were not looking. The fix is scroll snapping. The map carries a lattice
+ * of invisible snap lines, one set of columns and one of rows, spread evenly by
+ * percentage so they scale with the map. When the layout changes, a browser
+ * re-snaps the frame to the SAME snap target it was on, and the same target is
+ * the same place on the map at any width. So the point in the middle of the
+ * frame stays in the middle through every zoom.
+ *
+ * Three details make that hold, each found by testing it in Chromium:
+ *
+ *  - The lines span the whole map in the other axis. Chromium only snaps an
+ *    axis to an area that is visible in the other axis at the proposed
+ *    position, so a one-pixel column marker at the top of the map stops being
+ *    a candidate the moment the frame scrolls down, and nothing snaps at all.
+ *  - At the widest view the map fits the frame and there is nothing to scroll,
+ *    so the browser snaps to whichever target is nearest offset zero, which is
+ *    the top left corner, and the first zoom from there went to Alaska. At
+ *    that level only the centre lines are snap targets, so the first zoom
+ *    lands on the middle of the map.
+ *  - The lattice is dense enough that snapping reads as panning. 768 columns
+ *    across a map sixteen frames wide is one line every 27px on a laptop.
+ *
+ * A browser that does not re-snap to the same target after a layout change
+ * falls back to the nearest line to the old offset, which is the top-left
+ * drift described above and nothing worse.
+ *
+ * Markers are HTML, not SVG. An SVG circle scales with the map and would be
+ * sixteen times the size at the deepest zoom; an element stays the size it was
+ * drawn at. They are placed with margins, not with position or transform,
+ * because either of those would make the marker the containing block of its
+ * preview card, and a card contained by a marker inside the scrolling frame is
+ * clipped by the frame. With margins the card's containing block is the frame's
+ * positioned parent, outside the scroller, so it is never cut off.
+ *
+ * Every marker is a button that opens its card as a native popover, which is
+ * the route on a touch screen. Hovering shows the same card without opening it.
+ */
+import { projectLand } from "../lib/geo";
+
+export interface ZoomPoint {
+  lon: number;
+  lat: number;
+  /** Marker diameter in CSS pixels, chosen by the caller from the data. */
+  d: number;
+  /**
+   * How much of the marker is filled, as a fraction of its diameter: 1 is a
+   * solid disc, 0 an empty ring, anything between a disc inside a ring. Lets
+   * one marker carry two magnitudes of the same thing, such as capacity now
+   * inside capacity planned.
+   */
+  fill?: number;
+  /** Drawn in the muted ink, for a point whose size is not known. */
+  muted?: boolean;
+  /** Filter keys this point belongs to. Unchecking any of them hides it. */
+  tags?: string[];
+  /** Accessible name of the marker. */
+  label: string;
+  /** Card heading. */
+  name: string;
+  /** Line under the heading. */
+  sub?: string;
+  /** Card rows, label then value. */
+  rows: Array<[string, string]>;
+  /** Link from the card, usually to the point's row in a table. */
+  href?: string;
+  hrefLabel?: string;
+}
+
+export interface ZoomFilter {
+  key: string;
+  label: string;
+  checked?: boolean;
+}
+
+interface Props {
+  points: ZoomPoint[];
+  /** Accessible description of what the map shows. */
+  label: string;
+  /** Unique per page, and becomes both an HTML id and a CSS selector. */
+  id?: string;
+  /** Zoom multiples, widest first. */
+  levels?: number[];
+  filters?: ZoomFilter[];
+}
+
+const { points, label, id = "zm", levels = [1, 2, 4, 8, 16], filters = [] } = Astro.props;
+
+/* `id` and each filter key are interpolated into a raw <style> block via
+   set:html, as selectors. Anything that is not a plain identifier fails the
+   build rather than being rewritten, the same rule as TimeMap's labels. */
+const IDENT = /^[A-Za-z][A-Za-z0-9_-]{0,31}$/;
+if (!IDENT.test(id)) {
+  throw new Error(`ZoomMap: id ${JSON.stringify(id)} is not a plain identifier.`);
+}
+for (const filter of filters) {
+  if (!IDENT.test(filter.key)) {
+    throw new Error(`ZoomMap: filter key ${JSON.stringify(filter.key)} is not a plain identifier.`);
+  }
+}
+if (!levels.length || levels[0] !== 1 || levels.some((z, i) => i > 0 && z <= levels[i - 1])) {
+  throw new Error(`ZoomMap: levels must start at 1 and rise, got ${JSON.stringify(levels)}.`);
+}
+
+const world = projectLand(2000, 1);
+
+/* Largest first, so a small marker is never painted underneath a large one it
+   sits inside and can always be reached by the pointer. */
+const placed = points
+  .map((point) => ({ point, at: world.place(point.lon, point.lat) }))
+  .filter((p): p is { point: ZoomPoint; at: [number, number] } => p.at !== null)
+  .sort((a, b) => b.point.d - a.point.d);
+
+/* A point the projection cannot place would vanish from the map and from
+   nothing else, so the table below it would disagree with the picture. */
+if (placed.length !== points.length) {
+  const lost = points.filter((p) => !world.place(p.lon, p.lat)).map((p) => p.name);
+  throw new Error(`ZoomMap: ${lost.length} point(s) could not be projected: ${lost.join(", ")}`);
+}
+
+/* The snap lattice. Even counts, so the middle falls between two lines and the
+   pair either side of it are both marked as the centre. */
+const COLS = 768;
+const ROWS = 384;
+const midCol = COLS / 2 - 1;
+const midRow = ROWS / 2 - 1;
+
+const pct = (n: number) => n.toFixed(3);
+
+const rules = [
+  ...levels.map(
+    (z, i) => `#${id}:has(#${id}-z${i}:checked) .zmap__canvas { --z: ${z}; }
+#${id}:has(#${id}-z${i}:checked) .zmap__step[data-from="${i}"] { display: inline-flex; }
+#${id}:has(#${id}-z${i}:checked) .zmap__level::after { content: "${z}\\00D7"; }
+#${id}:has(#${id}-z${i}:focus-visible) .zmap__zoom { outline: 2px solid var(--accent); outline-offset: 2px; }`,
+  ),
+  /* At the widest level there is nothing to scroll, and only the centre lines
+     are targets. See the header. */
+  `#${id}:has(#${id}-z0:checked) .zmap__cols > i:not(.is-mid),
+#${id}:has(#${id}-z0:checked) .zmap__rows > i:not(.is-mid) { scroll-snap-align: none; }`,
+  `#${id}:has(#${id}-z0:checked) .zmap__step--home { opacity: 0.45; pointer-events: none; }`,
+  ...filters.map(
+    (f) => `#${id}:has(#${id}-f-${f.key}:not(:checked)) .zmap__site.t-${f.key} { display: none; }`,
+  ),
+].join("\n");
+---
+
+<div class="zmap" id={id}>
+  <div class="zmap__radios" role="radiogroup" aria-label="Zoom">
+    {
+      levels.map((z, i) => (
+        <input
+          class="zmap__radio"
+          type="radio"
+          name={`${id}-zoom`}
+          id={`${id}-z${i}`}
+          checked={i === 0}
+          aria-label={z === 1 ? "Whole world" : `Zoom ${z} times`}
+        />
+      ))
+    }
+  </div>
+
+  <div class="zmap__frame">
+    <div class="zmap__view" tabindex="0" role="group" aria-label={`${label}. Scrolls in both directions when zoomed.`}>
+      <div class="zmap__canvas">
+        <svg viewBox={`0 0 ${world.width} ${world.height}`} class="zmap__svg" role="img" aria-label={label}>
+          <path d={world.land} class="zmap__land"></path>
+          <path d={world.borders} class="zmap__borders"></path>
+        </svg>
+
+        <span class="zmap__cols" aria-hidden="true">
+          {Array.from({ length: COLS }, (_, i) => <i class:list={[(i === midCol || i === midCol + 1) && "is-mid"]} />)}
+        </span>
+        <span class="zmap__rows" aria-hidden="true">
+          {Array.from({ length: ROWS }, (_, i) => <i class:list={[(i === midRow || i === midRow + 1) && "is-mid"]} />)}
+        </span>
+
+        {
+          placed.map(({ point, at: [x, y] }, i) => {
+            const card = `${id}-c${i}`;
+            const anchor = `--${id}-a${i}`;
+            return (
+              <div
+                class:list={["zmap__site", ...(point.tags ?? []).map((t) => `t-${t}`)]}
+                style={`--x:${pct(x)};--y:${pct(y)};--d:${point.d.toFixed(1)}px;--f:${Math.min(1, Math.max(0, point.fill ?? 1)).toFixed(3)};anchor-name:${anchor}`}
+              >
+                <button
+                  type="button"
+                  class:list={["zmap__dot", point.muted && "is-muted"]}
+                  popovertarget={card}
+                  tabindex="-1"
+                  aria-label={point.label}
+                />
+                <div popover id={card} class="zmap__card" style={`position-anchor:${anchor}`}>
+                  <span class="zmap__name">{point.name}</span>
+                  {point.sub && <span class="zmap__sub">{point.sub}</span>}
+                  <dl class="zmap__rows-list">
+                    {point.rows.map(([k, v]) => (
+                      <div class="zmap__row">
+                        <dt>{k}</dt>
+                        <dd>{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  {point.href && (
+                    <a class="zmap__more" href={point.href}>
+                      {point.hrefLabel ?? "Details"}
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <div class="zmap__controls">
+      <span class="zmap__zoom">
+        {
+          levels.map((_, i) =>
+            i === 0 ? (
+              <span class="zmap__step zmap__step--off" data-from="0" aria-hidden="true">
+                &minus;
+              </span>
+            ) : (
+              <label class="zmap__step" data-from={String(i)} for={`${id}-z${i - 1}`} aria-label="Zoom out">
+                &minus;
+              </label>
+            ),
+          )
+        }
+        <span class="zmap__level mono" aria-hidden="true"></span>
+        {
+          levels.map((_, i) =>
+            i === levels.length - 1 ? (
+              <span class="zmap__step zmap__step--off" data-from={String(i)} aria-hidden="true">
+                +
+              </span>
+            ) : (
+              <label class="zmap__step" data-from={String(i)} for={`${id}-z${i + 1}`} aria-label="Zoom in">
+                +
+              </label>
+            ),
+          )
+        }
+      </span>
+      <label class="zmap__step zmap__step--home" for={`${id}-z0`}>World</label>
+    </div>
+  </div>
+
+  {
+    filters.length > 0 && (
+      <div class="zmap__filters" role="group" aria-label="Show on the map">
+        {filters.map((f) => (
+          <label class="zmap__filter">
+            <input type="checkbox" id={`${id}-f-${f.key}`} checked={f.checked ?? true} />
+            <span>{f.label}</span>
+          </label>
+        ))}
+      </div>
+    )
+  }
+
+  <slot />
+</div>
+
+<style set:html={rules} is:inline></style>
+
+<style>
+  .zmap {
+    --zmap-h: min(74svh, 76vw, 720px);
+    /* Marker scale. The markers are drawn in pixels and the map at the width
+       of the frame, so on a phone the same pixel size covers four times as
+       much of the world. */
+    --zmap-ms: 1;
+  }
+
+  @media (max-width: 640px) {
+    .zmap {
+      --zmap-ms: 0.55;
+    }
+  }
+
+  /* Off-screen rather than display:none, so the zoom stays operable from the
+     keyboard: tab to the group and the arrow keys step through the levels. */
+  .zmap__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* The positioned box the cards are laid out against. It is deliberately the
+     parent of the scroller and not the scroller itself: see the header. */
+  .zmap__frame {
+    position: relative;
+    /* The size container the canvas measures itself against. Here and not on
+       the scroller, because containment makes an element the containing block
+       of its positioned descendants, which would put the cards back inside
+       the scroller and under its clip. */
+    container-type: inline-size;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--bg-deep);
+    overflow: clip;
+  }
+
+  .zmap__view {
+    display: flex;
+    block-size: var(--zmap-h);
+    overflow: auto;
+    overscroll-behavior: auto;
+    scroll-snap-type: both mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+    cursor: grab;
+  }
+
+  .zmap__view:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  /* Contained, not covered: at the widest level the whole world is in view and
+     nothing scrolls, which is what lets the snap lattice keep the centre. The
+     auto margins centre the map while it is smaller than the frame and resolve
+     to zero once it is larger, so no part of it is ever out of reach. */
+  .zmap__canvas {
+    --z: 1;
+    display: grid;
+    grid-template: 1fr / 1fr;
+    flex: none;
+    inline-size: calc(var(--z) * min(100cqi, 2 * var(--zmap-h)));
+    aspect-ratio: 2 / 1;
+    margin: auto;
+  }
+
+  .zmap__canvas > * {
+    grid-area: 1 / 1;
+  }
+
+  .zmap__svg {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .zmap__land {
+    fill: var(--surface-2);
+  }
+
+  .zmap__borders {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 0.75;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .zmap__cols,
+  .zmap__rows {
+    display: grid;
+    pointer-events: none;
+  }
+
+  .zmap__cols {
+    grid-template-columns: repeat(768, 1fr);
+  }
+
+  .zmap__rows {
+    grid-template-rows: repeat(384, 1fr);
+  }
+
+  .zmap__cols > i {
+    scroll-snap-align: none center;
+  }
+
+  .zmap__rows > i {
+    scroll-snap-align: center none;
+  }
+
+  /* Placed with margins against the canvas. A vertical percentage margin
+     resolves against the containing block's WIDTH, and the canvas is exactly
+     twice as wide as it is tall, so half of --y percent of the width is --y
+     percent of the height. */
+  .zmap__site {
+    --dd: calc(var(--d) * var(--zmap-ms, 1));
+    justify-self: start;
+    align-self: start;
+    inline-size: var(--dd);
+    block-size: var(--dd);
+    margin-inline-start: calc(var(--x) * 1% - var(--dd) / 2);
+    margin-block-start: calc(var(--y) * 0.5% - var(--dd) / 2);
+  }
+
+  /* The ring is the whole magnitude and the disc inside it the part, so the
+     two read as one quantity at two stages rather than as two hues. With
+     closest-side, 100% of the gradient is the radius, so --f is a fraction of
+     the diameter. The half-pixel step keeps the disc's edge crisp. */
+  .zmap__dot {
+    --dot: var(--accent);
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 0;
+    border: 1.5px solid var(--dot);
+    border-radius: 50%;
+    background:
+      radial-gradient(closest-side, var(--dot) calc(var(--f, 1) * 100%), transparent calc(var(--f, 1) * 100% + 0.5px)),
+      rgb(9 17 32 / 0.45);
+    box-shadow: 0 0 0 1px rgb(9 17 32 / 0.7);
+    cursor: pointer;
+    transition: transform 0.15s var(--ease);
+  }
+
+  .zmap__dot.is-muted {
+    --dot: var(--muted-2);
+  }
+
+  .zmap__site:hover .zmap__dot,
+  .zmap__dot:focus-visible {
+    --dot: var(--accent-ink);
+    transform: scale(1.2);
+  }
+
+  /* The card. Without anchor positioning it sits in the frame's top corner,
+     which is still beside whatever the pointer is on. With it, it attaches to
+     the marker and flips to stay inside the frame. */
+  .zmap__card {
+    display: none;
+    position: absolute;
+    inset-block-start: 0.6rem;
+    inset-inline-end: 0.6rem;
+    inset-inline-start: auto;
+    inset-block-end: auto;
+    z-index: 3;
+    inline-size: min(19rem, calc(100% - 1.2rem));
+    margin: 0;
+    padding: 0.8rem 0.95rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--surface-2);
+    color: var(--ink);
+    box-shadow: 0 16px 44px rgb(0 0 0 / 0.55);
+    font-size: 0.75rem;
+    line-height: 1.45;
+    pointer-events: none;
+  }
+
+  /* Every area is anchored at one edge of the marker and extends away from
+     it, so the fallbacks can always find one that fits. A single keyword
+     such as block-start spans the whole row and centres on the marker, and
+     near the edge of a phone screen that pushed the card half off it. */
+  @supports (position-area: block-start) {
+    .zmap__card {
+      inset: auto;
+      position-area: block-start span-inline-end;
+      position-try-fallbacks: block-start span-inline-start, block-end span-inline-end,
+        block-end span-inline-start;
+      margin: 0.45rem;
+    }
+  }
+
+  .zmap__site:hover > .zmap__card:not(:popover-open),
+  .zmap__dot:focus-visible + .zmap__card:not(:popover-open) {
+    display: block;
+  }
+
+  /* Opened by a tap or click it becomes a real popover in the top layer: it
+     can take the pointer, carries its link, and dismisses on a tap outside. */
+  .zmap__card:popover-open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    block-size: fit-content;
+    margin: auto;
+    pointer-events: auto;
+    inline-size: min(20rem, calc(100vw - 2rem));
+  }
+
+  @supports (position-area: block-start) {
+    .zmap__card:popover-open {
+      inset: auto;
+      margin: 0.45rem;
+    }
+  }
+
+  /* On a phone an opened card is a sheet along the bottom of the screen: the
+     one place it can never cover the marker it describes or run off an edge.
+
+     The fallbacks go too, not only the area. A tap shows the card by :hover
+     first, anchored, and Chromium keeps the last fallback that fitted as long
+     as it still fits, so with fallbacks left on, a tapped card kept the
+     anchored position `end span-start` as a 229px column instead of becoming
+     the sheet. Opened by script with no hover first, it was a sheet, which is
+     how the sheet looked tested when it was not. */
+  @media (max-width: 640px) {
+    .zmap__card:popover-open {
+      position-area: none;
+      position-try-fallbacks: none;
+      inset: auto 0.75rem 0.75rem;
+      inline-size: auto;
+      margin: 0;
+    }
+  }
+
+  .zmap__name {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .zmap__sub {
+    display: block;
+    margin-block: 0.1rem 0.5rem;
+    color: var(--muted);
+  }
+
+  .zmap__rows-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.12rem 0.75rem;
+    margin: 0;
+  }
+
+  .zmap__row {
+    display: contents;
+  }
+
+  .zmap__row dt {
+    color: var(--muted);
+  }
+
+  .zmap__row dd {
+    margin: 0;
+  }
+
+  .zmap__more {
+    display: inline-block;
+    margin-block-start: 0.55rem;
+  }
+
+  .zmap__controls {
+    position: absolute;
+    inset-block-start: 0.6rem;
+    inset-inline-start: 0.6rem;
+    z-index: 2;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .zmap__zoom {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: rgb(22 38 66 / 0.94);
+  }
+
+  .zmap__step {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 2.25rem;
+    block-size: 2.25rem;
+    padding-inline: 0.6rem;
+    color: var(--ink);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.18s var(--ease), background-color 0.18s var(--ease);
+  }
+
+  .zmap__step:hover {
+    color: var(--accent);
+  }
+
+  .zmap__step--off {
+    color: var(--muted-2);
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  .zmap__step--off:hover {
+    color: var(--muted-2);
+  }
+
+  .zmap__step--home {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: rgb(22 38 66 / 0.94);
+    font-size: 0.75rem;
+  }
+
+  .zmap__level {
+    min-inline-size: 2.5rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .zmap__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-block-start: 0.6rem;
+  }
+
+  .zmap__filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.7rem 0.25rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  .zmap__filter:has(:checked) {
+    border-color: var(--accent-line);
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+  }
+
+  .zmap__filter input {
+    margin: 0;
+    accent-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zmap__dot,
+    .zmap__step {
+      transition: none;
+    }
+  }
+</style>

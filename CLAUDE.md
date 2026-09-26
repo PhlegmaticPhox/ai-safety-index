@@ -53,9 +53,10 @@ figures, each figure carrying a `<Provenance>` marker and a caveat where it coul
 
 | Route | What is on it |
 |---|---|
-| `/` | Full-width choropleth of AI use as the banner (`TimeMap`), a stat band, then one numbered panel per section, 01 Progress to 08 The wire, each with that section's headline figure and a button as the way in. |
+| `/` | Full-width choropleth of AI use as the banner (`TimeMap`), a stat band, then one numbered panel per section, 01 Progress to 09 The wire, each with that section's headline figure and a button as the way in. |
 | `/progress/` | **Outputs.** Benchmark scores by category and by difficulty tier (both our own classification), how long each test stayed useful, straight-line extrapolations of open benchmarks, a rail of per-benchmark frontier lines, the most recent notable models, release cadence by quarter. |
 | `/capability/` | **Inputs.** Training compute over time with the fitted frontier, disclosed cost, how models ship (open weights / API / unreleased), how far behind the open-weight frontier is, who builds them, and the compute thresholds written into law against the models that cross them. |
+| `/datacentres/` | Every site in Epoch AI's AI Data Centers hub on a world map that pans and zooms (`ZoomMap`), ringed by planned IT power with the operating power as a disc, filtered by stage, a hover or tap card per site, a list sortable by size, owner and category (our grouping of the chip owner), AI's share of all datacentres by count, electricity and water as the IEA and LBNL state it, and what no field records: training or inference, power source, cooling type. |
 | `/environment/` | What each frontier developer has published about training energy, emissions, sites, power sources and energy per prompt, cell by cell and marked by who said it (`What we know`). Training runs by developer against which have a published footprint, every published footprint with emissions per 1e24 FLOP, per-prompt figures, and operators' annual renewable matching against Google's hourly carbon-free share by grid region. |
 | `/alignment/` | How close is AGI, answered only from measured quantities. Published frontier safety frameworks side by side. Safety research against capability research from OpenAlex. Reported incidents. A section on what the page cannot show. |
 | `/usage/` | Every aggregate token count a company has stated, normalised to tokens per month and drawn only within one company's own scope, the developers that state none, disclosed user counts per product, and published shares of use by topic (ChatGPT, Claude.ai, the Claude API). |
@@ -73,9 +74,11 @@ progress. Do not move them back.
 
 **Components** (`src/components/`): `Provenance` (the citation popover), `StatTile` (a bento cell),
 `BarTable` (ranked list, ten rows plus a disclosure), `TimeMap` (choropleth with a period stepper),
-`WorldMap` (static choropleth), `Sparkline`, `NewsList`.
+`WorldMap` (static choropleth), `ZoomMap` (points on a map that pans by scrolling and zooms by a
+radio group, centre held by a scroll-snap lattice; read its header before editing), `Sparkline`,
+`NewsList`.
 **Library** (`src/lib/`): `sources.ts` (registry, licence guard, freshness), `geo.ts` (projection,
-country joins, percentile ranks), `news.ts` (category vocabulary).
+point placement, country joins, percentile ranks), `news.ts` (category vocabulary).
 
 ## The pipeline
 
@@ -91,10 +94,16 @@ Hand-coded indexes ignore `offline` because there is nothing to fetch.
 idempotent: it skips the write when records are unchanged, so a commit in the history means the
 data actually moved rather than that a timestamp did. Last-checked time lives in `_status.json`.
 
-Current modules: `fetch_epoch` (5 datasets), `fetch_microsoft_diffusion`, `fetch_eurostat` (4),
+Current modules: `fetch_epoch` (6 datasets), `fetch_microsoft_diffusion`, `fetch_eurostat` (4),
 `fetch_news` (8 feeds), `fetch_openalex`, `build_governance`, `build_policy_index`
 (+ `policy_jurisdictions.py`, the instrument lists), `build_frontier_index` (2),
-`build_usage_index` (3), `build_environment_index` (5).
+`build_usage_index` (3), `build_environment_index` (6).
+
+**One page is fetched as a page.** Epoch publishes data-centre coordinates only in the props of the
+map on `epoch.ai/data/ai-data-centers/map`, not in its downloads, so `fetch_epoch` fetches that page
+with `fetch(..., fmt="html")` and decodes the Astro island. `fetch()` refuses HTML for every data
+format; `fmt` is per call and no registered source may declare `html`. If Epoch changes the page,
+`build_datacentres()` fails loudly and runs last, so the other five Epoch datasets still write.
 
 Six datasets are our own work, all MIT licensed like the code: **Governance Readiness Index**,
 **AI Law and Policy Index**, **Frontier Safety Framework Index**, **Compute Threshold Index**,
@@ -109,7 +118,8 @@ dataset, when it was last confirmed into `_status.json` (`datasets`), and `confi
 `src/lib/sources.ts` shows whichever is later. Every page wraps its datasets in `confirmed()`.
 Hand-coded indexes pass `retrieved=review_stamp(REVIEWED)`, never `utcnow()`, so the daily run
 cannot confirm a review that did not happen: bump `REVIEWED` only after re-reading the
-instruments. The frameworks and thresholds indexes carry separate review dates for that reason.
+instruments. The frameworks and thresholds indexes carry separate review dates for that reason, as
+do the datacentre shares (`SHARES_REVIEWED`) inside the Environmental Disclosure Index.
 
 ```bash
 npm install
@@ -126,11 +136,12 @@ python etl/fetch_news.py --self-check                 # snippet cap, relevance, 
 python etl/fetch_eurostat.py --self-check             # JSON-stat decoder, aggregate filter
 python etl/fetch_openalex.py --self-check             # query narrowing and year range (needs network)
 python etl/fetch_microsoft_diffusion.py --self-check  # source encoding
+python etl/fetch_epoch.py --self-check                # data-centre stages, dates, owners, map decoder
 python etl/build_governance.py --self-check           # scoring rubric
 python etl/build_policy_index.py --self-check         # schema and coverage
 python etl/build_frontier_index.py --self-check       # frameworks and compute thresholds
 python etl/build_usage_index.py --self-check          # token normalisation, scopes, shares
-python etl/build_environment_index.py --self-check    # disclosure cells, derived energy
+python etl/build_environment_index.py --self-check    # disclosure cells, derived energy, AI shares
 python etl/check_contrast.py                          # palette against WCAG AA
 
 python etl/build_governance.py --check-links          # probe every cited instrument
@@ -258,11 +269,16 @@ Set from the tasteskill brief at `DESIGN_VARIANCE 7 / MOTION_INTENSITY 4 / VISUA
 
 ## Data sources
 
-Full registry with licences in `data/sources.json`; 29 registered, 20 in use.
+Full registry with licences in `data/sources.json`; 30 registered, 21 in use.
 
-**Backbone:** Epoch AI (models, benchmarks, clusters, CC BY 4.0), Microsoft AI Diffusion (147
-economies, MIT), Eurostat enterprise adoption (Decision 2011/833/EU), OpenAlex (research volume,
-CC0), Natural Earth (map geometry, public domain).
+**Backbone:** Epoch AI (models, benchmarks, clusters, data centres, CC BY 4.0), Microsoft AI
+Diffusion (147 economies, MIT), Eurostat enterprise adoption (Decision 2011/833/EU), OpenAlex
+(research volume, CC0), Natural Earth (map geometry, public domain).
+**Read into our own indexes, not registered as sources:** the IEA's *Energy and AI* (2025) and
+LBNL's *United States Data Center Energy Usage Report: 2025 Update* (2026), both CC BY 4.0, cited
+row by row in the datacentre shares. The IEA's report pages and LBNL's publication site answer
+non-browsers with a Cloudflare challenge; the same PDFs are on the IEA's asset store
+(`iea.blob.core.windows.net`) and on OSTI (`osti.gov/servlets/purl/3374245`), which are cited.
 **News feed, eight:** US Federal Register and NIST (public domain), GOV.UK (OGL v3.0), European
 Commission (Decision 2011/833/EU), Government of Canada (OGL Canada), arXiv cs.AI and cs.CY
 (metadata CC0), AI Incident Database (ODbL, display only).
@@ -375,6 +391,18 @@ Seven joins nobody else publishes. If a change would break one of them, it is th
   (FSF 3.1, April 2026) have revisions the records predate. Re-read those before moving the date.
 - `/environment/` sizes training runs by compute. Epoch's notable-models file also carries an
   estimated training power draw per model, which `fetch_epoch.py` does not yet extract.
+- `/datacentres/` shows training or inference, power source and cooling type as not recorded for
+  every site, because Epoch records none of them. Its notes describe cooling equipment in prose,
+  and sites change it, so it is not classified here. Epoch's timelines also carry a water estimate
+  (`Water use (MGD)`) for 25 sites at scattered dates, with zeros at several sites drawing over
+  60 MW and nothing documenting whether a zero is an estimate or a blank; it is not published until
+  Epoch documents it.
+- Epoch's coverage estimate (44% of deployed AI compute, September 2026) is a dated sentence in the
+  `epoch-ai-data-centers` caveat, read from its methodology page. Re-read it when Epoch revises it.
+- The share table has no US water row. LBNL's 2024 report, which estimates US datacentre water,
+  is only on hosts that refuse non-browsers, and its 2025 update on OSTI has no water figure.
+- `AI XPV Platform`, the chip owner Epoch records at Anthropic Lake Mariner, could not be
+  identified from any public source, so its category is Other.
 
 `docs/02-plan.md` and `docs/01-ideas-backlog.md` are the original plan and idea list, now marked
 item by item with what was built. Read them for the reasoning and the unbuilt ideas, not for current

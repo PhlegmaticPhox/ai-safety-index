@@ -114,6 +114,20 @@
       "cadence": "quarterly",
       "caveats": "Our own reading of what frontier developers and the operators of their data centres have published about training energy, emissions, power sources and energy per prompt, with permits and press reporting marked separately from company statements. Most cells record an absence. Company figures are self-reported and mostly unaudited, and market-based emissions reflect contracts rather than the grid at the hour of use."
     },
+    "epoch-ai-data-centers": {
+      "name": "AI Data Centers",
+      "publisher": "Epoch AI",
+      "publisher_url": "https://epoch.ai",
+      "landing_page": "https://epoch.ai/data/ai-data-centers",
+      "url": "https://epoch.ai/data/data_centers/data_centers.csv",
+      "format": "csv",
+      "licence": "CC-BY-4.0",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Epoch AI, \"AI Data Centers\". Licensed CC BY 4.0.",
+      "redistribution": "permitted",
+      "cadence": "several times a week",
+      "caveats": "The largest AI sites Epoch has found, mostly in the United States. Epoch estimated in September 2026 that they hold 44% of the world's deployed AI compute, with a 90% interval of 23% to 81%. Power, compute and cost are Epoch's estimates from satellite imagery, permits and company statements; four in five IT power estimates fall within a factor of 1.4 of the true value. The owner is the owner of the chips, not necessarily of the building. Capacity after the date of retrieval is Epoch's projection. Coordinates are read from the hub's map page, which publishes them; the downloads do not."
+    },
     "epoch-benchmarks": {
       "name": "AI Benchmarking Hub",
       "publisher": "Epoch AI",

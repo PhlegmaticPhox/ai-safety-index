@@ -176,6 +176,27 @@ const entries: Entry[] = [
     href: "/environment/#grid",
     hrefLabel: "Environment: renewable claims against the grid",
   },
+  {
+    term: "IT power",
+    definition:
+      "The electrical power available to a datacentre's computing equipment, before cooling, power conversion and other overheads. Recorded per site as the power operating now and the power planned at the last stage of the site's timeline.",
+    href: "/datacentres/#map",
+    hrefLabel: "Datacentres: where they are",
+  },
+  {
+    term: "Facility power",
+    definition:
+      "The whole electrical capacity of a datacentre: IT power plus cooling, lighting and power conversion.",
+    href: "/datacentres/#map",
+    hrefLabel: "Datacentres: where they are",
+  },
+  {
+    term: "H100 equivalent",
+    definition:
+      "A unit of compute capacity: the number of Nvidia H100 chips with the same total performance as the chips a site actually holds. Written H100e.",
+    href: "/datacentres/#list",
+    hrefLabel: "Datacentres: every site",
+  },
 ];
 
 const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term));

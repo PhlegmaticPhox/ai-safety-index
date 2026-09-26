@@ -86,6 +86,84 @@ assert.equal(geo.alpha3("Not A Country At All"), null, "unknown names must not g
   );
 }
 
+/* projectLand() places the datacentre markers. It must use the same projection
+   and fit as projectWorld(), or a point lands a country away from where the
+   same coordinates are drawn on every other map, and nothing looks wrong. */
+{
+  const land = geo.projectLand(2000, 1);
+  const world = geo.projectWorld(2000, 1);
+  assert.ok(land.land.length > 1000 && land.borders.length > 1000, "land or borders path is empty");
+  assert.equal(land.width, world.width);
+  assert.equal(land.height, world.height);
+
+  const london = land.place(-0.12, 51.5);
+  const frankfurt = land.place(8.68, 50.11);
+  const sydney = land.place(151.2, -33.87);
+  assert.ok(london && frankfurt && sydney, "a valid coordinate failed to place");
+  assert.ok(london[0] < frankfurt[0], "longitude must increase to the right");
+  assert.ok(london[1] < sydney[1], "latitude must increase upwards");
+  for (const [x, y] of [london, frankfurt, sydney]) {
+    assert.ok(x > 0 && x < 100 && y > 0 && y < 100, `placed outside the frame: ${x}, ${y}`);
+  }
+
+  /* The same fit, tested through a shape: London must fall inside Great
+     Britain as projectWorld() draws it. */
+  const gbr = world.shapes.find((s) => s.code === "GBR");
+  const [[x0, y0], [x1, y1]] = gbr.detailBounds;
+  const [lx, ly] = [(london[0] / 100) * world.width, (london[1] / 100) * world.height];
+  assert.ok(lx >= x0 && lx <= x1 && ly >= y0 && ly <= y1, "London is not inside Great Britain");
+
+  // A coordinate the projection cannot honestly place must not be placed.
+  for (const [lon, lat] of [[NaN, 0], [0, 91], [181, 0], [0, -91]]) {
+    assert.equal(land.place(lon, lat), null, `placed an impossible coordinate ${lon}, ${lat}`);
+  }
+}
+
+/* Every datacentre lands inside its own country. Latitude and longitude
+   swapped, or a sign dropped, puts a site in the sea or on another continent,
+   and the map still renders perfectly. The test is against the country's
+   bounding box with half a degree of slack in projected units, because a
+   coastal site can sit just outside a 1:110m outline. A country too small to
+   appear at 1:110m is listed rather than tested. */
+{
+  const sites = JSON.parse(readFileSync("data/processed/ai-datacentres.json", "utf8"));
+  const land = geo.projectLand(2000, 1);
+  const shapes = new Map(geo.projectWorld(2000, 1).shapes.map((s) => [s.code, s]));
+  const SLACK = 6;
+  const misplaced = [];
+  const untested = new Set();
+  for (const site of sites.records) {
+    const code = site.country ? geo.alpha3(site.country) : null;
+    const shape = code ? shapes.get(code) : null;
+    if (!shape) {
+      untested.add(site.country);
+      continue;
+    }
+    const at = land.place(site.lon, site.lat);
+    if (!at) {
+      misplaced.push(`${site.name}: cannot be projected`);
+      continue;
+    }
+    const [x, y] = [(at[0] / 100) * land.width, (at[1] / 100) * land.height];
+    /* Full bounds, not detailBounds: detailBounds keeps only the mainland of a
+       far-flung country, and Alaska is still the United States. */
+    const [[x0, y0], [x1, y1]] = shape.bounds;
+    if (x < x0 - SLACK || x > x1 + SLACK || y < y0 - SLACK || y > y1 + SLACK) {
+      misplaced.push(`${site.name} (${site.country}) at ${site.lat}, ${site.lon}`);
+    }
+  }
+  assert.deepEqual(misplaced, [], `datacentres placed outside their country:\n  ${misplaced.join("\n  ")}`);
+  const allowedUntested = new Set(["Singapore"]);
+  const unexpected = [...untested].filter((c) => !allowedUntested.has(c));
+  assert.deepEqual(
+    unexpected,
+    [],
+    `datacentre countries with no shape to test against: ${unexpected.join(", ")}. ` +
+      `Singapore is expected, being too small for 1:110m. Anything else is a name the ` +
+      `country join does not resolve, so add it to NAME_ALIASES in src/lib/geo.ts.`,
+  );
+}
+
 /* News categories are defined twice, once in Python and once in TypeScript.
    Two copies drift. This is the thing that notices. */
 {

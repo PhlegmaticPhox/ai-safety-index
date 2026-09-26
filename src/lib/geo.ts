@@ -11,12 +11,13 @@
  * honest numbers, that is not a defensible default.
  */
 import { geoNaturalEarth1, geoPath } from "d3-geo";
-import { feature } from "topojson-client";
+import { feature, mesh } from "topojson-client";
 import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json" with { type: "json" };
 import world from "world-atlas/countries-110m.json" with { type: "json" };
+import landAtlas from "world-atlas/land-110m.json" with { type: "json" };
 import type { Topology, GeometryCollection } from "topojson-specification";
-import type { Feature, FeatureCollection, Geometry, Polygon } from "geojson";
+import type { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from "geojson";
 
 countries.registerLocale(en as Parameters<typeof countries.registerLocale>[0]);
 
@@ -84,6 +85,8 @@ export interface CountryShape {
   /** Detail geometry avoids framing a mainland as a speck beside a remote territory. */
   detailD: string;
   detailBounds: [[number, number], [number, number]];
+  /** Bounds of the whole country, remote territories included. */
+  bounds: [[number, number], [number, number]];
 }
 
 export interface ProjectedWorld {
@@ -167,6 +170,7 @@ export function projectWorld(width = 1000, places = 1): ProjectedWorld {
       d: roundPath(d, places),
       detailD: roundPath(detailD, places),
       detailBounds: path.bounds(detail),
+      bounds,
     });
   }
 
@@ -175,6 +179,84 @@ export function projectWorld(width = 1000, places = 1): ProjectedWorld {
     height,
     shapes,
     sphere: roundPath(path({ type: "Sphere" }) ?? "", places),
+  };
+}
+
+export interface ProjectedLand {
+  width: number;
+  height: number;
+  /** Every coastline as one path: land is drawn once, not once per country. */
+  land: string;
+  /** Internal borders only, as one path. A shared border is drawn once. */
+  borders: string;
+  /**
+   * Where a longitude and latitude fall, as percentages of the width and the
+   * height. Percentages rather than pixels, because a point map that zooms
+   * places its markers against a box whose pixel size changes with the zoom.
+   * Null when the projection cannot place the point.
+   */
+  place: (lon: number, lat: number) => [number, number] | null;
+}
+
+/**
+ * The world as land and borders for a point map, with the projection that
+ * places points on it.
+ *
+ * Same projection and the same fit as projectWorld(), so a point drawn here and
+ * a country drawn there land in the same place for the same width. Two meshes
+ * rather than 177 country paths: a point map has nothing to say per country, and
+ * drawing every shared border twice is about a fifth more markup for no pixel.
+ */
+export function projectLand(width = 2000, places = 1): ProjectedLand {
+  const topology = world as unknown as Topology<{ countries: GeometryCollection }>;
+  const collection = feature(
+    topology,
+    topology.objects.countries,
+  ) as unknown as FeatureCollection<Geometry, { name: string }>;
+
+  const kept = collection.features.filter((f) => !DROPPED.has(f.properties.name));
+  const height = Math.round(width * 0.5);
+  const projection = geoNaturalEarth1().fitSize(
+    [width, height],
+    { type: "FeatureCollection", features: kept } as FeatureCollection,
+  );
+  const path = geoPath(projection);
+
+  /* Land is Natural Earth's own land layer, a set of polygons that can be
+     filled. Neither alternative can. A coastline mesh stops wherever a border
+     meets the sea, and filling an open arc closes it with a straight chord;
+     topojson's merge() of the countries goes wrong at the antimeridian. Both
+     drew the same wedge from the Black Sea to the Bering Strait across Russia.
+
+     Antarctica is left out, as from projectWorld(): every polygon lying wholly
+     south of 55 degrees south, which is Antarctica and its ice shelves and
+     nothing else in this layer. Borders are a mesh of the arcs two countries
+     share, stroked and never filled. */
+  const landTopology = landAtlas as unknown as Topology<{ land: GeometryCollection }>;
+  const landFeatures = feature(landTopology, landTopology.objects.land) as unknown as FeatureCollection<MultiPolygon>;
+  const land: MultiPolygon = {
+    type: "MultiPolygon",
+    coordinates: landFeatures.features
+      .flatMap((f) => f.geometry.coordinates)
+      .filter((poly) => !poly[0].every(([, lat]) => lat < -55)),
+  };
+  const objects = topology.objects.countries;
+  const antarctica = (g: { properties?: { name?: string } }) =>
+    DROPPED.has(g.properties?.name ?? "");
+  const shared = mesh(topology, objects, (a, b) => a !== b && !antarctica(a) && !antarctica(b));
+
+  return {
+    width,
+    height,
+    land: roundPath(path(land) ?? "", places),
+    borders: roundPath(path(shared) ?? "", places),
+    place: (lon, lat) => {
+      if (!Number.isFinite(lon) || !Number.isFinite(lat)) return null;
+      if (Math.abs(lat) > 90 || Math.abs(lon) > 180) return null;
+      const xy = projection([lon, lat]);
+      if (!xy) return null;
+      return [(xy[0] / width) * 100, (xy[1] / height) * 100];
+    },
   };
 }
 
