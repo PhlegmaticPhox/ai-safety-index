@@ -1,6 +1,6 @@
 {
   "dataset": "safety-frameworks",
-  "generated": "2026-09-25T23:47:07+00:00",
+  "generated": "2026-09-26T05:32:30+00:00",
   "retrieved": "2026-09-13T00:00:00+00:00",
   "sources": [
     "safety-frameworks-index"
@@ -113,15 +113,16 @@
       "domains": [
         "CBRN",
         "cyber",
-        "autonomy"
+        "autonomy",
+        "persuasion"
       ],
-      "external": false,
-      "halt": "qualified",
+      "external": true,
+      "halt": "yes",
       "since": 2025,
       "url": "https://www.amazon.science/publications/amazons-frontier-model-safety-framework",
-      "note": "Published as a Seoul commitment signatory ahead of the Paris AI Action Summit.",
-      "halt_meaning": "Commits to a decision process rather than to an outcome.",
-      "reviewed": "2026-09-13",
+      "note": "Revised in September 2026. Names four critical risk domains, adding harmful manipulation, and commits not to deploy a model that meets a threshold until safeguards appropriately mitigate the risks.",
+      "reviewed": "2026-09-26",
+      "halt_meaning": "Commits to not deploying, or not continuing, until mitigations are in place.",
       "source_id": "safety-frameworks-index"
     },
     {
